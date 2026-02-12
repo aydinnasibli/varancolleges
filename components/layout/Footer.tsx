@@ -1,0 +1,105 @@
+import Link from "next/link";
+import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin, ArrowRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+const Footer = () => {
+  return (
+    <footer className="bg-[#020408] border-t border-white/5 pt-20 pb-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          {/* Brand & Social */}
+          <div className="col-span-1 md:col-span-1">
+            <div className="flex items-center gap-2 mb-8">
+              <div className="w-8 h-8 bg-gradient-to-br from-accent to-[#b38728] rounded-sm flex items-center justify-center text-primary font-bold font-serif text-lg">
+                V
+              </div>
+              <span className="text-xl font-serif font-bold text-white">
+                Varan<span className="text-accent">Colleges</span>
+              </span>
+            </div>
+            <p className="text-slate-500 text-sm leading-relaxed mb-8 font-light">
+              Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.
+            </p>
+            <div className="flex space-x-5">
+              <a href="#" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300">
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300">
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Services Links */}
+          <div>
+            <h4 className="text-white font-serif font-medium mb-8">Xidmətlər</h4>
+            <ul className="space-y-4 text-sm text-slate-500 font-light">
+              {[
+                "Xaricdə Təhsil",
+                "IELTS Hazırlığı",
+                "SAT Hazırlığı",
+                "Yay Məktəbləri"
+              ].map((item) => (
+                <li key={item}>
+                  <Link href="#" className="hover:text-accent transition-colors flex items-center gap-2 group">
+                    <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h4 className="text-white font-serif font-medium mb-8">Şirkət</h4>
+            <ul className="space-y-4 text-sm text-slate-500 font-light">
+              {[
+                "Haqqımızda",
+                "Komandamız",
+                "Vakansiyalar",
+                "Blog"
+              ].map((item) => (
+                <li key={item}>
+                  <Link href="#" className="hover:text-accent transition-colors flex items-center gap-2 group">
+                    <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <h4 className="text-white font-serif font-medium mb-8">Abunə olun</h4>
+            <p className="text-slate-500 text-sm mb-6 font-light">
+              Ən son xəbərlər və təkliflərdən xəbərdar olmaq üçün.
+            </p>
+            <div className="flex w-full max-w-sm items-center space-x-2">
+              <Input type="email" placeholder="Email ünvanınız" className="rounded-r-none border-r-0 focus-visible:ring-0" />
+              <Button type="submit" variant="accent" className="rounded-l-none">
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-600 text-xs">© 2023 VaranColleges. Bütün hüquqlar qorunur.</p>
+          <div className="flex space-x-8 text-xs text-slate-600">
+            <Link href="#" className="hover:text-white transition-colors">Məxfilik Siyasəti</Link>
+            <Link href="#" className="hover:text-white transition-colors">İstifadə Şərtləri</Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

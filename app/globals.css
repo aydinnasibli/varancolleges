@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0f2142;
+  --color-accent: #d4af37;
+  --color-accent-light: #f3e5ab;
+  --color-silver: #e3e4e8;
+  --color-background-dark: #05080f;
+  --color-background-card: #0f1623;
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+
+  --animate-shine: shine 6s infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes shine {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+  }
+  @keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+}
+
+@layer base {
+  :root {
+    --background: 5 8 15;
+    --foreground: 227 228 232;
+  }
+  body {
+    @apply bg-background-dark text-slate-300 overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-primary/65 backdrop-blur-2xl border border-white/10;
+  }
+  .glass-card {
+    @apply bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md border border-accent/15 shadow-lg shadow-black/30 transition-all duration-300;
+  }
+  .glass-card:hover {
+    @apply -translate-y-1 shadow-accent/10 border-accent/40;
+  }
+  .text-gold {
+    @apply bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#aa771c] bg-clip-text text-transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #05080f;
+}
+::-webkit-scrollbar-thumb {
+  background: #0f2142;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
