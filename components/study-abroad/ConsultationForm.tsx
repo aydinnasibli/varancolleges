@@ -70,7 +70,7 @@ const ConsultationForm = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-accent to-[#b38728] hover:to-accent text-primary font-bold py-4 px-8 rounded-sm transition-all shadow-[0_4px_14px_0_rgba(212,175,55,0.39)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.23)] hover:-translate-y-1 cursor-pointer"
+            className="w-full bg-white hover:bg-slate-200 text-primary font-bold py-4 px-8 rounded-sm transition-all shadow-[0_4px_14px_0_rgba(255,255,255,0.1)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.15)] hover:-translate-y-1 cursor-pointer"
           >
             Konsultasiya Sifariş Et
           </button>

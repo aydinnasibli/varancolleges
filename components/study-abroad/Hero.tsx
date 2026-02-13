@@ -15,7 +15,7 @@ const Hero = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <h1 className="text-5xl lg:text-7xl font-serif font-medium text-white leading-tight mb-6">
-          Sərhədsiz <span className="text-gold italic">Təhsil</span>
+          Sərhədsiz <span className="text-highlight italic">Təhsil</span>
         </h1>
         <p className="text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
           Dünyanın ən nüfuzlu universitetlərində təhsil almaq xəyal deyil. Məqsədlərinizə uyğun ölkəni və proqramı seçin, gələcəyinizi bizimlə qurun.

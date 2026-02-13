@@ -2,8 +2,8 @@
 
 @theme {
   --color-primary: #0f2142;
-  --color-accent: #d4af37;
-  --color-accent-light: #f3e5ab;
+  --color-accent: #ffffff;
+  --color-accent-light: #e2e8f0;
   --color-silver: #e3e4e8;
   --color-background-dark: #05080f;
   --color-background-card: #0f1623;
@@ -25,7 +25,7 @@
     100% { transform: translateY(0px) rotate(0deg); }
   }
 
-  --image-gold-gradient: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #d4af37 100%);
+  --image-gold-gradient: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #ffffff 100%);
   --image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
 }
 
@@ -44,13 +44,13 @@
     @apply bg-primary/65 backdrop-blur-2xl border border-white/10;
   }
   .glass-card {
-    @apply bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md border border-accent/15 shadow-lg shadow-black/30 transition-all duration-300;
+    @apply bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-md border border-white/10 shadow-lg shadow-black/30 transition-all duration-300;
   }
   .glass-card:hover {
-    @apply -translate-y-1 shadow-accent/10 border-accent/40;
+    @apply -translate-y-1 shadow-white/5 border-white/30;
   }
-  .text-gold {
-    @apply bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#aa771c] bg-clip-text text-transparent;
+  .text-highlight {
+    @apply bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent;
   }
 }
 
@@ -66,5 +66,5 @@
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+  background: #ffffff;
 }

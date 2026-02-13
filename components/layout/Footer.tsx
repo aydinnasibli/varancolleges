@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Brand & Social */}
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-8">
-              <div className="w-8 h-8 bg-gradient-to-br from-accent to-[#b38728] rounded-sm flex items-center justify-center text-primary font-bold font-serif text-lg">
+              <div className="w-8 h-8 bg-white text-primary rounded-sm flex items-center justify-center font-bold font-serif text-lg">
                 V
               </div>
               <span className="text-xl font-serif font-bold text-white">
