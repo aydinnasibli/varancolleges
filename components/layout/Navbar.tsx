@@ -66,7 +66,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
               <div className="relative w-10 h-10 flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent to-[#b38728] rounded-sm transform rotate-45 group-hover:rotate-90 transition-transform duration-500"></div>
+                <div className="absolute inset-0 bg-white rounded-sm transform rotate-45 group-hover:rotate-90 transition-transform duration-500"></div>
                 <span className="relative text-primary font-serif font-bold text-xl">V</span>
               </div>
               <div className="flex flex-col">

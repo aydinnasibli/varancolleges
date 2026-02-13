@@ -20,7 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         // Custom variants for this design
         primary: "bg-primary text-white hover:bg-primary/90 border border-transparent",
-        accent: "bg-accent text-primary font-semibold hover:bg-[#b38728] shadow-md hover:shadow-lg transition-all border border-transparent",
+        accent: "bg-white text-primary font-semibold hover:bg-slate-200 shadow-md hover:shadow-lg transition-all border border-transparent",
         glass: "bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white transition-all",
       },
       size: {
