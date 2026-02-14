@@ -82,7 +82,7 @@ const Navbar = () => {
                 { name: "Xidmətlər", href: "/services" },
                 { name: "Xaricdə Təhsil", href: "/study-abroad" },
                 { name: "Haqqımızda", href: "/about" },
-                { name: "Əlaqə", href: "#contact" },
+                { name: "Əlaqə", href: "/contact" },
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -105,7 +105,7 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-6">
               <div className="h-8 w-[1px] bg-white/10"></div>
               <Button variant="accent" className="rounded-sm" asChild>
-                <Link href="#contact">Müraciət et</Link>
+                <Link href="/contact">Müraciət et</Link>
               </Button>
             </div>
 
@@ -129,7 +129,7 @@ const Navbar = () => {
               { name: "Xidmətlər", href: "/services" },
               { name: "Xaricdə Təhsil", href: "/study-abroad" },
               { name: "Haqqımızda", href: "/about" },
-              { name: "Əlaqə", href: "#contact" },
+              { name: "Əlaqə", href: "/contact" },
             ].map((item) => (
               <Link
                 key={item.name}
@@ -141,7 +141,7 @@ const Navbar = () => {
               </Link>
             ))}
             <Button variant="accent" className="w-full mt-4" asChild>
-               <Link href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Müraciət et</Link>
+               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>Müraciət et</Link>
             </Button>
           </div>
         )}

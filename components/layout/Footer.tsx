@@ -39,15 +39,15 @@ const Footer = () => {
             <h4 className="text-white font-serif font-medium mb-8">Xidmətlər</h4>
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
-                "Xaricdə Təhsil",
-                "IELTS Hazırlığı",
-                "SAT Hazırlığı",
-                "Yay Məktəbləri"
+                { label: "Xaricdə Təhsil", href: "/study-abroad" },
+                { label: "IELTS Hazırlığı", href: "#" },
+                { label: "SAT Hazırlığı", href: "#" },
+                { label: "Yay Məktəbləri", href: "#" }
               ].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="hover:text-accent transition-colors flex items-center gap-2 group">
+                <li key={item.label}>
+                  <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
                     <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -59,15 +59,15 @@ const Footer = () => {
             <h4 className="text-white font-serif font-medium mb-8">Şirkət</h4>
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
-                "Haqqımızda",
-                "Komandamız",
-                "Vakansiyalar",
-                "Blog"
+                { label: "Haqqımızda", href: "/about" },
+                { label: "Komandamız", href: "#" },
+                { label: "Vakansiyalar", href: "#" },
+                { label: "Blog", href: "#" }
               ].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="hover:text-accent transition-colors flex items-center gap-2 group">
+                <li key={item.label}>
+                  <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
                     <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
