@@ -1,7 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ServicesGrid from "@/components/sections/ServicesGrid";
-import Contact from "@/components/sections/Contact";
 import Link from "next/link";
 
 export default function ServicesPage() {
@@ -49,7 +48,6 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      <Contact />
       <Footer />
     </main>
   );
