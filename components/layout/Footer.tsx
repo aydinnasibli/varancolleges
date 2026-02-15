@@ -14,10 +14,10 @@ const Footer = () => {
             <div className="mb-8">
               <Link href="/">
                 <Image
-                  src="/images/logo.jpg"
+                  src="/images/logo.png"
                   alt="Varan Colleges"
-                  width={180}
-                  height={60}
+                  width={666}
+                  height={375}
                   className="h-12 w-auto object-contain"
                 />
               </Link>

@@ -67,10 +67,10 @@ const Navbar = () => {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer">
               <Image
-                src="/images/logo.jpg"
+                src="/images/logo.png"
                 alt="Varan Colleges"
-                width={180}
-                height={60}
+                width={666}
+                height={375}
                 className="h-14 w-auto object-contain"
                 priority
               />
