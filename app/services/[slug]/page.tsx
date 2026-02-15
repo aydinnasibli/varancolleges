@@ -2,7 +2,6 @@ import { servicesData } from "@/lib/services-data";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Contact from "@/components/sections/Contact";
 import { ArrowLeft, CheckCircle2, Clock, CalendarDays, Award } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -234,7 +233,6 @@ export default async function ServicePage({ params }: Props) {
         </div>
       </section>
 
-      <Contact />
       <Footer />
     </main>
   );
