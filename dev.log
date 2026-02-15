@@ -2083,3 +2083,6 @@ Import trace:
  GET /services/sat 200 in 1802ms (compile: 177ms, render: 1626ms)
 ✓ Compiled in 73ms
  GET /services/sat 200 in 1150ms (compile: 207ms, render: 942ms)
+✓ Compiled in 1661ms
+ HEAD / 200 in 1003ms (compile: 335ms, render: 669ms)
+ GET / 200 in 359ms (compile: 7ms, render: 352ms)
