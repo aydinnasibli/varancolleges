@@ -77,20 +77,6 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-
-          {/* Newsletter */}
-          <div>
-            <h4 className="text-white font-serif font-medium mb-8">Abunə olun</h4>
-            <p className="text-slate-500 text-sm mb-6 font-light">
-              Ən son xəbərlər və təkliflərdən xəbərdar olmaq üçün.
-            </p>
-            <div className="flex w-full max-w-sm items-center space-x-2">
-              <Input type="email" placeholder="Email ünvanınız" className="rounded-r-none border-r-0 focus-visible:ring-0" />
-              <Button type="submit" variant="accent" className="rounded-l-none">
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
         </div>
 
         {/* Bottom Bar */}
