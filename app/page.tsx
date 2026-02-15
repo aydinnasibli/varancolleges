@@ -3,7 +3,6 @@ import Hero from "@/components/sections/Hero";
 import Stats from "@/components/sections/Stats";
 import Advantages from "@/components/sections/Advantages";
 import BlogPreview from "@/components/sections/BlogPreview";
-import Contact from "@/components/sections/Contact";
 import Footer from "@/components/layout/Footer";
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
       <Stats />
       <Advantages />
       <BlogPreview />
-      <Contact />
       <Footer />
     </main>
   );
