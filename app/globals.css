@@ -1,2 +1,90 @@
 @import "tailwindcss";
 @import "shadcn/tailwind.css";
+
+@theme {
+  --color-background-dark: #05080f;
+  --color-primary: #0f2142;
+  --color-accent: #d4af37;
+  --color-accent-light: #f4d03f;
+
+  /* Font Families */
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+
+  /* Shadcn/Tailwind Theme Overrides */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  :root {
+    --background: 223 47% 4%; /* #05080f */
+    --foreground: 210 40% 98%;
+
+    --card: 223 47% 4%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 223 47% 4%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 218 63% 16%; /* #0f2142 */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 46 65% 52%; /* #d4af37 */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  /* Force dark mode behavior by default */
+  .dark {
+    --background: 223 47% 4%;
+    --foreground: 210 40% 98%;
+
+    --card: 223 47% 4%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 223 47% 4%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 218 63% 16%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 46 65% 52%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-300;
+  }
+}

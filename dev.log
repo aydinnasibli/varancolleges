@@ -2003,3 +2003,81 @@ See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
 ✓ Ready in 1435ms
  GET / 200 in 2.2s (compile: 1077ms, render: 1127ms)
  GET /services/sat 200 in 1698ms (compile: 771ms, render: 927ms)
+⨯ ./components/layout/Footer.tsx:93:5
+Parsing ecmascript source code failed
+[0m [90m 91 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 92 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 93 |[39m     [33m<[39m[33m/[39m[33mfooter[39m[33m>[39m
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 94 |[39m   )[33m;[39m
+ [90m 95 |[39m }[33m;[39m
+ [90m 96 |[39m[0m
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/layout/Footer.tsx
+    ./app/services/[slug]/page.tsx
+
+
+
+./components/layout/Footer.tsx:93:6
+Parsing ecmascript source code failed
+[0m [90m 91 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 92 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 93 |[39m     [33m<[39m[33m/[39m[33mfooter[39m[33m>[39m
+ [90m    |[39m      [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 94 |[39m   )[33m;[39m
+ [90m 95 |[39m }[33m;[39m
+ [90m 96 |[39m[0m
+
+Unterminated regexp literal
+
+Import trace:
+  Server Component:
+    ./components/layout/Footer.tsx
+    ./app/services/[slug]/page.tsx
+
+
+ GET /services/sat 500 in 1774ms (compile: 1329ms, render: 445ms)
+⨯ ./components/layout/Footer.tsx:93:5
+Parsing ecmascript source code failed
+[0m [90m 91 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 92 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 93 |[39m     [33m<[39m[33m/[39m[33mfooter[39m[33m>[39m
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 94 |[39m   )[33m;[39m
+ [90m 95 |[39m }[33m;[39m
+ [90m 96 |[39m[0m
+
+Expression expected
+
+Import trace:
+  Server Component:
+    ./components/layout/Footer.tsx
+    ./app/services/[slug]/page.tsx
+
+
+
+./components/layout/Footer.tsx:93:6
+Parsing ecmascript source code failed
+[0m [90m 91 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 92 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 93 |[39m     [33m<[39m[33m/[39m[33mfooter[39m[33m>[39m
+ [90m    |[39m      [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 94 |[39m   )[33m;[39m
+ [90m 95 |[39m }[33m;[39m
+ [90m 96 |[39m[0m
+
+Unterminated regexp literal
+
+Import trace:
+  Server Component:
+    ./components/layout/Footer.tsx
+    ./app/services/[slug]/page.tsx
+
+
+ GET /services/sat 500 in 40ms (compile: 19ms, render: 22ms)
+✓ Compiled in 84ms
+ GET /services/sat 200 in 1802ms (compile: 177ms, render: 1626ms)
