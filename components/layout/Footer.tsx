@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Instagram, Facebook, Linkedin, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { Instagram, Facebook, Linkedin, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -10,13 +11,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand & Social */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-2 mb-8">
-              <div className="w-8 h-8 bg-white text-primary rounded-sm flex items-center justify-center font-bold font-serif text-lg">
-                V
-              </div>
-              <span className="text-xl font-serif font-bold text-white">
-                Varan<span className="text-accent">Colleges</span>
-              </span>
+            <div className="mb-8">
+              <Link href="/">
+                <Image
+                  src="/images/logo.jpg"
+                  alt="Varan Colleges"
+                  width={180}
+                  height={60}
+                  className="h-12 w-auto object-contain"
+                />
+              </Link>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-8 font-light">
               Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.

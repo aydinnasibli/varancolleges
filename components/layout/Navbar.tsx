@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail, Clock, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Menu, X, Phone, Mail, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
@@ -64,15 +65,15 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex justify-between items-center h-full">
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
-              <div className="relative w-10 h-10 flex items-center justify-center">
-                <div className="absolute inset-0 bg-white rounded-sm transform rotate-45 group-hover:rotate-90 transition-transform duration-500"></div>
-                <span className="relative text-primary font-serif font-bold text-xl">V</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-serif font-bold tracking-tight text-white leading-none">Varan</span>
-                <span className="text-[10px] tracking-[0.3em] text-accent uppercase font-medium">Colleges</span>
-              </div>
+            <Link href="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+              <Image
+                src="/images/logo.jpg"
+                alt="Varan Colleges"
+                width={180}
+                height={60}
+                className="h-14 w-auto object-contain"
+                priority
+              />
             </Link>
 
             {/* Desktop Menu */}
