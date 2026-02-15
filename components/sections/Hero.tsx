@@ -22,12 +22,6 @@ const Hero = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-            <span className="text-xs font-semibold tracking-[0.2em] text-accent uppercase">
-              Premium Təhsil Mərkəzi
-            </span>
-          </div>
           <h1 className="text-6xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8">
             Gələcəyi <br />
             <span className="text-gold italic pr-2">Kəşf Edin</span>
@@ -42,15 +36,15 @@ const Hero = () => {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="rounded-sm text-white border-white/20 hover:border-accent hover:text-accent font-semibold tracking-wide uppercase backdrop-blur-sm" asChild>
-              <Link href="/courses">Dil Kursları</Link>
+            <Button variant="outline" size="lg" className="rounded-sm text-white border-white/20 hover:bg-accent hover:text-primary hover:border-accent font-semibold tracking-wide uppercase backdrop-blur-sm transition-all duration-300" asChild>
+              <Link href="/services">Xidmətlər</Link>
             </Button>
           </div>
         </div>
 
         <div className="relative hidden lg:block h-[600px]">
           {/* Floating Card 1 */}
-          <div className="absolute top-10 right-10 w-72 p-6 glass-card rounded-xl animate-float z-20">
+          <div className="absolute top-10 right-10 w-72 p-6 glass-card rounded-xl animate-float z-20 hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
                 <School className="text-accent h-6 w-6" />
@@ -66,7 +60,7 @@ const Hero = () => {
           </div>
 
           {/* Floating Card 2 */}
-          <div className="absolute bottom-20 left-10 w-64 p-6 glass-card rounded-xl animate-float z-10" style={{ animationDelay: "-3s" }}>
+          <div className="absolute bottom-20 left-10 w-64 p-6 glass-card rounded-xl animate-float z-10 hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ animationDelay: "-3s" }}>
             <div className="flex justify-between items-end mb-2">
               <span className="text-4xl font-serif text-white">98%</span>
               <span className="text-accent text-sm mb-1 font-medium">Uğur</span>

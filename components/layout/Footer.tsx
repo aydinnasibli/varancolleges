@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Facebook, Linkedin, ArrowRight } from "lucide-react";
+import { Instagram, Facebook, Linkedin, ArrowRight, MapPin, Phone, Mail } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -75,6 +75,40 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-white font-serif font-medium mb-8">Əlaqə</h4>
+            <ul className="space-y-6 text-sm text-slate-500 font-light">
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
+                  <MapPin className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <p className="text-white mb-1 font-medium">Ünvan</p>
+                  <p className="group-hover:text-white transition-colors leading-relaxed">Bakı ş., Nərimanov r.,<br/>Əhməd Rəcəbli küç. 56</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
+                  <Phone className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <p className="text-white mb-1 font-medium">Telefon</p>
+                  <a href="tel:+994501234567" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">+994 50 123 45 67</a>
+                </div>
+              </li>
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
+                  <Mail className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
+                </div>
+                <div>
+                  <p className="text-white mb-1 font-medium">Email</p>
+                  <a href="mailto:info@varancolleges.az" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">info@varancolleges.az</a>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
