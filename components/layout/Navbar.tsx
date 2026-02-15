@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ApplicationModal } from "@/components/ui/ApplicationModal";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -105,9 +106,7 @@ const Navbar = () => {
             {/* CTA Button */}
             <div className="hidden lg:flex items-center gap-6">
               <div className="h-8 w-[1px] bg-white/10"></div>
-              <Button variant="accent" className="rounded-sm" asChild>
-                <Link href="/contact">Müraciət et</Link>
-              </Button>
+              <ApplicationModal />
             </div>
 
             {/* Mobile Menu Button */}
@@ -141,9 +140,11 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Button variant="accent" className="w-full mt-4" asChild>
-               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>Müraciət et</Link>
-            </Button>
+            <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
+              <ApplicationModal>
+                 <Button variant="accent" className="w-full">Müraciət et</Button>
+              </ApplicationModal>
+            </div>
           </div>
         )}
       </nav>

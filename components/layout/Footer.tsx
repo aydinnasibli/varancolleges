@@ -16,9 +16,9 @@ const Footer = () => {
                 <Image
                   src="/images/logo.png"
                   alt="Varan Colleges"
-                  width={666}
-                  height={375}
-                  className="h-12 w-auto object-contain"
+                  width={800}
+                  height={450}
+                  className="h-20 w-auto object-contain"
                 />
               </Link>
             </div>
