@@ -84,7 +84,7 @@ export default function AboutPage() {
       >
         <div className="absolute inset-0 bg-primary/70 backdrop-blur-[2px] flex items-center justify-center">
             <div className="text-center px-4 max-w-4xl mx-auto">
-                <p className="text-2xl md:text-3xl font-serif text-white italic mb-6">"Təhsil dünyanı dəyişdirmək üçün istifadə edə biləcəyiniz ən güclü silahdır."</p>
+                <p className="text-2xl md:text-3xl font-serif text-white italic mb-6">&quot;Təhsil dünyanı dəyişdirmək üçün istifadə edə biləcəyiniz ən güclü silahdır.&quot;</p>
                 <p className="text-accent text-sm tracking-widest uppercase font-medium">— Nelson Mandela</p>
             </div>
         </div>
