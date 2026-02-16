@@ -2,7 +2,7 @@
 @import "shadcn/tailwind.css";
 
 @theme {
-  --color-background-dark: #2f3092;
+  --color-background-dark: #0B1120;
   --color-primary: #152C55;
   --color-accent: #d4af37;
   --color-accent-light: #f4d03f;
@@ -18,13 +18,13 @@
 
 @layer base {
   :root {
-    --background: 239 51% 38%; /* #2f3092 */
+    --background: 222 47% 9%; /* #0B1120 */
     --foreground: 210 40% 98%;
 
-    --card: 239 51% 38%;
+    --card: 222 47% 9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 239 51% 38%;
+    --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 218 60% 21%; /* #152C55 */
@@ -49,13 +49,13 @@
 
   /* Force dark mode behavior by default */
   .dark {
-    --background: 239 51% 38%;
+    --background: 222 47% 9%;
     --foreground: 210 40% 98%;
 
-    --card: 239 51% 38%;
+    --card: 222 47% 9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 239 51% 38%;
+    --popover: 222 47% 9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 218 60% 21%;
