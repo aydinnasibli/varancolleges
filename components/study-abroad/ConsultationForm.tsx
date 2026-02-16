@@ -36,7 +36,7 @@ const ConsultationForm = () => {
           Mütəxəssislərimizlə 30 dəqiqəlik pulsuz konsultasiya zamanı sizin profilinizə uyğun ən ideal təhsil yolunu müəyyənləşdirək.
         </p>
 
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-[#05080f] p-8 rounded-lg border border-white/10 shadow-2xl">
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-background-dark p-8 rounded-lg border border-white/10 shadow-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="relative group text-left">
               <input

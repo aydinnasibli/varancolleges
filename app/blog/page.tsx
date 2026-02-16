@@ -53,7 +53,7 @@ export default async function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
                 <Link key={post._id} href={`/blog/${post.slug.current}`} className="group block cursor-pointer">
-                  <div className="relative overflow-hidden rounded-lg mb-6 h-64 bg-[#0f1623]">
+                  <div className="relative overflow-hidden rounded-lg mb-6 h-64 bg-card border border-white/5">
                     <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors z-10"></div>
                     {post.mainImage && (
                       <Image
