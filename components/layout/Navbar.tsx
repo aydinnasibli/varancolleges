@@ -72,7 +72,7 @@ const Navbar = () => {
                 alt="Varan Colleges"
                 width={666}
                 height={375}
-                className="h-14 w-auto object-contain"
+                className="h-20 w-auto object-contain"
                 priority
               />
             </Link>
