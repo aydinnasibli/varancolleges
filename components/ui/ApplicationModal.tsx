@@ -55,7 +55,7 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
                 <SelectItem value="ielts">IELTS Hazırlığı</SelectItem>
                 <SelectItem value="toefl">TOEFL Hazırlığı</SelectItem>
                 <SelectItem value="general-english">General English</SelectItem>
-                <SelectItem value="yos">YÖS Hazırlığı</SelectItem>
+                <SelectItem value="yos">TR YÖS Hazırlığı</SelectItem>
                 <SelectItem value="study-abroad">Xaricdə Təhsil Konsultasiyası</SelectItem>
                 <SelectItem value="other">Digər</SelectItem>
               </SelectContent>

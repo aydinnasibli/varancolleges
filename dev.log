@@ -52,3 +52,6 @@ The default export of @sanity/image-url has been deprecated. Use the named expor
 The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
  GET / 200 in 3.8s (compile: 1162ms, render: 2.6s)
  GET / 200 in 3.6s (compile: 169ms, render: 3.5s)
+○ Compiling /services/[slug] ...
+⨯ upstream image response failed for https://images.unsplash.com/photo-1524178232363-1fb2b075b955?q=80&w=2670&auto=format&fit=crop 404
+ GET /services/yos 200 in 17.3s (compile: 12.0s, render: 5.4s)
