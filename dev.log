@@ -48,3 +48,6 @@ The default export of @sanity/image-url has been deprecated. Use the named expor
 ✓ Compiled in 787ms
 The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
  GET / 200 in 3.2s (compile: 1595ms, render: 1562ms)
+✓ Compiled in 1329ms
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+ GET / 200 in 3.8s (compile: 1162ms, render: 2.6s)
