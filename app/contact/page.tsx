@@ -37,7 +37,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Address */}
-                <div className="bg-[#0f1623] p-8 rounded-2xl border border-white/5 text-center group hover:border-accent/50 transition-all duration-300">
+                <div className="bg-card p-8 rounded-2xl border border-white/5 text-center group hover:border-accent/50 transition-all duration-300">
                     <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-accent transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-accent group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -52,7 +52,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Phone */}
-                <div className="bg-[#0f1623] p-8 rounded-2xl border border-white/5 text-center group hover:border-accent/50 transition-all duration-300">
+                <div className="bg-card p-8 rounded-2xl border border-white/5 text-center group hover:border-accent/50 transition-all duration-300">
                     <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-accent transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-accent group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -65,7 +65,7 @@ export default function ContactPage() {
                 </div>
 
                  {/* Social Media */}
-                 <div className="bg-[#0f1623] p-8 rounded-2xl border border-white/5 text-center group hover:border-accent/50 transition-all duration-300">
+                 <div className="bg-card p-8 rounded-2xl border border-white/5 text-center group hover:border-accent/50 transition-all duration-300">
                     <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-accent transition-colors duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-accent group-hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

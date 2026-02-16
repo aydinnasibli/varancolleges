@@ -17,7 +17,7 @@ const FAQAccordion = ({ faqs }: { faqs: FAQ[] }) => {
       {faqs.map((faq, index) => (
         <div
           key={faq._id}
-          className={`border rounded-lg overflow-hidden transition-colors duration-300 ${activeIndex === index ? 'border-accent bg-accent/5' : 'border-white/5 bg-[#0f1623]'}`}
+          className={`border rounded-lg overflow-hidden transition-colors duration-300 ${activeIndex === index ? 'border-accent bg-accent/5' : 'border-white/5 bg-card'}`}
         >
           <button
             onClick={() => toggleIndex(index)}

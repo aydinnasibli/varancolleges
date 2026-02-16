@@ -13,7 +13,7 @@ const BlogPreview = async () => {
   }
 
   return (
-    <section className="py-24 bg-[#080c14] relative">
+    <section className="py-24 bg-background-dark relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-16">
           <div>
@@ -29,7 +29,7 @@ const BlogPreview = async () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentPosts.map((post) => (
             <Link key={post._id} href={`/blog/${post.slug.current}`} className="group block cursor-pointer">
-              <div className="relative overflow-hidden rounded-lg mb-6 h-64 bg-[#0f1623]">
+              <div className="relative overflow-hidden rounded-lg mb-6 h-64 bg-card border border-white/5">
                 <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors z-10"></div>
                 {post.mainImage && (
                   <Image
