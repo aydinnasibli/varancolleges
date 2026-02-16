@@ -26,7 +26,7 @@ const Footer = () => {
               Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.
             </p>
             <div className="flex space-x-5">
-              <a href="#" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300">
+              <a href="https://www.instagram.com/varancollegesltd/" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer">
                 <Instagram className="w-5 h-5" />
               </a>
               <a href="#" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300">
@@ -88,7 +88,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-white mb-1 font-medium">Ünvan</p>
-                  <p className="group-hover:text-white transition-colors leading-relaxed">Bakı ş., Nərimanov r.,<br/>Əhməd Rəcəbli küç. 56</p>
+                  <p className="group-hover:text-white transition-colors leading-relaxed">137A Samad Vurgun,<br/>Baku 1022, Azerbaijan</p>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">
@@ -97,7 +97,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-white mb-1 font-medium">Telefon</p>
-                  <a href="tel:+994501234567" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">+994 50 123 45 67</a>
+                  <a href="tel:+994771885050" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">+994 77 188 50 50</a>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">

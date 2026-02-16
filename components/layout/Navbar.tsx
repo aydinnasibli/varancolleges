@@ -33,9 +33,9 @@ const Navbar = () => {
       <div className="bg-primary border-b border-white/5 py-2 hidden lg:block">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-xs text-slate-400 font-medium tracking-wide">
           <div className="flex items-center space-x-6">
-            <a href="tel:+994501234567" className="flex items-center hover:text-accent transition-colors">
+            <a href="tel:+994771885050" className="flex items-center hover:text-accent transition-colors">
               <Phone className="w-4 h-4 mr-2 text-accent" />
-              +994 50 123 45 67
+              +994 77 188 50 50
             </a>
             <a href="mailto:info@varancolleges.az" className="flex items-center hover:text-accent transition-colors">
               <Mail className="w-4 h-4 mr-2 text-accent" />
@@ -47,7 +47,7 @@ const Navbar = () => {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="#" className="hover:text-accent transition-colors">Instagram</a>
+            <a href="https://www.instagram.com/varancollegesltd/" className="hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer">Instagram</a>
             <span className="text-slate-700">|</span>
             <a href="#" className="hover:text-accent transition-colors">Facebook</a>
             <span className="text-slate-700">|</span>
