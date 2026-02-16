@@ -84,6 +84,7 @@ const Navbar = () => {
                 { name: "Xidmətlər", href: "/services" },
                 { name: "Xaricdə Təhsil", href: "/study-abroad" },
                 { name: "Haqqımızda", href: "/about" },
+                { name: "Blog", href: "/blog" },
                 { name: "Əlaqə", href: "/contact" },
               ].map((item) => (
                 <Link
@@ -129,6 +130,7 @@ const Navbar = () => {
               { name: "Xidmətlər", href: "/services" },
               { name: "Xaricdə Təhsil", href: "/study-abroad" },
               { name: "Haqqımızda", href: "/about" },
+              { name: "Blog", href: "/blog" },
               { name: "Əlaqə", href: "/contact" },
             ].map((item) => (
               <Link

@@ -33,3 +33,6 @@ The default export of @sanity/image-url has been deprecated. Use the named expor
  GET / 200 in 1204ms (compile: 189ms, render: 1015ms)
 The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
  GET /blog/canada-education 404 in 4.1s (compile: 3.8s, render: 321ms)
+✓ Compiled in 239ms
+The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead.
+ GET / 200 in 1758ms (compile: 509ms, render: 1249ms)

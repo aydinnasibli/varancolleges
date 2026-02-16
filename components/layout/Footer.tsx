@@ -66,7 +66,7 @@ const Footer = () => {
                 { label: "Haqqımızda", href: "/about" },
                 { label: "Komandamız", href: "#" },
                 { label: "Vakansiyalar", href: "#" },
-                { label: "Blog", href: "#" }
+                { label: "Blog", href: "/blog" }
               ].map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
