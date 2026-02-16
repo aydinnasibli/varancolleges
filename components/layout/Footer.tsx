@@ -115,7 +115,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-600 text-xs">© 2023 VaranColleges. Bütün hüquqlar qorunur.</p>
+          <p className="text-slate-600 text-xs">© 2026 VaranColleges. Bütün hüquqlar qorunur.</p>
           <div className="flex space-x-8 text-xs text-slate-600">
             <Link href="#" className="hover:text-white transition-colors">Məxfilik Siyasəti</Link>
             <Link href="#" className="hover:text-white transition-colors">İstifadə Şərtləri</Link>
