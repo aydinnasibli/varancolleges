@@ -27,10 +27,10 @@ const Footer = () => {
               Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.
             </p>
             <div className="flex space-x-5">
-              <a href="https://www.instagram.com/varancollegesltd/" className="transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href="https://www.instagram.com/varancollegesltd/" className="transform hover:scale-110 duration-300 text-slate-500 hover:text-accent" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <InstagramIcon className="w-5 h-5" />
               </a>
-              <a href="https://wa.me/994771885050" className="transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <a href="https://wa.me/994771885050" className="transform hover:scale-110 duration-300 text-slate-500 hover:text-accent" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                 <WhatsAppIcon className="w-5 h-5" />
               </a>
             </div>

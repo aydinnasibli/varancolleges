@@ -52,7 +52,7 @@ const Navbar = () => {
               href="https://wa.me/994771885050"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform hover:text-accent"
               aria-label="WhatsApp"
             >
               <WhatsAppIcon className="w-5 h-5" />
@@ -62,7 +62,7 @@ const Navbar = () => {
               href="https://www.instagram.com/varancollegesltd/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
+              className="hover:scale-110 transition-transform hover:text-accent"
               aria-label="Instagram"
             >
               <InstagramIcon className="w-5 h-5" />
@@ -87,7 +87,7 @@ const Navbar = () => {
                 alt="Varan Colleges"
                 width={666}
                 height={375}
-                className="h-16 w-auto object-contain"
+                className="h-12 w-auto object-contain"
                 priority
               />
             </Link>
