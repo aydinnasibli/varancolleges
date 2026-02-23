@@ -10,3 +10,11 @@
 ✓ Ready in 1105ms
 ○ Compiling /study-abroad ...
  GET /study-abroad 200 in 4.9s (compile: 3.8s, render: 1056ms)
+✓ Compiled in 423ms
+✓ Compiled in 154ms
+✓ Compiled in 150ms
+✓ Compiled in 124ms
+✓ Compiled in 98ms
+✓ Compiled in 37ms
+✓ Compiled in 85ms
+ GET /study-abroad 200 in 963ms (compile: 186ms, render: 777ms)
