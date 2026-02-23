@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phone: "",
     message: "",
   });
@@ -31,7 +32,7 @@ const ContactForm = () => {
     setTimeout(() => {
       console.log("Form submitted:", formData);
       setStatus("success");
-      setFormData({ name: "", phone: "", message: "" });
+      setFormData({ name: "", email: "", phone: "", message: "" });
 
       // Reset status after a few seconds
       setTimeout(() => setStatus("idle"), 3000);
@@ -39,7 +40,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-card p-8 md:p-12 rounded-2xl border border-white/5 shadow-xl">
+    <div className="bg-card p-8 md:p-12 rounded-2xl border border-white/5 shadow-xl glass-panel">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
@@ -67,6 +68,20 @@ const ContactForm = () => {
               className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent"
             />
           </div>
+        </div>
+
+        <div className="space-y-2">
+            <Label htmlFor="email" className="text-white">Email</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="nümunə@mail.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent"
+            />
         </div>
 
         <div className="space-y-2">
