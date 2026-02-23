@@ -3,37 +3,37 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://varancolleges.com',
+      url: 'https://www.varancolleges.com',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1,
     },
     {
-      url: 'https://varancolleges.com/about',
+      url: 'https://www.varancolleges.com/about',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://varancolleges.com/services',
+      url: 'https://www.varancolleges.com/services',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://varancolleges.com/contact',
+      url: 'https://www.varancolleges.com/contact',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
-      url: 'https://varancolleges.com/study-abroad',
+      url: 'https://www.varancolleges.com/study-abroad',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://varancolleges.com/blog',
+      url: 'https://www.varancolleges.com/blog',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,

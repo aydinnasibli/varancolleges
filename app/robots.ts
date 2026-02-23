@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/studio/',
     },
-    sitemap: 'https://varancolleges.com/sitemap.xml',
+    sitemap: 'https://www.varancolleges.com/sitemap.xml',
   };
 }

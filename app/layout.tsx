@@ -15,7 +15,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://varancolleges.com"),
+  metadataBase: new URL("https://www.varancolleges.com"),
   title: {
     default: "VaranColleges - Xaricdə Təhsil və Hazırlıq Mərkəzi",
     template: "%s | VaranColleges",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     title: "VaranColleges - Gələcəyi Kəşf Edin",
     description:
       "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
-    url: "https://varancolleges.com",
+    url: "https://www.varancolleges.com",
     siteName: "VaranColleges",
     locale: "az_AZ",
     type: "website",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://varancolleges.com",
+    canonical: "https://www.varancolleges.com",
   },
 };
 
@@ -84,9 +84,9 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
   name: "VaranColleges",
-  url: "https://varancolleges.com",
-  logo: "https://varancolleges.com/images/logo.png",
-  image: "https://varancolleges.com/images/varan-office.webp",
+  url: "https://www.varancolleges.com",
+  logo: "https://www.varancolleges.com/images/logo.png",
+  image: "https://www.varancolleges.com/images/varan-office.webp",
   description:
     "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
   address: {
