@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, MessageCircle, ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -26,11 +27,11 @@ const Footer = () => {
               Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.
             </p>
             <div className="flex space-x-5">
-              <a href="https://www.instagram.com/varancollegesltd/" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <Instagram className="w-5 h-5" />
+              <a href="https://www.instagram.com/varancollegesltd/" className="transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <InstagramIcon className="w-5 h-5" />
               </a>
-              <a href="https://wa.me/994771885050" className="text-slate-500 hover:text-accent transition-colors transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <MessageCircle className="w-5 h-5" />
+              <a href="https://wa.me/994771885050" className="transform hover:scale-110 duration-300" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <WhatsAppIcon className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -103,7 +104,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-white mb-1 font-medium">Email</p>
-                  <a href="mailto:info@varancolleges.az" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">info@varancolleges.az</a>
+                  <a href="mailto:info@varancolleges.com" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">info@varancolleges.com</a>
                 </div>
               </li>
             </ul>

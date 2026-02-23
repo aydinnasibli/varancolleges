@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail, Clock } from "lucide-react";
+import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
 
@@ -37,9 +38,9 @@ const Navbar = () => {
               <Phone className="w-4 h-4 mr-2 text-accent" />
               +994 77 188 50 50
             </a>
-            <a href="mailto:info@varancolleges.az" className="flex items-center hover:text-accent transition-colors">
+            <a href="mailto:info@varancolleges.com" className="flex items-center hover:text-accent transition-colors">
               <Mail className="w-4 h-4 mr-2 text-accent" />
-              info@varancolleges.az
+              info@varancolleges.com
             </a>
             <span className="flex items-center text-slate-500">
               <Clock className="w-4 h-4 mr-2 text-accent" />
@@ -47,11 +48,25 @@ const Navbar = () => {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="https://www.instagram.com/varancollegesltd/" className="hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a
+              href="https://wa.me/994771885050"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:scale-110 transition-transform"
+              aria-label="WhatsApp"
+            >
+              <WhatsAppIcon className="w-5 h-5" />
+            </a>
             <span className="text-slate-700">|</span>
-            <a href="#" className="hover:text-accent transition-colors">Facebook</a>
-            <span className="text-slate-700">|</span>
-            <a href="#" className="hover:text-accent transition-colors">Linkedin</a>
+            <a
+              href="https://www.instagram.com/varancollegesltd/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:scale-110 transition-transform"
+              aria-label="Instagram"
+            >
+              <InstagramIcon className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </div>
