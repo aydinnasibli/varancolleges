@@ -17,8 +17,8 @@ const Hero = () => {
         <h1 className="text-5xl lg:text-7xl font-serif font-medium text-white leading-tight mb-6">
           Sərhədsiz <span className="text-highlight italic">Təhsil</span>
         </h1>
-        <p className="text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
-          Dünyanın ən nüfuzlu universitetlərində təhsil almaq xəyal deyil. Məqsədlərinizə uyğun ölkəni və proqramı seçin, gələcəyinizi bizimlə qurun.
+        <p className="text-lg text-slate-400 max-w-4xl mx-auto font-light leading-relaxed">
+          Varan Colleges olaraq tələbələrimizi ABŞ, Kanada, Avstraliya, Avropa ölkələri və Türkiyədə yerləşən universitet və kolleclərə yönləndiririk. Məqsədimiz yalnız qəbul almaq deyil, tələbənin düzgün ölkə, düzgün ixtisas və düzgün universitet seçməsinə peşəkar şəkildə dəstək olmaqdır.
         </p>
       </div>
     </section>
