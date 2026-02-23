@@ -1,7 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Stats from "@/components/sections/Stats";
-import Advantages from "@/components/sections/Advantages";
 import Map from "@/components/ui/Map";
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Quote } from "lucide-react";
@@ -48,8 +47,10 @@ export default function AboutPage() {
                 </div>
 
                 <h2 className="text-4xl lg:text-6xl font-serif text-white mb-8 leading-tight">
-                  Təhsildə Yeni <br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-[#b38728]">Standartlar</span>
+                  Təhsildə Yeni <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-[#b38728]">
+                    Standartlar
+                  </span>
                 </h2>
 
                 <div className="relative p-8 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm overflow-hidden group">
@@ -58,7 +59,9 @@ export default function AboutPage() {
                   </div>
                   <Quote className="w-8 h-8 text-accent mb-4 opacity-80" />
                   <p className="text-xl text-slate-200 font-serif italic leading-relaxed relative z-10">
-                    &quot;Hədəfimiz sadəcə bilik vermək deyil, tələbələrimizə dünyanı dəyişdirə biləcək potensiallarını kəşf etdirməkdir.&quot;
+                    &quot;Hədəfimiz sadəcə bilik vermək deyil, tələbələrimizə
+                    dünyanı dəyişdirə biləcək potensiallarını kəşf
+                    etdirməkdir.&quot;
                   </p>
                 </div>
               </div>
@@ -68,17 +71,20 @@ export default function AboutPage() {
             <div className="space-y-8 pt-4 lg:pt-0">
               <div className="space-y-6 text-lg text-slate-400 font-light leading-relaxed">
                 <p>
-                  <strong className="text-white font-medium">VaranColleges</strong>, Azərbaycanda təhsil sahəsində keyfiyyət və
-                  yenilikçilik standartlarını müəyyən edən aparıcı təhsil
-                  mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də
-                  beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və
-                  bacarıqları təqdim edirik.
+                  <strong className="text-white font-medium">
+                    VaranColleges
+                  </strong>
+                  , Azərbaycanda təhsil sahəsində keyfiyyət və yenilikçilik
+                  standartlarını müəyyən edən aparıcı təhsil mərkəzidir.
+                  İllərdir ki, tələbələrimizə həm yerli, həm də beynəlxalq
+                  səviyyədə uğur qazanmaq üçün lazım olan bilik və bacarıqları
+                  təqdim edirik.
                 </p>
                 <p>
-                  Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi
-                  yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə
-                  üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz
-                  gələcəyin liderlərini yetişdiririk.
+                  Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və
+                  fərdi yanaşmamızla hər bir tələbənin potensialını maksimum
+                  dərəcədə üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik,
+                  biz gələcəyin liderlərini yetişdiririk.
                 </p>
               </div>
 
@@ -89,9 +95,12 @@ export default function AboutPage() {
                   "Fərdi İnkişaf Proqramları",
                   "Beynəlxalq Sertifikatlar",
                   "Qlobal Əməkdaşlıqlar",
-                  "Karyera Dəstəyi"
+                  "Karyera Dəstəyi",
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center text-slate-300 bg-white/5 rounded-lg p-4 border border-white/5 hover:border-accent/30 transition-all duration-300 group">
+                  <div
+                    key={index}
+                    className="flex items-center text-slate-300 bg-white/5 rounded-lg p-4 border border-white/5 hover:border-accent/30 transition-all duration-300 group"
+                  >
                     <CheckCircle className="w-5 h-5 text-accent mr-3 flex-shrink-0 group-hover:scale-110 transition-transform" />
                     <span className="font-medium text-sm">{item}</span>
                   </div>
@@ -111,8 +120,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      <Advantages />
 
       {/* Map Section */}
       <section className="py-20 bg-background-dark border-t border-white/5 relative">
