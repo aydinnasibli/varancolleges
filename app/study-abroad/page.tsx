@@ -2,9 +2,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/study-abroad/Hero";
 import AdviceSection from "@/components/study-abroad/AdviceSection";
-import ProcessSection from "@/components/study-abroad/ProcessSection";
 import CountriesSection from "@/components/study-abroad/CountriesSection";
-import SupportSection from "@/components/study-abroad/SupportSection";
+import CTASection from "@/components/study-abroad/CTASection";
 
 export default function StudyAbroadPage() {
   return (
@@ -12,9 +11,8 @@ export default function StudyAbroadPage() {
       <Navbar />
       <Hero />
       <AdviceSection />
-      <ProcessSection />
       <CountriesSection />
-      <SupportSection />
+      <CTASection />
       <Footer />
     </main>
   );

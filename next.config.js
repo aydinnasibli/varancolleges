@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -20,9 +19,15 @@ const nextConfig: NextConfig = {
         hostname: "i.ibb.co",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "flagcdn.com",
+        port: "",
+        pathname: "/**",
       }
     ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
