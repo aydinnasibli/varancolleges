@@ -4,7 +4,7 @@ import Stats from "@/components/sections/Stats";
 import Advantages from "@/components/sections/Advantages";
 import Map from "@/components/ui/Map";
 import Link from "next/link";
-import { ArrowRight, Target, Lightbulb, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle, Quote } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -35,119 +35,87 @@ export default function AboutPage() {
 
       <Stats />
 
-      {/* Mission & Vision Section (New) */}
-      <section className="py-20 bg-background-dark relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Mission Card */}
-            <div className="group relative p-1 rounded-2xl bg-gradient-to-br from-white/10 to-transparent hover:from-accent/20 hover:to-primary/20 transition-all duration-500">
-              <div className="bg-[#0a0f18] h-full p-8 rounded-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Target className="w-32 h-32 text-white" />
+      {/* Main Content Section (Redesigned - Split Layout) */}
+      <section className="py-20 lg:py-32 relative overflow-hidden bg-background-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            {/* Left Column: Title & Key Statement */}
+            <div className="relative">
+              <div className="sticky top-32">
+                <div className="inline-flex items-center px-4 py-1.5 bg-accent/10 rounded-full text-accent text-sm font-medium mb-8 border border-accent/20">
+                  <span className="w-2 h-2 rounded-full bg-accent mr-2 animate-pulse"></span>
+                  Biz Kimik?
                 </div>
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent mb-6">
-                    <Target className="w-6 h-6" />
+
+                <h2 className="text-4xl lg:text-6xl font-serif text-white mb-8 leading-tight">
+                  Təhsildə Yeni <br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-[#b38728]">Standartlar</span>
+                </h2>
+
+                <div className="relative p-8 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <Quote className="w-24 h-24 text-accent" />
                   </div>
-                  <h3 className="text-2xl font-serif text-white mb-4">
-                    Missiyamız
-                  </h3>
-                  <p className="text-slate-400 leading-relaxed">
-                    VaranColleges olaraq missiyamız, gənclərin akademik və
-                    peşəkar inkişafına dəstək olaraq, onların dünya səviyyəsində
-                    rəqabətədavamlı kadr kimi yetişməsini təmin etməkdir. Biz
-                    hər bir tələbənin potensialını üzə çıxarmaq üçün çalışırıq.
+                  <Quote className="w-8 h-8 text-accent mb-4 opacity-80" />
+                  <p className="text-xl text-slate-200 font-serif italic leading-relaxed relative z-10">
+                    &quot;Hədəfimiz sadəcə bilik vermək deyil, tələbələrimizə dünyanı dəyişdirə biləcək potensiallarını kəşf etdirməkdir.&quot;
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Vision Card */}
-            <div className="group relative p-1 rounded-2xl bg-gradient-to-br from-white/10 to-transparent hover:from-accent/20 hover:to-primary/20 transition-all duration-500">
-              <div className="bg-[#0a0f18] h-full p-8 rounded-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <Lightbulb className="w-32 h-32 text-white" />
-                </div>
-                <div className="relative z-10">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center text-accent mb-6">
-                    <Lightbulb className="w-6 h-6" />
+            {/* Right Column: Detailed Content */}
+            <div className="space-y-8 pt-4 lg:pt-0">
+              <div className="space-y-6 text-lg text-slate-400 font-light leading-relaxed">
+                <p>
+                  <strong className="text-white font-medium">VaranColleges</strong>, Azərbaycanda təhsil sahəsində keyfiyyət və
+                  yenilikçilik standartlarını müəyyən edən aparıcı təhsil
+                  mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də
+                  beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və
+                  bacarıqları təqdim edirik.
+                </p>
+                <p>
+                  Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi
+                  yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə
+                  üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz
+                  gələcəyin liderlərini yetişdiririk.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                {[
+                  "Peşəkar Müəllim Heyəti",
+                  "Müasir Tədris Metodikası",
+                  "Fərdi İnkişaf Proqramları",
+                  "Beynəlxalq Sertifikatlar",
+                  "Qlobal Əməkdaşlıqlar",
+                  "Karyera Dəstəyi"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center text-slate-300 bg-white/5 rounded-lg p-4 border border-white/5 hover:border-accent/30 transition-all duration-300 group">
+                    <CheckCircle className="w-5 h-5 text-accent mr-3 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <span className="font-medium text-sm">{item}</span>
                   </div>
-                  <h3 className="text-2xl font-serif text-white mb-4">
-                    Vizyonumuz
-                  </h3>
-                  <p className="text-slate-400 leading-relaxed">
-                    Təhsildə innovativ yanaşmalar tətbiq edərək, Azərbaycanın ən
-                    qabaqcıl və etibarlı təhsil mərkəzi olmaq. Tələbələrimizə
-                    qlobal dünyanın qapılarını açmaq və onların uğur
-                    hekayələrinin bir hissəsi olmaq.
-                  </p>
-                </div>
+                ))}
+              </div>
+
+              <div className="pt-8">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center px-8 py-4 bg-accent text-background-dark font-medium rounded-lg hover:bg-accent/90 transition-all hover:scale-105 shadow-lg shadow-accent/20 group w-full sm:w-auto justify-center"
+                >
+                  Bizimlə Əlaqə
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Main Content Section (Redesigned - Centered Layout) */}
-      <section className="py-20 lg:py-32 relative overflow-hidden">
-        {/* Centered Background Effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-block px-4 py-1.5 bg-accent/10 rounded-full text-accent text-sm font-medium mb-6 border border-accent/20">
-            Haqqımızda
-          </div>
-
-          <h2 className="text-4xl lg:text-5xl font-serif text-white mb-8">
-            Biz Kimik?
-          </h2>
-
-          <div className="space-y-6 text-lg text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-12">
-            <p>
-              VaranColleges, Azərbaycanda təhsil sahəsində keyfiyyət və
-              yenilikçilik standartlarını müəyyən edən aparıcı təhsil
-              mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də
-              beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və
-              bacarıqları təqdim edirik.
-            </p>
-            <p>
-              Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi
-              yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə
-              üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz
-              gələcəyin liderlərini yetişdiririk.
-            </p>
-          </div>
-
-          <div className="bg-[#0a0f18]/50 border border-white/5 rounded-2xl p-8 mb-12 backdrop-blur-sm">
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
-              {[
-                "Peşəkar Müəllim Heyəti",
-                "Müasir Tədris Metodikası",
-                "Fərdi İnkişaf Proqramları",
-                "Beynəlxalq Sertifikatlar",
-              ].map((item, index) => (
-                <li key={index} className="flex items-center text-slate-300 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors">
-                  <CheckCircle className="w-5 h-5 text-accent mr-3 flex-shrink-0" />
-                  <span className="font-medium">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <Link
-            href="/contact"
-            className="inline-flex items-center px-8 py-4 bg-accent text-background-dark font-medium rounded-lg hover:bg-accent/90 transition-all hover:scale-105 shadow-lg shadow-accent/20 group"
-          >
-            Bizimlə Əlaqə
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Link>
         </div>
       </section>
 
       <Advantages />
 
       {/* Map Section */}
-      <section className="py-20 bg-background-dark border-t border-white/5">
+      <section className="py-20 bg-background-dark border-t border-white/5 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
