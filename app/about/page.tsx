@@ -5,7 +5,7 @@ import Advantages from "@/components/sections/Advantages";
 import Map from "@/components/ui/Map";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Target, Lightbulb } from "lucide-react";
+import { ArrowRight, Target, Lightbulb, CheckCircle } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -106,6 +106,50 @@ export default function AboutPage() {
                   className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700 transform hover:scale-105"
                 />
               </div>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <div className="inline-block px-3 py-1 bg-accent/10 rounded-full text-accent text-sm font-medium mb-4">
+                Haqqımızda
+              </div>
+              <h2 className="text-3xl lg:text-4xl font-serif text-white mb-6">
+                Biz Kimik?
+              </h2>
+              <p className="text-slate-400 mb-6 leading-relaxed">
+                VaranColleges, Azərbaycanda təhsil sahəsində keyfiyyət və
+                yenilikçilik standartlarını müəyyən edən aparıcı təhsil
+                mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də
+                beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və
+                bacarıqları təqdim edirik.
+              </p>
+              <p className="text-slate-400 mb-8 leading-relaxed">
+                Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi
+                yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə
+                üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz
+                gələcəyin liderlərini yetişdiririk.
+              </p>
+
+              <ul className="space-y-4 mb-8">
+                {[
+                  "Peşəkar Müəllim Heyəti",
+                  "Müasir Tədris Metodikası",
+                  "Fərdi İnkişaf Proqramları",
+                  "Beynəlxalq Sertifikatlar",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center text-slate-300">
+                    <CheckCircle className="w-5 h-5 text-accent mr-3 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href="/contact"
+                className="inline-flex items-center px-6 py-3 bg-accent text-background-dark font-medium rounded-lg hover:bg-accent/90 transition-colors"
+              >
+                Bizimlə Əlaqə
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
             </div>
           </div>
         </div>
