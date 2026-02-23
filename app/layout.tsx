@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/hero-bg.png",
+        url: "/images/varan-office.webp",
         width: 1200,
         height: 630,
         alt: "VaranColleges Office",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "VaranColleges - Xaricdə Təhsil",
     description:
       "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. Peşəkar komanda və zəmanətli nəticələr.",
-    images: ["/images/hero-bg.png"],
+    images: ["/images/varan-office.webp"],
   },
   robots: {
     index: true,
@@ -86,7 +86,7 @@ const jsonLd = {
   name: "VaranColleges",
   url: "https://varancolleges.com",
   logo: "https://varancolleges.com/images/logo.png",
-  image: "https://varancolleges.com/images/hero-bg.png",
+  image: "https://varancolleges.com/images/varan-office.webp",
   description:
     "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
   address: {
@@ -99,6 +99,7 @@ const jsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+994-77-188-50-50",
+    email: "info@varancolleges.com",
     contactType: "customer service",
     areaServed: "AZ",
     availableLanguage: ["Azerbaijani", "English", "Russian"],
