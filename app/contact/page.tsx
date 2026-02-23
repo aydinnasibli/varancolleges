@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import ContactForm from "@/components/sections/ContactForm";
+import Map from "@/components/ui/Map";
 
 export default function ContactPage() {
   return (
@@ -113,6 +114,14 @@ export default function ContactPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-20 bg-background-dark/50 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-serif text-white mb-8 text-center">Bizi Xəritədə Tapın</h2>
+            <Map />
         </div>
       </section>
 
