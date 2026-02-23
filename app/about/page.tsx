@@ -4,7 +4,6 @@ import Stats from "@/components/sections/Stats";
 import Advantages from "@/components/sections/Advantages";
 import Map from "@/components/ui/Map";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Target, Lightbulb, CheckCircle } from "lucide-react";
 
 export default function AboutPage() {
@@ -89,56 +88,59 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Main Content Section (Redesigned) */}
-      <section className="py-20 lg:py-32 relative">
-        <div className="absolute top-1/2 left-0 w-1/2 h-1/2 bg-primary/10 blur-[100px] -z-10"></div>
+      {/* Main Content Section (Redesigned - Centered Layout) */}
+      <section className="py-20 lg:py-32 relative overflow-hidden">
+        {/* Centered Background Effect */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-full bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-1 lg:order-2">
-              <div className="inline-block px-3 py-1 bg-accent/10 rounded-full text-accent text-sm font-medium mb-4">
-                Haqqımızda
-              </div>
-              <h2 className="text-3xl lg:text-4xl font-serif text-white mb-6">
-                Biz Kimik?
-              </h2>
-              <p className="text-slate-400 mb-6 leading-relaxed">
-                VaranColleges, Azərbaycanda təhsil sahəsində keyfiyyət və
-                yenilikçilik standartlarını müəyyən edən aparıcı təhsil
-                mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də
-                beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və
-                bacarıqları təqdim edirik.
-              </p>
-              <p className="text-slate-400 mb-8 leading-relaxed">
-                Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi
-                yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə
-                üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz
-                gələcəyin liderlərini yetişdiririk.
-              </p>
-
-              <ul className="space-y-4 mb-8">
-                {[
-                  "Peşəkar Müəllim Heyəti",
-                  "Müasir Tədris Metodikası",
-                  "Fərdi İnkişaf Proqramları",
-                  "Beynəlxalq Sertifikatlar",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center text-slate-300">
-                    <CheckCircle className="w-5 h-5 text-accent mr-3 flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-6 py-3 bg-accent text-background-dark font-medium rounded-lg hover:bg-accent/90 transition-colors"
-              >
-                Bizimlə Əlaqə
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-block px-4 py-1.5 bg-accent/10 rounded-full text-accent text-sm font-medium mb-6 border border-accent/20">
+            Haqqımızda
           </div>
+
+          <h2 className="text-4xl lg:text-5xl font-serif text-white mb-8">
+            Biz Kimik?
+          </h2>
+
+          <div className="space-y-6 text-lg text-slate-400 font-light leading-relaxed max-w-3xl mx-auto mb-12">
+            <p>
+              VaranColleges, Azərbaycanda təhsil sahəsində keyfiyyət və
+              yenilikçilik standartlarını müəyyən edən aparıcı təhsil
+              mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də
+              beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və
+              bacarıqları təqdim edirik.
+            </p>
+            <p>
+              Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi
+              yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə
+              üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz
+              gələcəyin liderlərini yetişdiririk.
+            </p>
+          </div>
+
+          <div className="bg-[#0a0f18]/50 border border-white/5 rounded-2xl p-8 mb-12 backdrop-blur-sm">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
+              {[
+                "Peşəkar Müəllim Heyəti",
+                "Müasir Tədris Metodikası",
+                "Fərdi İnkişaf Proqramları",
+                "Beynəlxalq Sertifikatlar",
+              ].map((item, index) => (
+                <li key={index} className="flex items-center text-slate-300 bg-white/5 rounded-lg p-3 hover:bg-white/10 transition-colors">
+                  <CheckCircle className="w-5 h-5 text-accent mr-3 flex-shrink-0" />
+                  <span className="font-medium">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center px-8 py-4 bg-accent text-background-dark font-medium rounded-lg hover:bg-accent/90 transition-all hover:scale-105 shadow-lg shadow-accent/20 group"
+          >
+            Bizimlə Əlaqə
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </section>
 
