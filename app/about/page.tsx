@@ -95,19 +95,6 @@ export default function AboutPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="order-2 lg:order-1 relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-accent to-primary opacity-30 blur-lg rounded-xl group-hover:opacity-50 transition-opacity duration-500"></div>
-              <div className="relative rounded-xl overflow-hidden shadow-2xl">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsUiePLbzFLOD_5nw2nZ696u1sKa8i3jUxmKgLjW_gi0hudjeXMKPvrO_-34vCwk737b2nMH0os1Qrrcn2MAdrbvyvS78U8oQDfh4itUutv-TsRXDTrqKHfFqjh3DbhHK8ALHL5OycSPzEyPK9hlSQ8OzDniQFpz__Ykw6uNdHShTOyt8oRhIOHJMt3TRvndA_Vf1K9ZCtXsqoNBNFq5pH6Ao9S19glDeF4cRt6xNx3XnZSlWQeVbMDIc4cgZFT_BTQyBFHza5sA3N"
-                  alt="About Us Image"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700 transform hover:scale-105"
-                />
-              </div>
-            </div>
-
             <div className="order-1 lg:order-2">
               <div className="inline-block px-3 py-1 bg-accent/10 rounded-full text-accent text-sm font-medium mb-4">
                 Haqqımızda
