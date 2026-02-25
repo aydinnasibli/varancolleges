@@ -1,14 +1,17 @@
 "use server";
 
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import connectToDatabase from "@/lib/db";
 import Contact from "@/models/Contact";
 import { contactSchema } from "@/lib/validations";
+import { EmailTemplate } from "@/components/email-template";
 
 interface EmailResponse {
   success?: boolean;
   error?: string;
 }
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendEmail(formData: FormData): Promise<EmailResponse> {
   const rawData = {
@@ -22,7 +25,6 @@ export async function sendEmail(formData: FormData): Promise<EmailResponse> {
   const validation = contactSchema.safeParse(rawData);
 
   if (!validation.success) {
-    // Return the first error message
     const errorMessage = validation.error.issues[0]?.message || "Məlumatlar düzgün deyil.";
     return { error: errorMessage };
   }
@@ -33,7 +35,6 @@ export async function sendEmail(formData: FormData): Promise<EmailResponse> {
     await connectToDatabase();
 
     // 2. Rate Limiting (Check DB)
-    // Check if the same email or phone submitted in the last 10 minutes
     const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
     const existingSubmission = await Contact.findOne({
       $or: [{ email }, { phone }],
@@ -54,37 +55,33 @@ export async function sendEmail(formData: FormData): Promise<EmailResponse> {
       message,
     });
 
-    // 4. Send Email
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+    // 4. Send Email via Resend
+    // Fallback text content
+    const textContent = `
+Yeni Müraciət:
+Ad: ${name}
+Email: ${email}
+Telefon: ${phone}
+Mesaj: ${message || 'Yoxdur'}
+    `;
+
+    const { error } = await resend.emails.send({
+      from: 'VaranColleges Form <onboarding@resend.dev>',
+      to: ['info@varancolleges.com'],
+      subject: `Yeni Müraciət: ${name}`,
+      react: await EmailTemplate({ name, email, phone, message }),
+      text: textContent,
     });
 
-    const mailOptions = {
-      from: `"VaranColleges Website Form" <${process.env.EMAIL_USER}>`,
-      to: "info@varancolleges.com",
-      subject: `Yeni Müraciət: ${name}`,
-      html: `
-        <h2>Yeni Müraciət</h2>
-        <p><strong>Ad və Soyad:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Telefon:</strong> ${phone}</p>
-        <p><strong>Mesaj:</strong></p>
-        <p>${message ? message.replace(/\n/g, '<br>') : "Mesaj yoxdur"}</p>
-      `,
-    };
-
-    await transporter.sendMail(mailOptions);
+    if (error) {
+      console.error("Resend API Error:", error);
+      return { error: "Email göndərilərkən xəta baş verdi. (Resend Error)" };
+    }
 
     return { success: true };
 
   } catch (error) {
     console.error("Submission Error:", error);
-
-    // Distinguish between DB errors and Email errors if possible, or just return generic
     return {
       error: `Xəta baş verdi: ${error instanceof Error ? error.message : "Naməlum xəta"}`
     };
