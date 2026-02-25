@@ -12,7 +12,6 @@ export async function sendEmail(formData: FormData): Promise<EmailResponse> {
   const email = formData.get("email") as string;
   const phone = formData.get("phone") as string;
   const message = formData.get("message") as string;
-  const service = formData.get("service") as string;
 
   if (!name || !email || !phone) {
     return { error: "Zəhmət olmasa bütün vacib xanaları doldurun." };
@@ -35,7 +34,6 @@ export async function sendEmail(formData: FormData): Promise<EmailResponse> {
       <p><strong>Ad və Soyad:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Telefon:</strong> ${phone}</p>
-      ${service ? `<p><strong>Xidmət:</strong> ${service}</p>` : ""}
       <p><strong>Mesaj:</strong></p>
       <p>${message || "Mesaj yoxdur"}</p>
     `,
@@ -45,7 +43,10 @@ export async function sendEmail(formData: FormData): Promise<EmailResponse> {
     await transporter.sendMail(mailOptions);
     return { success: true };
   } catch (error) {
-    console.error("Email sending error:", error);
-    return { error: "Email göndərilərkən xəta baş verdi. Zəhmət olmasa bir daha cəhd edin." };
+    console.error("Detailed Email Error:", error);
+    // Return the actual error message for debugging purposes (remove in production if needed)
+    return {
+      error: `Email göndərilmədi: ${error instanceof Error ? error.message : "Naməlum xəta"}`
+    };
   }
 }
