@@ -12,13 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { sendEmail } from "@/app/actions/send-email";
 import { toast } from "sonner";
@@ -33,7 +26,6 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
     name: "",
     email: "",
     phone: "",
-    service: "",
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -46,13 +38,6 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
     }));
   };
 
-  const handleServiceChange = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      service: value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
@@ -61,7 +46,6 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
     data.append("name", formData.name);
     data.append("email", formData.email);
     data.append("phone", formData.phone);
-    data.append("service", formData.service);
     data.append("message", formData.message);
 
     try {
@@ -69,12 +53,9 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
 
       if (response.success) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", message: "" });
         toast.success("Müraciətiniz qəbul edildi!");
 
-        // Keep the modal open for a moment to show success message, or close it?
-        // User requested inline message. I'll keep it open with success message.
-        // Optionally close it after a delay.
         setTimeout(() => {
           setStatus("idle");
           setOpen(false);
@@ -138,23 +119,6 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
               required
               className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-accent"
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="service" className="text-slate-300">Maraqlandığınız Xidmət</Label>
-            <Select onValueChange={handleServiceChange} value={formData.service}>
-              <SelectTrigger className="bg-white/5 border-white/10 text-white focus:ring-accent w-full">
-                <SelectValue placeholder="Xidmət seçin" />
-              </SelectTrigger>
-              <SelectContent className="bg-background-dark border-white/10 text-slate-300">
-                <SelectItem value="sat">SAT Hazırlığı</SelectItem>
-                <SelectItem value="ielts">IELTS Hazırlığı</SelectItem>
-                <SelectItem value="toefl">TOEFL Hazırlığı</SelectItem>
-                <SelectItem value="general-english">General English</SelectItem>
-                <SelectItem value="yos">TR YÖS Hazırlığı</SelectItem>
-                <SelectItem value="study-abroad">Xaricdə Təhsil Konsultasiyası</SelectItem>
-                <SelectItem value="other">Digər</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="message" className="text-slate-300">Əlavə Qeydlər (İstəyə bağlı)</Label>
