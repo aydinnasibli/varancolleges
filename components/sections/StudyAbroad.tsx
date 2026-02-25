@@ -1,6 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
-import { GraduationCap, Briefcase } from "lucide-react";
+import { ApplicationModal } from "@/components/ui/ApplicationModal";
 
 const StudyAbroad = () => {
   return (
@@ -41,9 +40,11 @@ const StudyAbroad = () => {
                   <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Motivasiya məktubları</li>
                   <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Təqaüd müraciətləri</li>
                 </ul>
-                <Link href="#" className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300">
-                  Müraciət Et
-                </Link>
+                <ApplicationModal>
+                  <button className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300">
+                    Müraciət Et
+                  </button>
+                </ApplicationModal>
               </div>
             </div>
           </div>
@@ -72,9 +73,11 @@ const StudyAbroad = () => {
                   <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Müsahibə simulyasiyası</li>
                   <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Sığorta və uçuş planlaması</li>
                 </ul>
-                <Link href="#" className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300">
-                  Müraciət Et
-                </Link>
+                <ApplicationModal>
+                  <button className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300">
+                    Müraciət Et
+                  </button>
+                </ApplicationModal>
               </div>
             </div>
           </div>

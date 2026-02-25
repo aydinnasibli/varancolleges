@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { sendEmail } from "@/app/actions/send-email";
+import { toast } from "sonner";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -28,15 +30,33 @@ const ContactForm = () => {
     e.preventDefault();
     setStatus("submitting");
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Form submitted:", formData);
-      setStatus("success");
-      setFormData({ name: "", email: "", phone: "", message: "" });
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("phone", formData.phone);
+    data.append("message", formData.message);
 
-      // Reset status after a few seconds
+    try {
+      const response = await sendEmail(data);
+
+      if (response.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        toast.success("Müraciətiniz qəbul edildi!");
+
+        // Reset status after a few seconds
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+        toast.error(response.error || "Xəta baş verdi.");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setStatus("error");
+      toast.error("Gözlənilməz xəta baş verdi.");
       setTimeout(() => setStatus("idle"), 3000);
-    }, 1500);
+    }
   };
 
   return (
@@ -109,6 +129,11 @@ const ContactForm = () => {
           {status === "success" && (
             <p className="text-green-500 text-sm mt-3 text-center md:text-left animate-in fade-in slide-in-from-bottom-2">
               Müraciətiniz qəbul edildi! Tezliklə sizinlə əlaqə saxlayacağıq.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-red-500 text-sm mt-3 text-center md:text-left animate-in fade-in slide-in-from-bottom-2">
+              Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.
             </p>
           )}
         </div>
