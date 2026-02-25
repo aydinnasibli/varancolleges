@@ -1,31 +1,30 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URL = process.env.MONGODB_URL;
+
+if (!MONGODB_URL) {
+  throw new Error("Please define the MONGODB_URL environment variable inside .env");
+}
 
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
 }
 
+// Global scope to persist connection across hot reloads in development
 declare global {
-  // eslint-disable-next-line no-var
-  var mongoose: MongooseCache | undefined;
+  var mongoose: MongooseCache;
 }
 
-let cached: MongooseCache = global.mongoose || { conn: null, promise: null };
+let cached: MongooseCache = global.mongoose;
 
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function connectDB() {
+async function connectToDatabase() {
   if (cached.conn) {
     return cached.conn;
-  }
-
-  if (!MONGODB_URI) {
-    console.warn("MONGODB_URI is not defined. Database features will be disabled.");
-    return null;
   }
 
   if (!cached.promise) {
@@ -33,7 +32,7 @@ async function connectDB() {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URL!, opts).then((mongoose) => {
       return mongoose;
     });
   }
@@ -48,4 +47,4 @@ async function connectDB() {
   return cached.conn;
 }
 
-export default connectDB;
+export default connectToDatabase;
