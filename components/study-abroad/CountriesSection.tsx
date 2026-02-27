@@ -1,37 +1,6 @@
 import Image from "next/image";
-
-const countries = [
-  {
-    name: "ABŞ",
-    code: "us",
-    desc: "Qlobal təhsil və innovasiya mərkəzi.",
-  },
-  {
-    name: "Kanada",
-    code: "ca",
-    desc: "Yüksək həyat keyfiyyəti və karyera.",
-  },
-  {
-    name: "Böyük Britaniya",
-    code: "gb",
-    desc: "Əsrlərin təhsil ənənəsi.",
-  },
-  {
-    name: "Avstraliya",
-    code: "au",
-    desc: "Macəra dolu akademik təcrübə.",
-  },
-  {
-    name: "Almaniya",
-    code: "de",
-    desc: "Mühəndislik və texnologiya lideri.",
-  },
-  {
-    name: "Türkiyə",
-    code: "tr",
-    desc: "Bizə ən yaxın keyfiyyətli təhsil.",
-  },
-];
+import Link from "next/link";
+import { studyAbroadData } from "@/lib/data/study-abroad";
 
 const CountriesSection = () => {
   return (
@@ -42,14 +11,15 @@ const CountriesSection = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {countries.map((country, index) => (
-            <div
+          {studyAbroadData.countries.map((country, index) => (
+            <Link
               key={index}
-              className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
+              href={`/study-abroad/${country.slug}`}
+              className="group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer block"
             >
               <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110 bg-background-dark">
                 <Image
-                  src={`https://flagcdn.com/w1280/${country.code}.png`}
+                  src={country.flagUrl}
                   alt={`${country.name} flag`}
                   fill
                   className="object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
@@ -63,11 +33,11 @@ const CountriesSection = () => {
                   {country.name}
                 </h3>
                 <p className="text-slate-300 font-light opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75">
-                  {country.desc}
+                  {country.description}
                 </p>
                 <div className="w-12 h-1 bg-accent mt-4 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 delay-100" />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
