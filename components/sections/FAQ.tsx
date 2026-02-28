@@ -1,9 +1,9 @@
-import { getFAQs } from "@/lib/data";
+import { generalFaqs } from "@/lib/data/faqs";
 import FAQAccordion from "./FAQAccordion";
 import { MessageCircle } from "lucide-react";
 
 const FAQ = async () => {
-  const faqs = await getFAQs();
+  const faqs = generalFaqs;
 
   return (
     <section className="py-24 bg-background-dark relative overflow-hidden">

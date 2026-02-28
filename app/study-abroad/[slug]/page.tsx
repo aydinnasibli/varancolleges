@@ -6,6 +6,8 @@ import { studyAbroadData } from "@/lib/data/study-abroad";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/study-abroad/CTASection";
+import { getCountryFaqs } from "@/lib/data/faqs";
+import FAQAccordion from "@/components/sections/FAQAccordion";
 
 export default async function CountryPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
@@ -14,6 +16,8 @@ export default async function CountryPage(props: { params: Promise<{ slug: strin
   if (!country) {
     notFound();
   }
+
+  const faqs = getCountryFaqs(params.slug);
 
   return (
     <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary">
@@ -83,6 +87,22 @@ export default async function CountryPage(props: { params: Promise<{ slug: strin
           </div>
         </div>
       </section>
+
+      {faqs.length > 0 && (
+        <section className="py-24 bg-background-dark relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="flex flex-col items-center mb-16 gap-6 text-center">
+              <div className="max-w-2xl">
+                <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">Sual-Cavab</h2>
+                <h3 className="text-4xl font-serif text-white mb-6">Tez-tez Verilən Suallar</h3>
+              </div>
+            </div>
+            <div className="max-w-3xl mx-auto">
+              <FAQAccordion faqs={faqs} />
+            </div>
+          </div>
+        </section>
+      )}
 
       <CTASection />
       <Footer />
