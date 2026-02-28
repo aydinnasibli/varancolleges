@@ -1,48 +1,48 @@
-const adviceSteps = [
-  {
-    number: "01",
-    title: "Analiz",
-    description: "Akademik potensialın dəqiq təhlili.",
-  },
-  {
-    number: "02",
-    title: "Planlama",
-    description: "Sizə ən uyğun yol xəritəsi.",
-  },
-  {
-    number: "03",
-    title: "Nəticə",
-    description: "Dünyanın top universitetlərinə qəbul.",
-  },
-];
+import { studyAbroadData } from "@/lib/data/study-abroad";
 
 const AdviceSection = () => {
   return (
     <section className="py-24 bg-background-dark relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-serif text-white mb-20">
-          Peşəkar <span className="text-accent italic">Yanaşma</span>
-        </h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-          {/* Connecting Line (Desktop) */}
-          <div className="hidden md:block absolute top-12 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          {/* Akademik Məsləhət */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-8">
+              Akademik <span className="text-accent italic">Məsləhət</span>
+            </h2>
+            <ul className="space-y-4">
+              {studyAbroadData.academicAdvice.items.map((item, index) => (
+                <li key={index} className="flex items-start group">
+                  <div className="w-2 h-2 rounded-full bg-accent mt-2.5 mr-4 flex-shrink-0 group-hover:scale-150 transition-transform duration-300" />
+                  <span className="text-slate-300 font-light leading-relaxed group-hover:text-white transition-colors duration-300">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          {adviceSteps.map((step, index) => (
-            <div key={index} className="relative group">
-              <div className="w-24 h-24 mx-auto bg-background-dark border border-white/10 rounded-full flex items-center justify-center mb-8 relative z-10 group-hover:border-accent/50 group-hover:bg-accent/5 transition-all duration-500">
-                <span className="text-3xl font-serif text-white/20 group-hover:text-accent transition-colors duration-300">
-                  {step.number}
-                </span>
-              </div>
-              <h3 className="text-2xl text-white font-medium mb-4 group-hover:text-accent transition-colors duration-300">
-                {step.title}
-              </h3>
-              <p className="text-slate-400 font-light max-w-xs mx-auto">
-                {step.description}
-              </p>
-            </div>
-          ))}
+          {/* Qəbul Prosesi */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-8">
+              Qəbul <span className="text-accent italic">Prosesi</span>
+            </h2>
+            <p className="text-slate-400 mb-6 font-light">
+              {studyAbroadData.admissionProcess.description}
+            </p>
+            <ul className="space-y-4">
+              {studyAbroadData.admissionProcess.items.map((item, index) => (
+                <li key={index} className="flex items-start group">
+                  <div className="w-2 h-2 rounded-full bg-accent mt-2.5 mr-4 flex-shrink-0 group-hover:scale-150 transition-transform duration-300" />
+                  <span className="text-slate-300 font-light leading-relaxed group-hover:text-white transition-colors duration-300">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
       </div>
     </section>
