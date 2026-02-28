@@ -20,13 +20,6 @@ export interface Post {
   body: any; // Block content
 }
 
-// Interface for FAQ
-export interface FAQ {
-  _id: string;
-  question: string;
-  answer: string;
-  order?: number;
-}
 
 // Mock Data
 const MOCK_SERVICES: Service[] = [
@@ -77,12 +70,3 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   }
 }
 
-export async function getFAQs(): Promise<FAQ[]> {
-  try {
-    const faqs = await client.fetch(`*[_type == "faq"] | order(order asc)`);
-    return faqs;
-  } catch (error) {
-    console.error("Failed to fetch FAQs from Sanity:", error);
-    return [];
-  }
-}

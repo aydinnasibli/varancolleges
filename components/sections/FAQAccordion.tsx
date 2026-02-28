@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
-import { FAQ } from "@/lib/data";
+import { FAQ } from "@/lib/data/faqs";
 
 const FAQAccordion = ({ faqs }: { faqs: FAQ[] }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
