@@ -23,7 +23,7 @@ export default function AdminDashboardPage() {
             Dashboard Overview
           </h1>
           <p className="text-slate-500 text-sm mt-1">
-            Welcome back, Admin. Here's what's happening today.
+            Welcome back, Admin. Here&apos;s what&apos;s happening today.
           </p>
         </div>
         <button className="flex items-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-[#1152d4] text-white text-sm font-medium leading-normal hover:bg-[#1152d4]/90 transition-colors shadow-sm shadow-[#1152d4]/20">
