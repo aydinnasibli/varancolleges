@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getPosts } from "@/lib/data";
-import { urlFor } from "@/lib/sanity";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -59,7 +58,7 @@ export default async function BlogPage() {
                       <Image
                         alt={post.title}
                         className="object-cover transform group-hover:scale-110 transition-transform duration-700"
-                        src={urlFor(post.mainImage).url()}
+                        src={post.mainImage}
                         fill
                       />
                     )}

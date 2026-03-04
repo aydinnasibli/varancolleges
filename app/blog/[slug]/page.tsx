@@ -1,11 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PortableText, PortableTextComponents } from "@portabletext/react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getPostBySlug } from "@/lib/data";
-import { urlFor } from "@/lib/sanity";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
@@ -24,48 +22,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-const components: PortableTextComponents = {
-  block: {
-    h1: ({ children }) => <h1 className="text-3xl font-serif font-bold text-white mt-8 mb-4">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-2xl font-serif font-semibold text-white mt-8 mb-4">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-xl font-serif font-medium text-white mt-6 mb-3">{children}</h3>,
-    normal: ({ children }) => <p className="text-slate-300 leading-relaxed mb-4">{children}</p>,
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-accent pl-4 italic text-slate-400 my-6">
-        {children}
-      </blockquote>
-    ),
-  },
-  list: {
-    bullet: ({ children }) => <ul className="list-disc pl-5 mb-4 text-slate-300 space-y-2">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal pl-5 mb-4 text-slate-300 space-y-2">{children}</ol>,
-  },
-  marks: {
-    link: ({ children, value }) => {
-      const rel = !value.href.startsWith("/") ? "noreferrer noopener" : undefined;
-      return (
-        <a href={value.href} rel={rel} className="text-accent hover:underline transition-colors">
-          {children}
-        </a>
-      );
-    },
-  },
-  types: {
-    image: ({ value }) => {
-      return (
-        <div className="relative w-full h-64 md:h-96 my-8 rounded-lg overflow-hidden">
-          <Image
-            src={urlFor(value).url()}
-            alt={value.alt || "Blog image"}
-            fill
-            className="object-cover"
-          />
-        </div>
-      );
-    },
-  },
-};
-
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
@@ -83,7 +39,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         <div className="absolute inset-0 bg-gradient-to-b from-[#05080f]/80 to-[#05080f]/95">
            {post.mainImage && (
              <Image
-               src={urlFor(post.mainImage).url()}
+               src={post.mainImage}
                alt={post.title}
                fill
                className="object-cover opacity-20 mix-blend-overlay"
@@ -120,7 +76,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-invert prose-lg max-w-none">
             {post.body ? (
-              <PortableText value={post.body} components={components} />
+              <div dangerouslySetInnerHTML={{ __html: post.body }} />
             ) : (
               <p className="text-slate-500 italic">Bu yazı üçün məzmun yoxdur.</p>
             )}

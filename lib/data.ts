@@ -1,5 +1,3 @@
-import { client } from "./sanity";
-
 // Interface for Service
 export interface Service {
   _id: string;
@@ -14,12 +12,11 @@ export interface Post {
   _id: string;
   title: string;
   slug: { current: string };
-  mainImage?: { asset: { url: string } };
+  mainImage?: string; // Simplied image URL string
   publishedAt: string;
   excerpt?: string;
-  body: any; // Block content
+  body: string; // Simplified HTML or markdown string
 }
-
 
 // Mock Data
 const MOCK_SERVICES: Service[] = [
@@ -39,34 +36,17 @@ const MOCK_SERVICES: Service[] = [
   },
 ];
 
+const MOCK_POSTS: Post[] = [];
 
 export async function getServices(): Promise<Service[]> {
-  try {
-    const services = await client.fetch(`*[_type == "service"]`);
-    return services.length > 0 ? services : MOCK_SERVICES;
-  } catch (error) {
-    console.warn("Failed to fetch services from Sanity, using mock data.", error);
-    return MOCK_SERVICES;
-  }
+  return MOCK_SERVICES;
 }
 
 export async function getPosts(): Promise<Post[]> {
-  try {
-    const posts = await client.fetch(`*[_type == "post"] | order(publishedAt desc)`);
-    return posts;
-  } catch (error) {
-    console.error("Failed to fetch posts from Sanity:", error);
-    return [];
-  }
+  return MOCK_POSTS;
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  try {
-    const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]`, { slug });
-    return post || null;
-  } catch (error) {
-    console.error(`Failed to fetch post with slug ${slug}:`, error);
-    return null;
-  }
+  const post = MOCK_POSTS.find(p => p.slug.current === slug);
+  return post || null;
 }
-
