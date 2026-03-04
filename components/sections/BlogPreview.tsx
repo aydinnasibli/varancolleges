@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getPosts } from "@/lib/data";
-import { urlFor } from "@/lib/sanity";
 
 const BlogPreview = async () => {
   const posts = await getPosts();
@@ -35,7 +34,7 @@ const BlogPreview = async () => {
                   <Image
                     alt={post.title}
                     className="object-cover transform group-hover:scale-110 transition-transform duration-700"
-                    src={urlFor(post.mainImage).url()}
+                    src={post.mainImage}
                     fill
                   />
                 )}
