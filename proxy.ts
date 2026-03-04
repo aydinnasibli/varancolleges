@@ -5,17 +5,18 @@ const isProtectedRoute = createRouteMatcher(['/admin(.*)'])
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
+    // Calling auth.protect() will redirect unauthenticated users to the Clerk sign-in page
+    await auth.protect()
+
     const session = await auth()
 
     // Type assertion to bypass TypeScript check on sessionClaims
     const metadata = (session.sessionClaims?.metadata as { role?: string }) || {}
 
-    // Redirect unauthenticated users or those without the admin role to the home page
-    if (!session.userId || metadata.role !== 'admin') {
+    // Redirect authenticated users without the admin role to the home page
+    if (metadata.role !== 'admin') {
       return NextResponse.redirect(new URL('/', req.url))
     }
-
-    await auth.protect()
   }
 })
 
