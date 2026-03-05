@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { name: "Blog İdarəetmə", href: "/admin/blogs", icon: FileText },
+  { name: "Blog İdarəetmə", href: "/admin/blog", icon: FileText },
   { name: "Müraciətlər", href: "/admin/inquiries", icon: Mail, badge: "3" },
   { name: "Settings", href: "/admin/settings", icon: Settings, pushDown: true },
 ];
