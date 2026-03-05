@@ -26,10 +26,10 @@ export default function AdminDashboardPage() {
             Welcome back, Admin. Here&apos;s what&apos;s happening today.
           </p>
         </div>
-        <button className="flex items-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-[#1152d4] text-white text-sm font-medium leading-normal hover:bg-[#1152d4]/90 transition-colors shadow-sm shadow-[#1152d4]/20">
+        <Link href="/admin/blog/new" className="flex items-center gap-2 overflow-hidden rounded-lg h-10 px-5 bg-[#1152d4] text-white text-sm font-medium leading-normal hover:bg-[#1152d4]/90 transition-colors shadow-sm shadow-[#1152d4]/20">
           <Plus className="h-[20px] w-[20px]" />
           <span>New Post</span>
-        </button>
+        </Link>
       </div>
 
       {/* Quick Stats */}
@@ -223,9 +223,9 @@ export default function AdminDashboardPage() {
             </div>
           </div>
           <div className="p-3 border-t border-slate-200">
-            <button className="w-full py-2 text-sm text-center text-[#1152d4] font-medium hover:bg-[#1152d4]/5 rounded transition-colors">
+            <Link href="/admin/blog" className="block w-full py-2 text-sm text-center text-[#1152d4] font-medium hover:bg-[#1152d4]/5 rounded transition-colors">
               View All Posts
-            </button>
+            </Link>
           </div>
         </div>
       </div>

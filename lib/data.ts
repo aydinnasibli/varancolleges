@@ -36,17 +36,55 @@ const MOCK_SERVICES: Service[] = [
   },
 ];
 
-const MOCK_POSTS: Post[] = [];
+import connectToDatabase from "./db";
+import MongoPost from "@/models/Post";
 
 export async function getServices(): Promise<Service[]> {
   return MOCK_SERVICES;
 }
 
 export async function getPosts(): Promise<Post[]> {
-  return MOCK_POSTS;
+  try {
+    await connectToDatabase();
+    const posts = await MongoPost.find({ status: "published" })
+      .sort({ date: -1 })
+      .lean();
+
+    return posts.map((post: any) => ({
+      _id: post._id.toString(),
+      title: post.title,
+      slug: { current: post.slug },
+      mainImage: post.image,
+      publishedAt: post.date.toISOString(),
+      excerpt: post.excerpt,
+      body: post.content,
+    }));
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const post = MOCK_POSTS.find(p => p.slug.current === slug);
-  return post || null;
+  try {
+    await connectToDatabase();
+    const post = await MongoPost.findOne({ slug, status: "published" }).lean() as any;
+
+    if (!post) {
+      return null;
+    }
+
+    return {
+      _id: post._id.toString(),
+      title: post.title,
+      slug: { current: post.slug },
+      mainImage: post.image,
+      publishedAt: post.date.toISOString(),
+      excerpt: post.excerpt,
+      body: post.content,
+    };
+  } catch (error) {
+    console.error("Error fetching post by slug:", error);
+    return null;
+  }
 }
