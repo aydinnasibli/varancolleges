@@ -31,27 +31,33 @@ export default clerkMiddleware(async (auth, req) => {
 
   // Only apply next-intl middleware for non-admin routes
   if (!req.nextUrl.pathname.startsWith('/admin')) {
-    // Determine locale from Vercel header if present
-    const country = req.headers.get('x-vercel-ip-country')
-    const preferredLocale = country === 'AZ' ? 'az' : 'en'
-
-    // For root path, explicitly redirect to the preferred locale
+    // Provide default Vercel IP-based redirection on the root path
+    // ONLY if the request isn't already asking for a specific locale in cookies
     if (req.nextUrl.pathname === '/') {
-      const targetUrl = new URL(`/${preferredLocale}`, req.url);
-      return NextResponse.redirect(targetUrl);
+      const hasLocaleCookie = req.cookies.has('NEXT_LOCALE');
+
+      if (!hasLocaleCookie) {
+        const country = req.headers.get('x-vercel-ip-country');
+        const preferredLocale = country === 'AZ' ? 'az' : 'en';
+
+        const targetUrl = new URL(`/${preferredLocale}`, req.url);
+        const res = NextResponse.redirect(targetUrl);
+        // Make sure cookie is set so future visits remember it!
+        res.cookies.set('NEXT_LOCALE', preferredLocale);
+        return res;
+      }
     }
 
-    const response = intlMiddleware(req);
-    return response;
+    return intlMiddleware(req);
   }
 })
 
 export const config = {
   matcher: [
     '/', '/(az|en)/:path*',
-    // Match all pathnames except for
-    // - … if they start with `/api`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
-    '/((?!api|_next|_vercel|.*\\..*).*)',
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
   ],
 }
