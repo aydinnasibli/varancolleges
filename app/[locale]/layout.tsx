@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
-import { ClerkProvider } from "@clerk/nextjs";
 import "../globals.css";
 
 const playfair = Playfair_Display({
@@ -125,21 +124,19 @@ export default async function RootLayout({
   const messages = await getMessages({locale});
 
   return (
-    <ClerkProvider>
-      <html lang={locale} className="dark scroll-smooth">
-        <body
-          className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
-        >
-          <NextIntlClientProvider messages={messages}>
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-            {children}
-            <Toaster position="bottom-left" />
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang={locale} className="dark scroll-smooth">
+      <body
+        className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
+      >
+        <NextIntlClientProvider messages={messages}>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          {children}
+          <Toaster position="bottom-left" />
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
