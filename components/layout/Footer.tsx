@@ -5,8 +5,12 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 const Footer = () => {
+  const tNav = useTranslations("Navigation");
+  const tFoot = useTranslations("Footer");
+
   return (
     <footer className="bg-background-dark border-t border-white/5 pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,10 +43,10 @@ const Footer = () => {
 
           {/* Services Links */}
           <div>
-            <h4 className="text-white font-serif font-medium mb-8">Xidmətlər</h4>
+            <h4 className="text-white font-serif font-medium mb-8">{tNav("services")}</h4>
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
-                { label: "Xaricdə Təhsil", href: "/study-abroad" },
+                { label: tNav("studyAbroad"), href: "/study-abroad" },
                 { label: "IELTS Hazırlığı", href: "#" },
                 { label: "SAT Hazırlığı", href: "#" },
                 { label: "Yay Məktəbləri", href: "#" }
@@ -59,10 +63,10 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="text-white font-serif font-medium mb-8">Şirkət</h4>
+            <h4 className="text-white font-serif font-medium mb-8">{tNav("about")}</h4>
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
-                { label: "Haqqımızda", href: "/about" },
+                { label: tNav("about"), href: "/about" },
                 { label: "Komandamız", href: "#" },
                 { label: "Vakansiyalar", href: "#" },
                 { label: "Blog", href: "/blog" }
@@ -79,7 +83,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-white font-serif font-medium mb-8">Əlaqə</h4>
+            <h4 className="text-white font-serif font-medium mb-8">{tNav("contact")}</h4>
             <ul className="space-y-6 text-sm text-slate-500 font-light">
               <li className="flex items-start gap-4 group">
                 <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
@@ -114,7 +118,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-600 text-xs">© 2026 VaranColleges. Bütün hüquqlar qorunur.</p>
+          <p className="text-slate-600 text-xs">© 2026 VaranColleges. {tFoot("rights")}</p>
           <div className="flex items-center space-x-8 text-xs text-slate-600">
             <LanguageSwitcher />
             <Link href="#" className="hover:text-white transition-colors">Məxfilik Siyasəti</Link>

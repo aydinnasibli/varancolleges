@@ -9,11 +9,13 @@ import { Menu, X, Phone, Mail, Clock } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations("Navigation");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,12 +97,12 @@ const Navbar = () => {
             {/* Desktop Menu */}
             <div className="hidden lg:flex space-x-10 items-center">
               {[
-                { name: "Ana Səhifə", href: "/" },
-                { name: "Xidmətlər", href: "/services" },
-                { name: "Xaricdə Təhsil", href: "/study-abroad" },
-                { name: "Haqqımızda", href: "/about" },
+                { name: t("home"), href: "/" },
+                { name: t("services"), href: "/services" },
+                { name: t("studyAbroad"), href: "/study-abroad" },
+                { name: t("about"), href: "/about" },
                 { name: "Blog", href: "/blog" },
-                { name: "Əlaqə", href: "/contact" },
+                { name: t("contact"), href: "/contact" },
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -141,12 +143,12 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 w-full bg-background-dark/95 backdrop-blur-xl border-b border-white/10 py-4 px-4 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-5">
             {[
-              { name: "Ana Səhifə", href: "/" },
-              { name: "Xidmətlər", href: "/services" },
-              { name: "Xaricdə Təhsil", href: "/study-abroad" },
-              { name: "Haqqımızda", href: "/about" },
+              { name: t("home"), href: "/" },
+              { name: t("services"), href: "/services" },
+              { name: t("studyAbroad"), href: "/study-abroad" },
+              { name: t("about"), href: "/about" },
               { name: "Blog", href: "/blog" },
-              { name: "Əlaqə", href: "/contact" },
+              { name: t("contact"), href: "/contact" },
             ].map((item) => (
               <Link
                 key={item.name}
