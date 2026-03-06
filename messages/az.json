@@ -1,0 +1,13 @@
+{
+  "Navigation": {
+    "home": "Ana Səhifə",
+    "about": "Haqqımızda",
+    "services": "Xidmətlər",
+    "studyAbroad": "Xaricdə Təhsil",
+    "contact": "Əlaqə"
+  },
+  "Footer": {
+    "language": "Dil",
+    "rights": "Bütün hüquqlar qorunur."
+  }
+}
