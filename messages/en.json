@@ -1,0 +1,13 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "studyAbroad": "Study Abroad",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "language": "Language",
+    "rights": "All rights reserved."
+  }
+}

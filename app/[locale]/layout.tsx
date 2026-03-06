@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
-import { ClerkProvider } from "@clerk/nextjs";
-import "./globals.css";
+import "../globals.css";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -111,25 +110,33 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
+
+export default async function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{locale: string}>;
 }>) {
+  const { locale } = await params;
+  const messages = await getMessages({locale});
+
   return (
-    <ClerkProvider>
-      <html lang="az" className="dark scroll-smooth">
-        <body
-          className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
-        >
+    <html lang={locale} className="dark scroll-smooth">
+      <body
+        className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
+      >
+        <NextIntlClientProvider messages={messages}>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
           {children}
           <Toaster position="bottom-left" />
-        </body>
-      </html>
-    </ClerkProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }

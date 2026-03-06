@@ -4,6 +4,7 @@ import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Footer = () => {
   return (
@@ -114,7 +115,8 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-600 text-xs">© 2026 VaranColleges. Bütün hüquqlar qorunur.</p>
-          <div className="flex space-x-8 text-xs text-slate-600">
+          <div className="flex items-center space-x-8 text-xs text-slate-600">
+            <LanguageSwitcher />
             <Link href="#" className="hover:text-white transition-colors">Məxfilik Siyasəti</Link>
             <Link href="#" className="hover:text-white transition-colors">İstifadə Şərtləri</Link>
           </div>
