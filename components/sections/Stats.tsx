@@ -1,11 +1,14 @@
 import { GraduationCap, Users, Building, Clock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const Stats = () => {
+  const t = useTranslations("Stats");
+
   const stats = [
-    { value: "10+", label: "İl Təcrübə", icon: Clock },
-    { value: "500+", label: "Məzun", icon: GraduationCap },
-    { value: "50+", label: "Partnyor", icon: Building },
-    { value: "24/7", label: "Dəstək", icon: Users },
+    { value: "10+", label: t("years"), icon: Clock },
+    { value: "500+", label: t("graduates"), icon: GraduationCap },
+    { value: "50+", label: t("partners"), icon: Building },
+    { value: "24/7", label: t("support"), icon: Users },
   ];
 
   return (

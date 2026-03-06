@@ -2,8 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, School, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations("Hero");
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -23,21 +26,21 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="max-w-3xl">
           <h1 className="text-6xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8">
-            Gələcəyi <br />
-            <span className="text-gold italic pr-2">Kəşf Edin</span>
+            {t("title1")} <br />
+            <span className="text-gold italic pr-2">{t("title2")}</span>
           </h1>
           <p className="text-lg text-slate-400 mb-12 leading-relaxed max-w-lg font-light border-l border-accent/30 pl-6">
-            Qlobal təhsil standartları ilə sərhədləri aşın. VaranColleges sizin beynəlxalq karyeranızın memarıdır.
+            {t("description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-6">
             <Button variant="accent" size="lg" className="rounded-sm font-semibold tracking-wide uppercase" asChild>
               <Link href="/study-abroad">
-                Xaricdə Təhsil
+                {t("button1")}
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" className="rounded-sm text-white border-white/20 hover:bg-accent hover:text-primary hover:border-accent font-semibold tracking-wide uppercase backdrop-blur-sm transition-all duration-300" asChild>
-              <Link href="/services">Xidmətlər</Link>
+              <Link href="/services">{t("button2")}</Link>
             </Button>
           </div>
         </div>
@@ -50,8 +53,8 @@ const Hero = () => {
                 <School className="text-accent h-6 w-6" />
               </div>
               <div>
-                <h4 className="text-white font-serif text-lg">Top Universitetlər</h4>
-                <p className="text-xs text-slate-400">Dünya reytinqində ilk 100</p>
+                <h4 className="text-white font-serif text-lg">{t("card1Title")}</h4>
+                <p className="text-xs text-slate-400">{t("card1Desc")}</p>
               </div>
             </div>
             <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
@@ -63,9 +66,9 @@ const Hero = () => {
           <div className="absolute bottom-20 left-10 w-64 p-6 glass-card rounded-xl animate-float z-10 hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ animationDelay: "-3s" }}>
             <div className="flex justify-between items-end mb-2">
               <span className="text-4xl font-serif text-white">98%</span>
-              <span className="text-accent text-sm mb-1 font-medium">Uğur</span>
+              <span className="text-accent text-sm mb-1 font-medium">{t("card2Title")}</span>
             </div>
-            <p className="text-xs text-slate-400">Viza müraciətlərinin təsdiq faizi</p>
+            <p className="text-xs text-slate-400">{t("card2Desc")}</p>
           </div>
 
           {/* Abstract Shapes */}

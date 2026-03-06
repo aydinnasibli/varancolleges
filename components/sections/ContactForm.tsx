@@ -7,8 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { sendEmail } from "@/app/actions/send-email";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 const ContactForm = () => {
+  const t = useTranslations("Contact.form");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -64,11 +66,11 @@ const ContactForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-white">Ad və Soyad</Label>
+            <Label htmlFor="name" className="text-white">{t("nameLabel")}</Label>
             <Input
               id="name"
               name="name"
-              placeholder="Adınızı daxil edin"
+              placeholder={t("namePlaceholder")}
               value={formData.name}
               onChange={handleChange}
               required
@@ -76,12 +78,12 @@ const ContactForm = () => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-white">Əlaqə Nömrəsi</Label>
+            <Label htmlFor="phone" className="text-white">{t("phoneLabel")}</Label>
             <Input
               id="phone"
               name="phone"
               type="tel"
-              placeholder="+994 XX XXX XX XX"
+              placeholder={t("phonePlaceholder")}
               value={formData.phone}
               onChange={handleChange}
               required
@@ -91,12 +93,12 @@ const ContactForm = () => {
         </div>
 
         <div className="space-y-2">
-            <Label htmlFor="email" className="text-white">Email</Label>
+            <Label htmlFor="email" className="text-white">{t("emailLabel")}</Label>
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="nümunə@mail.com"
+              placeholder={t("emailPlaceholder")}
               value={formData.email}
               onChange={handleChange}
               required
@@ -105,11 +107,11 @@ const ContactForm = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-white">Mesajınız (İstəyə bağlı)</Label>
+          <Label htmlFor="message" className="text-white">{t("messageLabel")}</Label>
           <Textarea
             id="message"
             name="message"
-            placeholder="Sualınızı və ya mesajınızı bura yaza bilərsiniz..."
+            placeholder={t("messagePlaceholder")}
             value={formData.message}
             onChange={handleChange}
             className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent min-h-[120px]"
@@ -124,7 +126,7 @@ const ContactForm = () => {
             className="w-full md:w-auto min-w-[200px]"
             disabled={status === "submitting" || status === "success"}
           >
-            {status === "submitting" ? "Göndərilir..." : status === "success" ? "Göndərildi!" : "Müraciət et"}
+            {status === "submitting" ? t("submitting") : status === "success" ? "✔" : t("submit")}
           </Button>
           {status === "success" && (
             <p className="text-green-500 text-sm mt-3 text-center md:text-left animate-in fade-in slide-in-from-bottom-2">

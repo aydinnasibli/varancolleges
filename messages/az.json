@@ -9,5 +9,80 @@
   "Footer": {
     "language": "Dil",
     "rights": "Bütün hüquqlar qorunur."
+  },
+  "Hero": {
+    "title1": "Gələcəyi",
+    "title2": "Kəşf Edin",
+    "description": "Qlobal təhsil standartları ilə sərhədləri aşın. VaranColleges sizin beynəlxalq karyeranızın memarıdır.",
+    "button1": "Xaricdə Təhsil",
+    "button2": "Xidmətlər",
+    "card1Title": "Top Universitetlər",
+    "card1Desc": "Dünya reytinqində ilk 100",
+    "card2Title": "Uğur",
+    "card2Desc": "Viza müraciətlərinin təsdiq faizi"
+  },
+  "Stats": {
+    "years": "İl Təcrübə",
+    "graduates": "Məzun",
+    "partners": "Partnyor",
+    "support": "Dəstək"
+  },
+  "BlogPreview": {
+    "subtitle": "Blog & Xəbərlər",
+    "title": "Son Məlumatlar",
+    "allPosts": "Bütün yazılar",
+    "readMore": "Oxumağa davam et"
+  },
+  "FAQ": {
+    "subtitle": "Sual-Cavab",
+    "title": "Tez-tez Verilən Suallar",
+    "description": "Təhsiliniz və gələcəyinizlə bağlı sizi narahat edən sualların cavablarını burada tapa bilərsiniz. Əlavə suallarınız varsa, bizimlə əlaqə saxlayın.",
+    "contactUs": "Bizimlə Əlaqə"
+  },
+  "General": {
+    "applyNow": "Müraciət et",
+    "address": "Ünvan",
+    "phone": "Telefon",
+    "email": "Email",
+    "workingHours": "Bazar ertəsi - Şənbə, 09:00 - 18:00"
+  },
+  "About": {
+    "title": "Haqqımızda",
+    "heroDesc": "Biz sadəcə bir təhsil mərkəzi deyilik, biz gələcəyinizi inşa edən tərəfdaşıq. VaranColleges ilə arzularınızın sərhədlərini aşın.",
+    "whoWeAre": "Biz Kimik?",
+    "newStandards": "Təhsildə Yeni",
+    "standards": "Standartlar",
+    "quote": "\"Hədəfimiz sadəcə bilik vermək deyil, tələbələrimizə dünyanı dəyişdirə biləcək potensiallarını kəşf etdirməkdir.\"",
+    "desc1": "Azərbaycanda təhsil sahəsində keyfiyyət və yenilikçilik standartlarını müəyyən edən aparıcı təhsil mərkəzidir. İllərdir ki, tələbələrimizə həm yerli, həm də beynəlxalq səviyyədə uğur qazanmaq üçün lazım olan bilik və bacarıqları təqdim edirik.",
+    "desc2": "Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və fərdi yanaşmamızla hər bir tələbənin potensialını maksimum dərəcədə üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik, biz gələcəyin liderlərini yetişdiririk.",
+    "feat1": "Peşəkar Müəllim Heyəti",
+    "feat2": "Müasir Tədris Metodikası",
+    "feat3": "Fərdi İnkişaf Proqramları",
+    "feat4": "Beynəlxalq Sertifikatlar",
+    "feat5": "Qlobal Əməkdaşlıqlar",
+    "feat6": "Karyera Dəstəyi",
+    "visitUs": "Bizi Ziyarət Edin",
+    "visitUsDesc": "Ofisimizə yaxınlaşın, gələcəyiniz haqqında danışaq."
+  },
+  "Contact": {
+    "title1": "Bizimlə",
+    "title2": "Əlaqə",
+    "heroDesc": "Sualınız var? Bizimlə əlaqə saxlamaqdan çəkinməyin. Komandamız sizə kömək etməkdən məmnunluq duyacaq.",
+    "socialMedia": "Sosial Media Hesablarımız",
+    "findUsOnMap": "Bizi Xəritədə Tapın",
+    "form": {
+        "title": "Mesaj Göndərin",
+        "description": "Sizə ən qısa zamanda geri dönüş edəcəyik",
+        "nameLabel": "Ad və Soyad",
+        "namePlaceholder": "Adınızı və soyadınızı daxil edin",
+        "phoneLabel": "Telefon",
+        "phonePlaceholder": "+994 -- --- -- --",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Email ünvanınızı daxil edin",
+        "messageLabel": "Mesajınız",
+        "messagePlaceholder": "Sualınızı və ya mesajınızı buraya yazın...",
+        "submit": "Göndər",
+        "submitting": "Göndərilir..."
+    }
   }
 }

@@ -5,8 +5,12 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import ContactForm from "@/components/sections/ContactForm";
 import Map from "@/components/ui/Map";
+import { getTranslations } from "next-intl/server";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getTranslations("Contact");
+  const tGen = await getTranslations("General");
+
   return (
     <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
@@ -26,11 +30,10 @@ export default function ContactPage() {
             <div className="space-y-12 animate-in slide-in-from-left duration-700">
               <div>
                 <h1 className="text-4xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight">
-                  Bizimlə <span className="text-accent">Əlaqə</span>
+                  {t("title1")} <span className="text-accent">{t("title2")}</span>
                 </h1>
                 <p className="text-lg text-slate-400 max-w-lg leading-relaxed">
-                  Sualınız var? Bizimlə əlaqə saxlamaqdan çəkinməyin.
-                  Komandamız sizə kömək etməkdən məmnunluq duyacaq.
+                  {t("heroDesc")}
                 </p>
               </div>
 
@@ -41,7 +44,7 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">Ünvan</h3>
+                    <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">{tGen("address")}</h3>
                     <p className="text-slate-400 leading-relaxed">
                       137A Samad Vurgun,<br/>
                       Baku 1022, Azerbaijan
@@ -55,11 +58,11 @@ export default function ContactPage() {
                     <Phone className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">Telefon</h3>
+                    <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">{tGen("phone")}</h3>
                     <p className="text-slate-400 leading-relaxed">
                       <a href="tel:+994771885050" className="hover:text-accent transition-colors block mb-1">+994 77 188 50 50</a>
                     </p>
-                    <span className="text-xs text-slate-500 uppercase tracking-wider">Bazar ertəsi - Şənbə, 09:00 - 18:00</span>
+                    <span className="text-xs text-slate-500 uppercase tracking-wider">{tGen("workingHours")}</span>
                   </div>
                 </div>
 
@@ -69,7 +72,7 @@ export default function ContactPage() {
                     <Mail className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">Email</h3>
+                    <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">{tGen("email")}</h3>
                     <p className="text-slate-400 leading-relaxed break-all">
                       <a href="mailto:info@varancolleges.com" className="hover:text-accent transition-colors">info@varancolleges.com</a>
                     </p>
@@ -79,7 +82,7 @@ export default function ContactPage() {
 
               {/* Social Media */}
               <div className="pt-8 border-t border-white/10">
-                <h3 className="text-lg font-serif text-white mb-6">Sosial Media Hesablarımız</h3>
+                <h3 className="text-lg font-serif text-white mb-6">{t("socialMedia")}</h3>
                 <div className="flex gap-4">
                   <a
                     href="https://www.instagram.com/varancollegesltd/"
@@ -120,7 +123,7 @@ export default function ContactPage() {
       {/* Map Section */}
       <section className="py-20 bg-background-dark/50 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-serif text-white mb-8 text-center">Bizi Xəritədə Tapın</h2>
+            <h2 className="text-3xl font-serif text-white mb-8 text-center">{t("findUsOnMap")}</h2>
             <Map />
         </div>
       </section>

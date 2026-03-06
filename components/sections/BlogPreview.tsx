@@ -2,10 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getPosts } from "@/lib/data";
+import { getTranslations } from "next-intl/server";
 
 const BlogPreview = async () => {
   const posts = await getPosts();
   const recentPosts = posts.slice(0, 3);
+  const t = await getTranslations("BlogPreview");
 
   if (recentPosts.length === 0) {
     return null;
@@ -16,11 +18,11 @@ const BlogPreview = async () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">Blog & Xəbərlər</h2>
-            <h3 className="text-4xl font-serif text-white">Son Məlumatlar</h3>
+            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">{t("subtitle")}</h2>
+            <h3 className="text-4xl font-serif text-white">{t("title")}</h3>
           </div>
           <Link href="/blog" className="hidden md:flex items-center text-sm font-medium text-slate-400 hover:text-accent transition-colors">
-            Bütün yazılar
+            {t("allPosts")}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </div>
@@ -55,7 +57,7 @@ const BlogPreview = async () => {
                 </p>
               )}
               <span className="inline-flex items-center text-accent text-sm font-medium opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-                Oxumağa davam et
+                {t("readMore")}
                 <ArrowRight className="ml-1 h-4 w-4" />
               </span>
             </Link>
