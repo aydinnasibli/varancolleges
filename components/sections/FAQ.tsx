@@ -1,9 +1,11 @@
 import { generalFaqs } from "@/lib/data/faqs";
 import FAQAccordion from "./FAQAccordion";
 import { MessageCircle } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 const FAQ = async () => {
   const faqs = generalFaqs;
+  const t = await getTranslations("FAQ");
 
   return (
     <section className="py-24 bg-background-dark relative overflow-hidden">
@@ -12,13 +14,13 @@ const FAQ = async () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start mb-16 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">Sual-Cavab</h2>
-            <h3 className="text-4xl font-serif text-white mb-6">Tez-tez Verilən Suallar</h3>
+            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">{t("subtitle")}</h2>
+            <h3 className="text-4xl font-serif text-white mb-6">{t("title")}</h3>
             <p className="text-slate-400 text-sm leading-relaxed mb-8">
-              Təhsiliniz və gələcəyinizlə bağlı sizi narahat edən sualların cavablarını burada tapa bilərsiniz. Əlavə suallarınız varsa, bizimlə əlaqə saxlayın.
+              {t("description")}
             </p>
             <a href="/contact" className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300 group">
-              Bizimlə Əlaqə
+              {t("contactUs")}
               <MessageCircle className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>

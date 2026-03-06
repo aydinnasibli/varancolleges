@@ -1,7 +1,7 @@
 {
   "Navigation": {
     "home": "Home",
-    "about": "About",
+    "about": "About Us",
     "services": "Services",
     "studyAbroad": "Study Abroad",
     "contact": "Contact"
@@ -9,5 +9,80 @@
   "Footer": {
     "language": "Language",
     "rights": "All rights reserved."
+  },
+  "Hero": {
+    "title1": "Discover the",
+    "title2": "Future",
+    "description": "Cross borders with global education standards. VaranColleges is the architect of your international career.",
+    "button1": "Study Abroad",
+    "button2": "Services",
+    "card1Title": "Top Universities",
+    "card1Desc": "Top 100 in World Rankings",
+    "card2Title": "Success",
+    "card2Desc": "Visa application approval rate"
+  },
+  "Stats": {
+    "years": "Years Experience",
+    "graduates": "Graduates",
+    "partners": "Partners",
+    "support": "Support"
+  },
+  "BlogPreview": {
+    "subtitle": "Blog & News",
+    "title": "Latest Insights",
+    "allPosts": "All posts",
+    "readMore": "Read more"
+  },
+  "FAQ": {
+    "subtitle": "Q&A",
+    "title": "Frequently Asked Questions",
+    "description": "Find answers to the most common questions regarding your education and future. If you have additional questions, feel free to contact us.",
+    "contactUs": "Contact Us"
+  },
+  "General": {
+    "applyNow": "Apply Now",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "workingHours": "Monday - Saturday, 09:00 - 18:00"
+  },
+  "About": {
+    "title": "About Us",
+    "heroDesc": "We are not just an education center, we are the partner building your future. Cross the boundaries of your dreams with VaranColleges.",
+    "whoWeAre": "Who We Are?",
+    "newStandards": "New Standards in",
+    "standards": "Education",
+    "quote": "\"Our goal is not just to provide knowledge, but to let our students discover their potential that can change the world.\"",
+    "desc1": "It is the leading education center in Azerbaijan that sets standards of quality and innovation in the field of education. For years, we have provided our students with the knowledge and skills needed to succeed both locally and internationally.",
+    "desc2": "With our experienced teaching staff, modern teaching methods, and individualized approach, we aim to maximize the potential of every student. We don't just teach; we raise the leaders of the future.",
+    "feat1": "Professional Teaching Staff",
+    "feat2": "Modern Teaching Methodology",
+    "feat3": "Individual Development Programs",
+    "feat4": "International Certificates",
+    "feat5": "Global Partnerships",
+    "feat6": "Career Support",
+    "visitUs": "Visit Us",
+    "visitUsDesc": "Come to our office, let's talk about your future."
+  },
+  "Contact": {
+    "title1": "Contact",
+    "title2": "Us",
+    "heroDesc": "Have a question? Feel free to reach out to us. Our team will be happy to assist you.",
+    "socialMedia": "Our Social Media Accounts",
+    "findUsOnMap": "Find Us on the Map",
+    "form": {
+        "title": "Send a Message",
+        "description": "We will get back to you as soon as possible",
+        "nameLabel": "Full Name",
+        "namePlaceholder": "Enter your full name",
+        "phoneLabel": "Phone",
+        "phonePlaceholder": "+994 -- --- -- --",
+        "emailLabel": "Email",
+        "emailPlaceholder": "Enter your email address",
+        "messageLabel": "Your Message",
+        "messagePlaceholder": "Write your question or message here...",
+        "submit": "Submit",
+        "submitting": "Submitting..."
+    }
   }
 }

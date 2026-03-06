@@ -4,8 +4,12 @@ import Stats from "@/components/sections/Stats";
 import Map from "@/components/ui/Map";
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Quote } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const t = await getTranslations("About");
+  const tFAQ = await getTranslations("FAQ");
+
   return (
     <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
@@ -21,13 +25,11 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 tracking-tight animate-in slide-in-from-bottom duration-700 fade-in">
-            Haqqımızda
+            {t("title")}
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mb-8"></div>
           <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed animate-in slide-in-from-bottom duration-700 delay-100 fade-in">
-            Biz sadəcə bir təhsil mərkəzi deyilik, biz gələcəyinizi inşa edən
-            tərəfdaşıq. <span className="text-accent">VaranColleges</span> ilə
-            arzularınızın sərhədlərini aşın.
+            {t("heroDesc")}
           </p>
         </div>
       </section>
@@ -43,13 +45,13 @@ export default function AboutPage() {
               <div className="sticky top-32">
                 <div className="inline-flex items-center px-4 py-1.5 bg-accent/10 rounded-full text-accent text-sm font-medium mb-8 border border-accent/20">
                   <span className="w-2 h-2 rounded-full bg-accent mr-2 animate-pulse"></span>
-                  Biz Kimik?
+                  {t("whoWeAre")}
                 </div>
 
                 <h2 className="text-4xl lg:text-6xl font-serif text-white mb-8 leading-tight">
-                  Təhsildə Yeni <br />
+                  {t("newStandards")} <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-[#b38728]">
-                    Standartlar
+                    {t("standards")}
                   </span>
                 </h2>
 
@@ -59,9 +61,7 @@ export default function AboutPage() {
                   </div>
                   <Quote className="w-8 h-8 text-accent mb-4 opacity-80" />
                   <p className="text-xl text-slate-200 font-serif italic leading-relaxed relative z-10">
-                    &quot;Hədəfimiz sadəcə bilik vermək deyil, tələbələrimizə
-                    dünyanı dəyişdirə biləcək potensiallarını kəşf
-                    etdirməkdir.&quot;
+                    {t("quote")}
                   </p>
                 </div>
               </div>
@@ -74,28 +74,21 @@ export default function AboutPage() {
                   <strong className="text-white font-medium">
                     VaranColleges
                   </strong>
-                  , Azərbaycanda təhsil sahəsində keyfiyyət və yenilikçilik
-                  standartlarını müəyyən edən aparıcı təhsil mərkəzidir.
-                  İllərdir ki, tələbələrimizə həm yerli, həm də beynəlxalq
-                  səviyyədə uğur qazanmaq üçün lazım olan bilik və bacarıqları
-                  təqdim edirik.
+                  {t("desc1").replace("VaranColleges", "")}
                 </p>
                 <p>
-                  Təcrübəli müəllim heyətimiz, müasir tədris metodlarımız və
-                  fərdi yanaşmamızla hər bir tələbənin potensialını maksimum
-                  dərəcədə üzə çıxarmağı hədəfləyirik. Biz sadəcə dərs keçmirik,
-                  biz gələcəyin liderlərini yetişdiririk.
+                  {t("desc2")}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 {[
-                  "Peşəkar Müəllim Heyəti",
-                  "Müasir Tədris Metodikası",
-                  "Fərdi İnkişaf Proqramları",
-                  "Beynəlxalq Sertifikatlar",
-                  "Qlobal Əməkdaşlıqlar",
-                  "Karyera Dəstəyi",
+                  t("feat1"),
+                  t("feat2"),
+                  t("feat3"),
+                  t("feat4"),
+                  t("feat5"),
+                  t("feat6"),
                 ].map((item, index) => (
                   <div
                     key={index}
@@ -112,7 +105,7 @@ export default function AboutPage() {
                   href="/contact"
                   className="inline-flex items-center px-8 py-4 bg-accent text-background-dark font-medium rounded-lg hover:bg-accent/90 transition-all hover:scale-105 shadow-lg shadow-accent/20 group w-full sm:w-auto justify-center"
                 >
-                  Bizimlə Əlaqə
+                  {tFAQ("contactUs")}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -126,10 +119,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              Bizi Ziyarət Edin
+              {t("visitUs")}
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
-              Ofisimizə yaxınlaşın, gələcəyiniz haqqında danışaq.
+              {t("visitUsDesc")}
             </p>
           </div>
           <Map />
