@@ -52,6 +52,45 @@ export async function getCloudflareAnalytics() {
               userAgentOS
             }
           }
+          countries: rumPageloadEventsAdaptiveGroups(
+            limit: 5,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              countryName
+            }
+          }
+          referers: rumPageloadEventsAdaptiveGroups(
+            limit: 5,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              refererHost
+            }
+          }
+          devices: rumPageloadEventsAdaptiveGroups(
+            limit: 3,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              deviceType
+            }
+          }
         }
       }
     }
@@ -97,12 +136,30 @@ export async function getCloudflareAnalytics() {
       views: b.count
     })) || [];
 
+    const topCountries = account.countries?.map((c: any) => ({
+      country: c.dimensions.countryName || 'Unknown',
+      views: c.count
+    })) || [];
+
+    const topReferers = account.referers?.map((r: any) => ({
+      referer: r.dimensions.refererHost || 'Direct',
+      views: r.count
+    })) || [];
+
+    const devices = account.devices?.map((d: any) => ({
+      device: d.dimensions.deviceType || 'Unknown',
+      views: d.count
+    })) || [];
+
     return {
       data: {
         visits: totals.sum?.visits || 0,
         pageViews: totals.count || 0,
         topPaths,
-        topBrowsers
+        topBrowsers,
+        topCountries,
+        topReferers,
+        devices
       }
     };
   } catch (error) {
