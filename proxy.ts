@@ -40,11 +40,20 @@ export default clerkMiddleware(async (auth, req) => {
         const country = req.headers.get('x-vercel-ip-country');
         const preferredLocale = country === 'AZ' ? 'az' : 'en';
 
-        const targetUrl = new URL(`/${preferredLocale}`, req.url);
-        const res = NextResponse.redirect(targetUrl);
-        // Make sure cookie is set so future visits remember it!
-        res.cookies.set('NEXT_LOCALE', preferredLocale);
-        return res;
+        // If preferred locale is 'az', we don't need to redirect since it's the default and 'as-needed' is set
+        // But we still want to set the NEXT_LOCALE cookie to remember the choice.
+        if (preferredLocale === 'en') {
+          const targetUrl = new URL(`/${preferredLocale}`, req.url);
+          const res = NextResponse.redirect(targetUrl);
+          res.cookies.set('NEXT_LOCALE', preferredLocale);
+          return res;
+        } else {
+          // If preferred is 'az', just let intlMiddleware handle the root '/' (it won't redirect due to 'as-needed')
+          // But we want to explicitly set the cookie on the response
+          const res = intlMiddleware(req);
+          res.cookies.set('NEXT_LOCALE', preferredLocale);
+          return res;
+        }
       }
     }
 
