@@ -1,7 +1,11 @@
 import Image from "next/image";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
+import { useTranslations } from "next-intl";
 
 const StudyAbroad = () => {
+  const t = useTranslations("StudyAbroad");
+  const tGen = useTranslations("General");
+
   return (
     <section className="py-24 bg-[#080c14] relative border-t border-white/5">
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -9,8 +13,8 @@ const StudyAbroad = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start mb-16 gap-6">
           <div>
-            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">Qlobal İmkanlar</h2>
-            <h3 className="text-4xl font-serif text-white">Xaricdə Təhsil Xidmətləri</h3>
+            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">{t("subtitle")}</h2>
+            <h3 className="text-4xl font-serif text-white">{t("title")}</h3>
           </div>
           <div className="hidden md:block w-32 h-[1px] bg-white/10 mt-12"></div>
         </div>
@@ -30,19 +34,19 @@ const StudyAbroad = () => {
               </div>
               <div className="flex-1">
                 <h4 className="text-2xl font-serif text-white mb-3 group-hover:text-accent transition-colors">
-                  Universitet Qəbulu
+                  {t("service1Title")}
                 </h4>
                 <p className="text-slate-400 text-sm mb-6 leading-relaxed font-light">
-                  ABŞ, Böyük Britaniya, Avropa və Kanada universitetlərinə bakalavr, magistr və doktorantura pillələri üzrə qəbul prosesinin tam idarə olunması.
+                  {t("service1Desc")}
                 </p>
                 <ul className="text-sm text-slate-500 space-y-2 mb-6">
-                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Sənədlərin hazırlanması</li>
-                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Motivasiya məktubları</li>
-                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Təqaüd müraciətləri</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {t("service1Feat1")}</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {t("service1Feat2")}</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {t("service1Feat3")}</li>
                 </ul>
                 <ApplicationModal>
                   <button className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300">
-                    Müraciət Et
+                    {tGen("applyNow")}
                   </button>
                 </ApplicationModal>
               </div>
@@ -63,19 +67,19 @@ const StudyAbroad = () => {
               </div>
               <div className="flex-1">
                 <h4 className="text-2xl font-serif text-white mb-3 group-hover:text-accent transition-colors">
-                  Viza Dəstəyi
+                  {t("service2Title")}
                 </h4>
                 <p className="text-slate-400 text-sm mb-6 leading-relaxed font-light">
-                  Tələbə vizası üçün lazımi sənədlərin toplanması, anketlərin doldurulması və səfirlik müsahibəsinə hazırlıq prosesində peşəkar dəstək.
+                  {t("service2Desc")}
                 </p>
                 <ul className="text-sm text-slate-500 space-y-2 mb-6">
-                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Viza anketinin doldurulması</li>
-                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Müsahibə simulyasiyası</li>
-                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> Sığorta və uçuş planlaması</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {t("service2Feat1")}</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {t("service2Feat2")}</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {t("service2Feat3")}</li>
                 </ul>
                 <ApplicationModal>
                   <button className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300">
-                    Müraciət Et
+                    {tGen("applyNow")}
                   </button>
                 </ApplicationModal>
               </div>

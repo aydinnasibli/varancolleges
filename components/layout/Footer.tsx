@@ -29,7 +29,7 @@ const Footer = () => {
               </Link>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-8 font-light">
-              Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.
+              {tFoot("brandDesc")}
             </p>
             <div className="flex space-x-5">
               <a href="https://www.instagram.com/varancollegesltd/" className="transform hover:scale-110 duration-300 text-slate-500 hover:text-accent" target="_blank" rel="noopener noreferrer" aria-label="Instagram">

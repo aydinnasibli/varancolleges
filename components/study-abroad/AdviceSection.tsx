@@ -1,6 +1,8 @@
-import { studyAbroadData } from "@/lib/data/study-abroad";
+import { useTranslations } from "next-intl";
 
 const AdviceSection = () => {
+  const t = useTranslations("StudyAbroad");
+
   return (
     <section className="py-24 bg-background-dark relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,10 +11,10 @@ const AdviceSection = () => {
           {/* Akademik Məsləhət */}
           <div>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-8">
-              Akademik <span className="text-accent italic">Məsləhət</span>
+              {t("academicAdvice.title")}
             </h2>
             <ul className="space-y-4">
-              {studyAbroadData.academicAdvice.items.map((item, index) => (
+              {t.raw("academicAdvice.items").map((item: string, index: number) => (
                 <li key={index} className="flex items-start group">
                   <div className="w-2 h-2 rounded-full bg-accent mt-2.5 mr-4 flex-shrink-0 group-hover:scale-150 transition-transform duration-300" />
                   <span className="text-slate-300 font-light leading-relaxed group-hover:text-white transition-colors duration-300">
@@ -26,13 +28,13 @@ const AdviceSection = () => {
           {/* Qəbul Prosesi */}
           <div>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-8">
-              Qəbul <span className="text-accent italic">Prosesi</span>
+              {t("admissionProcess.title")}
             </h2>
             <p className="text-slate-400 mb-6 font-light">
-              {studyAbroadData.admissionProcess.description}
+              {t("admissionProcess.description")}
             </p>
             <ul className="space-y-4">
-              {studyAbroadData.admissionProcess.items.map((item, index) => (
+              {t.raw("admissionProcess.items").map((item: string, index: number) => (
                 <li key={index} className="flex items-start group">
                   <div className="w-2 h-2 rounded-full bg-accent mt-2.5 mr-4 flex-shrink-0 group-hover:scale-150 transition-transform duration-300" />
                   <span className="text-slate-300 font-light leading-relaxed group-hover:text-white transition-colors duration-300">
