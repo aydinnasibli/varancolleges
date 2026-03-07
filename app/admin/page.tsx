@@ -81,6 +81,7 @@ export default async function AdminDashboard() {
               </p>
             </div>
           ) : (
+            <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Pageviews */}
               <div className="flex flex-col gap-2 p-6 rounded-lg bg-slate-50 border border-slate-100">
@@ -104,9 +105,46 @@ export default async function AdminDashboard() {
                 </div>
               </div>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              {/* Top Paths */}
+              <div className="flex flex-col gap-2">
+                <h3 className="text-sm font-semibold text-slate-700 mb-2 border-b border-slate-100 pb-2">Top Visited Pages</h3>
+                <div className="flex flex-col gap-2">
+                  {analytics.data?.topPaths && analytics.data.topPaths.length > 0 ? (
+                    analytics.data.topPaths.map((pathItem: any, i: number) => (
+                      <div key={i} className="flex justify-between items-center text-sm">
+                        <span className="text-slate-600 truncate max-w-[200px]">{pathItem.path || '/'}</span>
+                        <span className="font-medium text-slate-900 bg-slate-100 px-2 py-0.5 rounded-full text-xs">{pathItem.views} views</span>
+                      </div>
+                    ))
+                  ) : (
+                    <span className="text-sm text-slate-400">No data available yet</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Top Browsers */}
+              <div className="flex flex-col gap-2">
+                <h3 className="text-sm font-semibold text-slate-700 mb-2 border-b border-slate-100 pb-2">Top Browsers / Devices</h3>
+                <div className="flex flex-col gap-2">
+                  {analytics.data?.topBrowsers && analytics.data.topBrowsers.length > 0 ? (
+                    analytics.data.topBrowsers.map((browserItem: any, i: number) => (
+                      <div key={i} className="flex justify-between items-center text-sm">
+                        <span className="text-slate-600 truncate max-w-[200px]">{browserItem.browser}</span>
+                        <span className="font-medium text-slate-900 bg-slate-100 px-2 py-0.5 rounded-full text-xs">{browserItem.views} views</span>
+                      </div>
+                    ))
+                  ) : (
+                    <span className="text-sm text-slate-400">No data available yet</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
           )}
 
-          <div className="mt-6 flex justify-end">
+          <div className="mt-8 pt-4 border-t border-slate-100 flex justify-end">
             <a
               href="https://dash.cloudflare.com"
               target="_blank"
