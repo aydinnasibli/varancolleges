@@ -71,13 +71,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       },
     },
     icons: {
-      icon: [
-        { url: '/favicon.ico' },
-        { url: '/icon.png', type: 'image/png' },
-      ],
-      apple: [
-        { url: '/icon.png' }
-      ],
+      icon: '/favicon.ico',
+      shortcut: '/favicon.ico',
+      apple: '/icon.png',
+      other: {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/icon.png',
+      },
     },
   };
 }
