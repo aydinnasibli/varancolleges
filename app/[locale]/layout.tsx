@@ -70,15 +70,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "max-snippet": -1,
       },
     },
-    icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon.ico',
-      apple: '/icon.png',
-      other: {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/icon.png',
-      },
-    },
   };
 }
 
