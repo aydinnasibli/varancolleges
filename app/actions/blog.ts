@@ -39,6 +39,8 @@ export async function createPost(formData: FormData) {
     await newPost.save();
 
     revalidatePath("/blog");
+    revalidatePath("/en/blog");
+    revalidatePath("/az/blog");
     revalidatePath("/admin/blog");
 
     return { success: true, slug: uniqueSlug };
@@ -93,6 +95,10 @@ export async function updatePost(id: string, formData: FormData) {
 
     revalidatePath("/blog");
     revalidatePath(`/blog/${post.slug}`);
+    revalidatePath("/en/blog");
+    revalidatePath(`/en/blog/${post.slug}`);
+    revalidatePath("/az/blog");
+    revalidatePath(`/az/blog/${post.slug}`);
     revalidatePath("/admin/blog");
 
     return { success: true, slug: uniqueSlug };
@@ -113,6 +119,8 @@ export async function deletePost(id: string) {
     }
 
     revalidatePath("/blog");
+    revalidatePath("/en/blog");
+    revalidatePath("/az/blog");
     revalidatePath("/admin/blog");
 
     return { success: true };

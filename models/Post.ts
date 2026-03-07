@@ -8,6 +8,7 @@ const PostSchema = new mongoose.Schema({
   author: { type: String },
   date: { type: Date, default: Date.now },
   image: { type: String },
+  status: { type: String, enum: ['draft', 'published'], default: 'draft' },
 });
 
 export default mongoose.models.Post || mongoose.model('Post', PostSchema);
