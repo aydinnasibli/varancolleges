@@ -71,9 +71,13 @@ export default async function AdminDashboard() {
         <div className="p-6">
           {analytics.error ? (
             <div className="bg-amber-50 text-amber-700 p-4 rounded-lg border border-amber-200">
-              <p className="font-medium text-sm">Analytics Integration Pending</p>
+              <p className="font-medium text-sm">Analytics Notice: {analytics.error.includes('configured') ? 'Integration Pending' : 'Data Unavailable'}</p>
               <p className="text-xs mt-1">
-                To view website analytics here, add <code className="font-mono bg-amber-100 px-1 rounded">CLOUDFLARE_API_TOKEN</code> and <code className="font-mono bg-amber-100 px-1 rounded">CLOUDFLARE_ACCOUNT_ID</code> to your environment variables.
+                {analytics.error === 'Cloudflare credentials not configured' ? (
+                  <>To view website analytics here, add <code className="font-mono bg-amber-100 px-1 rounded">CLOUDFLARE_API_TOKEN</code> and <code className="font-mono bg-amber-100 px-1 rounded">CLOUDFLARE_ACCOUNT_ID</code> to your environment variables.</>
+                ) : (
+                  <>Unable to load analytics data: <strong>{analytics.error}</strong></>
+                )}
               </p>
             </div>
           ) : (
