@@ -48,11 +48,11 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
            )}
            <div className="absolute inset-0 bg-primary mix-blend-multiply opacity-50"></div>
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-12">
           <div className="inline-block bg-accent/10 px-4 py-1.5 rounded-full text-accent text-sm font-medium mb-6">
              {new Date(post.publishedAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
           </div>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
             {post.title}
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mb-8"></div>
@@ -72,14 +72,16 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       </section>
 
       {/* Content Section */}
-      <section className="py-20 bg-background-dark">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-invert prose-lg max-w-none">
-            {post.body ? (
-              <div dangerouslySetInnerHTML={{ __html: post.body }} />
-            ) : (
-              <p className="text-slate-500 italic">Bu yazı üçün məzmun yoxdur.</p>
-            )}
+      <section className="pb-20 bg-background-dark">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-primary/50 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 lg:p-16 shadow-2xl mt-[-80px] relative z-20">
+            <div className="prose prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:text-white prose-a:text-accent hover:prose-a:text-accent-light prose-img:rounded-xl prose-img:shadow-lg prose-p:text-slate-300 prose-p:leading-relaxed">
+              {post.body ? (
+                <div dangerouslySetInnerHTML={{ __html: post.body }} />
+              ) : (
+                <p className="text-slate-500 italic">Bu yazı üçün məzmun yoxdur.</p>
+              )}
+            </div>
           </div>
 
           <div className="mt-16 pt-8 border-t border-white/10 flex justify-between items-center">
