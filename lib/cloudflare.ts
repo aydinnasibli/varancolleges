@@ -13,7 +13,7 @@ export async function getCloudflareAnalytics() {
     query {
       viewer {
         accounts(filter: { accountTag: "${accountId}" }) {
-          rumPageloadEventsAdaptiveGroups(
+          totals: rumPageloadEventsAdaptiveGroups(
             limit: 1,
             filter: {
               date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
@@ -23,6 +23,72 @@ export async function getCloudflareAnalytics() {
             count
             sum {
               visits
+            }
+          }
+          paths: rumPageloadEventsAdaptiveGroups(
+            limit: 5,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              requestPath
+            }
+          }
+          browsers: rumPageloadEventsAdaptiveGroups(
+            limit: 5,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              userAgentBrowser
+              userAgentOS
+            }
+          }
+          countries: rumPageloadEventsAdaptiveGroups(
+            limit: 5,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              countryName
+            }
+          }
+          referers: rumPageloadEventsAdaptiveGroups(
+            limit: 5,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              refererHost
+            }
+          }
+          devices: rumPageloadEventsAdaptiveGroups(
+            limit: 3,
+            filter: {
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_leq: "${new Date().toISOString().split('T')[0]}"
+            },
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions {
+              deviceType
             }
           }
         }
@@ -53,16 +119,47 @@ export async function getCloudflareAnalytics() {
       return { error: `API Error: ${data.errors[0]?.message || 'GraphQL query failed'}` };
     }
 
-    const groups = data.data?.viewer?.accounts?.[0]?.rumPageloadEventsAdaptiveGroups;
+    const account = data.data?.viewer?.accounts?.[0];
 
-    if (!groups || groups.length === 0) {
-      return { data: { visits: 0, pageViews: 0 } };
+    if (!account || !account.totals || account.totals.length === 0) {
+      return { data: { visits: 0, pageViews: 0, topPaths: [], topBrowsers: [] } };
     }
+
+    const totals = account.totals[0];
+    const topPaths = account.paths?.map((p: any) => ({
+      path: p.dimensions.requestPath,
+      views: p.count
+    })) || [];
+
+    const topBrowsers = account.browsers?.map((b: any) => ({
+      browser: `${b.dimensions.userAgentBrowser} (${b.dimensions.userAgentOS})`,
+      views: b.count
+    })) || [];
+
+    const topCountries = account.countries?.map((c: any) => ({
+      country: c.dimensions.countryName || 'Unknown',
+      views: c.count
+    })) || [];
+
+    const topReferers = account.referers?.map((r: any) => ({
+      referer: r.dimensions.refererHost || 'Direct',
+      views: r.count
+    })) || [];
+
+    const devices = account.devices?.map((d: any) => ({
+      device: d.dimensions.deviceType || 'Unknown',
+      views: d.count
+    })) || [];
 
     return {
       data: {
-        visits: groups[0].sum?.visits || 0,
-        pageViews: groups[0].count || 0
+        visits: totals.sum?.visits || 0,
+        pageViews: totals.count || 0,
+        topPaths,
+        topBrowsers,
+        topCountries,
+        topReferers,
+        devices
       }
     };
   } catch (error) {
