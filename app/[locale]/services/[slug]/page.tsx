@@ -10,8 +10,27 @@ import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { getTranslations } from "next-intl/server";
 
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
+
+export async function generateMetadata({ params }: Props) {
+  const { locale, slug } = await params;
+  const tData = await getTranslations({ locale, namespace: `ServicesData.${slug}` });
+  const canonical = locale === 'az' ? `https://www.varancolleges.com/services/${slug}` : `https://www.varancolleges.com/${locale}/services/${slug}`;
+
+  return {
+    title: tData('title'),
+    description: tData('description'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': `https://www.varancolleges.com/services/${slug}`,
+        'az': `https://www.varancolleges.com/services/${slug}`,
+        'en': `https://www.varancolleges.com/en/services/${slug}`,
+      }
+    }
+  };
+}
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;

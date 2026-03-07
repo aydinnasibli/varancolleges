@@ -6,6 +6,24 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle, Quote } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const canonical = locale === 'az' ? 'https://www.varancolleges.com/about' : `https://www.varancolleges.com/${locale}/about`;
+
+  return {
+    title: t('about'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': 'https://www.varancolleges.com/about',
+        'az': 'https://www.varancolleges.com/about',
+        'en': 'https://www.varancolleges.com/en/about',
+      }
+    }
+  };
+}
+
 export default async function AboutPage() {
   const t = await getTranslations("About");
   const tFAQ = await getTranslations("FAQ");

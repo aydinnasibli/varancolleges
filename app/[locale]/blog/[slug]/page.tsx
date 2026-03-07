@@ -7,9 +7,10 @@ import ShareButtons from "@/components/ui/ShareButtons";
 import { getPostBySlug } from "@/lib/data";
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
   const post = await getPostBySlug(slug);
+  const canonical = locale === 'az' ? `https://www.varancolleges.com/blog/${slug}` : `https://www.varancolleges.com/${locale}/blog/${slug}`;
 
   if (!post) {
     return {
@@ -20,10 +21,18 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `${post.title} - Varan Colleges`,
     description: post.excerpt || post.title,
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': `https://www.varancolleges.com/blog/${slug}`,
+        'az': `https://www.varancolleges.com/blog/${slug}`,
+        'en': `https://www.varancolleges.com/en/blog/${slug}`,
+      }
+    }
   };
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 

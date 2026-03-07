@@ -70,14 +70,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         "max-snippet": -1,
       },
     },
-    alternates: {
-      canonical: locale === 'az' ? "https://www.varancolleges.com" : `https://www.varancolleges.com/en`,
-      languages: {
-        'x-default': "https://www.varancolleges.com",
-        'az': "https://www.varancolleges.com",
-        'en': "https://www.varancolleges.com/en",
-      },
-    },
   };
 }
 
