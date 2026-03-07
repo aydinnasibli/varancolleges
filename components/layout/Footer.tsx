@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";

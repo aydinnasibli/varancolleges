@@ -1,6 +1,6 @@
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { ArrowRight, School, Star } from "lucide-react";
+import { ArrowRight, School } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
