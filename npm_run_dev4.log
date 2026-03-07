@@ -1,0 +1,43 @@
+
+> varan-colleges@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+✓ Ready in 1846ms
+○ Compiling /[locale] ...
+ GET /en 200 in 19.3s (compile: 12.4s, proxy.ts: 515ms, render: 6.3s)
+ GET /en/contact 200 in 1833ms (compile: 1576ms, proxy.ts: 7ms, render: 250ms)
+⨯ ReferenceError: tGen is not defined
+    at Navbar (components/layout/Navbar.tsx:48:15)
+  46 |             </a>
+  47 |             <span className="flex items-center text-slate-500">
+> 48 |               <Clock className="w-4 h-4 mr-2 text-accent" />
+     |               ^
+  49 |               {tGen("workingHours")}
+  50 |             </span>
+  51 |           </div> {
+  digest: '561043060'
+}
+ GET /en 500 in 752ms (compile: 259ms, proxy.ts: 8ms, render: 484ms)
+⨯ ReferenceError: tGen is not defined
+    at Navbar (components/layout/Navbar.tsx:48:15)
+  46 |             </a>
+  47 |             <span className="flex items-center text-slate-500">
+> 48 |               <Clock className="w-4 h-4 mr-2 text-accent" />
+     |               ^
+  49 |               {tGen("workingHours")}
+  50 |             </span>
+  51 |           </div> {
+  digest: '529387433'
+}
+ GET /en/contact 500 in 877ms (compile: 309ms, proxy.ts: 7ms, render: 561ms)
+[?25h

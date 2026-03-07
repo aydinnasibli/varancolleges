@@ -16,6 +16,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const t = useTranslations("Navigation");
+  const tGen = useTranslations("General");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +47,7 @@ const Navbar = () => {
             </a>
             <span className="flex items-center text-slate-500">
               <Clock className="w-4 h-4 mr-2 text-accent" />
-              B.e - C.ə: 09:00 - 18:00
+              {tGen("workingHours")}
             </span>
           </div>
           <div className="flex items-center space-x-4">
@@ -161,7 +162,7 @@ const Navbar = () => {
             ))}
             <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
               <ApplicationModal>
-                 <Button variant="accent" className="w-full">Müraciət et</Button>
+                 <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
               </ApplicationModal>
             </div>
           </div>

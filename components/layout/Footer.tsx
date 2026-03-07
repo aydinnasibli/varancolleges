@@ -1,15 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslations } from "next-intl";
 
 const Footer = () => {
   const tNav = useTranslations("Navigation");
   const tFoot = useTranslations("Footer");
+  const tGen = useTranslations("General");
 
   return (
     <footer className="bg-background-dark border-t border-white/5 pt-20 pb-10">
@@ -47,9 +46,9 @@ const Footer = () => {
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
                 { label: tNav("studyAbroad"), href: "/study-abroad" },
-                { label: "IELTS Hazırlığı", href: "#" },
-                { label: "SAT Hazırlığı", href: "#" },
-                { label: "Yay Məktəbləri", href: "#" }
+                { label: tFoot("ielts"), href: "#" },
+                { label: tFoot("sat"), href: "#" },
+                { label: tFoot("summer"), href: "#" }
               ].map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
@@ -67,9 +66,9 @@ const Footer = () => {
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
                 { label: tNav("about"), href: "/about" },
-                { label: "Komandamız", href: "#" },
-                { label: "Vakansiyalar", href: "#" },
-                { label: "Blog", href: "/blog" }
+                { label: tFoot("team"), href: "#" },
+                { label: tFoot("vacancies"), href: "#" },
+                { label: tNav("blog"), href: "/blog" }
               ].map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
@@ -90,7 +89,7 @@ const Footer = () => {
                   <MapPin className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <p className="text-white mb-1 font-medium">Ünvan</p>
+                  <p className="text-white mb-1 font-medium">{tGen("address")}</p>
                   <p className="group-hover:text-white transition-colors leading-relaxed">137A Samad Vurgun,<br/>Baku 1022, Azerbaijan</p>
                 </div>
               </li>
@@ -99,7 +98,7 @@ const Footer = () => {
                   <Phone className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <p className="text-white mb-1 font-medium">Telefon</p>
+                  <p className="text-white mb-1 font-medium">{tGen("phone")}</p>
                   <a href="tel:+994771885050" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">+994 77 188 50 50</a>
                 </div>
               </li>
@@ -108,7 +107,7 @@ const Footer = () => {
                   <Mail className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <p className="text-white mb-1 font-medium">Email</p>
+                  <p className="text-white mb-1 font-medium">{tGen("email")}</p>
                   <a href="mailto:info@varancolleges.com" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">info@varancolleges.com</a>
                 </div>
               </li>
@@ -121,8 +120,8 @@ const Footer = () => {
           <p className="text-slate-600 text-xs">© 2026 VaranColleges. {tFoot("rights")}</p>
           <div className="flex items-center space-x-8 text-xs text-slate-600">
             <LanguageSwitcher />
-            <Link href="#" className="hover:text-white transition-colors">Məxfilik Siyasəti</Link>
-            <Link href="#" className="hover:text-white transition-colors">İstifadə Şərtləri</Link>
+            <Link href="#" className="hover:text-white transition-colors">{tFoot("privacy")}</Link>
+            <Link href="#" className="hover:text-white transition-colors">{tFoot("terms")}</Link>
           </div>
         </div>
       </div>

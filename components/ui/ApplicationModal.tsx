@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { sendEmail } from "@/app/actions/send-email";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface ApplicationModalProps {
   children?: React.ReactNode;
@@ -29,6 +30,8 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const t = useTranslations("ApplicationModal");
+  const tGen = useTranslations("General");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -76,13 +79,13 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {children || <Button variant="accent">Müraciət et</Button>}
+        {children || <Button variant="accent">{tGen("applyNow")}</Button>}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px] bg-background-dark border-white/10 text-slate-300">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-serif text-white">Müraciət et</DialogTitle>
+          <DialogTitle className="text-2xl font-serif text-white">{t("title")}</DialogTitle>
           <DialogDescription className="text-slate-400">
-            Təhsiliniz üçün ilk addımı atın. Məlumatlarınızı daxil edin, sizinlə əlaqə saxlayaq.
+            {t("desc")}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-6 py-4">
