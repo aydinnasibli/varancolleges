@@ -65,7 +65,7 @@ export default async function AdminDashboard() {
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mt-2">
         <div className="p-6 border-b border-slate-200 flex items-center gap-2">
           <Activity className="h-5 w-5 text-slate-500" />
-          <h2 className="text-lg font-semibold text-slate-900">Website Analytics (Last 30 Days)</h2>
+          <h2 className="text-lg font-semibold text-slate-900">Website Analytics (Last 7 Days)</h2>
         </div>
 
         <div className="p-6">

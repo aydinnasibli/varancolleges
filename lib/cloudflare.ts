@@ -13,10 +13,10 @@ export async function getCloudflareAnalytics() {
     query {
       viewer {
         accounts(filter: { accountTag: "${accountId}" }) {
-          rumSiteAnalyticsAdaptiveGroups(
+          rumPageloadEventsAdaptiveGroups(
             limit: 1,
             filter: {
-              date_geq: "${new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
+              date_geq: "${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}",
               date_leq: "${new Date().toISOString().split('T')[0]}"
             }
           ) {
