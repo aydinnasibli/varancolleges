@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ShareButtons from "@/components/ui/ShareButtons";
 import { getPostBySlug } from "@/lib/data";
 import { Metadata } from "next";
 
@@ -84,7 +85,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             </div>
           </div>
 
-          <div className="mt-16 pt-8 border-t border-white/10 flex justify-between items-center">
+          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+             <ShareButtons title={post.title} />
+
              <Link href="/blog" className="flex items-center text-accent hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
