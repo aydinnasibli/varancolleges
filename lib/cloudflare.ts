@@ -20,9 +20,9 @@ export async function getCloudflareAnalytics() {
               date_leq: "${new Date().toISOString().split('T')[0]}"
             }
           ) {
+            count
             sum {
               visits
-              pageViews
             }
           }
         }
@@ -50,10 +50,10 @@ export async function getCloudflareAnalytics() {
 
     if (data.errors) {
       console.error('Cloudflare GraphQL Errors:', data.errors);
-      return { error: 'GraphQL query failed' };
+      return { error: `API Error: ${data.errors[0]?.message || 'GraphQL query failed'}` };
     }
 
-    const groups = data.data?.viewer?.accounts?.[0]?.rumSiteAnalyticsAdaptiveGroups;
+    const groups = data.data?.viewer?.accounts?.[0]?.rumPageloadEventsAdaptiveGroups;
 
     if (!groups || groups.length === 0) {
       return { data: { visits: 0, pageViews: 0 } };
@@ -61,8 +61,8 @@ export async function getCloudflareAnalytics() {
 
     return {
       data: {
-        visits: groups[0].sum.visits || 0,
-        pageViews: groups[0].sum.pageViews || 0
+        visits: groups[0].sum?.visits || 0,
+        pageViews: groups[0].count || 0
       }
     };
   } catch (error) {
