@@ -2,6 +2,7 @@ import { generalFaqs } from "@/lib/data/faqs";
 import FAQAccordion from "./FAQAccordion";
 import { MessageCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
 
 const FAQ = async () => {
   const faqs = generalFaqs;
@@ -19,10 +20,10 @@ const FAQ = async () => {
             <p className="text-slate-400 text-sm leading-relaxed mb-8">
               {t("description")}
             </p>
-            <a href="/contact" className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300 group">
+            <Link href="/contact" className="inline-flex items-center px-6 py-3 border border-accent/30 text-accent text-sm font-medium rounded-sm hover:bg-accent hover:text-primary transition-all duration-300 group">
               {t("contactUs")}
               <MessageCircle className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
 
           <div className="w-full md:w-2/3 lg:w-1/2">
