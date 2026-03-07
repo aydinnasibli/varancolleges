@@ -8,7 +8,15 @@
   },
   "Footer": {
     "language": "Dil",
-    "rights": "Bütün hüquqlar qorunur."
+    "rights": "Bütün hüquqlar qorunur.",
+    "brandDesc": "Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.",
+    "privacy": "Məxfilik Siyasəti",
+    "terms": "İstifadə Şərtləri",
+    "team": "Komandamız",
+    "vacancies": "Vakansiyalar",
+    "ielts": "IELTS Hazırlığı",
+    "sat": "SAT Hazırlığı",
+    "summer": "Yay Məktəbləri"
   },
   "Hero": {
     "title1": "Gələcəyi",
@@ -44,7 +52,8 @@
     "address": "Ünvan",
     "phone": "Telefon",
     "email": "Email",
-    "workingHours": "Bazar ertəsi - Şənbə, 09:00 - 18:00"
+    "workingHours": "Bazar ertəsi - Şənbə, 09:00 - 18:00",
+    "noPosts": "Hazırda heç bir yazı yoxdur."
   },
   "About": {
     "title": "Haqqımızda",
@@ -71,18 +80,299 @@
     "socialMedia": "Sosial Media Hesablarımız",
     "findUsOnMap": "Bizi Xəritədə Tapın",
     "form": {
-        "title": "Mesaj Göndərin",
-        "description": "Sizə ən qısa zamanda geri dönüş edəcəyik",
-        "nameLabel": "Ad və Soyad",
-        "namePlaceholder": "Adınızı və soyadınızı daxil edin",
-        "phoneLabel": "Telefon",
-        "phonePlaceholder": "+994 -- --- -- --",
-        "emailLabel": "Email",
-        "emailPlaceholder": "Email ünvanınızı daxil edin",
-        "messageLabel": "Mesajınız",
-        "messagePlaceholder": "Sualınızı və ya mesajınızı buraya yazın...",
-        "submit": "Göndər",
-        "submitting": "Göndərilir..."
+      "title": "Mesaj Göndərin",
+      "description": "Sizə ən qısa zamanda geri dönüş edəcəyik",
+      "nameLabel": "Ad və Soyad",
+      "namePlaceholder": "Adınızı və soyadınızı daxil edin",
+      "phoneLabel": "Telefon",
+      "phonePlaceholder": "+994 -- --- -- --",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Email ünvanınızı daxil edin",
+      "messageLabel": "Mesajınız",
+      "messagePlaceholder": "Sualınızı və ya mesajınızı buraya yazın...",
+      "submit": "Göndər",
+      "submitting": "Göndərilir..."
+    }
+  },
+  "StudyAbroad": {
+    "subtitle": "Qlobal İmkanlar",
+    "title": "Xaricdə Təhsil Xidmətləri",
+    "service1Title": "Universitet Qəbulu",
+    "service1Desc": "ABŞ, Böyük Britaniya, Avropa və Kanada universitetlərinə bakalavr, magistr və doktorantura pillələri üzrə qəbul prosesinin tam idarə olunması.",
+    "service1Feat1": "Sənədlərin hazırlanması",
+    "service1Feat2": "Motivasiya məktubları",
+    "service1Feat3": "Təqaüd müraciətləri",
+    "service2Title": "Viza Dəstəyi",
+    "service2Desc": "Tələbə vizası üçün lazımi sənədlərin toplanması, anketlərin doldurulması və səfirlik müsahibəsinə hazırlıq prosesində peşəkar dəstək.",
+    "service2Feat1": "Viza anketinin doldurulması",
+    "service2Feat2": "Müsahibə simulyasiyası",
+    "service2Feat3": "Sığorta və uçuş planlaması",
+    "heroTitle": "Sərhədsiz",
+    "heroSubtitle": "Təhsil",
+    "heroDesc": "Varan Colleges olaraq tələbələrimizi ABŞ, Kanada, Avstraliya, Avropa ölkələri və Türkiyədə yerləşən universitet və kolleclərə yönləndiririk. Məqsədimiz yalnız qəbul almaq deyil, tələbənin düzgün ölkə, düzgün ixtisas və düzgün universitet seçməsinə peşəkar şəkildə dəstək olmaqdır.",
+    "academicAdvice": {
+      "title": "Akademik Məsləhət və Karyera Planlaması",
+      "items": [
+        "Tələbənin akademik göstəricilərinin təhlili",
+        "Maraqlarına və gələcək planlarına uyğun ixtisas seçimi",
+        "Ölkə və universitet müqayisəsi",
+        "Büdcəyə uyğun seçimlərin təqdim olunması",
+        "Biz qərarı tələbənin əvəzinə vermirik – düzgün qərar verməsi üçün real və obyektiv məlumat təqdim edirik."
+      ]
+    },
+    "admissionProcess": {
+      "title": "Qəbul Prosesi və Sənədləşmə",
+      "description": "Biz bakalavr, magistr, doktorantura, foundation və dil proqramları üzrə müraciətləri həyata keçiririk.",
+      "items": [
+        "Universitet və kolleclərə müraciət",
+        "Motivasiya məktubunun hazırlanması",
+        "CV və tövsiyə məktublarının redaktəsi",
+        "Sənədlərin düzgün şəkildə toplanması və göndərilməsi",
+        "Şərti və ya birbaşa qəbul prosesinin idarə olunması"
+      ]
+    },
+    "visaSupport": {
+      "title": "Viza Dəstəyi",
+      "description": "Biz viza qərarını verən tərəf deyilik, lakin sənədlərin düzgün təqdim olunması üçün prosesi tam şəkildə idarə edirik.",
+      "items": [
+        "Sənədlərin düzgün hazırlanması",
+        "Bank sənədləri və maliyyə sübutu üzrə istiqamət",
+        "Viza formalarının doldurulması",
+        "Müsahibəyə hazırlıq"
+      ]
+    },
+    "additionalServices": {
+      "title": "Əlavə Xidmətlər",
+      "items": [
+        "Yaşayış seçimi (kampus və ya rezidensiya)",
+        "Hava limanı qarşılanma istiqamətləndirilməsi",
+        "Sığorta və qeydiyyat dəstəyi",
+        "Təhsil müddətində konsultasiya"
+      ]
+    },
+    "countries": {
+      "usa": {
+        "name": "ABŞ",
+        "description": "Qlobal təhsil və innovasiya mərkəzi.",
+        "features": [
+          "Universitet və kolleclərə qəbul",
+          "Community college və transfer proqramları",
+          "Şərti qəbul imkanları",
+          "F1 viza prosesi üzrə tam dəstək"
+        ]
+      },
+      "canada": {
+        "name": "Kanada",
+        "description": "Yüksək həyat keyfiyyəti və karyera.",
+        "features": [
+          "Dövlət və özəl kolleclər",
+          "Post-Graduation Work Permit (PGWP) uyğun proqram seçimi",
+          "Universitet transfer imkanları",
+          "Study Permit sənədlərinin hazırlanması"
+        ]
+      },
+      "australia": {
+        "name": "Avstraliya",
+        "description": "Macəra dolu akademik təcrübə.",
+        "features": [
+          "Universitet və TAFE proqramları",
+          "İngilis dili kursları",
+          "Viza müraciəti və sənəd hazırlığı"
+        ]
+      },
+      "europe": {
+        "name": "Avropa",
+        "description": "Müxtəlif mədəniyyətlər və yüksək keyfiyyətli təhsil.",
+        "features": [
+          "Almaniya, İtaliya, Macarıstan, Fransa, Niderland və digər ölkələr",
+          "Dövlət və özəl universitetlər",
+          "İngilis və yerli dildə proqramlar",
+          "Hazırlıq (foundation) və birbaşa qəbul imkanları"
+        ]
+      },
+      "turkey": {
+        "name": "Türkiyə",
+        "description": "Bizə ən yaxın keyfiyyətli təhsil.",
+        "features": [
+          "Dövlət və özəl universitetlər",
+          "YÖS və beynəlxalq qəbul sistemləri",
+          "Tibb, mühəndislik və digər ixtisaslar üzrə müraciət"
+        ]
+      },
+      "uk": {
+        "name": "Böyük Britaniya",
+        "description": "Əsrlərin təhsil ənənəsi.",
+        "features": [
+          "Russell Group universitetlərinə qəbul",
+          "Foundation və Pre-Master proqramları",
+          "Tier 4 viza dəstəyi",
+          "IELTS hazırlığı və imtahan qeydiyyatı"
+        ]
+      }
+    },
+    "ctaTitle": "Sərhədsiz Gələcək",
+    "ctaSubtitle": "Buradan Başlayır",
+    "ctaDesc": "Xəyallarınızdakı universitetə qəbul olmağa hazırsınız? Elə isə, bu gün bizimlə əlaqə saxlayın."
+  },
+  "Services": {
+    "title": "Xidmətlərimiz",
+    "desc": "Keyfiyyətli təhsil və parlaq gələcək üçün ehtiyacınız olan hər şey bir ünvanda. VaranColleges olaraq hədəflərinizə çatmağınız üçün yanınızdayıq.",
+    "parallaxTitle": "Sərhədsiz Təhsil",
+    "parallaxDesc": "Dünya Sizin Kampusunuzdur"
+  },
+  "ServicesGrid": {
+    "subtitle": "Akademik İnkişaf",
+    "title": "Dil Kursları və İmtahanlar",
+    "description": "Beynəlxalq sertifikatlar və xarici dil biliklərinizi təkmilləşdirmək üçün peşəkar proqramlar.",
+    "viewDetails": "Ətraflı bax"
+  },
+  "Blog": {
+    "title": "Blog & Xəbərlər",
+    "desc": "Xaricdə təhsil, imtahanlara hazırlıq və təqaüd proqramları haqqında ən son məlumatları buradan oxuyun."
+  },
+  "ApplicationModal": {
+    "title": "Müraciət et",
+    "desc": "Təhsiliniz üçün ilk addımı atın. Məlumatlarınızı daxil edin, sizinlə əlaqə saxlayaq.",
+    "namePlaceholder": "Adınız Soyadınız",
+    "phonePlaceholder": "+994 50 123 45 67",
+    "messageLabel": "Əlavə Qeydlər (İstəyə bağlı)",
+    "messagePlaceholder": "Sizi maraqlandıran suallar...",
+    "success": "Müraciətiniz qəbul edildi!",
+    "error": "Xəta baş verdi."
+  },
+  "ServicePage": {
+    "freeConsultation": "Ödənişsiz Konsultasiya",
+    "stats": {
+      "duration": "Müddət",
+      "durationVal": "Fərdi Plan",
+      "lessons": "Dərslər",
+      "lessonsVal": "Həftədə 2-3 dəfə",
+      "result": "Nəticə",
+      "resultVal": "Zəmanətli",
+      "trial": "Sınaq",
+      "trialVal": "Ödənişsiz"
+    },
+    "tableOfContents": "Mündəricat",
+    "haveQuestion": "Sualınız var?",
+    "expertsReady": "Mütəxəssislərimiz sizə kömək etməyə hazırdır.",
+    "contactUs": "Əlaqə Saxlayın",
+    "generalInfo": "Ümumi Məlumat",
+    "aboutExam": "İmtahan Haqqında",
+    "format": "Format və Struktur",
+    "grading": "Qiymətləndirmə",
+    "whyUs": "Niyə Varan Colleges?",
+    "whyUsFeats": [
+      "Peşəkar Müəllim Heyəti",
+      "Fərdi Yanaşma",
+      "Müasir Metodika",
+      "Zəmanətli Nəticə"
+    ],
+    "process": "Hazırlıq Prosesi",
+    "processSteps": [
+      {
+        "title": "Diaqnostik Qiymətləndirmə",
+        "desc": "İlkin səviyyənizin müəyyən edilməsi və hədəflərin qoyulması."
+      },
+      {
+        "title": "Fərdi Plan",
+        "desc": "Zəif və güclü tərəflərinizə uyğun xüsusi dərs proqramının hazırlanması."
+      },
+      {
+        "title": "İntensiv Tədris"
+      },
+      {
+        "title": "Sınaq İmtahanları",
+        "desc": "Real imtahan mühitində mütəmadi yoxlamalar və nəticələrin analizi."
+      },
+      {
+        "title": "Hədəfə Çat",
+        "desc": "İmtahan günü üçün psixoloji hazırlıq və uğurlu nəticə."
+      }
+    ],
+    "ctaTitle": "Gələcəyinizi Bizimlə Planlayın",
+    "ctaDesc": "Peşəkar komandamız sizə ən uyğun təhsil yolunu seçməkdə kömək edəcək. İlk konsultasiya tamamilə ödənişsizdir."
+  },
+  "ServicesData": {
+    "sat": {
+      "title": "SAT Hazırlığı",
+      "description": "ABŞ və digər dünya universitetlərinə qəbul üçün əsas standartlaşdırılmış test. Riyaziyyat və İngilis dili bacarıqlarınızı maksimuma çatdırın.",
+      "examInfo": "SAT (Scholastic Assessment Test) ABŞ-da kollec və universitetlərə qəbul üçün istifadə olunan standartlaşdırılmış testdir. Bu imtahan tələbələrin məktəbdə öyrəndikləri bilikləri universitet səviyyəsində necə tətbiq edəcəklərini yoxlayır.",
+      "format": "Yeni rəqəmsal (Digital) SAT iki əsas bölmədən ibarətdir: Oxuma/Yazma (Reading and Writing) və Riyaziyyat (Math). Hər iki bölmə iki modula ayrılır. İmtahanın ümumi müddəti təxminən 2 saat 14 dəqiqədir.",
+      "grading": "Hər bir bölmə (Oxuma/Yazma və Riyaziyyat) 200-800 balla qiymətləndirilir. Ümumi SAT balı 400-1600 aralığında dəyişir. Səhv cavablar düzgün cavablardan bal çıxmır (cərimə yoxdur).",
+      "whyUs": "Bizimlə SAT hazırlığı zamanı siz hər həftə sınaq imtahanlarında iştirak edir, fərdi zəiflikləriniz üzərində işləyir və süni intellekt dəstəkli tədris proqramı ilə öyrənirsiniz. Təcrübəli müəllimlərimiz hər bir tələbəyə fərdi yanaşaraq onların potensialını maksimuma çatdırır.",
+      "preparationProcess": "Dərslərimiz həm rəsmi College Board materialları, həm də xüsusi olaraq seçilmiş beynəlxalq resurslar əsasında qurulur. Rəqəmsal formata tam uyğunlaşmaq üçün xüsusi test platformamız mövcuddur."
+    },
+    "ielts": {
+      "title": "IELTS Hazırlığı",
+      "description": "Qlobal təhsil və miqrasiya üçün ən çox tanınan ingilis dili testi. 4 fərqli bacarıq üzrə peşəkar inkişaf.",
+      "examInfo": "IELTS (International English Language Testing System) dünyada ən populyar ingilis dili testidir. 140-dan çox ölkədə 11,000-dən çox təşkilat tərəfindən tanınır. İmtahanın iki növü var: Academic (təhsil üçün) və General Training (iş və miqrasiya üçün).",
+      "format": "Test dörd bacarığı yoxlayır: Dinləmə (30 dəqiqə), Oxuma (60 dəqiqə), Yazma (60 dəqiqə) və Danışma (11-14 dəqiqə). Danışma imtahanı digər bölmələrdən fərqli gündə keçirilə bilər. Ümumi imtahan müddəti fasiləsiz olaraq təxminən 2 saat 45 dəqiqədir.",
+      "grading": "Qiymətləndirmə 9 ballıq şkala (Band Score) əsasında aparılır. Hər bir bacarıq ayrılıqda qiymətləndirilir və bunların ədədi ortası ümumi balı təşkil edir. Bir çox universitet magistratura üçün 6.5 və ya 7.0 bal tələb edir.",
+      "whyUs": "VaranColleges olaraq biz rəsmi IELTS materiallarından istifadə edirik. Müəllimlərimiz sertifikatlı mütəxəssislərdir və hər biri yüksək IELTS balına sahibdir. Speaking və Writing üzrə detallı feedback sessiyaları təşkil edirik.",
+      "preparationProcess": "Dərslər hər dörd bacarıq üzrə paralel aparılır. Mütəmadi Mock Exam-lər vasitəsilə real imtahan təcrübəsi yaşayırsınız. Xüsusi strategiyalar və 'time management' texnikaları öyrədilir."
+    },
+    "gmat": {
+      "title": "GMAT Hazırlığı",
+      "description": "Biznes dünyasının liderləri üçün ilk addım. MBA və idarəetmə proqramlarına qəbul açarı.",
+      "examInfo": "GMAT (Graduate Management Admission Test) dünyanın aparıcı biznes məktəbləri tərəfindən tələb olunan kompüter əsaslı adaptiv testdir. Bu imtahan real biznes mühitində uğur qazanmaq üçün vacib olan bacarıqları ölçür.",
+      "format": "GMAT Focus Edition dörd bölmədən ibarətdir: Kəmiyyət (Quantitative), Şifahi (Verbal) və Data Insights. Hər bölmə 45 dəqiqə davam edir. Yazı (AWA) bölməsi yeni formatda çıxarılmışdır. Ümumi müddət 2 saat 15 dəqiqədir.",
+      "grading": "Ümumi bal 205-805 aralığında dəyişir. Hər bölmə bərabər çəkiyə malikdir. Nəticələr imtahan bitdikdən dərhal sonra (rəsmi olmayan şəkildə) təqdim olunur.",
+      "whyUs": "GMAT hazırlığında riyazi və məntiqi təfəkkürün inkişafına xüsusi önəm veririk. Çətin sual tipləri üzərində intensiv işləyərək tələbələrimizin analitik bacarıqlarını artırırıq.",
+      "preparationProcess": "Kurs proqramı həm nəzəri bilikləri, həm də praktiki həll yollarını əhatə edir. Kompüter əsaslı sınaq imtahanları ilə adaptiv test mühitinə tam uyğunlaşma təmin edilir."
+    },
+    "toefl": {
+      "title": "TOEFL Hazırlığı",
+      "description": "Şimali Amerika təhsil standartlarına uyğun akademik ingilis dili.",
+      "examInfo": "TOEFL (Test of English as a Foreign Language) akademik mühitdə ingilis dili bacarıqlarını ölçən ən mötəbər testlərdən biridir. Xüsusilə ABŞ və Kanada universitetləri üçün əvəzolunmazdır.",
+      "format": "Yenilənmiş TOEFL iBT formatı daha qısadır və təxminən 2 saat davam edir. Oxuma, Dinləmə, Danışma və Yazma bölmələrini əhatə edir. 'Writing for an Academic Discussion' adlı yeni tapşırıq növü əlavə edilib.",
+      "grading": "Hər bölmə 30 bal, ümumi imtahan isə 120 bal üzərindən qiymətləndirilir. Yüksək reytinqli universitetlər adətən 100+ bal tələb edir.",
+      "whyUs": "TOEFL imtahanının spesifik strukturu və qiymətləndirmə meyarlarına bələd olan komandamızla yüksək nəticə əldə etmək daha asandır. Fərdi səhvlərin analizi bizim əsas üstünlüyümüzdür.",
+      "preparationProcess": "Dərslərdə akademik mətnlərin oxunması, mühazirələrin dinlənilməsi və akademik esselərin yazılması üzrə intensiv təcrübələr aparılır."
+    },
+    "yos": {
+      "title": "TR YÖS Hazırlığı",
+      "description": "Türkiyənin prestijli universitetlərində təhsil almaq xəyalınızı gerçəkləşdirin.",
+      "examInfo": "TR YÖS (Yabancı Uyruklu Öğrenci Sınavı) Türkiyədə ali təhsil almaq istəyən əcnəbilər üçün keçirilən mərkəzləşdirilmiş qəbul imtahanıdır. Bu imtahan ÖSYM tərəfindən təşkil olunur və Türkiyənin əksər universitetləri tərəfindən qəbul edilir.",
+      "format": "İmtahan əsasən Məntiq (IQ), Riyaziyyat və Həndəsə suallarından ibarətdir. TR YÖS formatında 80 sual təqdim olunur və 100 dəqiqə vaxt verilir.",
+      "grading": "Maksimum nəticə 500 bal üzərindən hesablanır. Səhv cavablar adətən düzgün cavablara təsir etmir (4 səhv 1 düzü aparmır), lakin qaydalar dəyişə bilər.",
+      "whyUs": "TR YÖS proqramımız Türkiyə təhsil sisteminə və yeni imtahan formatına tam uyğundur. Riyaziyyat və məntiq üzrə mütəxəssislərimiz sizə ən qısa həll yollarını öyrədir.",
+      "preparationProcess": "Sıfırdan başlayanlar və təkrar edənlər üçün fərqli qruplarımız mövcuddur. Hər mövzu bitdikdən sonra sınaq imtahanları ilə biliklər möhkəmləndirilir."
+    },
+    "gre": {
+      "title": "GRE Hazırlığı",
+      "description": "Akademik karyeranızın növbəti pilləsi. Magistr və doktorantura üçün qızıl standart.",
+      "examInfo": "GRE (Graduate Record Examinations) texniki, humanitar və biznes sahələrində magistratura təhsili üçün tələb olunur. Dünyanın minlərlə universiteti tərəfindən qəbul edilir.",
+      "format": "GRE General Test 3 hissədən ibarətdir: Verbal Reasoning (Şifahi məntiq), Quantitative Reasoning (Riyazi məntiq) və Analytical Writing (Analitik yazı). İmtahan müddəti 1 saat 58 dəqiqəyə endirilmişdir.",
+      "grading": "Verbal və Quantitative bölmələri 130-170 bal, Writing isə 0-6 bal aralığında qiymətləndirilir. Yaxşı bir nəticə üçün hər iki əsas bölmədən 160+ bal hədəflənməlidir.",
+      "whyUs": "GRE söz ehtiyatının (vocabulary) zənginləşdirilməsi və mürəkkəb mətnlərin analizi üzrə xüsusi metodikamız var. Riyazi hissədə isə vaxta qənaət edən həll üsulları öyrədilir.",
+      "preparationProcess": "Kurs müddətində rəsmi ETS materiallarından istifadə olunur. Tələbələrə həmçinin minlərlə sözdən ibarət rəqəmsal flashkartlar təqdim edilir."
+    },
+    "ab": {
+      "title": "AB Proqramı",
+      "description": "Orta məktəbdə universitet səviyyəsində təhsil. Qlobal uğurun təməli.",
+      "examInfo": "Advanced Placement (AP) proqramı College Board tərəfindən idarə olunur. Bu proqram şagirdlərə hələ məktəb illərində kollec səviyyəsində fənləri öyrənmək və kredit qazanmaq imkanı verir.",
+      "format": "İmtahanlar hər fənn üzrə fərqlidir, lakin adətən çoxseçimli suallar və açıq tipli (free-response) tapşırıqlardan ibarət olur. İmtahanlar may ayında keçirilir.",
+      "grading": "Nəticələr 1-5 bal şkalasında qiymətləndirilir. 3 'qualified', 4 'well qualified', 5 'extremely well qualified' hesab olunur. Bir çox universitet 3 və yuxarı balı kredit kimi qəbul edir.",
+      "whyUs": "Bizim tədris proqramımız şagirdlərin məktəb yükünü nəzərə alaraq hazırlanmışdır. Təcrübəli müəllimlərimiz AP kurikulumuna tam bələddir.",
+      "preparationProcess": "Fənn üzrə dərinləşdirilmiş dərslər, keçmiş imtahan suallarının analizi və imtahan strategiyaları tədrisin əsasını təşkil edir."
+    },
+    "ib": {
+      "title": "IB Proqramı",
+      "description": "Hərtərəfli inkişaf və qlobal vətəndaşlıq üçün Beynəlxalq Bakalavriat.",
+      "examInfo": "International Baccalaureate (IB) Diploma Programme 16-19 yaşlılar üçün nəzərdə tutulmuş nüfuzlu təhsil proqramıdır. Tələbələrin intellektual, sosial, emosional və fiziki inkişafını hədəfləyir.",
+      "format": "Tələbələr 6 fənn qrupundan dərslər alır. Əlavə olaraq TOK (Theory of Knowledge), CAS (Creativity, Activity, Service) və Extended Essay tələblərini yerinə yetirməlidirlər.",
+      "grading": "Maksimum bal 45-dir. Hər fənn 7 balla qiymətləndirilir (6x7=42), əlavə 3 bal isə nüvə komponentlərindən (TOK, EE) gəlir. Diplom almaq üçün minimum 24 bal lazımdır.",
+      "whyUs": "IB proqramının çətinliklərini başa düşürük və tələbələrə həm akademik, həm də psixoloji dəstək veririk. Internal Assessment (IA) və Extended Essay yazımında mentorluq edirik.",
+      "preparationProcess": "Dərslər tənqidi düşüncə və araşdırma bacarıqlarının inkişafına yönəlib. Hər fənn üzrə xüsusi materiallar və past paper-lər istifadə olunur."
+    },
+    "general-english": {
+      "title": "General English",
+      "description": "Sərhədsiz ünsiyyət azadlığı. İngilis dilini doğma diliniz kimi danışın.",
+      "examInfo": "General English kurslarımız CEFR (Common European Framework of Reference for Languages) standartlarına tam uyğundur. A1 (Beginner) səviyyəsindən C2 (Proficiency) səviyyəsinə qədər bütün mərhələləri əhatə edir.",
+      "format": "Dərslər kommunikativ metodika əsasında qurulub. Qrammatika, lüğət, oxu, yazı, dinləmə və ən əsası danışıq bacarıqları kompleks şəkildə inkişaf etdirilir.",
+      "grading": "Hər səviyyənin sonunda keçirilən yekun imtahan (Final Exam) və kurs boyu göstərilən aktivlik əsasında tələbənin növbəti səviyyəyə keçidi müəyyənləşdirilir.",
+      "whyUs": "Yalnız qrammatika öyrənməklə kifayətlənmirik, dilin real həyatda tətbiqinə önəm veririk. Danışıq klublarımız (Conversation Clubs) və xarici müəllimlərimizlə dil mühitini sizə gətiririk.",
+      "preparationProcess": "İnteraktiv dərslər, video və audio materiallar, rol oyunları və müzakirələr tədrisin ayrılmaz hissəsidir. Hər tələbəyə fərdi inkişaf planı hazırlanır."
     }
   }
 }

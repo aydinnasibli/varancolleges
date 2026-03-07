@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { studyAbroadData } from "@/lib/data/study-abroad";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations("StudyAbroad");
+
   return (
     <section className="relative py-24 bg-background-dark overflow-hidden min-h-[50vh] flex items-center">
       <div className="absolute inset-0 z-0">
@@ -16,10 +18,10 @@ const Hero = () => {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <h1 className="text-5xl lg:text-7xl font-serif font-medium text-white leading-tight mb-8">
-          Sərhədsiz <span className="text-accent italic">Təhsil</span>
+          {t("heroTitle")} <span className="text-accent italic"></span>
         </h1>
         <p className="text-lg md:text-xl text-slate-300 max-w-4xl mx-auto font-light leading-relaxed opacity-90">
-          {studyAbroadData.hero.description}
+          {t("heroDesc")}
         </p>
       </div>
     </section>

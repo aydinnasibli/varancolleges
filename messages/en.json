@@ -8,7 +8,15 @@
   },
   "Footer": {
     "language": "Language",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "brandDesc": "Premium education consultancy. Make the most reliable investment in your future with us. Professionalism and quality at every step.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "team": "Our Team",
+    "vacancies": "Vacancies",
+    "ielts": "IELTS Preparation",
+    "sat": "SAT Preparation",
+    "summer": "Summer Schools"
   },
   "Hero": {
     "title1": "Discover the",
@@ -44,7 +52,8 @@
     "address": "Address",
     "phone": "Phone",
     "email": "Email",
-    "workingHours": "Monday - Saturday, 09:00 - 18:00"
+    "workingHours": "Monday - Saturday, 09:00 - 18:00",
+    "noPosts": "There are no posts available at the moment."
   },
   "About": {
     "title": "About Us",
@@ -71,18 +80,299 @@
     "socialMedia": "Our Social Media Accounts",
     "findUsOnMap": "Find Us on the Map",
     "form": {
-        "title": "Send a Message",
-        "description": "We will get back to you as soon as possible",
-        "nameLabel": "Full Name",
-        "namePlaceholder": "Enter your full name",
-        "phoneLabel": "Phone",
-        "phonePlaceholder": "+994 -- --- -- --",
-        "emailLabel": "Email",
-        "emailPlaceholder": "Enter your email address",
-        "messageLabel": "Your Message",
-        "messagePlaceholder": "Write your question or message here...",
-        "submit": "Submit",
-        "submitting": "Submitting..."
+      "title": "Send a Message",
+      "description": "We will get back to you as soon as possible",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "phoneLabel": "Phone",
+      "phonePlaceholder": "+994 -- --- -- --",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "messageLabel": "Your Message",
+      "messagePlaceholder": "Write your question or message here...",
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    }
+  },
+  "StudyAbroad": {
+    "subtitle": "Global Opportunities",
+    "title": "Study Abroad Services",
+    "service1Title": "University Admission",
+    "service1Desc": "Full management of the admission process for bachelor's, master's and doctoral degrees to universities in the US, UK, Europe and Canada.",
+    "service1Feat1": "Preparation of documents",
+    "service1Feat2": "Motivation letters",
+    "service1Feat3": "Scholarship applications",
+    "service2Title": "Visa Support",
+    "service2Desc": "Professional support in the process of collecting the necessary documents for a student visa, filling out application forms and preparing for a consular interview.",
+    "service2Feat1": "Filling out visa forms",
+    "service2Feat2": "Interview simulation",
+    "service2Feat3": "Insurance and flight planning",
+    "heroTitle": "Education Without",
+    "heroSubtitle": "Borders",
+    "heroDesc": "At Varan Colleges, we direct our students to universities and colleges in the USA, Canada, Australia, European countries, and Turkey. Our goal is not just admission, but to provide professional support in choosing the right country, the right major, and the right university.",
+    "academicAdvice": {
+      "title": "Academic Advice and Career Planning",
+      "items": [
+        "Analysis of student's academic performance",
+        "Major selection according to interests and future plans",
+        "Country and university comparison",
+        "Presenting budget-friendly options",
+        "We do not make decisions for the student - we provide real and objective information to make the right decision."
+      ]
+    },
+    "admissionProcess": {
+      "title": "Admission Process and Documentation",
+      "description": "We process applications for bachelor's, master's, doctoral, foundation, and language programs.",
+      "items": [
+        "Applying to universities and colleges",
+        "Preparation of motivation letters",
+        "Editing CV and recommendation letters",
+        "Proper collection and submission of documents",
+        "Management of conditional or direct admission process"
+      ]
+    },
+    "visaSupport": {
+      "title": "Visa Support",
+      "description": "We are not the visa decision makers, but we fully manage the process for proper submission of documents.",
+      "items": [
+        "Proper preparation of documents",
+        "Direction on bank documents and proof of funds",
+        "Filling out visa forms",
+        "Interview preparation"
+      ]
+    },
+    "additionalServices": {
+      "title": "Additional Services",
+      "items": [
+        "Accommodation selection (campus or residence)",
+        "Airport pickup guidance",
+        "Insurance and registration support",
+        "Consultation during the study period"
+      ]
+    },
+    "countries": {
+      "usa": {
+        "name": "USA",
+        "description": "Global hub for education and innovation.",
+        "features": [
+          "Admission to universities and colleges",
+          "Community college and transfer programs",
+          "Conditional admission opportunities",
+          "Full support for F1 visa process"
+        ]
+      },
+      "canada": {
+        "name": "Canada",
+        "description": "High quality of life and career.",
+        "features": [
+          "Public and private colleges",
+          "Program selection eligible for Post-Graduation Work Permit (PGWP)",
+          "University transfer opportunities",
+          "Preparation of Study Permit documents"
+        ]
+      },
+      "australia": {
+        "name": "Australia",
+        "description": "Adventurous academic experience.",
+        "features": [
+          "University and TAFE programs",
+          "English language courses",
+          "Visa application and document preparation"
+        ]
+      },
+      "europe": {
+        "name": "Europe",
+        "description": "Diverse cultures and high-quality education.",
+        "features": [
+          "Germany, Italy, Hungary, France, Netherlands, and other countries",
+          "Public and private universities",
+          "Programs in English and local languages",
+          "Foundation and direct admission opportunities"
+        ]
+      },
+      "turkey": {
+        "name": "Turkey",
+        "description": "Quality education closest to us.",
+        "features": [
+          "Public and private universities",
+          "YÖS and international admission systems",
+          "Applications for medicine, engineering, and other majors"
+        ]
+      },
+      "uk": {
+        "name": "United Kingdom",
+        "description": "Centuries of education tradition.",
+        "features": [
+          "Admission to Russell Group universities",
+          "Foundation and Pre-Master programs",
+          "Tier 4 visa support",
+          "IELTS preparation and exam registration"
+        ]
+      }
+    },
+    "ctaTitle": "Limitless Future",
+    "ctaSubtitle": "Starts Here",
+    "ctaDesc": "Are you ready to be admitted to your dream university? If so, contact us today."
+  },
+  "Services": {
+    "title": "Our Services",
+    "desc": "Everything you need for quality education and a bright future is in one place. As VaranColleges, we are by your side to reach your goals.",
+    "parallaxTitle": "Education Without Borders",
+    "parallaxDesc": "The World is Your Campus"
+  },
+  "ServicesGrid": {
+    "subtitle": "Academic Development",
+    "title": "Language Courses and Exams",
+    "description": "Professional programs to improve your foreign language skills and international certificates.",
+    "viewDetails": "View Details"
+  },
+  "Blog": {
+    "title": "Blog & News",
+    "desc": "Read the latest information about studying abroad, exam preparation, and scholarship programs here."
+  },
+  "ApplicationModal": {
+    "title": "Apply Now",
+    "desc": "Take the first step for your education. Enter your details, let us contact you.",
+    "namePlaceholder": "Your Full Name",
+    "phonePlaceholder": "+994 50 123 45 67",
+    "messageLabel": "Additional Notes (Optional)",
+    "messagePlaceholder": "Questions you are interested in...",
+    "success": "Your application has been accepted!",
+    "error": "An error occurred."
+  },
+  "ServicePage": {
+    "freeConsultation": "Free Consultation",
+    "stats": {
+      "duration": "Duration",
+      "durationVal": "Custom Plan",
+      "lessons": "Lessons",
+      "lessonsVal": "2-3 times/week",
+      "result": "Result",
+      "resultVal": "Guaranteed",
+      "trial": "Trial",
+      "trialVal": "Free"
+    },
+    "tableOfContents": "Table of Contents",
+    "haveQuestion": "Have a Question?",
+    "expertsReady": "Our experts are ready to assist you.",
+    "contactUs": "Contact Us",
+    "generalInfo": "General Information",
+    "aboutExam": "About the Exam",
+    "format": "Format and Structure",
+    "grading": "Grading",
+    "whyUs": "Why Varan Colleges?",
+    "whyUsFeats": [
+      "Professional Teaching Staff",
+      "Individual Approach",
+      "Modern Methodology",
+      "Guaranteed Results"
+    ],
+    "process": "Preparation Process",
+    "processSteps": [
+      {
+        "title": "Diagnostic Assessment",
+        "desc": "Determining your initial level and setting goals."
+      },
+      {
+        "title": "Individual Plan",
+        "desc": "Preparation of a special lesson program according to your weak and strong points."
+      },
+      {
+        "title": "Intensive Teaching"
+      },
+      {
+        "title": "Mock Exams",
+        "desc": "Regular checks and results analysis in a real exam environment."
+      },
+      {
+        "title": "Reach the Goal",
+        "desc": "Psychological preparation and successful outcome for the exam day."
+      }
+    ],
+    "ctaTitle": "Plan Your Future with Us",
+    "ctaDesc": "Our professional team will help you choose the most suitable education path. The first consultation is completely free."
+  },
+  "ServicesData": {
+    "sat": {
+      "title": "SAT Preparation",
+      "description": "The primary standardized test for admission to US and global universities. Maximize your Math and English skills.",
+      "examInfo": "The SAT (Scholastic Assessment Test) is a standardized test widely used for college admissions in the United States. It evaluates how students apply the knowledge they've learned in school to university-level tasks.",
+      "format": "The new digital SAT consists of two main sections: Reading and Writing, and Math. Both sections are divided into two modules. The total exam time is approximately 2 hours and 14 minutes.",
+      "grading": "Each section (Reading/Writing and Math) is scored on a scale of 200-800. The total SAT score ranges from 400 to 1600. There is no penalty for guessing (incorrect answers do not deduct points).",
+      "whyUs": "During SAT preparation with us, you will take weekly mock exams, work on individual weaknesses, and learn through an AI-supported curriculum. Our experienced teachers apply an individual approach to maximize every student's potential.",
+      "preparationProcess": "Our classes are based on both official College Board materials and specially selected international resources. We have a dedicated test platform to fully adapt to the digital format."
+    },
+    "ielts": {
+      "title": "IELTS Preparation",
+      "description": "The world's most popular English language test for global education and migration. Professional development across 4 skills.",
+      "examInfo": "IELTS (International English Language Testing System) is the most popular English language test in the world. It is recognized by over 11,000 organizations in more than 140 countries. There are two types: Academic (for study) and General Training (for work and migration).",
+      "format": "The test evaluates four skills: Listening (30 minutes), Reading (60 minutes), Writing (60 minutes), and Speaking (11-14 minutes). The Speaking test may be held on a different day. Total continuous exam time is about 2 hours and 45 minutes.",
+      "grading": "Scoring is based on a 9-band scale. Each skill is scored separately, and the average forms the overall band score. Many universities require a 6.5 or 7.0 for master's programs.",
+      "whyUs": "At VaranColleges, we use official IELTS materials. Our teachers are certified specialists with high IELTS scores. We organize detailed feedback sessions for Speaking and Writing.",
+      "preparationProcess": "Classes are conducted parallelly for all four skills. You experience real exam environments through regular Mock Exams. Special strategies and time management techniques are taught."
+    },
+    "gmat": {
+      "title": "GMAT Preparation",
+      "description": "The first step for business world leaders. The key to admission into MBA and management programs.",
+      "examInfo": "The GMAT (Graduate Management Admission Test) is a computer adaptive test required by leading business schools globally. It measures skills crucial for success in the real business environment.",
+      "format": "The GMAT Focus Edition consists of four sections: Quantitative, Verbal, and Data Insights. Each section takes 45 minutes. The Analytical Writing (AWA) section has been removed in the new format. Total duration is 2 hours 15 minutes.",
+      "grading": "The total score ranges from 205 to 805. Each section carries equal weight. Unofficial results are provided immediately after completing the exam.",
+      "whyUs": "In GMAT preparation, we pay special attention to the development of mathematical and logical thinking. We intensively work on difficult question types to enhance our students' analytical skills.",
+      "preparationProcess": "The course program covers both theoretical knowledge and practical solutions. Complete adaptation to the adaptive test environment is ensured through computer-based mock exams."
+    },
+    "toefl": {
+      "title": "TOEFL Preparation",
+      "description": "Academic English matching North American education standards.",
+      "examInfo": "TOEFL (Test of English as a Foreign Language) is one of the most respected tests that measures English language skills in an academic setting. It is indispensable especially for US and Canadian universities.",
+      "format": "The updated TOEFL iBT format is shorter and lasts about 2 hours. It includes Reading, Listening, Speaking, and Writing sections. A new task type called 'Writing for an Academic Discussion' has been added.",
+      "grading": "Each section is scored out of 30, with a maximum total score of 120. Top-ranked universities typically require a score of 100+.",
+      "whyUs": "With our team familiar with the specific structure and grading criteria of the TOEFL exam, achieving a high score is easier. Individual error analysis is our main advantage.",
+      "preparationProcess": "Classes involve intensive practice in reading academic texts, listening to lectures, and writing academic essays."
+    },
+    "yos": {
+      "title": "TR YÖS Preparation",
+      "description": "Make your dream of studying at prestigious universities in Turkey a reality.",
+      "examInfo": "TR YÖS (Foreign Student Examination) is a centralized admission exam for foreigners wishing to pursue higher education in Turkey. This exam is organized by ÖSYM and accepted by most universities in Turkey.",
+      "format": "The exam mainly consists of Logic (IQ), Mathematics, and Geometry questions. The TR YÖS format features 80 questions to be completed in 100 minutes.",
+      "grading": "The maximum score is calculated out of 500. Generally, wrong answers do not affect correct ones (4 wrongs do not cancel 1 right), though rules can change.",
+      "whyUs": "Our TR YÖS program is fully adapted to the Turkish education system and the new exam format. Our specialists in mathematics and logic teach you the shortest solution methods.",
+      "preparationProcess": "We have different groups for absolute beginners and those revising. After completing each topic, knowledge is consolidated with mock exams."
+    },
+    "gre": {
+      "title": "GRE Preparation",
+      "description": "The next step in your academic career. The gold standard for Master's and Doctoral programs.",
+      "examInfo": "The GRE (Graduate Record Examinations) is required for graduate studies in technical, humanities, and business fields. It is accepted by thousands of universities worldwide.",
+      "format": "The GRE General Test consists of 3 parts: Verbal Reasoning, Quantitative Reasoning, and Analytical Writing. The exam duration has been reduced to 1 hour and 58 minutes.",
+      "grading": "The Verbal and Quantitative sections are scored between 130-170, and Writing from 0-6. For a competitive result, one should aim for 160+ in both main sections.",
+      "whyUs": "We have a special methodology for enriching GRE vocabulary and analyzing complex texts. For the mathematical section, time-saving solution methods are taught.",
+      "preparationProcess": "Official ETS materials are used during the course. Students are also provided with digital flashcards containing thousands of words."
+    },
+    "ab": {
+      "title": "AP Program",
+      "description": "University-level education in high school. The foundation of global success.",
+      "examInfo": "The Advanced Placement (AP) program is managed by the College Board. This program allows students to study college-level subjects and earn college credits while still in high school.",
+      "format": "Exams vary by subject but typically consist of multiple-choice questions and free-response tasks. Exams are held in May.",
+      "grading": "Results are scored on a 1-5 scale. A 3 is 'qualified', 4 is 'well qualified', and 5 is 'extremely well qualified'. Many universities accept scores of 3 and above for college credit.",
+      "whyUs": "Our teaching program is designed considering students' school workloads. Our experienced teachers are fully familiar with the AP curriculum.",
+      "preparationProcess": "In-depth subject classes, analysis of past exam questions, and exam strategies form the core of our instruction."
+    },
+    "ib": {
+      "title": "IB Program",
+      "description": "The International Baccalaureate for comprehensive development and global citizenship.",
+      "examInfo": "The International Baccalaureate (IB) Diploma Programme is a prestigious educational program for 16-19 year olds. It aims at the intellectual, social, emotional, and physical development of students.",
+      "format": "Students take courses from 6 subject groups. Additionally, they must fulfill the requirements for TOK (Theory of Knowledge), CAS (Creativity, Activity, Service), and the Extended Essay.",
+      "grading": "The maximum score is 45. Each subject is graded out of 7 (6x7=42), and an additional 3 points come from the core components (TOK, EE). A minimum of 24 points is required to earn the diploma.",
+      "whyUs": "We understand the challenges of the IB program and provide both academic and psychological support to students. We offer mentorship in writing Internal Assessments (IA) and the Extended Essay.",
+      "preparationProcess": "Classes focus on developing critical thinking and research skills. Special materials and past papers for each subject are utilized."
+    },
+    "general-english": {
+      "title": "General English",
+      "description": "Limitless freedom of communication. Speak English like your mother tongue.",
+      "examInfo": "Our General English courses fully comply with CEFR (Common European Framework of Reference for Languages) standards. They cover all stages from A1 (Beginner) to C2 (Proficiency).",
+      "format": "Classes are based on communicative methodology. Grammar, vocabulary, reading, writing, listening, and most importantly, speaking skills are developed comprehensively.",
+      "grading": "Progression to the next level is determined by the Final Exam held at the end of each level and active participation throughout the course.",
+      "whyUs": "We don't just teach grammar; we emphasize the application of language in real life. We bring the language environment to you with our Conversation Clubs and foreign teachers.",
+      "preparationProcess": "Interactive lessons, video and audio materials, role-plays, and discussions are integral parts of the instruction. An individual development plan is prepared for every student."
     }
   }
 }
