@@ -22,7 +22,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'ServicesPage' });
+
   return (
     <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
@@ -38,16 +41,16 @@ export default function ServicesPage() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 tracking-tight">
-                Xidmətlərimiz
+                {t('heroTitle')}
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mb-8"></div>
             <p className="text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-                Keyfiyyətli təhsil və parlaq gələcək üçün ehtiyacınız olan hər şey bir ünvanda. VaranColleges olaraq hədəflərinizə çatmağınız üçün yanınızdayıq.
+                {t('heroDesc')}
             </p>
             <div className="mt-12 flex justify-center gap-2 text-sm text-slate-400 uppercase tracking-widest font-medium">
-                <Link href="/" className="hover:text-white transition-colors">Ana Səhifə</Link>
+                <Link href="/" className="hover:text-white transition-colors">{t('home')}</Link>
                 <span className="text-accent">•</span>
-                <span className="text-white">Xidmətlər</span>
+                <span className="text-white">{t('services')}</span>
             </div>
         </div>
       </section>
@@ -61,8 +64,8 @@ export default function ServicesPage() {
       >
         <div className="absolute inset-0 bg-primary/60 backdrop-blur-[2px] flex items-center justify-center">
             <div className="text-center px-4">
-                <h3 className="text-3xl md:text-5xl font-serif text-white mb-4">Sərhədsiz Təhsil</h3>
-                <p className="text-accent-light text-lg font-light tracking-wide">Dünya Sizin Kampusunuzdur</p>
+                <h3 className="text-3xl md:text-5xl font-serif text-white mb-4">{t('borderlessEducation')}</h3>
+                <p className="text-accent-light text-lg font-light tracking-wide">{t('worldIsYourCampus')}</p>
             </div>
         </div>
       </div>

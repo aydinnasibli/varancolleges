@@ -1,26 +1,25 @@
-import { servicesData } from "@/lib/services-data";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { ArrowLeft, CheckCircle2, Clock, CalendarDays, Award } from "lucide-react";
-import { Link } from "@/i18n/routing";
-import Image from "next/image";
+import { servicesData } from "@/lib/services-data";
 import { Button } from "@/components/ui/button";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
+import { Clock, CalendarDays, Award, CheckCircle2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { Metadata } from 'next';
 
-type Props = {
-  params: Promise<{ locale: string; slug: string }>;
-};
-
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
+  const t = await getTranslations({ locale, namespace: 'ServicesData' });
   const tData = await getTranslations({ locale, namespace: `ServicesData.${slug}` });
+
   const canonical = locale === 'az' ? `https://www.varancolleges.com/services/${slug}` : `https://www.varancolleges.com/${locale}/services/${slug}`;
 
+  // Use a fallback for the title since not all slugs might be in the translations yet (but we expect them to be)
+  const title = tData('title') || 'VaranColleges';
+
   return {
-    title: tData('title'),
-    description: tData('description'),
+    title,
     alternates: {
       canonical,
       languages: {
@@ -32,43 +31,34 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-export default async function ServicePage({ params }: Props) {
-  const { slug } = await params;
-  const service = servicesData.find((s) => s.slug === slug);
-  const t = await getTranslations("ServicePage");
-  const tData = await getTranslations(`ServicesData.${slug}`);
-  const tNav = await getTranslations("Navigation");
+export default async function ServiceDetailsPage({ params }: { params: Promise<{ locale: string, slug: string }> }) {
+  const { slug, locale } = await params;
+  const service = servicesData.find(s => s.slug === slug);
 
   if (!service) {
     notFound();
   }
 
+  const tNav = await getTranslations({ locale, namespace: "Navigation" });
+  const t = await getTranslations({ locale, namespace: "ServicesData" });
+  const tData = await getTranslations({ locale, namespace: `ServicesData.${slug}` });
+
   return (
     <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
 
-      {/* Modern Hero Section */}
-      <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
-          <Image
-            src={service.heroImage}
-            alt={tData("title")}
-            fill
-            className="object-cover opacity-40 scale-105 animate-pulse-slow"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-background-dark/90 to-transparent" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
+          <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-primary/30 rounded-full blur-[100px] mix-blend-screen pointer-events-none" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl space-y-8 animate-in slide-in-from-bottom-10 fade-in duration-700">
-             <Link href="/services" className="inline-flex items-center text-accent/80 hover:text-accent mb-4 transition-colors text-sm font-medium tracking-wide uppercase">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                {tNav("services")}
-             </Link>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white tracking-tight leading-none">
-              {tData("title").split(' ').map((word: string, i: number) => (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl">
+            <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-[1.1] tracking-tight">
+              {tData("title").split(" ").map((word: string, i: number) => (
                 <span key={i} className="block">{word}</span>
               ))}
             </h1>
@@ -99,10 +89,10 @@ export default async function ServicePage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
             {[
-              { icon: Clock, label: "Müddət", value: "Fərdi Plan" },
-              { icon: CalendarDays, label: "Dərslər", value: "Həftədə 2-3 dəfə" },
-              { icon: Award, label: "Nəticə", value: "Zəmanətli" },
-              { icon: CheckCircle2, label: "Sınaq", value: "Ödənişsiz" },
+              { icon: Clock, label: t("duration"), value: t("personalPlan") },
+              { icon: CalendarDays, label: t("lessons"), value: t("twiceAWeek") },
+              { icon: Award, label: t("result"), value: t("guaranteed") },
+              { icon: CheckCircle2, label: t("mockExam"), value: t("free") },
             ].map((stat, i) => (
               <div key={i} className="py-8 px-6 flex items-center justify-center md:justify-start gap-4 group hover:bg-white/5 transition-colors cursor-default">
                 <div className="p-3 rounded-full bg-accent/10 text-accent group-hover:scale-110 transition-transform duration-300">
@@ -127,9 +117,9 @@ export default async function ServicePage({ params }: Props) {
             <div className="hidden lg:block col-span-3">
               <div className="sticky top-32 space-y-8">
                 <div>
-                  <h3 className="text-white font-serif text-xl mb-6">Mündəricat</h3>
+                  <h3 className="text-white font-serif text-xl mb-6">{t("tableOfContents")}</h3>
                   <ul className="space-y-4 text-sm text-slate-400 border-l border-white/10 pl-4">
-                    {["İmtahan Haqqında", "Format və Struktur", "Qiymətləndirmə", "Niyə Varan Colleges?", "Hazırlıq Prosesi"].map((item, i) => (
+                    {[t("generalInfo"), t("format"), t("grading"), t("whyUs"), t("process")].map((item, i) => (
                       <li key={i}>
                         <a href={`#section-${i}`} className="hover:text-accent transition-colors block py-1 relative group">
                           <span className="absolute -left-[17px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -140,12 +130,12 @@ export default async function ServicePage({ params }: Props) {
                   </ul>
                 </div>
                 <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-background-dark border border-white/10">
-                  <h4 className="text-white font-serif text-lg mb-2">Sualınız var?</h4>
+                  <h4 className="text-white font-serif text-lg mb-2">{t("haveQuestion")}</h4>
                   <p className="text-slate-400 text-sm mb-6 font-light">
-                    Mütəxəssislərimiz sizə kömək etməyə hazırdır.
+                    {t("expertsReady")}
                   </p>
                   <ApplicationModal>
-                    <Button variant="accent" className="w-full">Əlaqə Saxlayın</Button>
+                    <Button variant="accent" className="w-full">{t("contactUs")}</Button>
                   </ApplicationModal>
                 </div>
               </div>
@@ -171,7 +161,7 @@ export default async function ServicePage({ params }: Props) {
                   </div>
                   <h3 className="text-2xl font-serif text-white mb-4">{t("format")}</h3>
                   <p className="text-slate-400 leading-relaxed font-light">
-                    {tData("format")}
+                    {tData.has("format") ? tData("format") : tData("examInfo")}
                   </p>
                 </div>
                 <div id="section-2" className="glass-card p-8 rounded-2xl border border-white/5 scroll-mt-32 hover:border-accent/30 transition-colors duration-500">
@@ -180,7 +170,7 @@ export default async function ServicePage({ params }: Props) {
                   </div>
                   <h3 className="text-2xl font-serif text-white mb-4">{t("grading")}</h3>
                   <p className="text-slate-400 leading-relaxed font-light">
-                    {tData("grading")}
+                    {tData.has("grading") ? tData("grading") : tData("examInfo")}
                   </p>
                 </div>
               </div>
@@ -191,10 +181,11 @@ export default async function ServicePage({ params }: Props) {
                 <div className="relative z-10">
                    <h2 className="text-3xl font-serif text-white mb-6">{t("whyUs")}</h2>
                    <p className="text-slate-300 text-lg leading-relaxed font-light mb-8">
-                     {tData("whyUs")}
+                     {tData.has("whyUs") ? tData("whyUs") : ""}
                    </p>
+                   {/* If there are specific why us features we can map them, otherwise omit or use a generic list */}
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {t.raw("whyUsFeats").map((feature: string, i: number) => (
+                      {t.raw("whyUsFeats")?.map((feature: string, i: number) => (
                         <div key={i} className="flex items-center gap-3 text-slate-200">
                           <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
                           <span>{feature}</span>
@@ -208,7 +199,7 @@ export default async function ServicePage({ params }: Props) {
               <div id="section-4" className="scroll-mt-32">
                  <h2 className="text-3xl md:text-4xl font-serif text-white mb-12">{t("process")}</h2>
                  <div className="space-y-12 relative before:absolute before:left-[19px] before:top-2 before:bottom-0 before:w-[2px] before:bg-white/5">
-                    {t.raw("processSteps").map((step: any, i: number) => (
+                    {t.raw("processSteps")?.map((step: any, i: number) => (
                       <div key={i} className="relative pl-16 group">
                          <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-background-dark border border-white/10 flex items-center justify-center text-sm font-serif font-bold text-accent group-hover:border-accent transition-colors z-10 shadow-[0_0_15px_-5px_black]">
                            {i + 1}

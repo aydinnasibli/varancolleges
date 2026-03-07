@@ -1,54 +1,45 @@
-import { useTranslations } from "next-intl";
+import { FileText, Building } from "lucide-react";
+import { getStudyAbroadData } from "@/lib/data/study-abroad";
 
-const ServicesSection = () => {
-  const t = useTranslations("StudyAbroad");
+const ServicesSection = async ({ locale }: { locale: string }) => {
+  const studyAbroadData = await getStudyAbroadData(locale);
 
   return (
-    <section className="py-24 bg-background-dark border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
-
-          {/* Viza Dəstəyi */}
-          <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/30 transition-all duration-300 group">
-            <h2 className="text-3xl font-serif text-white mb-6 flex items-center gap-4">
-              {t("visaSupport.title")}
+    <section className="py-24 bg-primary text-slate-300 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#05080f]/80 to-[#05080f]/95 z-0"></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="space-y-8">
+            <h2 className="text-3xl md:text-4xl font-serif text-white flex items-center gap-4">
+              <FileText className="w-10 h-10 text-accent" />
+              {studyAbroadData.visaSupport.title}
             </h2>
-            <p className="text-slate-400 mb-8 font-light leading-relaxed">
-              {t("visaSupport.description")}
+            <p className="text-lg font-light leading-relaxed">
+              {studyAbroadData.visaSupport.description}
             </p>
             <ul className="space-y-4">
-              {t.raw("visaSupport.items").map((item: string, index: number) => (
-                <li key={index} className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-accent group-hover:text-background-dark transition-all duration-300">
-                    <span className="text-accent text-sm group-hover:text-background-dark transition-colors duration-300">✓</span>
-                  </div>
-                  <span className="text-slate-300 font-light group-hover:text-white transition-colors duration-300">
-                    {item}
-                  </span>
+              {studyAbroadData.visaSupport.items.map((item, index) => (
+                <li key={index} className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
+                  <span className="font-light">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Əlavə Xidmətlər */}
-          <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-accent/30 transition-all duration-300 group">
-            <h2 className="text-3xl font-serif text-white mb-6">
-              {t("additionalServices.title")}
+          <div className="space-y-8">
+            <h2 className="text-3xl md:text-4xl font-serif text-white flex items-center gap-4">
+              <Building className="w-10 h-10 text-accent" />
+              {studyAbroadData.additionalServices.title}
             </h2>
-            <ul className="space-y-4 mt-8">
-              {t.raw("additionalServices.items").map((item: string, index: number) => (
-                <li key={index} className="flex items-start">
-                  <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-accent group-hover:text-background-dark transition-all duration-300">
-                    <span className="text-accent text-sm group-hover:text-background-dark transition-colors duration-300">+</span>
-                  </div>
-                  <span className="text-slate-300 font-light group-hover:text-white transition-colors duration-300">
-                    {item}
-                  </span>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {studyAbroadData.additionalServices.items.map((item, index) => (
+                <li key={index} className="glass-card p-6 rounded-xl hover:border-accent/30 transition-colors">
+                  <span className="font-light text-sm">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
-
         </div>
       </div>
     </section>

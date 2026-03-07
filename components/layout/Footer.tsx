@@ -3,19 +3,19 @@ import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const Footer = () => {
-  const tNav = useTranslations("Navigation");
-  const tFoot = useTranslations("Footer");
-  const tGen = useTranslations("General");
+const Footer = async () => {
+  const tNav = await getTranslations("Navigation");
+  const tFoot = await getTranslations("Footer");
+  const tGen = await getTranslations("General");
 
   return (
     <footer className="bg-background-dark border-t border-white/5 pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand & Social */}
-          <div className="col-span-1 md:col-span-1">
+          <div className="col-span-1">
             <div className="mb-8">
               <Link href="/">
                 <Image
@@ -46,9 +46,8 @@ const Footer = () => {
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
                 { label: tNav("studyAbroad"), href: "/study-abroad" },
-                { label: tFoot("ielts"), href: "#" },
-                { label: tFoot("sat"), href: "#" },
-                { label: tFoot("summer"), href: "#" }
+                { label: tFoot("ielts"), href: "/services/ielts" },
+                { label: tFoot("sat"), href: "/services/sat" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
@@ -66,9 +65,8 @@ const Footer = () => {
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
                 { label: tNav("about"), href: "/about" },
-                { label: tFoot("team"), href: "#" },
-                { label: tFoot("vacancies"), href: "#" },
-                { label: tNav("blog"), href: "/blog" }
+                { label: tNav("blog"), href: "/blog" },
+                { label: tNav("contact"), href: "/contact" }
               ].map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
@@ -90,7 +88,10 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="text-white mb-1 font-medium">{tGen("address")}</p>
-                  <p className="group-hover:text-white transition-colors leading-relaxed">137A Samad Vurgun,<br/>Baku 1022, Azerbaijan</p>
+                  <p className="group-hover:text-white transition-colors leading-relaxed">
+                    137A Samad Vurgun,<br/>
+                    Baku 1022, Azerbaijan
+                  </p>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">
@@ -117,11 +118,9 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-600 text-xs">© 2026 VaranColleges. {tFoot("rights")}</p>
+          <p className="text-slate-600 text-xs">© {new Date().getFullYear()} VaranColleges. {tFoot("rights")}</p>
           <div className="flex items-center space-x-8 text-xs text-slate-600">
             <LanguageSwitcher />
-            <Link href="#" className="hover:text-white transition-colors">{tFoot("privacy")}</Link>
-            <Link href="#" className="hover:text-white transition-colors">{tFoot("terms")}</Link>
           </div>
         </div>
       </div>

@@ -243,12 +243,19 @@
   "ApplicationModal": {
     "title": "Apply Now",
     "desc": "Take the first step for your education. Enter your details, let us contact you.",
+    "nameLabel": "Full Name",
     "namePlaceholder": "Your Full Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "example@mail.com",
+    "phoneLabel": "Phone Number",
     "phonePlaceholder": "+994 50 123 45 67",
     "messageLabel": "Additional Notes (Optional)",
     "messagePlaceholder": "Questions you are interested in...",
+    "submit": "Submit",
+    "submitting": "Submitting...",
     "success": "Your application has been accepted!",
-    "error": "An error occurred."
+    "error": "An error occurred.",
+    "unexpectedError": "An unexpected error occurred."
   },
   "ServicePage": {
     "freeConsultation": "Free Consultation",
@@ -305,84 +312,469 @@
   "ServicesData": {
     "sat": {
       "title": "SAT Preparation",
-      "description": "The primary standardized test for admission to US and global universities. Maximize your Math and English skills.",
-      "examInfo": "The SAT (Scholastic Assessment Test) is a standardized test widely used for college admissions in the United States. It evaluates how students apply the knowledge they've learned in school to university-level tasks.",
-      "format": "The new digital SAT consists of two main sections: Reading and Writing, and Math. Both sections are divided into two modules. The total exam time is approximately 2 hours and 14 minutes.",
+      "description": "The main standardized test for admission to US and other global universities. Maximize your Math and English skills.",
+      "examInfo": "The SAT (Scholastic Assessment Test) is a standardized test widely used for college admissions in the United States. It evaluates how students apply the knowledge they've learned in school to university-level tasks. The main purpose is to assess students' critical thinking and problem-solving skills.",
+      "format": "The new Digital SAT consists of two main sections: Reading and Writing, and Math. Both sections are divided into two modules. The total exam duration is about 2 hours and 14 minutes.",
       "grading": "Each section (Reading/Writing and Math) is scored on a scale of 200-800. The total SAT score ranges from 400 to 1600. There is no penalty for guessing (incorrect answers do not deduct points).",
-      "whyUs": "During SAT preparation with us, you will take weekly mock exams, work on individual weaknesses, and learn through an AI-supported curriculum. Our experienced teachers apply an individual approach to maximize every student's potential.",
-      "preparationProcess": "Our classes are based on both official College Board materials and specially selected international resources. We have a dedicated test platform to fully adapt to the digital format."
+      "whyUs": "During SAT preparation with us, you will take weekly mock exams, work on individual weaknesses, and learn through an AI-supported curriculum. Our experienced teachers apply an individual approach to maximize every student's potential."
     },
     "ielts": {
       "title": "IELTS Preparation",
       "description": "The world's most popular English language test for global education and migration. Professional development across 4 skills.",
       "examInfo": "IELTS (International English Language Testing System) is the most popular English language test in the world. It is recognized by over 11,000 organizations in more than 140 countries. There are two types: Academic (for study) and General Training (for work and migration).",
       "format": "The test evaluates four skills: Listening (30 minutes), Reading (60 minutes), Writing (60 minutes), and Speaking (11-14 minutes). The Speaking test may be held on a different day. Total continuous exam time is about 2 hours and 45 minutes.",
-      "grading": "Scoring is based on a 9-band scale. Each skill is scored separately, and the average forms the overall band score. Many universities require a 6.5 or 7.0 for master's programs.",
-      "whyUs": "At VaranColleges, we use official IELTS materials. Our teachers are certified specialists with high IELTS scores. We organize detailed feedback sessions for Speaking and Writing.",
-      "preparationProcess": "Classes are conducted parallelly for all four skills. You experience real exam environments through regular Mock Exams. Special strategies and time management techniques are taught."
+      "grading": "Each section is graded from 0 to 9 in half or full bands (e.g., 6.5, 7.0). The Overall score is the average of these four sections.",
+      "whyUs": "With our experienced IELTS experts, mock exams, and individual analyses, we guarantee your target score."
     },
     "gmat": {
       "title": "GMAT Preparation",
       "description": "The first step for business world leaders. The key to admission into MBA and management programs.",
       "examInfo": "The GMAT (Graduate Management Admission Test) is a computer adaptive test required by leading business schools globally. It measures skills crucial for success in the real business environment.",
       "format": "The GMAT Focus Edition consists of four sections: Quantitative, Verbal, and Data Insights. Each section takes 45 minutes. The Analytical Writing (AWA) section has been removed in the new format. Total duration is 2 hours 15 minutes.",
-      "grading": "The total score ranges from 205 to 805. Each section carries equal weight. Unofficial results are provided immediately after completing the exam.",
-      "whyUs": "In GMAT preparation, we pay special attention to the development of mathematical and logical thinking. We intensively work on difficult question types to enhance our students' analytical skills.",
-      "preparationProcess": "The course program covers both theoretical knowledge and practical solutions. Complete adaptation to the adaptive test environment is ensured through computer-based mock exams."
+      "grading": "The total score is calculated on a scale of 205-805. All three sections weigh equally on the total score. Because the test is adaptive, correctly answering the initial questions significantly impacts getting a high score.",
+      "whyUs": "In GMAT preparation, we pay special attention to the development of mathematical and logical thinking. We intensively work on difficult question types to enhance our students' analytical skills."
     },
     "toefl": {
       "title": "TOEFL Preparation",
-      "description": "Academic English matching North American education standards.",
+      "description": "Complete integration into the global academic environment, particularly in the US and Canada.",
       "examInfo": "TOEFL (Test of English as a Foreign Language) is one of the most respected tests that measures English language skills in an academic setting. It is indispensable especially for US and Canadian universities.",
       "format": "The updated TOEFL iBT format is shorter and lasts about 2 hours. It includes Reading, Listening, Speaking, and Writing sections. A new task type called 'Writing for an Academic Discussion' has been added.",
-      "grading": "Each section is scored out of 30, with a maximum total score of 120. Top-ranked universities typically require a score of 100+.",
-      "whyUs": "With our team familiar with the specific structure and grading criteria of the TOEFL exam, achieving a high score is easier. Individual error analysis is our main advantage.",
-      "preparationProcess": "Classes involve intensive practice in reading academic texts, listening to lectures, and writing academic essays."
+      "grading": "Each section is graded on a scale of 0-30. The maximum total score is 120. Competitive universities usually require a score of 90-100+.",
+      "whyUs": "We specialize in complete adaptation to the computer-based testing environment and strengthening the academic vocabulary base."
     },
     "yos": {
       "title": "TR YÖS Preparation",
-      "description": "Make your dream of studying at prestigious universities in Turkey a reality.",
+      "description": "The unified exam to study at Turkey's best public and private universities.",
       "examInfo": "TR YÖS (Foreign Student Examination) is a centralized admission exam for foreigners wishing to pursue higher education in Turkey. This exam is organized by ÖSYM and accepted by most universities in Turkey.",
-      "format": "The exam mainly consists of Logic (IQ), Mathematics, and Geometry questions. The TR YÖS format features 80 questions to be completed in 100 minutes.",
+      "format": "The exam mainly consists of Logic (IQ), Math, and Geometry questions. The TR YÖS format features 80 questions to be answered in 100 minutes.",
       "grading": "The maximum score is calculated out of 500. Generally, wrong answers do not affect correct ones (4 wrongs do not cancel 1 right), though rules can change.",
-      "whyUs": "Our TR YÖS program is fully adapted to the Turkish education system and the new exam format. Our specialists in mathematics and logic teach you the shortest solution methods.",
-      "preparationProcess": "We have different groups for absolute beginners and those revising. After completing each topic, knowledge is consolidated with mock exams."
+      "whyUs": "Our TR YÖS program is fully aligned with the Turkish education system and the new exam format. Our math and logic experts teach you the shortest solution methods."
     },
     "gre": {
       "title": "GRE Preparation",
-      "description": "The next step in your academic career. The gold standard for Master's and Doctoral programs.",
-      "examInfo": "The GRE (Graduate Record Examinations) is required for graduate studies in technical, humanities, and business fields. It is accepted by thousands of universities worldwide.",
+      "description": "The universal admission test opening doors to master's and doctoral education.",
+      "examInfo": "The GRE (Graduate Record Examinations) is the main test required for admission to master's and PhD programs in engineering, humanities, and exact sciences.",
       "format": "The GRE General Test consists of 3 parts: Verbal Reasoning, Quantitative Reasoning, and Analytical Writing. The exam duration has been reduced to 1 hour and 58 minutes.",
       "grading": "The Verbal and Quantitative sections are scored between 130-170, and Writing from 0-6. For a competitive result, one should aim for 160+ in both main sections.",
-      "whyUs": "We have a special methodology for enriching GRE vocabulary and analyzing complex texts. For the mathematical section, time-saving solution methods are taught.",
-      "preparationProcess": "Official ETS materials are used during the course. Students are also provided with digital flashcards containing thousands of words."
+      "whyUs": "We have a special methodology for enriching GRE vocabulary and analyzing complex texts. For the mathematical section, time-saving solution methods are taught."
     },
     "ab": {
-      "title": "AP Program",
-      "description": "University-level education in high school. The foundation of global success.",
+      "title": "AP (Advanced Placement)",
+      "description": "Opportunity to study at the college level and earn university credits during school years.",
       "examInfo": "The Advanced Placement (AP) program is managed by the College Board. This program allows students to study college-level subjects and earn college credits while still in high school.",
-      "format": "Exams vary by subject but typically consist of multiple-choice questions and free-response tasks. Exams are held in May.",
-      "grading": "Results are scored on a 1-5 scale. A 3 is 'qualified', 4 is 'well qualified', and 5 is 'extremely well qualified'. Many universities accept scores of 3 and above for college credit.",
-      "whyUs": "Our teaching program is designed considering students' school workloads. Our experienced teachers are fully familiar with the AP curriculum.",
-      "preparationProcess": "In-depth subject classes, analysis of past exam questions, and exam strategies form the core of our instruction."
+      "format": "Exams vary by subject (Calculus, Physics, Biology, History, etc.). They usually consist of multiple-choice and free-response questions.",
+      "grading": "AP exams are scored on a scale from 1 to 5. Most universities require a minimum score of 3 or 4 to grant credit.",
+      "whyUs": "Our teaching program is designed considering students' school workloads. Our experienced teachers are fully familiar with the AP curriculum."
     },
     "ib": {
-      "title": "IB Program",
+      "title": "IB (International Baccalaureate)",
       "description": "The International Baccalaureate for comprehensive development and global citizenship.",
       "examInfo": "The International Baccalaureate (IB) Diploma Programme is a prestigious educational program for 16-19 year olds. It aims at the intellectual, social, emotional, and physical development of students.",
       "format": "Students take courses from 6 subject groups. Additionally, they must fulfill the requirements for TOK (Theory of Knowledge), CAS (Creativity, Activity, Service), and the Extended Essay.",
       "grading": "The maximum score is 45. Each subject is graded out of 7 (6x7=42), and an additional 3 points come from the core components (TOK, EE). A minimum of 24 points is required to earn the diploma.",
-      "whyUs": "We understand the challenges of the IB program and provide both academic and psychological support to students. We offer mentorship in writing Internal Assessments (IA) and the Extended Essay.",
-      "preparationProcess": "Classes focus on developing critical thinking and research skills. Special materials and past papers for each subject are utilized."
+      "whyUs": "We understand the challenges of the IB program and provide both academic and psychological support to students. We offer mentorship in writing Internal Assessments (IA) and the Extended Essay."
     },
     "general-english": {
       "title": "General English",
-      "description": "Limitless freedom of communication. Speak English like your mother tongue.",
+      "description": "Freedom of borderless communication. Speak English like your native language.",
       "examInfo": "Our General English courses fully comply with CEFR (Common European Framework of Reference for Languages) standards. They cover all stages from A1 (Beginner) to C2 (Proficiency).",
       "format": "Classes are based on communicative methodology. Grammar, vocabulary, reading, writing, listening, and most importantly, speaking skills are developed comprehensively.",
       "grading": "Progression to the next level is determined by the Final Exam held at the end of each level and active participation throughout the course.",
-      "whyUs": "We don't just teach grammar; we emphasize the application of language in real life. We bring the language environment to you with our Conversation Clubs and foreign teachers.",
-      "preparationProcess": "Interactive lessons, video and audio materials, role-plays, and discussions are integral parts of the instruction. An individual development plan is prepared for every student."
-    }
+      "whyUs": "We don't just teach grammar; we emphasize the application of language in real life. We bring the language environment to you with our Conversation Clubs and foreign teachers."
+    },
+    "tableOfContents": "Table of Contents",
+    "haveQuestion": "Have a question?",
+    "expertsReady": "Our experts are ready to help you.",
+    "contactUs": "Contact Us",
+    "duration": "Duration",
+    "personalPlan": "Personal Plan",
+    "lessons": "Lessons",
+    "twiceAWeek": "2-3 times a week",
+    "result": "Result",
+    "guaranteed": "Guaranteed",
+    "mockExam": "Mock Exam",
+    "free": "Free",
+    "sat-hazirligi": {
+      "title": "SAT Preparation",
+      "description": "The main standardized test for admission to US and other global universities. Maximize your Math and English skills.",
+      "examInfo": "The SAT (Scholastic Assessment Test) is a standardized test widely used for college admissions in the United States. It evaluates how students apply the knowledge they've learned in school to university-level tasks. The main purpose is to assess students' critical thinking and problem-solving skills.",
+      "format": "The new Digital SAT consists of two main sections: Reading and Writing, and Math. Both sections are divided into two modules. The total exam duration is about 2 hours and 14 minutes.",
+      "grading": "Each section (Reading/Writing and Math) is scored on a scale of 200-800. The total SAT score ranges from 400 to 1600. There is no penalty for guessing (incorrect answers do not deduct points).",
+      "whyUs": "During SAT preparation with us, you will take weekly mock exams, work on individual weaknesses, and learn through an AI-supported curriculum. Our experienced teachers apply an individual approach to maximize every student's potential."
+    },
+    "ielts-hazirligi": {
+      "title": "IELTS Preparation",
+      "description": "The world's most popular English language test for global education and migration. Professional development across 4 skills.",
+      "examInfo": "IELTS (International English Language Testing System) is the most popular English language test in the world. It is recognized by over 11,000 organizations in more than 140 countries. There are two types: Academic (for study) and General Training (for work and migration).",
+      "format": "The test evaluates four skills: Listening (30 minutes), Reading (60 minutes), Writing (60 minutes), and Speaking (11-14 minutes). The Speaking test may be held on a different day. Total continuous exam time is about 2 hours and 45 minutes.",
+      "grading": "Each section is graded from 0 to 9 in half or full bands (e.g., 6.5, 7.0). The Overall score is the average of these four sections.",
+      "whyUs": "With our experienced IELTS experts, mock exams, and individual analyses, we guarantee your target score."
+    },
+    "gmat-hazirligi": {
+      "title": "GMAT Preparation",
+      "description": "The first step for business world leaders. The key to admission into MBA and management programs.",
+      "examInfo": "The GMAT (Graduate Management Admission Test) is a computer adaptive test required by leading business schools globally. It measures skills crucial for success in the real business environment.",
+      "format": "The GMAT Focus Edition consists of four sections: Quantitative, Verbal, and Data Insights. Each section takes 45 minutes. The Analytical Writing (AWA) section has been removed in the new format. Total duration is 2 hours 15 minutes.",
+      "grading": "The total score is calculated on a scale of 205-805. All three sections weigh equally on the total score. Because the test is adaptive, correctly answering the initial questions significantly impacts getting a high score.",
+      "whyUs": "In GMAT preparation, we pay special attention to the development of mathematical and logical thinking. We intensively work on difficult question types to enhance our students' analytical skills."
+    },
+    "toefl-hazirligi": {
+      "title": "TOEFL Preparation",
+      "description": "Complete integration into the global academic environment, particularly in the US and Canada.",
+      "examInfo": "TOEFL (Test of English as a Foreign Language) is one of the most respected tests that measures English language skills in an academic setting. It is indispensable especially for US and Canadian universities.",
+      "format": "The updated TOEFL iBT format is shorter and lasts about 2 hours. It includes Reading, Listening, Speaking, and Writing sections. A new task type called 'Writing for an Academic Discussion' has been added.",
+      "grading": "Each section is graded on a scale of 0-30. The maximum total score is 120. Competitive universities usually require a score of 90-100+.",
+      "whyUs": "We specialize in complete adaptation to the computer-based testing environment and strengthening the academic vocabulary base."
+    },
+    "yos-hazirligi": {
+      "title": "TR YÖS Preparation",
+      "description": "The unified exam to study at Turkey's best public and private universities.",
+      "examInfo": "TR YÖS (Foreign Student Examination) is a centralized admission exam for foreigners wishing to pursue higher education in Turkey. This exam is organized by ÖSYM and accepted by most universities in Turkey.",
+      "format": "The exam mainly consists of Logic (IQ), Math, and Geometry questions. The TR YÖS format features 80 questions to be answered in 100 minutes.",
+      "grading": "The maximum score is calculated out of 500. Generally, wrong answers do not affect correct ones (4 wrongs do not cancel 1 right), though rules can change.",
+      "whyUs": "Our TR YÖS program is fully aligned with the Turkish education system and the new exam format. Our math and logic experts teach you the shortest solution methods."
+    },
+    "gre-hazirligi": {
+      "title": "GRE Preparation",
+      "description": "The universal admission test opening doors to master's and doctoral education.",
+      "examInfo": "The GRE (Graduate Record Examinations) is the main test required for admission to master's and PhD programs in engineering, humanities, and exact sciences.",
+      "format": "The GRE General Test consists of 3 parts: Verbal Reasoning, Quantitative Reasoning, and Analytical Writing. The exam duration has been reduced to 1 hour and 58 minutes.",
+      "grading": "The Verbal and Quantitative sections are scored between 130-170, and Writing from 0-6. For a competitive result, one should aim for 160+ in both main sections.",
+      "whyUs": "We have a special methodology for enriching GRE vocabulary and analyzing complex texts. For the mathematical section, time-saving solution methods are taught."
+    },
+    "ab-hazirligi": {
+      "title": "AP (Advanced Placement)",
+      "description": "Opportunity to study at the college level and earn university credits during school years.",
+      "examInfo": "The Advanced Placement (AP) program is managed by the College Board. This program allows students to study college-level subjects and earn college credits while still in high school.",
+      "format": "Exams vary by subject (Calculus, Physics, Biology, History, etc.). They usually consist of multiple-choice and free-response questions.",
+      "grading": "AP exams are scored on a scale from 1 to 5. Most universities require a minimum score of 3 or 4 to grant credit.",
+      "whyUs": "Our teaching program is designed considering students' school workloads. Our experienced teachers are fully familiar with the AP curriculum."
+    },
+    "ib-hazirligi": {
+      "title": "IB (International Baccalaureate)",
+      "description": "The International Baccalaureate for comprehensive development and global citizenship.",
+      "examInfo": "The International Baccalaureate (IB) Diploma Programme is a prestigious educational program for 16-19 year olds. It aims at the intellectual, social, emotional, and physical development of students.",
+      "format": "Students take courses from 6 subject groups. Additionally, they must fulfill the requirements for TOK (Theory of Knowledge), CAS (Creativity, Activity, Service), and the Extended Essay.",
+      "grading": "The maximum score is 45. Each subject is graded out of 7 (6x7=42), and an additional 3 points come from the core components (TOK, EE). A minimum of 24 points is required to earn the diploma.",
+      "whyUs": "We understand the challenges of the IB program and provide both academic and psychological support to students. We offer mentorship in writing Internal Assessments (IA) and the Extended Essay."
+    },
+    "generalInfo": "General Information",
+    "aboutExam": "About Exam",
+    "format": "Format",
+    "grading": "Grading",
+    "whyUs": "Why Varan Colleges?",
+    "process": "Preparation Process",
+    "whyUsFeats": [
+      "Certified Teachers",
+      "Individual Approach",
+      "Exam Strategies",
+      "Guaranteed Result"
+    ],
+    "processSteps": [
+      {
+        "title": "Diagnostic Assessment",
+        "desc": "Checking your current language skills and identifying weak points."
+      },
+      {
+        "title": "Personal Plan",
+        "desc": "Preparation of a special lesson program according to your weak and strong points."
+      },
+      {
+        "title": "Intensive Teaching",
+        "desc": "Intensive classes and regular mock exams across all sections."
+      },
+      {
+        "title": "Result",
+        "desc": "Psychological preparation for the exam day and a successful result."
+      }
+    ],
+    "ctaTitle": "Ready to Reach Your Goal?",
+    "ctaDesc": "Start preparations without wasting time. Let our experts help you choose the most suitable program.",
+    "freeConsultation": "Free Consultation"
+  },
+  "StudyAbroadData": {
+    "hero": {
+      "title": "Study Abroad",
+      "subtitle": "Plan your future with us",
+      "description": "As Varan Colleges, we direct our students to universities and colleges located in the USA, Canada, Australia, European countries, and Turkey. Our goal is not just to get admission, but to provide professional support to the student in choosing the right country, the right major, and the right university."
+    },
+    "academicAdvice": {
+      "title": "Academic Counseling and Career Planning",
+      "items": [
+        "Analysis of student's academic performance",
+        "Choice of major according to interests and future plans",
+        "Country and university comparison",
+        "Presenting budget-friendly options",
+        "We do not make decisions for the student - we provide real and objective information to make the right decision."
+      ]
+    },
+    "admissionProcess": {
+      "title": "Admission Process and Documentation",
+      "description": "We process applications for bachelor's, master's, doctoral, foundation, and language programs.",
+      "items": [
+        "Application to universities and colleges",
+        "Preparation of motivation letter",
+        "Editing CV and recommendation letters",
+        "Proper collection and submission of documents",
+        "Management of conditional or direct admission process"
+      ]
+    },
+    "visaSupport": {
+      "title": "Visa Support",
+      "description": "We are not the visa decision makers, but we fully manage the process for proper submission of documents.",
+      "items": [
+        "Proper preparation of documents",
+        "Direction on bank documents and proof of funds",
+        "Filling out visa forms",
+        "Interview preparation"
+      ]
+    },
+    "additionalServices": {
+      "title": "Additional Services",
+      "items": [
+        "Accommodation selection (campus or residence)",
+        "Airport pickup guidance",
+        "Insurance and registration support",
+        "Consultation during studies"
+      ]
+    },
+    "countries": {
+      "usa": {
+        "name": "USA",
+        "description": "Global center for education and innovation.",
+        "features": [
+          "Admission to universities and colleges",
+          "Community college and transfer programs",
+          "Conditional admission opportunities",
+          "Full support for F1 visa process"
+        ]
+      },
+      "canada": {
+        "name": "Canada",
+        "description": "High quality of life and career.",
+        "features": [
+          "Public and private colleges",
+          "Post-Graduation Work Permit (PGWP) eligible program selection",
+          "University transfer opportunities",
+          "Preparation of Study Permit documents"
+        ]
+      },
+      "australia": {
+        "name": "Australia",
+        "description": "Adventurous academic experience.",
+        "features": [
+          "University and TAFE programs",
+          "English language courses",
+          "Visa application and document preparation"
+        ]
+      },
+      "europe": {
+        "name": "Europe",
+        "description": "Diverse cultures and high-quality education.",
+        "features": [
+          "Germany, Italy, Hungary, France, Netherlands and other countries",
+          "Public and private universities",
+          "Programs in English and local languages",
+          "Preparation (foundation) and direct admission opportunities"
+        ]
+      },
+      "turkey": {
+        "name": "Turkey",
+        "description": "Quality education closest to us.",
+        "features": [
+          "Public and private universities",
+          "YÖS and international admission systems",
+          "Applications for medicine, engineering, and other majors"
+        ]
+      },
+      "uk": {
+        "name": "United Kingdom",
+        "description": "Centuries of education tradition.",
+        "features": [
+          "Admission to Russell Group universities",
+          "Foundation and Pre-Master programs",
+          "Tier 4 visa support",
+          "IELTS preparation and exam registration"
+        ]
+      }
+    },
+    "goBack": "Go Back",
+    "advantages": "Advantages",
+    "individualApproach": "Individual Approach",
+    "individualApproachDesc": "We prepare an individual strategy to maximize every student's potential.",
+    "fullSupport": "Full Support",
+    "fullSupportDesc": "We are with you every step of the way, from the admission process to university placement."
+  },
+  "ServicesPage": {
+    "heroTitle": "Our Services",
+    "heroDesc": "Everything you need for quality education and a bright future in one place. As VaranColleges, we are by your side to help you reach your goals.",
+    "home": "Home",
+    "services": "Services",
+    "borderlessEducation": "Borderless Education",
+    "worldIsYourCampus": "The World Is Your Campus"
+  },
+  "FAQData": {
+    "general": [
+      {
+        "q": "What documents are required to study abroad?",
+        "a": "The main required documents include a passport, certificate or diploma, transcript, language certificate (IELTS/TOEFL/Duolingo), motivation letter, and recommendation letters."
+      },
+      {
+        "q": "How can I apply for scholarship programs?",
+        "a": "High academic performance and language skills are required to apply for scholarship programs. Our team is ready to help you find scholarship programs suitable for your profile and assist in the application process."
+      },
+      {
+        "q": "How long does the visa process take?",
+        "a": "The duration of the visa process varies depending on the country you choose. Usually, this process takes between 2-8 weeks. We fully support you in the proper preparation of visa documents."
+      },
+      {
+        "q": "Is it possible to study abroad without language skills?",
+        "a": "Yes, it is possible. Many universities offer language preparation (Foundation or Pre-Sessional) courses before the academic program. Additionally, admission programs without exams are also available in some countries."
+      }
+    ],
+    "usa": [
+      {
+        "q": "What is the difference between community college and university?",
+        "a": "Community college is 2-year and cheaper. Afterwards, a transfer to a university is possible."
+      },
+      {
+        "q": "Are scholarships real or just advertising?",
+        "a": "Yes, but full scholarships are very rare. Partial scholarships are more realistic."
+      },
+      {
+        "q": "Is SAT mandatory?",
+        "a": "Many universities do not require it, but it is still an advantage for competitive universities."
+      },
+      {
+        "q": "What is OPT?",
+        "a": "Permission to work for 12 months after graduation (up to 36 months for STEM majors)."
+      },
+      {
+        "q": "What do they ask in the F-1 interview?",
+        "a": "• Why this university?\n• Who is financing?\n• Why the USA?\n• What are your plans after graduation?"
+      },
+      {
+        "q": "How much should be in the bank balance?",
+        "a": "As much as the annual amount stated on the I-20 document - meaning the university determines this amount."
+      },
+      {
+        "q": "Why is the US visa rejected quickly?",
+        "a": "The main reason: showing a weak intention to return back."
+      }
+    ],
+    "canada": [
+      {
+        "q": "What is the difference between College and University?",
+        "a": "College is more practical and job-oriented (2-3 years). University is academic (4 years bachelor's, 1-2 years master's). College yields faster results in terms of finding a job, but university is needed for an academic career."
+      },
+      {
+        "q": "Is IELTS mandatory?",
+        "a": "In most cases, yes. Some colleges have recently been accepting Duolingo."
+      },
+      {
+        "q": "Is PGWP valid for every program?",
+        "a": "No. The program must be on the DLI list and must be a minimum of 8 months. Private schools are not all eligible.\nWhat is PGWP? A work permit for up to 3 years after completing public college and universities."
+      },
+      {
+        "q": "Is work experience needed for a Master's?",
+        "a": "For an MBA, it is almost always necessary (minimum 1-2 years). For other master's programs, it's not a strict requirement."
+      },
+      {
+        "q": "How much money should be shown in the bank account?",
+        "a": "Tuition fee + annual living expenses (approximately 20,000-25,000 CAD and above). The amount varies year by year."
+      },
+      {
+        "q": "Can I work with a study permit?",
+        "a": "Yes. 20 hours a week during studies, full-time during holidays."
+      },
+      {
+        "q": "What is the most common reason for refusal?",
+        "a": "• Financial weakness\n• Unconvincing study plan\n• Weak demonstration of intention to return"
+      },
+      {
+        "q": "Can the family go together?",
+        "a": "Yes. The spouse can get an open work permit, and the child can go to school for free (varies by province)."
+      }
+    ],
+    "europe": [
+      {
+        "q": "Is education free in Germany?",
+        "a": "There are no tuition fees in public universities, but there is a semester fee for programs in German (approximately 300-500 EUR)."
+      },
+      {
+        "q": "Is it possible without IELTS?",
+        "a": "In some cases, it is possible (via interview or internal test), but it is risky."
+      },
+      {
+        "q": "Who needs a foundation year?",
+        "a": "Those whose 12-year education system does not match. Foundation is required in Germany and the UK."
+      },
+      {
+        "q": "Is there an age limit?",
+        "a": "There is no official limit, but visa risk increases at age 30+."
+      },
+      {
+        "q": "What is a blocked account?",
+        "a": "For example, in Germany, the required annual living expenses are deposited into a special account in advance (approximately 12,000 EUR)."
+      },
+      {
+        "q": "Is there a work permit?",
+        "a": "Usually 20 hours a week."
+      },
+      {
+        "q": "If refused, can I apply again?",
+        "a": "Yes, but applying again without fixing the reason is pointless."
+      }
+    ],
+    "turkey": [
+      {
+        "q": "Is it possible to study in Turkey without an exam?",
+        "a": "Yes, it is possible in many private and public universities without requiring any exam results, just with an 11-year high school diploma or college diploma."
+      },
+      {
+        "q": "Is there admission with a 9-year certificate?",
+        "a": "No, it must be college or 11 years."
+      },
+      {
+        "q": "Is there part-time/distance medical education?",
+        "a": "No, there is no distance learning in medicine and dentistry. Because these fields require practical classes, laboratory, and hospital experience. In Turkey as well as in Azerbaijan, medicine is only taught in a full-time face-to-face format."
+      },
+      {
+        "q": "Is it possible to get a scholarship?",
+        "a": "Yes, there are internal university discounts and state scholarships."
+      },
+      {
+        "q": "What is education with a thesis?",
+        "a": "After obtaining a master's degree with a thesis, you can study for a doctorate and write a thesis. It takes 2 years."
+      },
+      {
+        "q": "What is non-thesis education?",
+        "a": "When a student does a non-thesis master's, they cannot proceed to a doctorate, and the study duration is 1 year and 6 months."
+      },
+      {
+        "q": "How are living expenses in Turkey?",
+        "a": "Living expenses differ depending on the city and accommodation. Around $400-500 per month is required, including rent, food, and personal expenses. Istanbul is more expensive than other cities, while Ankara and Eskisehir are more affordable, for example. We help with choosing student dormitories."
+      },
+      {
+        "q": "What is needed to get a scholarship?",
+        "a": "• Good high school diploma average\n• Motivation letter\n• Certificates\n• Sometimes an interview"
+      },
+      {
+        "q": "Are Turkish diplomas recognized in Azerbaijan?",
+        "a": "Yes, diplomas obtained from universities in Turkey are officially recognized in Azerbaijan. The process of recognizing diplomas is called nostrification, and it is carried out by the Ministry of Science and Education of the Republic of Azerbaijan."
+      },
+      {
+        "q": "How much is the tuition fee?",
+        "a": "Tuition fees vary depending on the university, major, and country. On average, it ranges from $1500 to $12000 per year; medicine and engineering can be more expensive."
+      },
+      {
+        "q": "How are work opportunities abroad?",
+        "a": "Students can work a certain number of hours part-time a week. Job opportunities are mostly found in internship programs. By working, the student gains experience and can reduce their expenses."
+      },
+      {
+        "q": "Where is distance learning possible?",
+        "a": "Distance programs are mainly available in business, management, marketing, etc. There are none in medicine and fields requiring practical labs. Distance education is suitable for working students as classes are online."
+      }
+    ]
   }
 }
