@@ -1,10 +1,20 @@
 {
+  "Metadata": {
+    "title": "VaranColleges - Xaricdə Təhsil və Hazırlıq Mərkəzi",
+    "description": "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
+    "keywords": "Xaricdə təhsil, IELTS kursları, SAT hazırlığı, Universitetlərə qəbul, Təhsil mərkəzi, Bakı, Azərbaycan, VaranColleges",
+    "openGraphTitle": "VaranColleges - Gələcəyi Kəşf Edin",
+    "openGraphDescription": "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
+    "twitterTitle": "VaranColleges - Xaricdə Təhsil",
+    "twitterDescription": "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. Peşəkar komanda və zəmanətli nəticələr."
+  },
   "Navigation": {
     "home": "Ana Səhifə",
     "about": "Haqqımızda",
     "services": "Xidmətlər",
     "studyAbroad": "Xaricdə Təhsil",
-    "contact": "Əlaqə"
+    "contact": "Əlaqə",
+    "blog": "Blog"
   },
   "Footer": {
     "language": "Dil",

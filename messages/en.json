@@ -1,10 +1,20 @@
 {
+  "Metadata": {
+    "title": "VaranColleges - Study Abroad & Preparation Center",
+    "description": "Make your study abroad dreams come true with VaranColleges. IELTS, SAT preparation and guaranteed admission to prestigious universities worldwide.",
+    "keywords": "Study abroad, IELTS courses, SAT preparation, University admissions, Education center, Baku, Azerbaijan, VaranColleges",
+    "openGraphTitle": "VaranColleges - Discover the Future",
+    "openGraphDescription": "Make your study abroad dreams come true with VaranColleges. IELTS, SAT preparation and guaranteed admission to prestigious universities worldwide.",
+    "twitterTitle": "VaranColleges - Study Abroad",
+    "twitterDescription": "Make your study abroad dreams come true with VaranColleges. Professional team and guaranteed results."
+  },
   "Navigation": {
     "home": "Home",
     "about": "About Us",
     "services": "Services",
     "studyAbroad": "Study Abroad",
-    "contact": "Contact"
+    "contact": "Contact",
+    "blog": "Blog"
   },
   "Footer": {
     "language": "Language",

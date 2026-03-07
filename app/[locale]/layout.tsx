@@ -15,71 +15,71 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://www.varancolleges.com"),
-  title: {
-    default: "VaranColleges - Xaricdə Təhsil və Hazırlıq Mərkəzi",
-    template: "%s | VaranColleges",
-  },
-  description:
-    "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
-  keywords: [
-    "Xaricdə təhsil",
-    "IELTS kursları",
-    "SAT hazırlığı",
-    "Universitetlərə qəbul",
-    "Təhsil mərkəzi",
-    "Bakı",
-    "Azərbaycan",
-    "VaranColleges",
-  ],
-  authors: [{ name: "VaranColleges" }],
-  creator: "VaranColleges",
-  publisher: "VaranColleges",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    title: "VaranColleges - Gələcəyi Kəşf Edin",
-    description:
-      "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
-    url: "https://www.varancolleges.com",
-    siteName: "VaranColleges",
-    locale: "az_AZ",
-    type: "website",
-    images: [
-      {
-        url: "/images/varan-office.webp",
-        width: 1200,
-        height: 630,
-        alt: "VaranColleges Office",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "VaranColleges - Xaricdə Təhsil",
-    description:
-      "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. Peşəkar komanda və zəmanətli nəticələr.",
-    images: ["/images/varan-office.webp"],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+
+  return {
+    metadataBase: new URL("https://www.varancolleges.com"),
+    title: {
+      default: t('title'),
+      template: "%s | VaranColleges",
+    },
+    description: t('description'),
+    keywords: t('keywords').split(', '),
+    authors: [{ name: "VaranColleges" }],
+    creator: "VaranColleges",
+    publisher: "VaranColleges",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    openGraph: {
+      title: t('openGraphTitle'),
+      description: t('openGraphDescription'),
+      url: "https://www.varancolleges.com",
+      siteName: "VaranColleges",
+      locale: locale === 'az' ? 'az_AZ' : 'en_US',
+      type: "website",
+      images: [
+        {
+          url: "/images/varan-office.webp",
+          width: 1200,
+          height: 630,
+          alt: "VaranColleges Office",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t('twitterTitle'),
+      description: t('twitterDescription'),
+      images: ["/images/varan-office.webp"],
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  alternates: {
-    canonical: "https://www.varancolleges.com",
-  },
-};
+    alternates: {
+      canonical: locale === 'az' ? "https://www.varancolleges.com" : `https://www.varancolleges.com/en`,
+      languages: {
+        'x-default': "https://www.varancolleges.com",
+        'az': "https://www.varancolleges.com",
+        'en': "https://www.varancolleges.com/en",
+      },
+    },
+  };
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
