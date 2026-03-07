@@ -4,6 +4,8 @@ import connectToDatabase from "@/lib/db";
 import Post from "@/models/Post";
 import DeletePostButton from "./DeletePostButton";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminBlogPage() {
   await connectToDatabase();
   const posts = await Post.find().sort({ date: -1 }).lean();
