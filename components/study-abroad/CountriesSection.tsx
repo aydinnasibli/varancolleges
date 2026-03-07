@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { studyAbroadData } from "@/lib/data/study-abroad";
 import { useTranslations } from "next-intl";
 

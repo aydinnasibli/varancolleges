@@ -2,7 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Stats from "@/components/sections/Stats";
 import Map from "@/components/ui/Map";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ArrowRight, CheckCircle, Quote } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 

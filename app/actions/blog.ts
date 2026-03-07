@@ -15,9 +15,9 @@ export async function createPost(formData: FormData) {
     const image = formData.get("image") as string;
     const status = formData.get("status") as string;
 
-    let providedSlug = formData.get("slug") as string;
+    const providedSlug = formData.get("slug") as string;
 
-    let baseSlug = providedSlug
+    const baseSlug = providedSlug
       ? slugify(providedSlug, { lower: true, strict: true })
       : slugify(title, { lower: true, strict: true });
 
@@ -64,9 +64,9 @@ export async function updatePost(id: string, formData: FormData) {
     const image = formData.get("image") as string;
     const status = formData.get("status") as string;
 
-    let providedSlug = formData.get("slug") as string;
+    const providedSlug = formData.get("slug") as string;
 
-    let baseSlug = providedSlug
+    const baseSlug = providedSlug
         ? slugify(providedSlug, { lower: true, strict: true })
         : slugify(title, { lower: true, strict: true });
 
