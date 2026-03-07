@@ -16,6 +16,7 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
   const [excerpt, setExcerpt] = useState(initialData?.excerpt || "");
   const [image, setImage] = useState(initialData?.image || "");
   const [status, setStatus] = useState(initialData?.status || "draft");
+  const [slug, setSlug] = useState(initialData?.slug || "");
 
   const [isUploading, setIsUploading] = useState(false);
 
@@ -53,7 +54,9 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
     formData.append("image", image);
     formData.append("status", status);
 
-    if (initialData?.slug) {
+    if (slug.trim() !== "") {
+        formData.append("slug", slug.trim());
+    } else if (initialData?.slug) {
         formData.append("slug", initialData.slug);
     }
 
@@ -88,6 +91,17 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-[#1152d4] focus:border-[#1152d4] outline-none text-slate-900 bg-white"
               placeholder="Enter post title"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">Slug (Optional)</label>
+            <input
+              type="text"
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-[#1152d4] focus:border-[#1152d4] outline-none text-slate-900 bg-white"
+              placeholder="custom-url-slug (leave blank to auto-generate from title)"
             />
           </div>
 

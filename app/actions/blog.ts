@@ -15,13 +15,17 @@ export async function createPost(formData: FormData) {
     const image = formData.get("image") as string;
     const status = formData.get("status") as string;
 
-    const slug = slugify(title, { lower: true, strict: true });
+    let providedSlug = formData.get("slug") as string;
+
+    let baseSlug = providedSlug
+      ? slugify(providedSlug, { lower: true, strict: true })
+      : slugify(title, { lower: true, strict: true });
 
     // Ensure unique slug
-    let uniqueSlug = slug;
+    let uniqueSlug = baseSlug;
     let counter = 1;
     while (await Post.findOne({ slug: uniqueSlug })) {
-      uniqueSlug = `${slug}-${counter}`;
+      uniqueSlug = `${baseSlug}-${counter}`;
       counter++;
     }
 
@@ -60,18 +64,18 @@ export async function updatePost(id: string, formData: FormData) {
     const image = formData.get("image") as string;
     const status = formData.get("status") as string;
 
-    let slug = formData.get("slug") as string;
+    let providedSlug = formData.get("slug") as string;
 
-    if (!slug) {
-        slug = slugify(title, { lower: true, strict: true });
-    }
+    let baseSlug = providedSlug
+        ? slugify(providedSlug, { lower: true, strict: true })
+        : slugify(title, { lower: true, strict: true });
 
     // Ensure unique slug (excluding self)
-    let uniqueSlug = slug;
+    let uniqueSlug = baseSlug;
     let counter = 1;
     let existingPost = await Post.findOne({ slug: uniqueSlug, _id: { $ne: id } });
     while (existingPost) {
-      uniqueSlug = `${slug}-${counter}`;
+      uniqueSlug = `${baseSlug}-${counter}`;
       counter++;
       existingPost = await Post.findOne({ slug: uniqueSlug, _id: { $ne: id } });
     }

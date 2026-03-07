@@ -10,6 +10,7 @@ export default function RichTextEditor({ content, onChange }: { content: string,
   const editor = useEditor({
     extensions: [StarterKit, Image],
     content: content,
+    immediatelyRender: false,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
