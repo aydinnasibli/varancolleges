@@ -490,7 +490,8 @@
     ],
     "ctaTitle": "Hədəfinizə Çatmağa Hazırsınız?",
     "ctaDesc": "Vaxt itirmədən hazırlıqlara başlayın. Mütəxəssislərimiz sizə ən uyğun proqramı seçməkdə kömək etsin.",
-    "freeConsultation": "Ödənişsiz Konsultasiya"
+    "freeConsultation": "Ödənişsiz Konsultasiya",
+    "details": "Ətraflı"
   },
   "StudyAbroadData": {
     "hero": {
@@ -611,7 +612,10 @@
     "home": "Ana Səhifə",
     "services": "Xidmətlər",
     "borderlessEducation": "Sərhədsiz Təhsil",
-    "worldIsYourCampus": "Dünya Sizin Kampusunuzdur"
+    "worldIsYourCampus": "Dünya Sizin Kampusunuzdur",
+    "academicDevelopment": "Akademik İnkişaf",
+    "languageCourses": "Dil Kursları və İmtahanlar",
+    "coursesDesc": "Beynəlxalq sertifikatlar və xarici dil biliklərinizi təkmilləşdirmək üçün peşəkar proqramlar."
   },
   "FAQData": {
     "general": [
