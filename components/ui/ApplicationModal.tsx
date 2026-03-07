@@ -57,7 +57,7 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
       if (response.success) {
         setStatus("success");
         setFormData({ name: "", email: "", phone: "", message: "" });
-        toast.success("Müraciətiniz qəbul edildi!");
+        toast.success(t("success"));
 
         setTimeout(() => {
           setStatus("idle");
@@ -65,13 +65,13 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
         }, 3000);
       } else {
         setStatus("error");
-        toast.error(response.error || "Xəta baş verdi.");
+        toast.error(response.error || t("error"));
         setTimeout(() => setStatus("idle"), 3000);
       }
     } catch (error) {
       console.error("Submission error:", error);
       setStatus("error");
-      toast.error("Gözlənilməz xəta baş verdi.");
+      toast.error(t("unexpectedError"));
       setTimeout(() => setStatus("idle"), 3000);
     }
   };
@@ -90,10 +90,10 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-6 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="name" className="text-slate-300">Ad və Soyad</Label>
+            <Label htmlFor="name" className="text-slate-300">{t("nameLabel")}</Label>
             <Input
               id="name"
-              placeholder="Adınız Soyadınız"
+              placeholder={t("namePlaceholder")}
               value={formData.name}
               onChange={handleChange}
               required
@@ -101,11 +101,11 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email" className="text-slate-300">Email</Label>
+            <Label htmlFor="email" className="text-slate-300">{t("emailLabel")}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="nümunə@mail.com"
+              placeholder={t("emailPlaceholder")}
               value={formData.email}
               onChange={handleChange}
               required
@@ -113,10 +113,10 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="phone" className="text-slate-300">Əlaqə Nömrəsi</Label>
+            <Label htmlFor="phone" className="text-slate-300">{t("phoneLabel")}</Label>
             <Input
               id="phone"
-              placeholder="+994 50 123 45 67"
+              placeholder={t("phonePlaceholder")}
               value={formData.phone}
               onChange={handleChange}
               required
@@ -124,10 +124,10 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="message" className="text-slate-300">Əlavə Qeydlər (İstəyə bağlı)</Label>
+            <Label htmlFor="message" className="text-slate-300">{t("messageLabel")}</Label>
             <Textarea
               id="message"
-              placeholder="Sizi maraqlandıran suallar..."
+              placeholder={t("messagePlaceholder")}
               value={formData.message}
               onChange={handleChange}
               className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-accent min-h-[100px]"
@@ -142,17 +142,17 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
                 className="w-full sm:w-auto"
                 disabled={status === "submitting" || status === "success"}
               >
-                {status === "submitting" ? "Göndərilir..." : status === "success" ? "Göndərildi!" : "Göndər"}
+                {status === "submitting" ? t("submitting") : status === "success" ? t("success") : t("submit")}
               </Button>
             </div>
             {status === "success" && (
               <p className="text-green-500 text-sm text-center">
-                Müraciətiniz qəbul edildi!
+                {t("success")}
               </p>
             )}
             {status === "error" && (
               <p className="text-red-500 text-sm text-center">
-                Xəta baş verdi.
+                {t("error")}
               </p>
             )}
           </div>

@@ -1,24 +1,21 @@
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { studyAbroadData } from "@/lib/data/study-abroad";
-import { useTranslations } from "next-intl";
+import { getStudyAbroadData } from "@/lib/data/study-abroad";
+import { getTranslations } from "next-intl/server";
 
-const CountriesSection = () => {
-  const t = useTranslations("StudyAbroad.countries");
+const CountriesSection = async ({ locale }: { locale: string }) => {
+  const studyAbroadData = await getStudyAbroadData(locale);
+  const tServicesPage = await getTranslations({ locale, namespace: "ServicesPage" });
 
   return (
     <section className="py-24 bg-background-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-5xl font-serif text-white text-center mb-16">
-          Dünya Sənin <span className="text-accent italic">Kampusundur</span>
+          {tServicesPage("worldIsYourCampus")}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {studyAbroadData.countries.map((country, index) => {
-            const countryTranslation = (t.raw(country.slug) || {}) as { name?: string; description?: string };
-            const name = countryTranslation.name || country.name;
-            const description = countryTranslation.description || country.description;
-
             return (
               <Link
                 key={index}
@@ -28,7 +25,7 @@ const CountriesSection = () => {
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110 bg-background-dark">
                   <Image
                     src={country.flagUrl}
-                    alt={`${name} flag`}
+                    alt={`${country.name} flag`}
                     fill
                     className="object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -38,10 +35,10 @@ const CountriesSection = () => {
 
                 <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
                   <h3 className="text-3xl font-serif text-white mb-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                    {name}
+                    {country.name}
                   </h3>
                   <p className="text-slate-300 font-light opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75">
-                    {description}
+                    {country.description}
                   </p>
                   <div className="w-12 h-1 bg-accent mt-4 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 delay-100" />
                 </div>

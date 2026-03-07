@@ -25,14 +25,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default function StudyAbroadPage() {
+export default async function StudyAbroadPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
   return (
     <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
       <Hero />
-      <AdviceSection />
-      <ServicesSection />
-      <CountriesSection />
+      <AdviceSection locale={locale} />
+      <ServicesSection locale={locale} />
+      <CountriesSection locale={locale} />
       <CTASection />
       <Footer />
     </main>

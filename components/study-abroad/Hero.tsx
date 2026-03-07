@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-const Hero = () => {
-  const t = useTranslations("StudyAbroad");
+const Hero = async () => {
+  const t = await getTranslations("StudyAbroad");
 
   return (
     <section className="relative py-24 bg-background-dark overflow-hidden min-h-[50vh] flex items-center">

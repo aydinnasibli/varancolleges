@@ -2,22 +2,29 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { ArrowLeft, MapPin } from "lucide-react";
-import { studyAbroadData } from "@/lib/data/study-abroad";
+import { getStudyAbroadData } from "@/lib/data/study-abroad";
+import { getCountryFaqs } from "@/lib/data/faqs";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/study-abroad/CTASection";
-import { getCountryFaqs } from "@/lib/data/faqs";
-import FAQAccordion from "@/components/sections/FAQAccordion";
+import FAQ from "@/components/sections/FAQ";
+import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }) {
   const { locale, slug } = await params;
-  const tData = await getTranslations({ locale, namespace: `StudyAbroad.countries.${slug}` });
+  const studyAbroadData = await getStudyAbroadData(locale);
+  const country = studyAbroadData.countries.find((c) => c.slug === slug);
+  const t = await getTranslations({ locale, namespace: 'Navigation' });
+
+  if (!country) {
+    return { title: t('studyAbroad') };
+  }
+
   const canonical = locale === 'az' ? `https://www.varancolleges.com/study-abroad/${slug}` : `https://www.varancolleges.com/${locale}/study-abroad/${slug}`;
 
   return {
-    title: tData('name'),
-    description: tData('description'),
+    title: `${country.name} - ${t('studyAbroad')}`,
     alternates: {
       canonical,
       languages: {
@@ -29,102 +36,97 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function CountryPage(props: { params: Promise<{ locale: string; slug: string }> }) {
-  const params = await props.params;
-  const country = studyAbroadData.countries.find((c) => c.slug === params.slug);
+export default async function CountryPage({ params }: { params: Promise<{ locale: string, slug: string }> }) {
+  const { slug, locale } = await params;
+  const studyAbroadData = await getStudyAbroadData(locale);
+  const country = studyAbroadData.countries.find((c) => c.slug === slug);
+  const tGen = await getTranslations({ locale, namespace: 'General' });
+  const tData = await getTranslations({ locale, namespace: 'StudyAbroadData' });
+  const tFaqData = await getTranslations({ locale, namespace: 'FAQData' });
 
   if (!country) {
     notFound();
   }
 
-  const faqs = getCountryFaqs(params.slug);
+  const countryFaqs = getCountryFaqs(slug, tFaqData);
 
   return (
-    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary">
+    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 z-0">
           <Image
             src={country.flagUrl}
             alt={`${country.name} background`}
             fill
-            className="object-cover opacity-20 blur-sm scale-105"
+            className="object-cover opacity-[0.03] grayscale"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background-dark/80 via-background-dark/80 to-background-dark" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-background-dark/40" />
         </div>
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Link
             href="/study-abroad"
-            className="inline-flex items-center text-slate-400 hover:text-accent mb-8 transition-colors duration-300 group"
+            className="inline-flex items-center text-sm font-medium text-accent hover:text-white transition-colors uppercase tracking-wider mb-8 group"
           >
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Geri qayıt
+            <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+            {tData("goBack")}
           </Link>
 
-          <h1 className="text-5xl md:text-7xl font-serif text-white mb-6">
-            {country.name}
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-300 font-light max-w-2xl mx-auto">
-            {country.description}
-          </p>
-        </div>
-      </section>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative w-16 h-12 rounded overflow-hidden shadow-2xl ring-1 ring-white/10">
+                  <Image
+                    src={country.flagUrl}
+                    alt={`${country.name} flag`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h1 className="text-5xl md:text-7xl font-serif text-white">
+                  {country.name}
+                </h1>
+              </div>
 
-      {/* Content Section */}
-      <section className="py-24 relative">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-sm relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+              <p className="text-xl md:text-2xl text-slate-300 font-light leading-relaxed max-w-2xl border-l-2 border-accent pl-6 mb-10">
+                {country.description}
+              </p>
 
-            <div className="relative z-10">
-              <h2 className="text-3xl font-serif text-white mb-12 flex items-center gap-4">
-                <MapPin className="w-8 h-8 text-accent" />
-                Təhsil <span className="text-accent italic">İmkanları</span>
-              </h2>
+              <div className="flex flex-wrap gap-4">
+                <ApplicationModal>
+                  <button className="bg-accent text-primary px-8 py-4 rounded-sm font-medium hover:bg-white hover:text-primary transition-colors text-lg">
+                    {tGen("applyNow")}
+                  </button>
+                </ApplicationModal>
+              </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {country.features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors duration-300 group border border-white/5 hover:border-accent/20"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-5 flex-shrink-0 group-hover:bg-accent group-hover:text-background-dark transition-all duration-300">
-                      <span className="text-accent font-serif text-lg group-hover:text-background-dark transition-colors duration-300">
-                        {index + 1}
-                      </span>
-                    </div>
-                    <p className="text-slate-300 group-hover:text-white transition-colors duration-300 text-lg font-light leading-relaxed pt-1.5">
-                      {feature}
-                    </p>
-                  </div>
+            <div className="glass-card p-8 rounded-2xl border border-white/5">
+              <h3 className="text-2xl font-serif text-white mb-6 flex items-center gap-3">
+                <MapPin className="text-accent w-6 h-6" />
+                {tData("advantages")}
+              </h3>
+              <ul className="space-y-4">
+                {country.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
+                    <span className="font-light text-slate-300 leading-relaxed">{feature}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {faqs.length > 0 && (
-        <section className="py-24 bg-background-dark relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex flex-col items-center mb-16 gap-6 text-center">
-              <div className="max-w-2xl">
-                <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">Sual-Cavab</h2>
-                <h3 className="text-4xl font-serif text-white mb-6">Tez-tez Verilən Suallar</h3>
-              </div>
-            </div>
-            <div className="max-w-3xl mx-auto">
-              <FAQAccordion faqs={faqs} />
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Pass countryFaqs array if there are specific faqs */}
+      <FAQ customFaqs={countryFaqs.length > 0 ? countryFaqs : undefined} />
 
       <CTASection />
+
       <Footer />
     </main>
   );
