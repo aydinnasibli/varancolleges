@@ -5,11 +5,25 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getPosts } from "@/lib/data";
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Blog - Varan Colleges",
-  description: "Xaricdə təhsil, imtahanlara hazırlıq və təqaüd proqramları haqqında son məlumatlar.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const canonical = locale === 'az' ? 'https://www.varancolleges.com/blog' : `https://www.varancolleges.com/${locale}/blog`;
+
+  return {
+    title: t('blog'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': 'https://www.varancolleges.com/blog',
+        'az': 'https://www.varancolleges.com/blog',
+        'en': 'https://www.varancolleges.com/en/blog',
+      }
+    }
+  };
+}
 
 export default async function BlogPage() {
   const posts = await getPosts();

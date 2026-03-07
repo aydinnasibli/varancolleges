@@ -6,6 +6,24 @@ import ContactForm from "@/components/sections/ContactForm";
 import Map from "@/components/ui/Map";
 import { getTranslations } from "next-intl/server";
 
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const canonical = locale === 'az' ? 'https://www.varancolleges.com/contact' : `https://www.varancolleges.com/${locale}/contact`;
+
+  return {
+    title: t('contact'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': 'https://www.varancolleges.com/contact',
+        'az': 'https://www.varancolleges.com/contact',
+        'en': 'https://www.varancolleges.com/en/contact',
+      }
+    }
+  };
+}
+
 export default async function ContactPage() {
   const t = await getTranslations("Contact");
   const tGen = await getTranslations("General");

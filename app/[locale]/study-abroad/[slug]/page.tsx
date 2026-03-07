@@ -8,8 +8,28 @@ import Footer from "@/components/layout/Footer";
 import CTASection from "@/components/study-abroad/CTASection";
 import { getCountryFaqs } from "@/lib/data/faqs";
 import FAQAccordion from "@/components/sections/FAQAccordion";
+import { getTranslations } from "next-intl/server";
 
-export default async function CountryPage(props: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  const tData = await getTranslations({ locale, namespace: `StudyAbroad.countries.${slug}` });
+  const canonical = locale === 'az' ? `https://www.varancolleges.com/study-abroad/${slug}` : `https://www.varancolleges.com/${locale}/study-abroad/${slug}`;
+
+  return {
+    title: tData('name'),
+    description: tData('description'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': `https://www.varancolleges.com/study-abroad/${slug}`,
+        'az': `https://www.varancolleges.com/study-abroad/${slug}`,
+        'en': `https://www.varancolleges.com/en/study-abroad/${slug}`,
+      }
+    }
+  };
+}
+
+export default async function CountryPage(props: { params: Promise<{ locale: string; slug: string }> }) {
   const params = await props.params;
   const country = studyAbroadData.countries.find((c) => c.slug === params.slug);
 

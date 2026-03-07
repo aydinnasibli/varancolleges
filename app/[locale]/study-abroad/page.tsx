@@ -5,6 +5,25 @@ import AdviceSection from "@/components/study-abroad/AdviceSection";
 import CountriesSection from "@/components/study-abroad/CountriesSection";
 import ServicesSection from "@/components/study-abroad/ServicesSection";
 import CTASection from "@/components/study-abroad/CTASection";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const canonical = locale === 'az' ? 'https://www.varancolleges.com/study-abroad' : `https://www.varancolleges.com/${locale}/study-abroad`;
+
+  return {
+    title: t('studyAbroad'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': 'https://www.varancolleges.com/study-abroad',
+        'az': 'https://www.varancolleges.com/study-abroad',
+        'en': 'https://www.varancolleges.com/en/study-abroad',
+      }
+    }
+  };
+}
 
 export default function StudyAbroadPage() {
   return (

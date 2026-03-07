@@ -2,6 +2,25 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ServicesGrid from "@/components/sections/ServicesGrid";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const canonical = locale === 'az' ? 'https://www.varancolleges.com/services' : `https://www.varancolleges.com/${locale}/services`;
+
+  return {
+    title: t('services'),
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': 'https://www.varancolleges.com/services',
+        'az': 'https://www.varancolleges.com/services',
+        'en': 'https://www.varancolleges.com/en/services',
+      }
+    }
+  };
+}
 
 export default function ServicesPage() {
   return (
