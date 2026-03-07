@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Link } from "@/i18n/routing";
-import { usePathname } from "@/i18n/routing";
+import React, { useState, useEffect } from "react";
+import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import { Menu, X, Phone, MapPin } from "lucide-react";
-import LanguageSwitcher from "./LanguageSwitcher";
-import { WhatsAppIcon, InstagramIcon } from "@/components/ui/custom-icons";
 import { Button } from "@/components/ui/button";
+import { Menu, X, Phone, Mail, Clock } from "lucide-react";
+import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
+import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { useTranslations } from "next-intl";
 
@@ -20,118 +19,83 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <>
-      <header
-        className={`fixed w-full z-50 transition-all duration-500 border-b ${
-          isScrolled
-            ? "bg-primary/90 backdrop-blur-md py-3 shadow-lg border-white/10"
-            : "bg-transparent py-5 border-white/5"
-        }`}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex justify-between items-center">
-            {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="flex items-center gap-3 group">
-                <Image
-                  src="/images/logo.png"
-                  alt="Varan Colleges"
-                  width={600}
-                  height={300}
-                  className="h-14 w-auto object-contain drop-shadow-lg"
-                  priority
-                />
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center justify-center flex-1 mx-8">
-              <ul className="flex space-x-8">
-                {[
-                  { name: t("home"), href: "/" },
-                  { name: t("services"), href: "/services" },
-                  { name: t("studyAbroad"), href: "/study-abroad" },
-                  { name: t("about"), href: "/about" },
-                  { name: t("blog"), href: "/blog" },
-                  { name: t("contact"), href: "/contact" },
-                ].map((link) => {
-                  const isActive = pathname === link.href;
-                  return (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className={`text-sm font-medium tracking-wide uppercase transition-all duration-300 relative group px-2 py-1 ${
-                          isActive ? "text-accent" : "text-white/80 hover:text-white"
-                        }`}
-                      >
-                        {link.name}
-                        <span
-                          className={`absolute -bottom-1 left-0 w-full h-[2px] bg-accent transform origin-left transition-transform duration-300 ease-out ${
-                            isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                          }`}
-                        />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center space-x-6">
-              <div className="flex items-center space-x-4 border-r border-white/10 pr-6">
-                <LanguageSwitcher />
-                <a href="https://wa.me/994771885050" className="text-white/80 hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                  <WhatsAppIcon className="w-5 h-5" />
-                </a>
-                <a href="https://www.instagram.com/varancollegesltd/" className="text-white/80 hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <InstagramIcon className="w-5 h-5" />
-                </a>
-              </div>
-              <ApplicationModal />
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="lg:hidden flex items-center gap-4">
-              <LanguageSwitcher />
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-white hover:text-accent transition-colors p-2 bg-white/5 rounded-lg border border-white/10"
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
-            </div>
+      {/* Top Bar - Hidden on mobile */}
+      <div className="bg-primary border-b border-white/5 py-2 hidden lg:block">
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-xs text-slate-400 font-medium tracking-wide">
+          <div className="flex items-center space-x-6">
+            <a href="tel:+994771885050" className="flex items-center hover:text-accent transition-colors">
+              <Phone className="w-4 h-4 mr-2 text-accent" />
+              +994 77 188 50 50
+            </a>
+            <a href="mailto:info@varancolleges.com" className="flex items-center hover:text-accent transition-colors">
+              <Mail className="w-4 h-4 mr-2 text-accent" />
+              info@varancolleges.com
+            </a>
+            <span className="flex items-center text-slate-500">
+              <Clock className="w-4 h-4 mr-2 text-accent" />
+              {tGen("workingHours")}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <a
+              href="https://wa.me/994771885050"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:scale-110 transition-transform hover:text-accent"
+              aria-label="WhatsApp"
+            >
+              <WhatsAppIcon className="w-5 h-5" />
+            </a>
+            <span className="text-slate-700">|</span>
+            <a
+              href="https://www.instagram.com/varancollegesltd/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:scale-110 transition-transform hover:text-accent"
+              aria-label="Instagram"
+            >
+              <InstagramIcon className="w-5 h-5" />
+            </a>
           </div>
         </div>
-      </header>
+      </div>
 
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`fixed inset-0 bg-primary/95 backdrop-blur-xl z-40 lg:hidden transition-all duration-500 ease-in-out ${
-          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
+      {/* Main Navbar */}
+      <nav
+        className={cn(
+          "sticky top-0 z-50 transition-all duration-300 border-b border-white/5",
+          isScrolled ? "glass-panel h-20" : "bg-transparent h-24 border-transparent"
+        )}
       >
-        <div className="flex flex-col h-full pt-28 pb-8 px-6 overflow-y-auto">
-          <nav className="flex-1">
-            <ul className="space-y-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+          <div className="flex justify-between items-center h-full">
+            {/* Logo */}
+            <Link href="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+              <Image
+                src="/images/logo.png"
+                alt="Varan Colleges"
+                width={666}
+                height={375}
+                className="h-12 w-auto object-contain"
+                priority
+              />
+            </Link>
+
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex space-x-10 items-center">
               {[
                 { name: t("home"), href: "/" },
                 { name: t("services"), href: "/services" },
@@ -139,66 +103,70 @@ const Navbar = () => {
                 { name: t("about"), href: "/about" },
                 { name: t("blog"), href: "/blog" },
                 { name: t("contact"), href: "/contact" },
-              ].map((link, index) => {
-                const isActive = pathname === link.href;
-                return (
-                  <li
-                    key={link.name}
-                    className={`transform transition-all duration-300 ${
-                      isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
-                    }`}
-                    style={{ transitionDelay: `${index * 50}ms` }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={closeMobileMenu}
-                      className={`block py-3 text-2xl font-serif border-b border-white/10 ${
-                        isActive ? "text-accent" : "text-white/80"
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+              ].map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={cn(
+                    "text-sm font-medium transition-colors relative group py-2",
+                    pathname === item.href ? "text-white" : "text-slate-300 hover:text-accent"
+                  )}
+                >
+                  {item.name}
+                  <span className={cn(
+                    "absolute bottom-0 left-0 h-0.5 bg-accent transition-all duration-300",
+                    pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
+                  )}></span>
+                </Link>
+              ))}
+            </div>
 
-          <div className={`mt-8 space-y-8 transform transition-all duration-500 delay-300 ${
-            isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-          }`}>
-             <div className="space-y-4">
-                <a href="tel:+994771885050" className="flex items-center gap-3 text-white/80">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-accent" />
-                  </div>
-                  <span>+994 77 188 50 50</span>
-                </a>
-                <div className="flex items-center gap-3 text-white/80">
-                  <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-accent" />
-                  </div>
-                  <span className="text-sm">137A Samad Vurgun, Baku 1022</span>
-                </div>
-             </div>
+            {/* CTA Button */}
+            <div className="hidden lg:flex items-center gap-6">
+              <div className="h-8 w-[1px] bg-white/10"></div>
+              <ApplicationModal />
+            </div>
 
-             <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-                <a href="https://wa.me/994771885050" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-accent transition-colors" target="_blank" rel="noopener noreferrer">
-                  <WhatsAppIcon className="w-6 h-6" />
-                </a>
-                <a href="https://www.instagram.com/varancollegesltd/" className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-accent transition-colors" target="_blank" rel="noopener noreferrer">
-                  <InstagramIcon className="w-6 h-6" />
-                </a>
-             </div>
-
-             <div onClick={closeMobileMenu}>
-                 <ApplicationModal>
-                     <Button variant="accent" className="w-full h-14 text-lg">{tGen("applyNow")}</Button>
-                 </ApplicationModal>
-             </div>
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden flex items-center">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-white hover:text-accent focus:outline-none"
+              >
+                {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 w-full bg-background-dark/95 backdrop-blur-xl border-b border-white/10 py-4 px-4 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-5">
+            {[
+              { name: t("home"), href: "/" },
+              { name: t("services"), href: "/services" },
+              { name: t("studyAbroad"), href: "/study-abroad" },
+              { name: t("about"), href: "/about" },
+              { name: t("blog"), href: "/blog" },
+              { name: t("contact"), href: "/contact" },
+            ].map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-lg font-medium text-white hover:text-accent py-2 border-b border-white/5"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
+              <ApplicationModal>
+                 <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
+              </ApplicationModal>
+            </div>
+          </div>
+        )}
+      </nav>
     </>
   );
 };

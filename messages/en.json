@@ -490,7 +490,8 @@
     ],
     "ctaTitle": "Ready to Reach Your Goal?",
     "ctaDesc": "Start preparations without wasting time. Let our experts help you choose the most suitable program.",
-    "freeConsultation": "Free Consultation"
+    "freeConsultation": "Free Consultation",
+    "details": "Details"
   },
   "StudyAbroadData": {
     "hero": {
@@ -611,7 +612,10 @@
     "home": "Home",
     "services": "Services",
     "borderlessEducation": "Borderless Education",
-    "worldIsYourCampus": "The World Is Your Campus"
+    "worldIsYourCampus": "The World Is Your Campus",
+    "academicDevelopment": "Academic Development",
+    "languageCourses": "Language Courses & Exams",
+    "coursesDesc": "Professional programs to improve your international certificates and foreign language skills."
   },
   "FAQData": {
     "general": [
