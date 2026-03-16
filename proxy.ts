@@ -8,6 +8,9 @@ const isProtectedRoute = createRouteMatcher(['/admin(.*)'])
 const intlMiddleware = createMiddleware(routing)
 
 export default clerkMiddleware(async (auth, req) => {
+  const reqHeaders = new Headers(req.headers)
+  reqHeaders.set('x-pathname', req.nextUrl.pathname)
+
   if (isProtectedRoute(req)) {
     // Calling auth.protect() will redirect unauthenticated users to the Clerk sign-in page
     await auth.protect()
@@ -26,7 +29,11 @@ export default clerkMiddleware(async (auth, req) => {
         return NextResponse.redirect(new URL('/', req.url))
       }
     }
-    return NextResponse.next()
+    return NextResponse.next({
+      request: {
+        headers: reqHeaders,
+      }
+    })
   }
 
   // Only apply next-intl middleware for non-admin routes
@@ -51,13 +58,16 @@ export default clerkMiddleware(async (auth, req) => {
           // If preferred is 'az', just let intlMiddleware handle the root '/' (it won't redirect due to 'as-needed')
           // But we want to explicitly set the cookie on the response
           const res = intlMiddleware(req);
+          res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname)
           res.cookies.set('NEXT_LOCALE', preferredLocale);
           return res;
         }
       }
     }
 
-    return intlMiddleware(req);
+    const res = intlMiddleware(req);
+    res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname);
+    return res;
   }
 })
 
