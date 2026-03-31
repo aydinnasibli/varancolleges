@@ -62,7 +62,7 @@
     "address": "Address",
     "phone": "Phone",
     "email": "Email",
-    "workingHours": "Monday - Saturday, 09:00 - 18:00",
+    "workingHours": "Monday - Saturday, 09:00 - 22:00",
     "noPosts": "There are no posts available at the moment."
   },
   "About": {
