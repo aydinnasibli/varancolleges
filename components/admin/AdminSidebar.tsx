@@ -5,15 +5,15 @@ import { usePathname } from "next/navigation";
 import { LayoutDashboard, FileText, Mail, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const navigation = [
-  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { name: "Blog İdarəetmə", href: "/admin/blog", icon: FileText },
-  { name: "Müraciətlər", href: "/admin/inquiries", icon: Mail, badge: "3" },
-  { name: "Settings", href: "/admin/settings", icon: Settings, pushDown: true },
-];
-
-export function AdminSidebar() {
+export function AdminSidebar({ unreadCount = 0 }: { unreadCount?: number }) {
   const pathname = usePathname();
+
+  const navigation = [
+    { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "Blog İdarəetmə", href: "/admin/blog", icon: FileText },
+    { name: "Müraciətlər", href: "/admin/inquiries", icon: Mail, badge: unreadCount > 0 ? unreadCount.toString() : undefined },
+    { name: "Settings", href: "/admin/settings", icon: Settings, pushDown: true },
+  ];
 
   return (
     <aside className="w-64 flex-shrink-0 border-r border-slate-200 bg-white hidden md:flex flex-col py-6 overflow-y-auto min-h-[calc(100vh-65px)]">

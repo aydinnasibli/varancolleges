@@ -2,6 +2,7 @@ import { AdminHeader } from "@/components/admin/AdminHeader";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { ClerkProvider } from "@clerk/nextjs";
 import "../globals.css";
+import { getUnreadInquiriesCount } from "@/app/actions/contact-actions";
 
 export const metadata = {
   title: "Admin Dashboard | VaranColleges",
@@ -12,11 +13,13 @@ export const metadata = {
   },
 };
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const unreadCount = await getUnreadInquiriesCount();
+
   return (
     <ClerkProvider>
     <html lang="en">
@@ -25,7 +28,7 @@ export default function AdminLayout({
           <div className="flex h-full grow flex-col">
             <AdminHeader />
             <div className="flex flex-1 overflow-hidden">
-              <AdminSidebar />
+              <AdminSidebar unreadCount={unreadCount} />
               <main className="flex-1 overflow-y-auto p-6 md:p-8 lg:px-12 bg-[#f6f6f8]">
                 {children}
               </main>
