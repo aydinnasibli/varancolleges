@@ -7,67 +7,64 @@ const isProtectedRoute = createRouteMatcher(['/admin(.*)'])
 
 const intlMiddleware = createMiddleware(routing)
 
+// 1 year — user's locale preference persists across browser sessions
+const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
+
 export default clerkMiddleware(async (auth, req) => {
   const reqHeaders = new Headers(req.headers)
   reqHeaders.set('x-pathname', req.nextUrl.pathname)
 
+  // Protect admin routes with Clerk auth
   if (isProtectedRoute(req)) {
-    // Calling auth.protect() will redirect unauthenticated users to the Clerk sign-in page
     await auth.protect()
 
     const session = await auth()
-
     if (session.userId) {
-      // Fetch the full user object from Clerk to access public metadata
       const client = await clerkClient()
       const user = await client.users.getUser(session.userId)
-
       const role = user.publicMetadata?.role as string | undefined
-
-      // Redirect authenticated users without the admin role to the home page
       if (role !== 'admin') {
         return NextResponse.redirect(new URL('/', req.url))
       }
     }
-    return NextResponse.next({
-      request: {
-        headers: reqHeaders,
-      }
-    })
+    return NextResponse.next({ request: { headers: reqHeaders } })
   }
 
-  // Only apply next-intl middleware for non-admin routes
   if (!req.nextUrl.pathname.startsWith('/admin')) {
-    // Provide default Vercel IP-based redirection on the root path
-    // ONLY if the request isn't already asking for a specific locale in cookies
-    if (req.nextUrl.pathname === '/') {
-      const hasLocaleCookie = req.cookies.has('NEXT_LOCALE');
+    const hasLocaleCookie = req.cookies.has('NEXT_LOCALE')
+    // x-vercel-ip-country is only present in Vercel production/preview deployments.
+    // When absent (local dev) we skip geo-detection entirely so the team can
+    // test the Azerbaijani version without being redirected.
+    const country = req.headers.get('x-vercel-ip-country')
 
-      if (!hasLocaleCookie) {
-        const country = req.headers.get('x-vercel-ip-country');
-        const preferredLocale = country === 'AZ' ? 'az' : 'en';
+    if (!hasLocaleCookie && country) {
+      const preferredLocale = country === 'AZ' ? 'az' : 'en'
+      // EN locale lives at /en or /en/... — check precisely so a future
+      // route like /enquiry or /enterprise doesn't get treated as EN locale
+      const isOnEnPath = req.nextUrl.pathname === '/en' || req.nextUrl.pathname.startsWith('/en/')
 
-        // If preferred locale is 'az', we don't need to redirect since it's the default and 'as-needed' is set
-        // But we still want to set the NEXT_LOCALE cookie to remember the choice.
-        if (preferredLocale === 'en') {
-          const targetUrl = new URL(`/${preferredLocale}`, req.url);
-          const res = NextResponse.redirect(targetUrl);
-          res.cookies.set('NEXT_LOCALE', preferredLocale);
-          return res;
-        } else {
-          // If preferred is 'az', just let intlMiddleware handle the root '/' (it won't redirect due to 'as-needed')
-          // But we want to explicitly set the cookie on the response
-          const res = intlMiddleware(req);
-          res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname)
-          res.cookies.set('NEXT_LOCALE', preferredLocale);
-          return res;
-        }
+      // Non-AZ visitor on an AZ-locale URL → redirect to the /en equivalent.
+      // Applies to ALL paths, not just root, so direct links (e.g. /about, /blog/*)
+      // also land in the correct language on the first visit.
+      if (preferredLocale === 'en' && !isOnEnPath) {
+        const enPath = req.nextUrl.pathname === '/'
+          ? '/en'
+          : `/en${req.nextUrl.pathname}`
+        const res = NextResponse.redirect(new URL(enPath, req.url))
+        res.cookies.set('NEXT_LOCALE', 'en', { maxAge: LOCALE_COOKIE_MAX_AGE, path: '/' })
+        return res
       }
+
+      // Visitor is already on the right locale path — record the preference and continue
+      const res = intlMiddleware(req)
+      res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname)
+      res.cookies.set('NEXT_LOCALE', preferredLocale, { maxAge: LOCALE_COOKIE_MAX_AGE, path: '/' })
+      return res
     }
 
-    const res = intlMiddleware(req);
-    res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname);
-    return res;
+    const res = intlMiddleware(req)
+    res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname)
+    return res
   }
 })
 
