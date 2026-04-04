@@ -58,16 +58,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: t('twitterDescription'),
       images: ["/images/varan-office.webp"],
     },
-    icons: {
-      icon: [
-        { url: '/favicon.svg', type: 'image/svg+xml' },
-        { url: '/images/logo.png', type: 'image/png' },
-      ],
-      apple: [
-        { url: '/images/logo.png', type: 'image/png' },
-      ],
-      shortcut: '/favicon.svg',
-    },
     robots: {
       index: true,
       follow: true,
@@ -126,6 +116,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className="dark scroll-smooth">
+      <head>
+        <link rel="icon" href="/images/logo-light.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/images/logo-light.png" />
+        <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+      </head>
       <body
         className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
       >
