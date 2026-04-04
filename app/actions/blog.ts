@@ -14,6 +14,7 @@ export async function createPost(formData: FormData) {
     const excerpt = formData.get("excerpt") as string;
     const image = formData.get("image") as string;
     const status = formData.get("status") as string;
+    const dateStr = formData.get("date") as string;
 
     const providedSlug = formData.get("slug") as string;
 
@@ -37,7 +38,7 @@ export async function createPost(formData: FormData) {
       image,
       status,
       author: "Admin", // default since there's no auth handling requested yet for author
-      date: new Date(),
+      date: dateStr ? new Date(dateStr) : new Date(),
     });
 
     await newPost.save();
@@ -63,6 +64,7 @@ export async function updatePost(id: string, formData: FormData) {
     const excerpt = formData.get("excerpt") as string;
     const image = formData.get("image") as string;
     const status = formData.get("status") as string;
+    const dateStr = formData.get("date") as string;
 
     const providedSlug = formData.get("slug") as string;
 
@@ -80,16 +82,22 @@ export async function updatePost(id: string, formData: FormData) {
       existingPost = await Post.findOne({ slug: uniqueSlug, _id: { $ne: id } });
     }
 
+    const updateData: any = {
+      title,
+      slug: uniqueSlug,
+      content,
+      excerpt,
+      image,
+      status,
+    };
+
+    if (dateStr) {
+      updateData.date = new Date(dateStr);
+    }
+
     const post = await Post.findByIdAndUpdate(
       id,
-      {
-        title,
-        slug: uniqueSlug,
-        content,
-        excerpt,
-        image,
-        status,
-      },
+      updateData,
       { new: true }
     );
 

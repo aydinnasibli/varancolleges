@@ -17,6 +17,15 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
   const [image, setImage] = useState(initialData?.image || "");
   const [status, setStatus] = useState(initialData?.status || "draft");
   const [slug, setSlug] = useState(initialData?.slug || "");
+  const [date, setDate] = useState(() => {
+    if (initialData?.date) {
+      const d = new Date(initialData.date);
+      if (!isNaN(d.getTime())) {
+        return d.toISOString().split('T')[0];
+      }
+    }
+    return new Date().toISOString().split('T')[0];
+  });
 
   const [isUploading, setIsUploading] = useState(false);
 
@@ -53,6 +62,7 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
     formData.append("excerpt", excerpt);
     formData.append("image", image);
     formData.append("status", status);
+    formData.append("date", date);
 
     if (slug.trim() !== "") {
         formData.append("slug", slug.trim());
@@ -136,6 +146,16 @@ export default function BlogForm({ initialData }: { initialData?: any }) {
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
               </select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">Publish Date</label>
+              <input
+                type="date"
+                required
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-[#1152d4] focus:border-[#1152d4] outline-none text-slate-900 bg-white"
+              />
             </div>
           </div>
 
