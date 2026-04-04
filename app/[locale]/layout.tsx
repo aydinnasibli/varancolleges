@@ -58,6 +58,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: t('twitterDescription'),
       images: ["/images/varan-office.webp"],
     },
+    icons: {
+      icon: [
+        { url: '/images/logo.png', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/images/logo.png', type: 'image/png' },
+      ],
+      shortcut: '/images/logo.png',
+    },
     robots: {
       index: true,
       follow: true,
