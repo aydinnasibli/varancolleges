@@ -58,17 +58,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: t('twitterDescription'),
       images: ["/images/varan-office.webp"],
     },
-    icons: {
-      icon: [
-        { url: '/images/logo.png', type: 'image/png', media: '(prefers-color-scheme: dark)' },
-        { url: '/images/logo-light.png', type: 'image/png', media: '(prefers-color-scheme: light)' },
-      ],
-      apple: [
-        { url: '/images/logo.png', type: 'image/png', media: '(prefers-color-scheme: dark)' },
-        { url: '/images/logo-light.png', type: 'image/png', media: '(prefers-color-scheme: light)' },
-      ],
-      shortcut: '/images/logo.png',
-    },
     robots: {
       index: true,
       follow: true,
@@ -127,6 +116,18 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className="dark scroll-smooth">
+      <head>
+        {/* Favicon: black logo as default (works on Safari's gray tab bar and Chrome light mode).
+            White logo override for browsers that support media queries (Chrome/Firefox/Edge dark mode).
+            Safari ignores media on <link rel="icon"> so it always gets the default black logo. */}
+        <link rel="icon" href="/images/logo-light.png" type="image/png" />
+        <link rel="icon" href="/images/logo.png" type="image/png" media="(prefers-color-scheme: dark)" />
+        {/* Apple Touch Icon: black logo — iOS composites on a white background automatically */}
+        <link rel="apple-touch-icon" href="/images/logo-light.png" />
+        {/* theme-color: tells mobile browsers and Chrome what color to use for the browser chrome */}
+        <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+      </head>
       <body
         className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
       >
