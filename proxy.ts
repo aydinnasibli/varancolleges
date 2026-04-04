@@ -39,7 +39,9 @@ export default clerkMiddleware(async (auth, req) => {
 
     if (!hasLocaleCookie && country) {
       const preferredLocale = country === 'AZ' ? 'az' : 'en'
-      const isOnEnPath = req.nextUrl.pathname.startsWith('/en')
+      // EN locale lives at /en or /en/... — check precisely so a future
+      // route like /enquiry or /enterprise doesn't get treated as EN locale
+      const isOnEnPath = req.nextUrl.pathname === '/en' || req.nextUrl.pathname.startsWith('/en/')
 
       // Non-AZ visitor on an AZ-locale URL → redirect to the /en equivalent.
       // Applies to ALL paths, not just root, so direct links (e.g. /about, /blog/*)
