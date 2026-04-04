@@ -60,13 +60,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     icons: {
       icon: [
-        { url: '/favicon.svg', type: 'image/svg+xml' },
-        { url: '/images/logo.png', type: 'image/png' },
+        { url: '/images/logo.png', type: 'image/png', media: '(prefers-color-scheme: dark)' },
+        { url: '/images/logo-light.png', type: 'image/png', media: '(prefers-color-scheme: light)' },
       ],
       apple: [
-        { url: '/images/logo.png', type: 'image/png' },
+        { url: '/images/logo.png', type: 'image/png', media: '(prefers-color-scheme: dark)' },
+        { url: '/images/logo-light.png', type: 'image/png', media: '(prefers-color-scheme: light)' },
       ],
-      shortcut: '/favicon.svg',
+      shortcut: '/images/logo.png',
     },
     robots: {
       index: true,
