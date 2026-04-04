@@ -9,8 +9,14 @@ if (!cached) {
 }
 
 async function connectToDatabase() {
+  // If we have a connection, check if it is still valid
   if (cached.conn) {
-    return cached.conn;
+    if (mongoose.connection.readyState === 1) {
+      return cached.conn;
+    } else {
+      // Connection exists but is not ready. Clear the promise to force reconnect.
+      cached.promise = null;
+    }
   }
 
   if (!cached.promise) {
@@ -28,7 +34,9 @@ async function connectToDatabase() {
       return cached.conn;
   } catch (error) {
       console.warn("MongoDB connection error:", error);
-      return null;
+      // Clear the cached promise so the next request can attempt to reconnect
+      cached.promise = null;
+      throw error; // Throw the error so the caller knows the connection failed, rather than returning null
   }
 }
 
