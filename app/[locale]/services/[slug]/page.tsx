@@ -18,8 +18,24 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // Use a fallback for the title since not all slugs might be in the translations yet (but we expect them to be)
   const title = tData('title') || 'VaranColleges';
 
+  const description = tData('description') || '';
+  const heroImage = servicesData.find(s => s.slug === slug)?.heroImage || '/images/varan-office.webp';
+
   return {
     title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: heroImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [heroImage],
+    },
     alternates: {
       canonical,
       languages: {

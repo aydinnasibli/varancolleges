@@ -16,28 +16,10 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 import { getTranslations } from "next-intl/server";
-import { headers } from "next/headers";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
-
-  const headersList = await headers();
-  const rawPathname = headersList.get('x-pathname') || '/';
-
-  // Strip '/en' prefix to get the bare path for canonical/hreflang calculation
-  const barePath = rawPathname.startsWith('/en')
-    ? rawPathname.replace('/en', '')
-    : rawPathname;
-
-  // Ensure we don't end up with an empty string, fallback to '/'
-  const normalizedPath = barePath === '' ? '/' : barePath;
-
-  const baseUrl = "https://www.varancolleges.com";
-  const azUrl = normalizedPath === '/' ? baseUrl : `${baseUrl}${normalizedPath}`;
-  const enUrl = normalizedPath === '/' ? `${baseUrl}/en` : `${baseUrl}/en${normalizedPath}`;
-
-  const currentUrl = locale === 'az' ? azUrl : enUrl;
 
   return {
     metadataBase: new URL("https://www.varancolleges.com"),
@@ -55,18 +37,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       address: false,
       telephone: false,
     },
-    alternates: {
-      canonical: currentUrl,
-      languages: {
-        'az': azUrl,
-        'en': enUrl,
-        'x-default': azUrl,
-      },
-    },
     openGraph: {
       title: t('openGraphTitle'),
       description: t('openGraphDescription'),
-      url: currentUrl,
       siteName: "VaranColleges",
       locale: locale === 'az' ? 'az_AZ' : 'en_US',
       type: "website",
