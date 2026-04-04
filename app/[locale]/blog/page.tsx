@@ -9,10 +9,26 @@ import { getTranslations } from "next-intl/server";
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const tMeta = await getTranslations({ locale, namespace: 'Metadata' });
   const canonical = locale === 'az' ? 'https://www.varancolleges.com/blog' : `https://www.varancolleges.com/${locale}/blog`;
+  const title = t('blog');
+  const description = tMeta('blogDescription');
 
   return {
-    title: t('blog'),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: '/images/varan-office.webp', width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/images/varan-office.webp'],
+    },
     alternates: {
       canonical,
       languages: {

@@ -6,11 +6,29 @@ import BlogPreview from "@/components/sections/BlogPreview";
 import FAQ from "@/components/sections/FAQ";
 import Footer from "@/components/layout/Footer";
 
+import { getTranslations } from "next-intl/server";
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
   const canonical = locale === 'az' ? 'https://www.varancolleges.com' : `https://www.varancolleges.com/${locale}`;
+  const description = t('description');
+  const title = t('title');
 
   return {
+    description,
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: '/images/varan-office.webp', width: 1200, height: 630, alt: 'VaranColleges' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/images/varan-office.webp'],
+    },
     alternates: {
       canonical,
       languages: {

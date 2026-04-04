@@ -18,9 +18,26 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     };
   }
 
+  const description = post.excerpt || post.title;
+  const ogImage = post.mainImage
+    ? [{ url: post.mainImage, width: 1200, height: 630, alt: post.title }]
+    : [{ url: '/images/varan-office.webp', width: 1200, height: 630, alt: post.title }];
+
   return {
     title: `${post.title} - Varan Colleges`,
-    description: post.excerpt || post.title,
+    description,
+    openGraph: {
+      title: `${post.title} - Varan Colleges`,
+      description,
+      url: canonical,
+      images: ogImage,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} - Varan Colleges`,
+      description,
+      images: post.mainImage ? [post.mainImage] : ['/images/varan-office.webp'],
+    },
     alternates: {
       canonical,
       languages: {

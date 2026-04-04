@@ -23,8 +23,24 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
   const canonical = locale === 'az' ? `https://www.varancolleges.com/study-abroad/${slug}` : `https://www.varancolleges.com/${locale}/study-abroad/${slug}`;
 
+  const title = `${country.name} - ${t('studyAbroad')}`;
+  const description = country.description || '';
+
   return {
-    title: `${country.name} - ${t('studyAbroad')}`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: country.flagUrl, alt: country.name }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [country.flagUrl],
+    },
     alternates: {
       canonical,
       languages: {
