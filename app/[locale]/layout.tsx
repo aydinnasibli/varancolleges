@@ -60,12 +60,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     icons: {
       icon: [
+        { url: '/favicon.svg', type: 'image/svg+xml' },
         { url: '/images/logo.png', type: 'image/png' },
       ],
       apple: [
         { url: '/images/logo.png', type: 'image/png' },
       ],
-      shortcut: '/images/logo.png',
+      shortcut: '/favicon.svg',
     },
     robots: {
       index: true,
