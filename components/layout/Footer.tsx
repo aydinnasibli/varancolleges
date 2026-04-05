@@ -45,11 +45,12 @@ const Footer = async () => {
             <h4 className="text-white font-serif font-medium mb-8">{tNav("services")}</h4>
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
+                { label: tNav("services"), href: "/services" },
                 { label: tNav("studyAbroad"), href: "/study-abroad" },
                 { label: tFoot("ielts"), href: "/services/ielts" },
                 { label: tFoot("sat"), href: "/services/sat" },
               ].map((item) => (
-                <li key={item.label}>
+                <li key={item.href}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
                     <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {item.label}
@@ -64,11 +65,12 @@ const Footer = async () => {
             <h4 className="text-white font-serif font-medium mb-8">{tNav("about")}</h4>
             <ul className="space-y-4 text-sm text-slate-500 font-light">
               {[
+                { label: tNav("home"), href: "/" },
                 { label: tNav("about"), href: "/about" },
                 { label: tNav("blog"), href: "/blog" },
                 { label: tNav("contact"), href: "/contact" }
               ].map((item) => (
-                <li key={item.label}>
+                <li key={item.href}>
                   <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
                     <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {item.label}
