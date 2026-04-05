@@ -2,7 +2,6 @@ import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
-import LanguageSwitcher from "./LanguageSwitcher";
 import { getTranslations } from "next-intl/server";
 
 const Footer = async () => {
@@ -122,7 +121,6 @@ const Footer = async () => {
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-600 text-xs">© {new Date().getFullYear()} VaranColleges. {tFoot("rights")}</p>
           <div className="flex items-center space-x-8 text-xs text-slate-600">
-            <LanguageSwitcher />
           </div>
         </div>
       </div>

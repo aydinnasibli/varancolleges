@@ -9,6 +9,7 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,6 +70,8 @@ const Navbar = () => {
             >
               <InstagramIcon className="w-5 h-5" />
             </a>
+            <span className="text-slate-700">|</span>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -159,6 +162,9 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+            <div className="pt-2 pb-1">
+              <LanguageSwitcher />
+            </div>
             <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
               <ApplicationModal>
                  <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
