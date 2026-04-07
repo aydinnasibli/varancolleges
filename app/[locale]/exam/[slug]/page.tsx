@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
-import { Clock, BookOpen, CheckCircle, ChevronRight, Lock } from "lucide-react";
+import { Clock, BookOpen, CheckCircle, ChevronRight } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import Link from "next/link";
 
@@ -162,7 +162,7 @@ export default async function ExamDetailPage({
                 <div className="mt-4 space-y-2">
                   {[
                     "Full Digital SAT simulation",
-                    "Adaptive Module 2",
+                    "4 timed modules",
                     "Section scores (R&W + Math)",
                     "Question-by-question review",
                     "Retake anytime",
@@ -212,14 +212,6 @@ export default async function ExamDetailPage({
             ))}
           </div>
 
-          <div className="mt-4 bg-accent/5 border border-accent/20 rounded-xl p-4 flex items-start gap-3">
-            <Lock className="h-4 w-4 text-accent mt-0.5 flex-shrink-0" />
-            <p className="text-sm text-slate-300">
-              <strong className="text-white">Adaptive Scoring:</strong> Module 2 difficulty is
-              automatically adjusted based on your Module 1 performance — harder Module 2 if you
-              scored ≥60%, easier if below. This mirrors how the real Digital SAT works.
-            </p>
-          </div>
         </section>
 
         {/* Previous attempts */}

@@ -43,7 +43,7 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next({ request: { headers: reqHeaders } })
   }
 
-  if (!req.nextUrl.pathname.startsWith('/admin') && !isStudentRoute(req)) {
+  if (!req.nextUrl.pathname.startsWith('/admin')) {
     const hasLocaleCookie = req.cookies.has('NEXT_LOCALE')
     // x-vercel-ip-country is only present in Vercel production/preview deployments.
     // When absent (local dev) we skip geo-detection entirely so the team can

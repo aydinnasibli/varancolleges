@@ -137,22 +137,26 @@ export async function getUserPurchases(userId: string) {
 
     return {
       success: true,
-      purchases: purchases.map((p) => ({
-        _id: p._id.toString(),
-        examId: p.examId.toString(),
-        amount: p.amount,
-        currency: p.currency,
-        status: p.status,
-        purchasedAt: (p.purchasedAt as Date).toISOString(),
-        exam: p.examId as unknown as {
-          _id: string;
+      purchases: purchases.map((p) => {
+        // After populate+lean, p.examId is the exam document object
+        const examDoc = p.examId as unknown as {
+          _id: { toString(): string };
           title: string;
           slug: string;
           type: string;
           totalDuration: number;
           coverImage: string;
-        },
-      })),
+        };
+        return {
+          _id: p._id.toString(),
+          examId: examDoc._id.toString(),
+          amount: p.amount,
+          currency: p.currency,
+          status: p.status,
+          purchasedAt: (p.purchasedAt as Date).toISOString(),
+          exam: examDoc,
+        };
+      }),
     };
   } catch (error) {
     console.error("getUserPurchases error:", error);
