@@ -15,7 +15,8 @@
     "services": "Xidmətlər",
     "studyAbroad": "Xaricdə Təhsil",
     "contact": "Əlaqə",
-    "blog": "Blog"
+    "blog": "Blog",
+    "mockExams": "Sınaq İmtahanları"
   },
   "Footer": {
     "language": "Dil",
@@ -781,5 +782,79 @@
         "a": "Qiyabi proqramlar əsasən biznes, idarəetmə və marketing və.s sahələrdə mövcuddur. Tibb və praktik laboratoriya tələb edən sahələrdə yoxdur. Qiyabi təhsil işləyən tələbələr üçün uyğundur dərslər online olur."
       }
     ]
+  },
+  "Exam": {
+    "nav": {
+      "mockExams": "Sınaq İmtahanları",
+      "myExams": "İmtahanlarım",
+      "signIn": "Daxil ol",
+      "signUp": "Qeydiyyat"
+    },
+    "listing": {
+      "label": "Sınaq İmtahanları",
+      "title": "Real İmtahan kimi Hazırlaşın",
+      "description": "Vaxtlı bölmələr və ətraflı bal hesabatları ilə tam uzunluqlu rəqəmsal SAT simulyasiyaları — real imtahan kimi.",
+      "noExams": "Hələ imtahan mövcud deyil. Tezliklə yoxlayın!",
+      "viewDetails": "Ətraflı bax",
+      "questions": "sual",
+      "features": {
+        "timedModules": {
+          "title": "4 Vaxtlı Modul",
+          "desc": "Tam Rəqəmsal SAT strukturu: Oxu və Yazı (M1+M2) və Riyaziyyat (M1+M2), hər biri real vaxt limitləri ilə."
+        },
+        "timedSections": {
+          "title": "Vaxtlı Bölmələr",
+          "desc": "Hər bölmə canlı geri sayım taymeri ilə real vaxt məhdudiyyətləri altında keçirilir."
+        },
+        "detailedResults": {
+          "title": "Ətraflı Nəticələr",
+          "desc": "Bölmə balları, sual-sual nəzərdən keçirmə və hər cavab üçün izahat alın."
+        }
+      }
+    },
+    "detail": {
+      "mockExam": "Sınaq İmtahanı",
+      "minutesTotal": "dəqiqə ümumi",
+      "questionsAcross": "sual 4 modulda",
+      "oneTimePayment": "Bir dəfəlik ödəniş • Limitsiz yenidən imtahan",
+      "signInToPurchase": "Bu imtahanı almaq üçün daxil olun",
+      "signIn": "Daxil ol",
+      "signUp": "Qeydiyyat",
+      "purchased": "Satın alınıb",
+      "continueExam": "İmtahanı davam et",
+      "startExam": "İmtahana başla",
+      "viewLatestResults": "Son nəticələrə bax",
+      "features": {
+        "fullSimulation": "Tam rəqəmsal SAT simulyasiyası",
+        "timedModules": "4 vaxtlı modul",
+        "sectionScores": "Bölmə balları (Oxu/Yazı + Riyaziyyat)",
+        "questionReview": "Sual-sual nəzərdən keçirmə",
+        "retakeAnytime": "İstənilən vaxt yenidən"
+      },
+      "examStructure": "İmtahan Strukturu",
+      "modules": "Modullar",
+      "questionsPerModule": "Modulda sual sayı",
+      "timePerModule": "Modulda vaxt",
+      "totalTime": "Ümumi vaxt",
+      "previousAttempts": "Əvvəlki Cəhdlər",
+      "attempt": "Cəhd"
+    },
+    "profile": {
+      "myExams": "İmtahanlarım",
+      "examsPurchased": "Satın alınan imtahanlar",
+      "attempts": "Cəhdlər",
+      "bestScore": "Ən Yüksək Bal",
+      "noExamsPurchased": "Hələ imtahan satın alınmayıb",
+      "browseMockExams": "Sınaq İmtahanlarına bax",
+      "paymentVerifying": "Ödəniş yoxlanılır — siz hələ imtahana başlaya bilərsiniz",
+      "continueExam": "İmtahanı davam et",
+      "retakeExam": "Yenidən imtahan ver",
+      "startExam": "İmtahana başla",
+      "viewLatestResults": "Son nəticələrə bax",
+      "attemptHistory": "Cəhd Tarixi",
+      "purchased": "Satın alınıb",
+      "moreAttempts": "daha çox cəhd",
+      "paymentSuccess": "Ödəniş uğurla tamamlandı! İmtahanınız aşağıda mövcuddur."
+    }
   }
 }

@@ -105,6 +105,7 @@ const Navbar = () => {
                 { name: t("studyAbroad"), href: "/study-abroad" },
                 { name: t("about"), href: "/about" },
                 { name: t("blog"), href: "/blog" },
+                { name: t("mockExams"), href: "/exam" },
                 { name: t("contact"), href: "/contact" },
               ].map((item) => (
                 <Link
@@ -151,6 +152,7 @@ const Navbar = () => {
               { name: t("studyAbroad"), href: "/study-abroad" },
               { name: t("about"), href: "/about" },
               { name: t("blog"), href: "/blog" },
+              { name: t("mockExams"), href: "/exam" },
               { name: t("contact"), href: "/contact" },
             ].map((item) => (
               <Link

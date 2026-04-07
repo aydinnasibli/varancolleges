@@ -131,33 +131,36 @@ export async function getUserPurchases(userId: string) {
   try {
     await dbConnect();
     const purchases = await ExamPurchase.find({ userId, status: { $in: ["pending", "completed"] } })
-      .populate("examId")
       .sort({ purchasedAt: -1 })
       .lean();
 
-    return {
-      success: true,
-      purchases: purchases.map((p) => {
-        // After populate+lean, p.examId is the exam document object
-        const examDoc = p.examId as unknown as {
-          _id: { toString(): string };
-          title: string;
-          slug: string;
-          type: string;
-          totalDuration: number;
-          coverImage: string;
-        };
+    if (purchases.length === 0) return { success: true, purchases: [] };
+
+    // Fetch exams manually to avoid populate crashing when a ref is null
+    const examIds = [...new Set(purchases.map((p) => p.examId.toString()))];
+    const exams = await Exam.find({ _id: { $in: examIds } }).lean();
+    const examMap = new Map(exams.map((e) => [e._id.toString(), e]));
+
+    const results = purchases
+      .map((p) => {
+        const examDoc = examMap.get(p.examId.toString());
+        if (!examDoc) return null; // exam was deleted — skip
         return {
           _id: p._id.toString(),
-          examId: examDoc._id.toString(),
+          examId: p.examId.toString(),
           amount: p.amount,
           currency: p.currency,
           status: p.status,
           purchasedAt: (p.purchasedAt as Date).toISOString(),
-          exam: examDoc,
+          exam: {
+            ...examDoc,
+            _id: examDoc._id.toString(),
+          },
         };
-      }),
-    };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+
+    return { success: true, purchases: results };
   } catch (error) {
     console.error("getUserPurchases error:", error);
     return { success: false, purchases: [] };

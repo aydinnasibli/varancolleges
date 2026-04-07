@@ -4,9 +4,13 @@ import Image from "next/image";
 import { Clock, BookOpen, ChevronRight } from "lucide-react";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
+import { getTranslations } from "next-intl/server";
 
 export default async function ExamListingPage() {
-  const result = await getActiveExams();
+  const [result, t] = await Promise.all([
+    getActiveExams(),
+    getTranslations("Exam.listing"),
+  ]);
   const exams = result.success ? result.exams : [];
 
   return (
@@ -17,14 +21,13 @@ export default async function ExamListingPage() {
         <section className="relative pt-24 pb-16 bg-gradient-to-b from-primary/80 to-background-dark border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6 text-center">
             <span className="inline-block text-xs font-semibold uppercase tracking-widest text-accent mb-4">
-              Mock Exams
+              {t("label")}
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Practice Like It&apos;s the Real Thing
+              {t("title")}
             </h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Full-length digital SAT simulations with timed sections and
-              detailed score reports — just like the real exam.
+              {t("description")}
             </p>
           </div>
         </section>
@@ -34,7 +37,7 @@ export default async function ExamListingPage() {
           {exams.length === 0 ? (
             <div className="text-center py-20">
               <BookOpen className="h-16 w-16 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">No exams available yet. Check back soon!</p>
+              <p className="text-slate-400 text-lg">{t("noExams")}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -83,7 +86,7 @@ export default async function ExamListingPage() {
                       </span>
                       <span className="flex items-center gap-1.5">
                         <BookOpen className="h-3.5 w-3.5" />
-                        98 questions
+                        98 {t("questions")}
                       </span>
                     </div>
 
@@ -91,7 +94,7 @@ export default async function ExamListingPage() {
                       href={`/exam/${exam.slug}`}
                       className="flex items-center justify-center gap-2 w-full bg-accent/10 hover:bg-accent text-accent hover:text-primary border border-accent/30 hover:border-accent py-2.5 rounded-xl text-sm font-semibold transition-all duration-200"
                     >
-                      View Details
+                      {t("viewDetails")}
                       <ChevronRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -104,23 +107,10 @@ export default async function ExamListingPage() {
         {/* Info section */}
         <section className="border-t border-white/5 bg-white/3">
           <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-              {
-                title: "4 Timed Modules",
-                desc: "Full Digital SAT structure: Reading & Writing (M1+M2) and Math (M1+M2), each with real time limits.",
-              },
-              {
-                title: "Timed Sections",
-                desc: "Each section runs under real time constraints with a live countdown timer.",
-              },
-              {
-                title: "Detailed Results",
-                desc: "Get section scores, question-by-question review, and explanations for every answer.",
-              },
-            ].map((item) => (
-              <div key={item.title} className="space-y-3">
-                <h3 className="text-white font-semibold">{item.title}</h3>
-                <p className="text-slate-400 text-sm">{item.desc}</p>
+            {(["timedModules", "timedSections", "detailedResults"] as const).map((key) => (
+              <div key={key} className="space-y-3">
+                <h3 className="text-white font-semibold">{t(`features.${key}.title`)}</h3>
+                <p className="text-slate-400 text-sm">{t(`features.${key}.desc`)}</p>
               </div>
             ))}
           </div>

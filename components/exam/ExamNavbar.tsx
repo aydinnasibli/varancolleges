@@ -4,9 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import { BookOpen } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function ExamNavbar() {
   const { isSignedIn, isLoaded } = useUser();
+  const t = useTranslations("Exam.nav");
 
   return (
     <header className="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-xl border-b border-white/10">
@@ -29,7 +31,7 @@ export default function ExamNavbar() {
             className="flex items-center gap-1.5 text-sm font-medium text-accent"
           >
             <BookOpen className="h-4 w-4" />
-            Mock Exams
+            {t("mockExams")}
           </Link>
         </nav>
 
@@ -42,7 +44,7 @@ export default function ExamNavbar() {
                   href="/profile"
                   className="hidden sm:block text-sm text-slate-300 hover:text-white transition-colors font-medium"
                 >
-                  My Exams
+                  {t("myExams")}
                 </Link>
                 <UserButton />
               </>
@@ -50,12 +52,12 @@ export default function ExamNavbar() {
               <>
                 <SignInButton mode="modal">
                   <button className="text-sm text-slate-300 hover:text-white transition-colors font-medium border border-white/20 px-3 py-1.5 rounded-lg">
-                    Sign In
+                    {t("signIn")}
                   </button>
                 </SignInButton>
                 <SignUpButton mode="modal">
                   <button className="text-sm bg-accent text-primary px-3 py-1.5 rounded-lg font-semibold hover:bg-accent/90 transition-colors">
-                    Sign Up
+                    {t("signUp")}
                   </button>
                 </SignUpButton>
               </>
