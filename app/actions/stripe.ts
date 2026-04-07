@@ -5,6 +5,7 @@ import dbConnect from "@/lib/db";
 import Exam from "@/models/Exam";
 import ExamPurchase from "@/models/ExamPurchase";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -28,18 +29,21 @@ export async function createCheckoutSession(examId: string) {
       return { success: false, error: "Exam not found" };
     }
 
-    // Check if user already has a completed purchase
+    // Block if any non-refunded purchase exists (pending OR completed)
     const existingPurchase = await ExamPurchase.findOne({
       userId,
       examId,
-      status: "completed",
+      status: { $in: ["pending", "completed"] },
     });
     if (existingPurchase) {
       return { success: false, error: "You have already purchased this exam" };
     }
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL || "https://www.varancolleges.com";
+    // Derive base URL from the actual request host so test/prod redirects work correctly
+    const reqHeaders = await headers();
+    const host = reqHeaders.get("host") || "localhost:3000";
+    const protocol = host.includes("localhost") ? "http" : "https";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `${protocol}://${host}`;
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({

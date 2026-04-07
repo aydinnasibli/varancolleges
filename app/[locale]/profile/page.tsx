@@ -4,7 +4,7 @@ import { getUserPurchases, getUserAttempts } from "@/app/actions/exam-public";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
-import { BookOpen, Clock, ChevronRight, Trophy, RotateCcw, CheckCircle, PlayCircle } from "lucide-react";
+import { BookOpen, Clock, ChevronRight, Trophy, RotateCcw, CheckCircle, PlayCircle, Loader2 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -127,6 +127,7 @@ export default async function ProfilePage({
                   completedAt?: string | null;
                 }>;
 
+                const isPending = (purchase as { status: string }).status === "pending";
                 const inProgress = examAttempts.find((a) => a.status === "in_progress");
                 const completed = examAttempts
                   .filter((a) => a.status === "completed")
@@ -183,7 +184,12 @@ export default async function ProfilePage({
 
                     {/* Actions */}
                     <div className="flex flex-wrap gap-3 mt-5">
-                      {inProgress ? (
+                      {isPending ? (
+                        <div className="flex items-center gap-2 bg-white/5 border border-white/10 text-slate-400 px-4 py-2 rounded-lg text-sm font-medium">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Processing payment...
+                        </div>
+                      ) : inProgress ? (
                         <Link
                           href={`/exam/${exam.slug}/take`}
                           className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
