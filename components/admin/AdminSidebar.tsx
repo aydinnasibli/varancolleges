@@ -2,24 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, Mail, Settings } from "lucide-react";
+import { LayoutDashboard, FileText, Mail, Settings, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function AdminSidebar({ unreadCount = 0 }: { unreadCount?: number }) {
   const pathname = usePathname();
 
   const navigation = [
-    { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-    { name: "Blog İdarəetmə", href: "/admin/blog", icon: FileText },
-    { name: "Müraciətlər", href: "/admin/inquiries", icon: Mail, badge: unreadCount > 0 ? unreadCount.toString() : undefined },
-    { name: "Settings", href: "/admin/settings", icon: Settings, pushDown: true },
+    { name: "Dashboard", href: "/admin", icon: LayoutDashboard, exact: true },
+    { name: "Blog İdarəetmə", href: "/admin/blog", icon: FileText, exact: false },
+    { name: "Sınaq İdarəetmə", href: "/admin/exam", icon: ClipboardList, exact: false },
+    { name: "Müraciətlər", href: "/admin/inquiries", icon: Mail, badge: unreadCount > 0 ? unreadCount.toString() : undefined, exact: false },
+    { name: "Settings", href: "/admin/settings", icon: Settings, pushDown: true, exact: true },
   ];
 
   return (
     <aside className="w-64 flex-shrink-0 border-r border-slate-200 bg-white hidden md:flex flex-col py-6 overflow-y-auto min-h-[calc(100vh-65px)]">
       <div className="flex flex-col gap-2 px-4 h-full">
         {navigation.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           const Icon = item.icon;
 
           return (

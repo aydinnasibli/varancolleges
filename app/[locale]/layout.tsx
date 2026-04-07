@@ -103,6 +103,7 @@ const jsonLd = {
 
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export default async function RootLayout({
   children,
@@ -115,32 +116,34 @@ export default async function RootLayout({
   const messages = await getMessages({locale});
 
   return (
-    <html lang={locale} className="dark scroll-smooth">
-      <head>
-        <link rel="icon" href="/images/logo-light.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/images/logo-light.png" />
-        <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-      </head>
-      <body
-        className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
-      >
-        <NextIntlClientProvider messages={messages}>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
-          {/* Cloudflare Web Analytics */}
-          <script
-            defer
-            src='https://static.cloudflareinsights.com/beacon.min.js'
-            data-cf-beacon='{"token": "1d9b481741fb4b02ac93c816ca4a0371"}'
-          ></script>
-          {/* End Cloudflare Web Analytics */}
-          {children}
-          <Toaster position="bottom-left" />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang={locale} className="dark scroll-smooth">
+        <head>
+          <link rel="icon" href="/images/logo-light.png" type="image/png" />
+          <link rel="apple-touch-icon" href="/images/logo-light.png" />
+          <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
+          <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        </head>
+        <body
+          className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
+        >
+          <NextIntlClientProvider messages={messages}>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            {/* Cloudflare Web Analytics */}
+            <script
+              defer
+              src='https://static.cloudflareinsights.com/beacon.min.js'
+              data-cf-beacon='{"token": "1d9b481741fb4b02ac93c816ca4a0371"}'
+            ></script>
+            {/* End Cloudflare Web Analytics */}
+            {children}
+            <Toaster position="bottom-left" />
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
