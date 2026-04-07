@@ -8,9 +8,16 @@ import { BookOpen, Clock, ChevronRight, Trophy, RotateCcw, CheckCircle, PlayCirc
 
 export const dynamic = "force-dynamic";
 
-export default async function ProfilePage() {
+export default async function ProfilePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ payment?: string }>;
+}) {
   const { userId } = await auth();
   if (!userId) redirect("/exam");
+
+  const sp = await searchParams;
+  const paymentSuccess = sp.payment === "success";
 
   const user = await currentUser();
   const [purchasesResult, attemptsResult] = await Promise.all([
@@ -25,6 +32,11 @@ export default async function ProfilePage() {
     <>
       <ExamNavbar />
       <main className="min-h-screen bg-background-dark">
+        {paymentSuccess && (
+          <div className="bg-green-500/10 border-b border-green-500/20 py-3 px-6 text-center text-sm text-green-400 font-medium">
+            Payment successful! Your exam is now available below.
+          </div>
+        )}
         {/* Header */}
         <section className="border-b border-white/5 py-10 bg-gradient-to-b from-primary/20 to-transparent">
           <div className="max-w-4xl mx-auto px-6">

@@ -64,7 +64,7 @@ export async function createCheckoutSession(examId: string) {
         examId: examId.toString(),
         userId,
       },
-      success_url: `${baseUrl}/exam/${exam.slug}?payment=success`,
+      success_url: `${baseUrl}/profile?payment=success`,
       cancel_url: `${baseUrl}/exam/${exam.slug}?payment=cancelled`,
     });
 
