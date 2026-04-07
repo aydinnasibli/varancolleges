@@ -155,7 +155,6 @@ export default async function ExamDetailPage({
                 ) : (
                   <ExamPurchaseButton
                     examId={exam._id}
-                    examTitle={exam.title}
                     price={exam.price}
                   />
                 )}

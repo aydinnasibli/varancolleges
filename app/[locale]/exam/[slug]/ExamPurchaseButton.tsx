@@ -1,52 +1,37 @@
 "use client";
 
 import { useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { Loader2, ShoppingCart } from "lucide-react";
+import { createCheckoutSession } from "@/app/actions/stripe";
 
 interface ExamPurchaseButtonProps {
   examId: string;
-  examTitle: string;
   price: number;
 }
 
 export default function ExamPurchaseButton({
   examId,
-  examTitle,
   price,
 }: ExamPurchaseButtonProps) {
   const [loading, setLoading] = useState(false);
-  const { user } = useUser();
 
   const handlePurchase = async () => {
-    if (!user) return;
     setLoading(true);
-
     try {
-      const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          examId,
-          userId: user.id,
-          userEmail: user.primaryEmailAddress?.emailAddress,
-        }),
-      });
+      const result = await createCheckoutSession(examId);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to create checkout session");
+      if (!result.success || !result.sessionUrl) {
+        toast.error(result.error || "Payment session could not be created");
+        setLoading(false);
+        return;
       }
 
       // Redirect to Stripe Checkout
-      window.location.href = data.sessionUrl;
+      window.location.href = result.sessionUrl;
     } catch (error) {
       console.error("Purchase error:", error);
-      toast.error(
-        error instanceof Error ? error.message : "Purchase failed. Please try again."
-      );
+      toast.error("Something went wrong. Please try again.");
       setLoading(false);
     }
   };

@@ -1,31 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
+"use server";
+
 import Stripe from "stripe";
 import dbConnect from "@/lib/db";
 import Exam from "@/models/Exam";
 import ExamPurchase from "@/models/ExamPurchase";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
 });
 
-export async function POST(request: NextRequest) {
+export async function createCheckoutSession(examId: string) {
+  const { userId } = await auth();
+  if (!userId) {
+    return { success: false, error: "You must be signed in to purchase" };
+  }
+
+  const user = await currentUser();
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+
   try {
-    const body = await request.json();
-    const { examId, userId, userEmail } = body;
-
-    if (!examId || !userId) {
-      return NextResponse.json(
-        { error: "examId and userId are required" },
-        { status: 400 }
-      );
-    }
-
     await dbConnect();
 
     // Verify exam exists and is active
     const exam = await Exam.findOne({ _id: examId, isActive: true });
     if (!exam) {
-      return NextResponse.json({ error: "Exam not found" }, { status: 404 });
+      return { success: false, error: "Exam not found" };
     }
 
     // Check if user already has a completed purchase
@@ -35,13 +35,11 @@ export async function POST(request: NextRequest) {
       status: "completed",
     });
     if (existingPurchase) {
-      return NextResponse.json(
-        { error: "Already purchased" },
-        { status: 400 }
-      );
+      return { success: false, error: "You have already purchased this exam" };
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.varancolleges.com";
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || "https://www.varancolleges.com";
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -55,7 +53,7 @@ export async function POST(request: NextRequest) {
             unit_amount: exam.price, // already in qəpik
             product_data: {
               name: exam.title,
-              description: `${exam.type} Mock Exam - VaranColleges`,
+              description: `${exam.type} Mock Exam — VaranColleges`,
             },
           },
           quantity: 1,
@@ -66,11 +64,11 @@ export async function POST(request: NextRequest) {
         examId: examId.toString(),
         userId,
       },
-      success_url: `${baseUrl}/sinaq/${exam.slug}?payment=success`,
-      cancel_url: `${baseUrl}/sinaq/${exam.slug}?payment=cancelled`,
+      success_url: `${baseUrl}/exam/${exam.slug}?payment=success`,
+      cancel_url: `${baseUrl}/exam/${exam.slug}?payment=cancelled`,
     });
 
-    // Create pending purchase record
+    // Save pending purchase record
     await ExamPurchase.create({
       userId,
       examId,
@@ -81,12 +79,9 @@ export async function POST(request: NextRequest) {
       purchasedAt: new Date(),
     });
 
-    return NextResponse.json({ sessionUrl: session.url });
+    return { success: true, sessionUrl: session.url };
   } catch (error) {
-    console.error("Stripe checkout error:", error);
-    return NextResponse.json(
-      { error: "Failed to create checkout session" },
-      { status: 500 }
-    );
+    console.error("createCheckoutSession error:", error);
+    return { success: false, error: "Failed to create payment session" };
   }
 }
