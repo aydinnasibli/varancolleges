@@ -3,7 +3,15 @@ import { NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 
-const isProtectedRoute = createRouteMatcher(['/admin(.*)'])
+const isAdminRoute = createRouteMatcher(['/admin(.*)'])
+const isStudentRoute = createRouteMatcher([
+  '/exam/:slug/take(.*)',
+  '/en/exam/:slug/take(.*)',
+  '/az/exam/:slug/take(.*)',
+  '/profile(.*)',
+  '/en/profile(.*)',
+  '/az/profile(.*)',
+])
 
 const intlMiddleware = createMiddleware(routing)
 
@@ -14,8 +22,13 @@ export default clerkMiddleware(async (auth, req) => {
   const reqHeaders = new Headers(req.headers)
   reqHeaders.set('x-pathname', req.nextUrl.pathname)
 
-  // Protect admin routes with Clerk auth
-  if (isProtectedRoute(req)) {
+  // Protect student routes — must be logged in
+  if (isStudentRoute(req)) {
+    await auth.protect()
+  }
+
+  // Protect admin routes — must be logged in AND have admin role
+  if (isAdminRoute(req)) {
     await auth.protect()
 
     const session = await auth()
@@ -30,7 +43,7 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next({ request: { headers: reqHeaders } })
   }
 
-  if (!req.nextUrl.pathname.startsWith('/admin')) {
+  if (!req.nextUrl.pathname.startsWith('/admin') && !isStudentRoute(req)) {
     const hasLocaleCookie = req.cookies.has('NEXT_LOCALE')
     // x-vercel-ip-country is only present in Vercel production/preview deployments.
     // When absent (local dev) we skip geo-detection entirely so the team can
