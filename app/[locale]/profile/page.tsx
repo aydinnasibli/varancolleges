@@ -5,6 +5,7 @@ import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { BookOpen, Clock, ChevronRight, Trophy, RotateCcw, CheckCircle, PlayCircle, Loader2 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +20,9 @@ export default async function ProfilePage({
   const sp = await searchParams;
   const paymentSuccess = sp.payment === "success";
 
-  const user = await currentUser();
-  const [purchasesResult, attemptsResult] = await Promise.all([
+  const [user, t, purchasesResult, attemptsResult] = await Promise.all([
+    currentUser(),
+    getTranslations("Exam.profile"),
     getUserPurchases(userId),
     getUserAttempts(userId),
   ]);
@@ -34,9 +36,10 @@ export default async function ProfilePage({
       <main className="min-h-screen bg-background-dark">
         {paymentSuccess && (
           <div className="bg-green-500/10 border-b border-green-500/20 py-3 px-6 text-center text-sm text-green-400 font-medium">
-            Payment successful! Your exam is now available below.
+            {t("paymentSuccess")}
           </div>
         )}
+
         {/* Header */}
         <section className="border-b border-white/5 py-10 bg-gradient-to-b from-primary/20 to-transparent">
           <div className="max-w-4xl mx-auto px-6">
@@ -66,13 +69,10 @@ export default async function ProfilePage({
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 mt-8">
               {[
-                { label: "Exams Purchased", value: purchases.length },
+                { label: t("examsPurchased"), value: purchases.length },
+                { label: t("attempts"), value: allAttempts.length },
                 {
-                  label: "Attempts",
-                  value: allAttempts.length,
-                },
-                {
-                  label: "Best Score",
+                  label: t("bestScore"),
                   value:
                     allAttempts
                       .filter((a) => a.status === "completed" && a.scores?.total)
@@ -83,10 +83,7 @@ export default async function ProfilePage({
                       ) || "—",
                 },
               ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-white/5 border border-white/10 rounded-xl p-4 text-center"
-                >
+                <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
                   <div className="text-2xl font-bold text-white">{stat.value}</div>
                   <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
                 </div>
@@ -99,18 +96,15 @@ export default async function ProfilePage({
         <section className="max-w-4xl mx-auto px-6 py-10">
           <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-accent" />
-            My Exams
+            {t("myExams")}
           </h2>
 
           {purchases.length === 0 ? (
             <div className="bg-white/5 border border-white/10 rounded-2xl p-12 text-center">
               <Trophy className="h-12 w-12 text-slate-600 mx-auto mb-4" />
-              <p className="text-slate-400 font-medium mb-2">No exams purchased yet</p>
-              <Link
-                href="/exam"
-                className="inline-flex items-center gap-2 text-sm text-accent hover:underline"
-              >
-                Browse Mock Exams
+              <p className="text-slate-400 font-medium mb-2">{t("noExamsPurchased")}</p>
+              <Link href="/exam" className="inline-flex items-center gap-2 text-sm text-accent hover:underline">
+                {t("browseMockExams")}
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
@@ -131,10 +125,7 @@ export default async function ProfilePage({
                 const inProgress = examAttempts.find((a) => a.status === "in_progress");
                 const completed = examAttempts
                   .filter((a) => a.status === "completed")
-                  .sort(
-                    (a, b) =>
-                      new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()
-                  );
+                  .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime());
                 const latestCompleted = completed[0];
 
                 const exam = purchase.exam as {
@@ -145,10 +136,7 @@ export default async function ProfilePage({
                 };
 
                 return (
-                  <div
-                    key={purchase._id}
-                    className="bg-white/5 border border-white/10 rounded-2xl p-6"
-                  >
+                  <div key={purchase._id} className="bg-white/5 border border-white/10 rounded-2xl p-6">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
@@ -157,7 +145,7 @@ export default async function ProfilePage({
                           </span>
                           {examAttempts.length > 0 && (
                             <span className="text-xs text-slate-500">
-                              {examAttempts.length} attempt{examAttempts.length !== 1 ? "s" : ""}
+                              {examAttempts.length} {t("attempts").toLowerCase()}
                             </span>
                           )}
                         </div>
@@ -167,11 +155,12 @@ export default async function ProfilePage({
                             <Clock className="h-3.5 w-3.5" />
                             {exam.totalDuration} min
                           </span>
-                          <span>Purchased {new Date(purchase.purchasedAt).toLocaleDateString()}</span>
+                          <span>
+                            {t("purchased")} {new Date(purchase.purchasedAt).toLocaleDateString()}
+                          </span>
                         </div>
                       </div>
 
-                      {/* Best score */}
                       {latestCompleted?.scores?.total && (
                         <div className="text-right flex-shrink-0">
                           <div className="text-2xl font-bold text-accent">
@@ -187,7 +176,7 @@ export default async function ProfilePage({
                       {isPending && (
                         <div className="flex items-center gap-2 text-xs text-yellow-400 mb-1 w-full">
                           <Loader2 className="h-3 w-3 animate-spin" />
-                          Payment is being verified — you can still start the exam
+                          {t("paymentVerifying")}
                         </div>
                       )}
                       {inProgress ? (
@@ -196,7 +185,7 @@ export default async function ProfilePage({
                           className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
                         >
                           <PlayCircle className="h-4 w-4" />
-                          Continue Exam
+                          {t("continueExam")}
                         </Link>
                       ) : (
                         <Link
@@ -204,7 +193,7 @@ export default async function ProfilePage({
                           className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
                         >
                           <RotateCcw className="h-4 w-4" />
-                          {completed.length > 0 ? "Retake Exam" : "Start Exam"}
+                          {completed.length > 0 ? t("retakeExam") : t("startExam")}
                         </Link>
                       )}
                       {latestCompleted && (
@@ -213,7 +202,7 @@ export default async function ProfilePage({
                           className="flex items-center gap-2 border border-white/20 hover:border-white/40 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                         >
                           <CheckCircle className="h-4 w-4 text-green-400" />
-                          View Latest Results
+                          {t("viewLatestResults")}
                         </Link>
                       )}
                     </div>
@@ -221,7 +210,7 @@ export default async function ProfilePage({
                     {/* Attempt history */}
                     {completed.length > 0 && (
                       <div className="mt-4 pt-4 border-t border-white/5">
-                        <p className="text-xs text-slate-500 mb-3">Attempt History</p>
+                        <p className="text-xs text-slate-500 mb-3">{t("attemptHistory")}</p>
                         <div className="space-y-2">
                           {completed.slice(0, 3).map((attempt, i) => (
                             <Link
@@ -230,7 +219,7 @@ export default async function ProfilePage({
                               className="flex items-center justify-between px-3 py-2 bg-white/3 hover:bg-white/5 rounded-lg transition-colors"
                             >
                               <div className="text-xs text-slate-400">
-                                Attempt #{completed.length - i} ·{" "}
+                                {t("attempt")} #{completed.length - i} ·{" "}
                                 {new Date(attempt.startedAt).toLocaleDateString("en-US", {
                                   month: "short",
                                   day: "numeric",
@@ -242,9 +231,7 @@ export default async function ProfilePage({
                                   <div className="flex gap-3 text-xs text-slate-400">
                                     <span>R&W: {attempt.scores.rw}</span>
                                     <span>Math: {attempt.scores.math}</span>
-                                    <span className="font-bold text-white">
-                                      {attempt.scores.total}
-                                    </span>
+                                    <span className="font-bold text-white">{attempt.scores.total}</span>
                                   </div>
                                 )}
                                 <ChevronRight className="h-3.5 w-3.5 text-slate-500" />
@@ -253,7 +240,7 @@ export default async function ProfilePage({
                           ))}
                           {completed.length > 3 && (
                             <p className="text-xs text-slate-500 text-center py-1">
-                              + {completed.length - 3} more attempts
+                              + {completed.length - 3} {t("moreAttempts")}
                             </p>
                           )}
                         </div>

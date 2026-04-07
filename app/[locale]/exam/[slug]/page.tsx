@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { Clock, BookOpen, CheckCircle, ChevronRight } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
@@ -17,10 +18,13 @@ const SAT_STRUCTURE = [
 export default async function ExamDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug } = await params;
-  const { userId } = await auth();
+  const [{ userId }, t] = await Promise.all([
+    auth(),
+    getTranslations("Exam.detail"),
+  ]);
 
   const examResult = await getExamBySlug(slug);
   if (!examResult.success || !examResult.exam) notFound();
@@ -36,7 +40,6 @@ export default async function ExamDetailPage({
     slug: string;
   };
 
-  // Check purchase and attempts
   let purchase = null;
   let inProgressAttempt = null;
   let completedAttempts: Array<{ _id: string; scores?: { total?: number }; startedAt: string }> = [];
@@ -72,7 +75,7 @@ export default async function ExamDetailPage({
               {/* Left: info */}
               <div className="flex-1">
                 <span className="inline-block text-xs font-semibold uppercase tracking-widest text-accent mb-4">
-                  {exam.type} Mock Exam
+                  {exam.type} {t("mockExam")}
                 </span>
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
                   {exam.title}
@@ -84,11 +87,11 @@ export default async function ExamDetailPage({
                 <div className="flex flex-wrap gap-4 text-sm text-slate-400">
                   <span className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-accent" />
-                    {exam.totalDuration} minutes total
+                    {exam.totalDuration} {t("minutesTotal")}
                   </span>
                   <span className="flex items-center gap-2">
                     <BookOpen className="h-4 w-4 text-accent" />
-                    98 questions across 4 modules
+                    98 {t("questionsAcross")}
                   </span>
                 </div>
               </div>
@@ -98,25 +101,25 @@ export default async function ExamDetailPage({
                 <div className="text-3xl font-bold text-white mb-1">
                   ₼{(exam.price / 100).toFixed(2)}
                 </div>
-                <p className="text-slate-400 text-sm mb-6">One-time payment • Unlimited retakes</p>
+                <p className="text-slate-400 text-sm mb-6">{t("oneTimePayment")}</p>
 
                 {!userId ? (
                   <div className="space-y-3">
                     <p className="text-xs text-slate-400 text-center">
-                      Sign in to purchase this exam
+                      {t("signInToPurchase")}
                     </p>
                     <div className="flex gap-2">
                       <a
                         href="/sign-in"
                         className="flex-1 text-center bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl text-sm font-medium transition-colors"
                       >
-                        Sign In
+                        {t("signIn")}
                       </a>
                       <a
                         href="/sign-up"
                         className="flex-1 text-center bg-accent hover:bg-accent/90 text-primary py-2.5 rounded-xl text-sm font-semibold transition-colors"
                       >
-                        Sign Up
+                        {t("signUp")}
                       </a>
                     </div>
                   </div>
@@ -124,14 +127,14 @@ export default async function ExamDetailPage({
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-green-400 text-sm font-medium">
                       <CheckCircle className="h-4 w-4" />
-                      Purchased
+                      {t("purchased")}
                     </div>
                     {inProgressAttempt ? (
                       <Link
                         href={`/exam/${slug}/take`}
                         className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-2.5 rounded-xl text-sm font-semibold transition-colors"
                       >
-                        Continue Exam
+                        {t("continueExam")}
                         <ChevronRight className="h-4 w-4" />
                       </Link>
                     ) : (
@@ -139,7 +142,7 @@ export default async function ExamDetailPage({
                         href={`/exam/${slug}/take`}
                         className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-2.5 rounded-xl text-sm font-semibold transition-colors"
                       >
-                        Start Exam
+                        {t("startExam")}
                         <ChevronRight className="h-4 w-4" />
                       </Link>
                     )}
@@ -148,28 +151,19 @@ export default async function ExamDetailPage({
                         href={`/exam/${slug}/results/${completedAttempts[0]._id}`}
                         className="flex items-center justify-center gap-2 w-full border border-white/20 hover:border-white/40 text-white py-2.5 rounded-xl text-sm font-medium transition-colors"
                       >
-                        View Latest Results
+                        {t("viewLatestResults")}
                       </Link>
                     )}
                   </div>
                 ) : (
-                  <ExamPurchaseButton
-                    examId={exam._id}
-                    price={exam.price}
-                  />
+                  <ExamPurchaseButton examId={exam._id} price={exam.price} />
                 )}
 
                 <div className="mt-4 space-y-2">
-                  {[
-                    "Full Digital SAT simulation",
-                    "4 timed modules",
-                    "Section scores (R&W + Math)",
-                    "Question-by-question review",
-                    "Retake anytime",
-                  ].map((f) => (
-                    <div key={f} className="flex items-center gap-2 text-xs text-slate-400">
+                  {(["fullSimulation", "timedModules", "sectionScores", "questionReview", "retakeAnytime"] as const).map((key) => (
+                    <div key={key} className="flex items-center gap-2 text-xs text-slate-400">
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                      {f}
+                      {t(`features.${key}`)}
                     </div>
                   ))}
                 </div>
@@ -180,29 +174,26 @@ export default async function ExamDetailPage({
 
         {/* Exam structure */}
         <section className="max-w-5xl mx-auto px-6 py-12">
-          <h2 className="text-xl font-bold text-white mb-6">Exam Structure</h2>
+          <h2 className="text-xl font-bold text-white mb-6">{t("examStructure")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {SAT_STRUCTURE.map((s) => (
-              <div
-                key={s.section}
-                className="bg-white/5 border border-white/10 rounded-xl p-5"
-              >
+              <div key={s.section} className="bg-white/5 border border-white/10 rounded-xl p-5">
                 <h3 className="text-white font-semibold mb-3">{s.section}</h3>
                 <div className="space-y-2 text-sm text-slate-400">
                   <div className="flex justify-between">
-                    <span>Modules</span>
+                    <span>{t("modules")}</span>
                     <span className="text-white font-medium">{s.modules}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Questions per module</span>
+                    <span>{t("questionsPerModule")}</span>
                     <span className="text-white font-medium">{s.questionsPerModule}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Time per module</span>
+                    <span>{t("timePerModule")}</span>
                     <span className="text-white font-medium">{s.minutesPerModule} min</span>
                   </div>
                   <div className="flex justify-between border-t border-white/10 pt-2 mt-2">
-                    <span>Total time</span>
+                    <span>{t("totalTime")}</span>
                     <span className="text-accent font-semibold">
                       {s.modules * s.minutesPerModule} min
                     </span>
@@ -211,13 +202,12 @@ export default async function ExamDetailPage({
               </div>
             ))}
           </div>
-
         </section>
 
         {/* Previous attempts */}
         {completedAttempts.length > 1 && (
           <section className="max-w-5xl mx-auto px-6 pb-12">
-            <h2 className="text-xl font-bold text-white mb-4">Previous Attempts</h2>
+            <h2 className="text-xl font-bold text-white mb-4">{t("previousAttempts")}</h2>
             <div className="space-y-2">
               {completedAttempts.map((attempt, i) => (
                 <Link
@@ -226,7 +216,9 @@ export default async function ExamDetailPage({
                   className="flex items-center justify-between bg-white/5 border border-white/10 hover:border-accent/30 rounded-xl px-5 py-3 transition-colors"
                 >
                   <div>
-                    <p className="text-sm text-white font-medium">Attempt #{completedAttempts.length - i}</p>
+                    <p className="text-sm text-white font-medium">
+                      {t("attempt")} #{completedAttempts.length - i}
+                    </p>
                     <p className="text-xs text-slate-400">
                       {new Date(attempt.startedAt).toLocaleDateString("en-US", {
                         month: "short",

@@ -15,7 +15,8 @@
     "services": "Services",
     "studyAbroad": "Study Abroad",
     "contact": "Contact",
-    "blog": "Blog"
+    "blog": "Blog",
+    "mockExams": "Mock Exams"
   },
   "Footer": {
     "language": "Language",
@@ -781,5 +782,79 @@
         "a": "Distance programs are mainly available in business, management, marketing, etc. There are none in medicine and fields requiring practical labs. Distance education is suitable for working students as classes are online."
       }
     ]
+  },
+  "Exam": {
+    "nav": {
+      "mockExams": "Mock Exams",
+      "myExams": "My Exams",
+      "signIn": "Sign In",
+      "signUp": "Sign Up"
+    },
+    "listing": {
+      "label": "Mock Exams",
+      "title": "Practice Like It's the Real Thing",
+      "description": "Full-length digital SAT simulations with timed sections and detailed score reports — just like the real exam.",
+      "noExams": "No exams available yet. Check back soon!",
+      "viewDetails": "View Details",
+      "questions": "questions",
+      "features": {
+        "timedModules": {
+          "title": "4 Timed Modules",
+          "desc": "Full Digital SAT structure: Reading & Writing (M1+M2) and Math (M1+M2), each with real time limits."
+        },
+        "timedSections": {
+          "title": "Timed Sections",
+          "desc": "Each section runs under real time constraints with a live countdown timer."
+        },
+        "detailedResults": {
+          "title": "Detailed Results",
+          "desc": "Get section scores, question-by-question review, and explanations for every answer."
+        }
+      }
+    },
+    "detail": {
+      "mockExam": "Mock Exam",
+      "minutesTotal": "minutes total",
+      "questionsAcross": "questions across 4 modules",
+      "oneTimePayment": "One-time payment • Unlimited retakes",
+      "signInToPurchase": "Sign in to purchase this exam",
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "purchased": "Purchased",
+      "continueExam": "Continue Exam",
+      "startExam": "Start Exam",
+      "viewLatestResults": "View Latest Results",
+      "features": {
+        "fullSimulation": "Full Digital SAT simulation",
+        "timedModules": "4 timed modules",
+        "sectionScores": "Section scores (R&W + Math)",
+        "questionReview": "Question-by-question review",
+        "retakeAnytime": "Retake anytime"
+      },
+      "examStructure": "Exam Structure",
+      "modules": "Modules",
+      "questionsPerModule": "Questions per module",
+      "timePerModule": "Time per module",
+      "totalTime": "Total time",
+      "previousAttempts": "Previous Attempts",
+      "attempt": "Attempt"
+    },
+    "profile": {
+      "myExams": "My Exams",
+      "examsPurchased": "Exams Purchased",
+      "attempts": "Attempts",
+      "bestScore": "Best Score",
+      "noExamsPurchased": "No exams purchased yet",
+      "browseMockExams": "Browse Mock Exams",
+      "paymentVerifying": "Payment is being verified — you can still start the exam",
+      "continueExam": "Continue Exam",
+      "retakeExam": "Retake Exam",
+      "startExam": "Start Exam",
+      "viewLatestResults": "View Latest Results",
+      "attemptHistory": "Attempt History",
+      "purchased": "Purchased",
+      "moreAttempts": "more attempts",
+      "paymentSuccess": "Payment successful! Your exam is now available below."
+    }
   }
 }
