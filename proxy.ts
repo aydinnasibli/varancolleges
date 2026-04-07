@@ -19,6 +19,12 @@ const intlMiddleware = createMiddleware(routing)
 const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
 export default clerkMiddleware(async (auth, req) => {
+  // API routes must pass through untouched — no locale redirect, no auth redirect
+  // (Stripe webhooks and other API handlers handle their own auth)
+  if (req.nextUrl.pathname.startsWith('/api')) {
+    return NextResponse.next()
+  }
+
   const reqHeaders = new Headers(req.headers)
   reqHeaders.set('x-pathname', req.nextUrl.pathname)
 
@@ -43,7 +49,7 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.next({ request: { headers: reqHeaders } })
   }
 
-  if (!req.nextUrl.pathname.startsWith('/admin') && !req.nextUrl.pathname.startsWith('/api')) {
+  if (!req.nextUrl.pathname.startsWith('/admin')) {
     const hasLocaleCookie = req.cookies.has('NEXT_LOCALE')
     // x-vercel-ip-country is only present in Vercel production/preview deployments.
     // When absent (local dev) we skip geo-detection entirely so the team can
