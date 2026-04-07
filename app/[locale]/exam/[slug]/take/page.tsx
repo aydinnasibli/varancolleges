@@ -32,7 +32,7 @@ export default async function TakeExamPage({
   const purchase = purchaseResult.purchase as { _id: string };
 
   // Start or resume attempt
-  const attemptResult = await startAttempt(exam._id, purchase._id, userId);
+  const attemptResult = await startAttempt(exam._id, purchase._id);
 
   if (!attemptResult.success) {
     redirect(`/exam/${slug}?error=start_failed`);

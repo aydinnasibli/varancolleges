@@ -35,8 +35,6 @@ export default async function ResultsPage({
     status: string;
     scores?: { rw?: number; math?: number; total?: number };
     answers: Array<{ questionId: string; selectedAnswer: string | null; isFlagged: boolean }>;
-    rwModule2Variant?: string;
-    mathModule2Variant?: string;
     startedAt: string;
     completedAt?: string;
   };
@@ -183,7 +181,6 @@ function QuestionSection({
     _id: { toString(): string };
     questionNumber: number;
     module: number;
-    moduleVariant: string;
     questionText: string;
     passageText?: string;
     options: { A: string; B: string; C: string; D: string };
@@ -241,7 +238,6 @@ function QuestionCard({
   question: {
     questionNumber: number;
     module: number;
-    moduleVariant: string;
     questionText: string;
     passageText?: string;
     options: { A: string; B: string; C: string; D: string };

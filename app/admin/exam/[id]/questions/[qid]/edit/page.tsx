@@ -26,7 +26,6 @@ export default async function EditQuestionPage({
     _id: string;
     section: string;
     module: number;
-    moduleVariant: string;
     questionNumber: number;
     passageText: string;
     questionText: string;

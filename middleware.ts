@@ -1,12 +1,12 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import createIntlMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const isProtectedRoute = createRouteMatcher([
+// Routes that require a logged-in user (students)
+const isStudentRoute = createRouteMatcher([
   "/exam/:slug/take(.*)",
   "/en/exam/:slug/take(.*)",
   "/az/exam/:slug/take(.*)",
@@ -15,8 +15,11 @@ const isProtectedRoute = createRouteMatcher([
   "/az/profile(.*)",
 ]);
 
+// Admin routes — require authentication
+const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
+
 export default clerkMiddleware(async (auth, req: NextRequest) => {
-  if (isProtectedRoute(req)) {
+  if (isAdminRoute(req) || isStudentRoute(req)) {
     await auth.protect();
   }
   return intlMiddleware(req);

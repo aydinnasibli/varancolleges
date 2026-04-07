@@ -23,7 +23,7 @@ export default async function ExamListingPage() {
               Practice Like It&apos;s the Real Thing
             </h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Full-length digital SAT simulations with adaptive modules, timed sections, and
+              Full-length digital SAT simulations with timed sections and
               detailed score reports — just like the real exam.
             </p>
           </div>
@@ -106,8 +106,8 @@ export default async function ExamListingPage() {
           <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
               {
-                title: "Adaptive Modules",
-                desc: "Just like the real Digital SAT — Module 2 difficulty adjusts based on your Module 1 performance.",
+                title: "4 Timed Modules",
+                desc: "Full Digital SAT structure: Reading & Writing (M1+M2) and Math (M1+M2), each with real time limits.",
               },
               {
                 title: "Timed Sections",

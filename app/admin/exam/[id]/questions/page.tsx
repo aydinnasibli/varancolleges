@@ -12,11 +12,6 @@ const SECTION_LABELS: Record<string, string> = {
   math: "Math",
 };
 
-const VARIANT_LABELS: Record<string, string> = {
-  standard: "Standart (M1)",
-  easy: "Asan (M2)",
-  hard: "Çətin (M2)",
-};
 
 export default async function QuestionsPage({
   params,
@@ -42,10 +37,10 @@ export default async function QuestionsPage({
   const exam = examResult.exam as { title: string };
   const questions = questionsResult.success ? questionsResult.questions ?? [] : [];
 
-  // Group by section > module > variant
+  // Group by section > module
   const grouped: Record<string, typeof questions> = {};
   for (const q of questions) {
-    const key = `${q.section}__${q.module}__${q.moduleVariant}`;
+    const key = `${q.section}__${q.module}`;
     if (!grouped[key]) grouped[key] = [];
     grouped[key].push(q);
   }
@@ -119,12 +114,12 @@ export default async function QuestionsPage({
       ) : (
         <div className="space-y-6">
           {Object.entries(grouped).map(([key, qs]) => {
-            const [section, module, variant] = key.split("__");
+            const [section, module] = key.split("__");
             return (
               <div key={key} className="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <div className="px-6 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
                   <h3 className="text-sm font-semibold text-slate-700">
-                    {SECTION_LABELS[section]} — Modul {module} ({VARIANT_LABELS[variant]})
+                    {SECTION_LABELS[section]} — Modul {module}
                   </h3>
                   <span className="text-xs text-slate-400">{qs.length} sual</span>
                 </div>

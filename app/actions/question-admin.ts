@@ -3,15 +3,21 @@
 import dbConnect from "@/lib/db";
 import Question from "@/models/Question";
 import { revalidatePath } from "next/cache";
+import { auth } from "@clerk/nextjs/server";
+
+async function requireAdmin() {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+}
 
 export async function getQuestionsByExam(
   examId: string,
   section?: string,
   module?: number
 ) {
+  await requireAdmin();
   try {
     await dbConnect();
-    // Build type-safe filter
     const sectionFilter = section as "reading_writing" | "math" | undefined;
     const moduleFilter = module as 1 | 2 | undefined;
 
@@ -20,7 +26,7 @@ export async function getQuestionsByExam(
       ...(sectionFilter ? { section: sectionFilter } : {}),
       ...(moduleFilter !== undefined ? { module: moduleFilter } : {}),
     })
-      .sort({ section: 1, module: 1, moduleVariant: 1, questionNumber: 1 })
+      .sort({ section: 1, module: 1, questionNumber: 1 })
       .lean();
 
     return {
@@ -40,6 +46,7 @@ export async function getQuestionsByExam(
 }
 
 export async function getQuestionById(id: string) {
+  await requireAdmin();
   try {
     await dbConnect();
     const question = await Question.findById(id).lean();
@@ -61,12 +68,12 @@ export async function getQuestionById(id: string) {
 }
 
 export async function createQuestion(examId: string, formData: FormData) {
+  await requireAdmin();
   try {
     await dbConnect();
 
     const section = formData.get("section") as string;
     const module = parseInt(formData.get("module") as string);
-    const moduleVariant = (formData.get("moduleVariant") as string) || "standard";
     const questionNumber = parseInt(formData.get("questionNumber") as string);
     const passageText = (formData.get("passageText") as string) || "";
     const questionText = formData.get("questionText") as string;
@@ -88,7 +95,6 @@ export async function createQuestion(examId: string, formData: FormData) {
       examId,
       section: section as "reading_writing" | "math",
       module: module as 1 | 2,
-      moduleVariant: moduleVariant as "standard" | "easy" | "hard",
       questionNumber,
       passageText,
       questionText,
@@ -104,16 +110,10 @@ export async function createQuestion(examId: string, formData: FormData) {
     return { success: true, id: question._id.toString() };
   } catch (error: unknown) {
     console.error("createQuestion error:", error);
-    // Duplicate question number in same module/section/variant
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      error.code === 11000
-    ) {
+    if (error && typeof error === "object" && "code" in error && error.code === 11000) {
       return {
         success: false,
-        error: "A question with this number already exists in this module/variant",
+        error: "A question with this number already exists in this module",
       };
     }
     return { success: false, error: "Failed to create question" };
@@ -121,12 +121,12 @@ export async function createQuestion(examId: string, formData: FormData) {
 }
 
 export async function updateQuestion(id: string, examId: string, formData: FormData) {
+  await requireAdmin();
   try {
     await dbConnect();
 
     const section = formData.get("section") as string;
     const module = parseInt(formData.get("module") as string);
-    const moduleVariant = (formData.get("moduleVariant") as string) || "standard";
     const questionNumber = parseInt(formData.get("questionNumber") as string);
     const passageText = (formData.get("passageText") as string) || "";
     const questionText = formData.get("questionText") as string;
@@ -145,7 +145,6 @@ export async function updateQuestion(id: string, examId: string, formData: FormD
       {
         section: section as "reading_writing" | "math",
         module: module as 1 | 2,
-        moduleVariant: moduleVariant as "standard" | "easy" | "hard",
         questionNumber,
         passageText,
         questionText,
@@ -170,6 +169,7 @@ export async function updateQuestion(id: string, examId: string, formData: FormD
 }
 
 export async function deleteQuestion(id: string, examId: string) {
+  await requireAdmin();
   try {
     await dbConnect();
     await Question.findByIdAndDelete(id);
@@ -182,13 +182,15 @@ export async function deleteQuestion(id: string, examId: string) {
 }
 
 export async function getQuestionCounts(examId: string) {
+  await requireAdmin();
   try {
     await dbConnect();
+    const mongoose = await import("mongoose");
     const counts = await Question.aggregate([
-      { $match: { examId: new (await import("mongoose")).Types.ObjectId(examId) } },
+      { $match: { examId: new mongoose.Types.ObjectId(examId) } },
       {
         $group: {
-          _id: { section: "$section", module: "$module", moduleVariant: "$moduleVariant" },
+          _id: { section: "$section", module: "$module" },
           count: { $sum: 1 },
         },
       },

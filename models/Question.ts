@@ -4,21 +4,15 @@ export interface IQuestion extends Document {
   examId: mongoose.Types.ObjectId;
   section: "reading_writing" | "math";
   module: 1 | 2;
-  moduleVariant: "standard" | "easy" | "hard"; // M1 = standard; M2 = easy or hard
   questionNumber: number; // 1-27 for RW, 1-22 for Math
-  passageText: string; // optional HTML reading passage
-  questionText: string; // required HTML
-  options: {
-    A: string;
-    B: string;
-    C: string;
-    D: string;
-  };
+  passageText: string;    // optional HTML reading passage
+  questionText: string;   // required HTML
+  options: { A: string; B: string; C: string; D: string };
   correctAnswer: "A" | "B" | "C" | "D";
   explanation: string;
-  domain: string; // e.g. "Algebra", "Grammar", "Reading Comprehension"
+  domain: string;         // e.g. "Algebra", "Grammar"
   difficulty: "easy" | "medium" | "hard";
-  image: string; // optional ImageKit URL
+  image: string;          // optional ImageKit URL
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,19 +20,10 @@ export interface IQuestion extends Document {
 const QuestionSchema = new mongoose.Schema<IQuestion>(
   {
     examId: { type: mongoose.Schema.Types.ObjectId, ref: "Exam", required: true },
-    section: {
-      type: String,
-      enum: ["reading_writing", "math"],
-      required: true,
-    },
-    module: { type: Number, enum: [1, 2], required: true },
-    moduleVariant: {
-      type: String,
-      enum: ["standard", "easy", "hard"],
-      default: "standard",
-    },
+    section: { type: String, enum: ["reading_writing", "math"], required: true },
+    module:  { type: Number, enum: [1, 2], required: true },
     questionNumber: { type: Number, required: true },
-    passageText: { type: String, default: "" },
+    passageText:  { type: String, default: "" },
     questionText: { type: String, required: true },
     options: {
       A: { type: String, required: true },
@@ -48,20 +33,16 @@ const QuestionSchema = new mongoose.Schema<IQuestion>(
     },
     correctAnswer: { type: String, enum: ["A", "B", "C", "D"], required: true },
     explanation: { type: String, default: "" },
-    domain: { type: String, default: "" },
-    difficulty: {
-      type: String,
-      enum: ["easy", "medium", "hard"],
-      default: "medium",
-    },
-    image: { type: String, default: "" },
+    domain:      { type: String, default: "" },
+    difficulty:  { type: String, enum: ["easy", "medium", "hard"], default: "medium" },
+    image:       { type: String, default: "" },
   },
   { timestamps: true }
 );
 
-// Compound index: one question number per section+module+variant per exam
+// One question number per section+module per exam
 QuestionSchema.index(
-  { examId: 1, section: 1, module: 1, moduleVariant: 1, questionNumber: 1 },
+  { examId: 1, section: 1, module: 1, questionNumber: 1 },
   { unique: true }
 );
 

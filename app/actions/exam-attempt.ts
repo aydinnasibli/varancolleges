@@ -10,14 +10,26 @@ import { auth } from "@clerk/nextjs/server";
 
 // SAT section durations in seconds
 const SECTION_DURATIONS: Record<string, number> = {
-  rw_m1: 32 * 60,   // 32 minutes
-  rw_m2: 32 * 60,   // 32 minutes
-  math_m1: 35 * 60, // 35 minutes
-  math_m2: 35 * 60, // 35 minutes
+  rw_m1: 32 * 60,
+  rw_m2: 32 * 60,
+  math_m1: 35 * 60,
+  math_m2: 35 * 60,
 };
 
-// Adaptive threshold: 60% correct in M1 → hard M2, else easy M2
-const ADAPTIVE_THRESHOLD = 0.6;
+const SECTION_ORDER = ["rw_m1", "rw_m2", "math_m1", "math_m2"];
+
+// Maps section key → Question query params
+const SECTION_QUERY: Record<string, { section: "reading_writing" | "math"; module: 1 | 2 }> = {
+  rw_m1:   { section: "reading_writing", module: 1 },
+  rw_m2:   { section: "reading_writing", module: 2 },
+  math_m1: { section: "math",            module: 1 },
+  math_m2: { section: "math",            module: 2 },
+};
+
+// Maps section key → sectionTimeRemaining field name
+const TIMING_KEY: Record<string, string> = {
+  rw_m1: "rwM1", rw_m2: "rwM2", math_m1: "mathM1", math_m2: "mathM2",
+};
 
 function serializeAttempt(attempt: Record<string, unknown>) {
   return {
@@ -25,17 +37,22 @@ function serializeAttempt(attempt: Record<string, unknown>) {
     _id: attempt._id?.toString(),
     examId: attempt.examId?.toString(),
     purchaseId: attempt.purchaseId?.toString(),
-    startedAt: attempt.startedAt instanceof Date
-      ? attempt.startedAt.toISOString()
-      : attempt.startedAt,
-    completedAt: attempt.completedAt instanceof Date
-      ? (attempt.completedAt as Date).toISOString()
-      : attempt.completedAt,
+    startedAt:
+      attempt.startedAt instanceof Date
+        ? attempt.startedAt.toISOString()
+        : attempt.startedAt,
+    completedAt:
+      attempt.completedAt instanceof Date
+        ? (attempt.completedAt as Date).toISOString()
+        : attempt.completedAt,
     answers: Array.isArray(attempt.answers)
-      ? (attempt.answers as Array<{ questionId: unknown; selectedAnswer: string | null; isFlagged: boolean }>).map((a) => ({
-          ...a,
-          questionId: a.questionId?.toString(),
-        }))
+      ? (
+          attempt.answers as Array<{
+            questionId: unknown;
+            selectedAnswer: string | null;
+            isFlagged: boolean;
+          }>
+        ).map((a) => ({ ...a, questionId: a.questionId?.toString() }))
       : [],
   };
 }
@@ -50,26 +67,30 @@ function serializeQuestion(q: Record<string, unknown>) {
   };
 }
 
-export async function startAttempt(
-  examId: string,
-  purchaseId: string,
-  userId: string
-) {
+async function loadQuestionsForSection(examId: string, section: string) {
+  const params = SECTION_QUERY[section];
+  if (!params) return [];
+  return Question.find({ examId, ...params }).sort({ questionNumber: 1 }).lean();
+}
+
+// ─── startAttempt ─────────────────────────────────────────────────────────────
+export async function startAttempt(examId: string, purchaseId: string) {
+  const { userId } = await auth();
+  if (!userId) return { success: false, error: "Not authenticated" };
+
   try {
     await dbConnect();
 
-    // Verify purchase belongs to user
+    // Verify the purchase belongs to this user and is completed
     const purchase = await ExamPurchase.findOne({
       _id: purchaseId,
       userId,
       examId,
       status: "completed",
     });
-    if (!purchase) {
-      return { success: false, error: "Purchase not verified" };
-    }
+    if (!purchase) return { success: false, error: "Purchase not verified" };
 
-    // Check for existing in_progress attempt
+    // Resume any existing in-progress attempt
     const existing = await ExamAttempt.findOne({
       userId,
       examId,
@@ -78,36 +99,26 @@ export async function startAttempt(
     }).lean();
 
     if (existing) {
-      // Load questions for current section
-      const questions = await loadSectionQuestions(
+      const questions = await loadQuestionsForSection(
         examId,
-        existing.currentSection as string,
-        existing.rwModule2Variant,
-        existing.mathModule2Variant
+        existing.currentSection as string
       );
       return {
         success: true,
         attempt: serializeAttempt(existing as unknown as Record<string, unknown>),
-        questions: questions.map((q) => serializeQuestion(q as unknown as Record<string, unknown>)),
+        questions: questions.map((q) =>
+          serializeQuestion(q as unknown as Record<string, unknown>)
+        ),
         isResuming: true,
       };
     }
 
-    // Load Module 1 RW questions
-    const questions = await Question.find({
-      examId,
-      section: "reading_writing",
-      module: 1 as 1 | 2,
-      moduleVariant: "standard",
-    })
-      .sort({ questionNumber: 1 })
-      .lean();
-
+    // Start fresh — load Module 1 R&W
+    const questions = await loadQuestionsForSection(examId, "rw_m1");
     if (questions.length === 0) {
       return { success: false, error: "No questions found for this exam" };
     }
 
-    // Create attempt with initial answers array (one slot per M1 RW question)
     const answers = questions.map((q) => ({
       questionId: q._id,
       selectedAnswer: null,
@@ -128,8 +139,12 @@ export async function startAttempt(
 
     return {
       success: true,
-      attempt: serializeAttempt(attempt.toObject() as unknown as Record<string, unknown>),
-      questions: questions.map((q) => serializeQuestion(q as unknown as Record<string, unknown>)),
+      attempt: serializeAttempt(
+        attempt.toObject() as unknown as Record<string, unknown>
+      ),
+      questions: questions.map((q) =>
+        serializeQuestion(q as unknown as Record<string, unknown>)
+      ),
       isResuming: false,
     };
   } catch (error) {
@@ -138,17 +153,25 @@ export async function startAttempt(
   }
 }
 
+// ─── saveAnswer ───────────────────────────────────────────────────────────────
 export async function saveAnswer(
   attemptId: string,
   questionId: string,
   selectedAnswer: string | null,
   isFlagged: boolean
 ) {
+  const { userId } = await auth();
+  if (!userId) return { success: false, error: "Not authenticated" };
+
   try {
     await dbConnect();
-
+    // Filter by userId so users can only modify their own attempts
     await ExamAttempt.updateOne(
-      { _id: attemptId, "answers.questionId": new mongoose.Types.ObjectId(questionId) },
+      {
+        _id: attemptId,
+        userId,
+        "answers.questionId": new mongoose.Types.ObjectId(questionId),
+      },
       {
         $set: {
           "answers.$.selectedAnswer": selectedAnswer,
@@ -156,7 +179,6 @@ export async function saveAnswer(
         },
       }
     );
-
     return { success: true };
   } catch (error) {
     console.error("saveAnswer error:", error);
@@ -164,15 +186,19 @@ export async function saveAnswer(
   }
 }
 
+// ─── saveCurrentPosition ─────────────────────────────────────────────────────
 export async function saveCurrentPosition(
   attemptId: string,
   currentSection: string,
   currentQuestionIndex: number
 ) {
+  const { userId } = await auth();
+  if (!userId) return { success: false };
+
   try {
     await dbConnect();
     await ExamAttempt.updateOne(
-      { _id: attemptId },
+      { _id: attemptId, userId },
       { $set: { currentSection, currentQuestionIndex } }
     );
     return { success: true };
@@ -182,22 +208,22 @@ export async function saveCurrentPosition(
   }
 }
 
+// ─── saveTimeRemaining ───────────────────────────────────────────────────────
 export async function saveTimeRemaining(
   attemptId: string,
   section: string,
   secondsLeft: number
 ) {
+  const { userId } = await auth();
+  if (!userId) return { success: false };
+
   try {
     await dbConnect();
-    const sectionKey = section.replace("_m", "M").replace("rw", "rw").replace("math", "math");
-    // Convert section key like "rw_m1" → "rwM1"
-    const fieldKey = section
-      .split("_")
-      .map((part, i) => (i === 0 ? part : part.charAt(0).toUpperCase() + part.slice(1)))
-      .join("");
+    const fieldKey = TIMING_KEY[section];
+    if (!fieldKey) return { success: false };
 
     await ExamAttempt.updateOne(
-      { _id: attemptId },
+      { _id: attemptId, userId },
       { $set: { [`sectionTimeRemaining.${fieldKey}`]: secondsLeft } }
     );
     return { success: true };
@@ -207,178 +233,54 @@ export async function saveTimeRemaining(
   }
 }
 
+// ─── completeSection ─────────────────────────────────────────────────────────
 export async function completeSection(attemptId: string, section: string) {
+  const { userId } = await auth();
+  if (!userId) return { success: false, error: "Not authenticated" };
+
   try {
     await dbConnect();
 
-    const attempt = await ExamAttempt.findById(attemptId).lean();
+    // Verify ownership
+    const attempt = await ExamAttempt.findOne({ _id: attemptId, userId }).lean();
     if (!attempt) return { success: false, error: "Attempt not found" };
 
     const examId = attempt.examId.toString();
+    const sectionIdx = SECTION_ORDER.indexOf(section);
+    if (sectionIdx === -1) return { success: false, error: "Invalid section" };
 
-    // Determine next section and adaptive variant
-    let nextSection: string | null = null;
-    let updateData: Record<string, unknown> = {};
-    let nextQuestions: unknown[] = [];
+    const nextSection = SECTION_ORDER[sectionIdx + 1];
+    if (!nextSection) return { success: false, error: "No next section" };
 
-    if (section === "rw_m1") {
-      // Calculate M1 RW score to assign adaptive M2
-      const m1Questions = await Question.find({
-        examId,
-        section: "reading_writing",
-        module: 1 as 1 | 2,
-        moduleVariant: "standard",
-      }).lean();
+    const timingKey = TIMING_KEY[nextSection];
 
-      const m1QuestionIds = new Set(m1Questions.map((q) => q._id.toString()));
-      const m1Answers = attempt.answers.filter((a) =>
-        m1QuestionIds.has(a.questionId.toString())
-      );
+    // Load next section questions
+    const nextQuestions = await loadQuestionsForSection(examId, nextSection);
+    const newAnswerSlots = nextQuestions.map((q) => ({
+      questionId: q._id,
+      selectedAnswer: null,
+      isFlagged: false,
+    }));
 
-      let correct = 0;
-      for (const q of m1Questions) {
-        const ans = m1Answers.find(
-          (a) => a.questionId.toString() === q._id.toString()
-        );
-        if (ans?.selectedAnswer === q.correctAnswer) correct++;
+    await ExamAttempt.updateOne(
+      { _id: attemptId, userId },
+      {
+        $set: {
+          currentSection: nextSection,
+          currentQuestionIndex: 0,
+          [`sectionStartTimes.${timingKey}`]: new Date(),
+          [`sectionTimeRemaining.${timingKey}`]: SECTION_DURATIONS[nextSection],
+        },
+        $push: { answers: { $each: newAnswerSlots } },
       }
-
-      const score = m1Questions.length > 0 ? correct / m1Questions.length : 0;
-      const variant = score >= ADAPTIVE_THRESHOLD ? "hard" : "easy";
-
-      nextSection = "rw_m2";
-      updateData = {
-        currentSection: "rw_m2",
-        currentQuestionIndex: 0,
-        rwModule2Variant: variant,
-        "sectionStartTimes.rwM2": new Date(),
-        [`sectionTimeRemaining.rwM2`]: SECTION_DURATIONS.rw_m2,
-      };
-
-      // Load M2 RW questions
-      const m2Questions = await Question.find({
-        examId,
-        section: "reading_writing",
-        module: 2 as 1 | 2,
-        moduleVariant: variant,
-      })
-        .sort({ questionNumber: 1 })
-        .lean();
-
-      // Append M2 answer slots to attempt
-      const newAnswerSlots = m2Questions.map((q) => ({
-        questionId: q._id,
-        selectedAnswer: null,
-        isFlagged: false,
-      }));
-
-      await ExamAttempt.updateOne(
-        { _id: attemptId },
-        {
-          $set: updateData,
-          $push: { answers: { $each: newAnswerSlots } },
-        }
-      );
-
-      nextQuestions = m2Questions;
-    } else if (section === "rw_m2") {
-      // Break before math - just update section
-      nextSection = "math_m1";
-      updateData = {
-        currentSection: "math_m1",
-        currentQuestionIndex: 0,
-        "sectionStartTimes.mathM1": new Date(),
-        [`sectionTimeRemaining.mathM1`]: SECTION_DURATIONS.math_m1,
-      };
-
-      const mathQuestions = await Question.find({
-        examId,
-        section: "math",
-        module: 1 as 1 | 2,
-        moduleVariant: "standard",
-      })
-        .sort({ questionNumber: 1 })
-        .lean();
-
-      const newAnswerSlots = mathQuestions.map((q) => ({
-        questionId: q._id,
-        selectedAnswer: null,
-        isFlagged: false,
-      }));
-
-      await ExamAttempt.updateOne(
-        { _id: attemptId },
-        {
-          $set: updateData,
-          $push: { answers: { $each: newAnswerSlots } },
-        }
-      );
-
-      nextQuestions = mathQuestions;
-    } else if (section === "math_m1") {
-      // Calculate Math M1 score for adaptive
-      const m1Questions = await Question.find({
-        examId,
-        section: "math",
-        module: 1 as 1 | 2,
-        moduleVariant: "standard",
-      }).lean();
-
-      const m1QuestionIds = new Set(m1Questions.map((q) => q._id.toString()));
-      const m1Answers = attempt.answers.filter((a) =>
-        m1QuestionIds.has(a.questionId.toString())
-      );
-
-      let correct = 0;
-      for (const q of m1Questions) {
-        const ans = m1Answers.find(
-          (a) => a.questionId.toString() === q._id.toString()
-        );
-        if (ans?.selectedAnswer === q.correctAnswer) correct++;
-      }
-
-      const score = m1Questions.length > 0 ? correct / m1Questions.length : 0;
-      const variant = score >= ADAPTIVE_THRESHOLD ? "hard" : "easy";
-
-      nextSection = "math_m2";
-      updateData = {
-        currentSection: "math_m2",
-        currentQuestionIndex: 0,
-        mathModule2Variant: variant,
-        "sectionStartTimes.mathM2": new Date(),
-        [`sectionTimeRemaining.mathM2`]: SECTION_DURATIONS.math_m2,
-      };
-
-      const m2Questions = await Question.find({
-        examId,
-        section: "math",
-        module: 2 as 1 | 2,
-        moduleVariant: variant,
-      })
-        .sort({ questionNumber: 1 })
-        .lean();
-
-      const newAnswerSlots = m2Questions.map((q) => ({
-        questionId: q._id,
-        selectedAnswer: null,
-        isFlagged: false,
-      }));
-
-      await ExamAttempt.updateOne(
-        { _id: attemptId },
-        {
-          $set: updateData,
-          $push: { answers: { $each: newAnswerSlots } },
-        }
-      );
-
-      nextQuestions = m2Questions;
-    }
+    );
 
     return {
       success: true,
       nextSection,
-      questions: (nextQuestions as Array<Record<string, unknown>>).map(serializeQuestion),
+      questions: nextQuestions.map((q) =>
+        serializeQuestion(q as unknown as Record<string, unknown>)
+      ),
     };
   } catch (error) {
     console.error("completeSection error:", error);
@@ -386,37 +288,36 @@ export async function completeSection(attemptId: string, section: string) {
   }
 }
 
-export async function submitExam(attemptId: string, _unusedUserId: string, slug: string) {
-  try {
-    const { userId } = await auth();
-    if (!userId) return { success: false, error: "Not authenticated" };
+// ─── submitExam ───────────────────────────────────────────────────────────────
+export async function submitExam(attemptId: string, slug: string) {
+  const { userId } = await auth();
+  if (!userId) return { success: false, error: "Not authenticated" };
 
+  try {
     await dbConnect();
 
     const attempt = await ExamAttempt.findOne({ _id: attemptId, userId }).lean();
     if (!attempt) return { success: false, error: "Attempt not found" };
-    if (attempt.status === "completed") {
-      return { success: true, attemptId };
-    }
+    if (attempt.status === "completed") return { success: true, attemptId };
 
     const examId = attempt.examId.toString();
 
-    // Load all questions for this attempt
-    const allQuestions = await Question.find({ examId }).lean();
+    // Score — only count questions that belong to this attempt
+    const attemptQuestionIds = attempt.answers.map((a) => a.questionId);
+    const allQuestions = await Question.find({
+      examId,
+      _id: { $in: attemptQuestionIds },
+    }).lean();
+
     const questionMap = new Map(
       allQuestions.map((q) => [q._id.toString(), q])
     );
 
-    // Separate RW and Math answers
-    let rwCorrect = 0;
-    let rwTotal = 0;
-    let mathCorrect = 0;
-    let mathTotal = 0;
+    let rwCorrect = 0, rwTotal = 0, mathCorrect = 0, mathTotal = 0;
 
     for (const answer of attempt.answers) {
       const question = questionMap.get(answer.questionId.toString());
       if (!question) continue;
-
       if (question.section === "reading_writing") {
         rwTotal++;
         if (answer.selectedAnswer === question.correctAnswer) rwCorrect++;
@@ -426,17 +327,14 @@ export async function submitExam(attemptId: string, _unusedUserId: string, slug:
       }
     }
 
-    // Calculate scaled scores (200-800 each)
-    const rwScore = rwTotal > 0 ? 200 + Math.round((rwCorrect / rwTotal) * 600) : 200;
-    const mathScore =
-      mathTotal > 0 ? 200 + Math.round((mathCorrect / mathTotal) * 600) : 200;
-    const totalScore = rwScore + mathScore;
+    const rwScore   = rwTotal   > 0 ? 200 + Math.round((rwCorrect   / rwTotal)   * 600) : 200;
+    const mathScore = mathTotal > 0 ? 200 + Math.round((mathCorrect / mathTotal) * 600) : 200;
 
     await ExamAttempt.findByIdAndUpdate(attemptId, {
       status: "completed",
       currentSection: "completed",
       completedAt: new Date(),
-      scores: { rw: rwScore, math: mathScore, total: totalScore },
+      scores: { rw: rwScore, math: mathScore, total: rwScore + mathScore },
     });
 
     revalidatePath(`/exam/${slug}/results/${attemptId}`);
@@ -447,36 +345,4 @@ export async function submitExam(attemptId: string, _unusedUserId: string, slug:
     console.error("submitExam error:", error);
     return { success: false, error: "Failed to submit exam" };
   }
-}
-
-// Helper: load questions for a given section
-async function loadSectionQuestions(
-  examId: string,
-  section: string,
-  rwVariant?: string,
-  mathVariant?: string
-) {
-  const sectionMap: Record<
-    string,
-    { section: string; module: number; moduleVariant: string }
-  > = {
-    rw_m1: { section: "reading_writing", module: 1, moduleVariant: "standard" },
-    rw_m2: {
-      section: "reading_writing",
-      module: 2 as 1 | 2,
-      moduleVariant: rwVariant || "easy",
-    },
-    math_m1: { section: "math", module: 1, moduleVariant: "standard" },
-    math_m2: { section: "math", module: 2, moduleVariant: mathVariant || "easy" },
-  };
-
-  const params = sectionMap[section];
-  if (!params) return [];
-
-  return Question.find({
-    examId,
-    section: params.section,
-    module: params.module as 1 | 2,
-    moduleVariant: params.moduleVariant,
-  }).sort({ questionNumber: 1 }).lean();
 }

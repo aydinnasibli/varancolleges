@@ -14,7 +14,6 @@ interface QuestionFormProps {
     _id: string;
     section: string;
     module: number;
-    moduleVariant: string;
     questionNumber: number;
     passageText: string;
     questionText: string;
@@ -34,9 +33,6 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
 
   const [section, setSection] = useState(initialData?.section || "reading_writing");
   const [module, setModule] = useState(initialData?.module?.toString() || "1");
-  const [moduleVariant, setModuleVariant] = useState(
-    initialData?.moduleVariant || "standard"
-  );
   const [questionNumber, setQuestionNumber] = useState(
     initialData?.questionNumber?.toString() || "1"
   );
@@ -53,14 +49,6 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
   const [image, setImage] = useState(initialData?.image || "");
 
   const isEditing = !!initialData;
-  const isModule2 = module === "2";
-
-  // When module changes, reset variant appropriately
-  function handleModuleChange(val: string) {
-    setModule(val);
-    if (val === "1") setModuleVariant("standard");
-    else setModuleVariant("easy");
-  }
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -94,7 +82,6 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
     const formData = new FormData();
     formData.append("section", section);
     formData.append("module", module);
-    formData.append("moduleVariant", isModule2 ? moduleVariant : "standard");
     formData.append("questionNumber", questionNumber);
     formData.append("passageText", passageText);
     formData.append("questionText", questionText);
@@ -292,32 +279,13 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
             </label>
             <select
               value={module}
-              onChange={(e) => handleModuleChange(e.target.value)}
+              onChange={(e) => setModule(e.target.value)}
               className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] bg-white"
             >
               <option value="1">Modul 1</option>
               <option value="2">Modul 2</option>
             </select>
           </div>
-
-          {isModule2 && (
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                Modul 2 növü <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={moduleVariant}
-                onChange={(e) => setModuleVariant(e.target.value)}
-                className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] bg-white"
-              >
-                <option value="easy">Asan (M1-də zəif nəticə)</option>
-                <option value="hard">Çətin (M1-də güclü nəticə)</option>
-              </select>
-              <p className="text-xs text-slate-400 mt-1">
-                Tələbə M1-də ≥60% alsaif Çətin M2, əks halda Asan M2 görür
-              </p>
-            </div>
-          )}
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1.5">

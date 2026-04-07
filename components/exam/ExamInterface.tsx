@@ -47,8 +47,6 @@ interface AttemptData {
   _id: string;
   currentSection: string;
   currentQuestionIndex: number;
-  rwModule2Variant?: string;
-  mathModule2Variant?: string;
   sectionTimeRemaining?: {
     rwM1?: number;
     rwM2?: number;
@@ -215,7 +213,7 @@ export default function ExamInterface({
     if (isLastSection) {
       // Submit the entire exam
       setPhase("submitting");
-      const result = await submitExam(attemptId, "", examSlug);
+      const result = await submitExam(attemptId, examSlug);
       if (result.success) {
         router.push(`/exam/${examSlug}/results/${result.attemptId}`);
       } else {
@@ -260,7 +258,7 @@ export default function ExamInterface({
     setSubmitting(true);
     setPhase("submitting");
 
-    const result = await submitExam(attemptId, "", examSlug);
+    const result = await submitExam(attemptId, examSlug);
     if (result.success) {
       router.push(`/exam/${examSlug}/results/${result.attemptId}`);
     } else {
