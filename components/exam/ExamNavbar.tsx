@@ -3,60 +3,72 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
-import { BookOpen } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 export default function ExamNavbar() {
   const { isSignedIn, isLoaded } = useUser();
   const t = useTranslations("Exam.nav");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-xl border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <nav className={cn(
+      "sticky top-0 z-50 transition-all duration-300 border-b border-white/5",
+      isScrolled ? "glass-panel h-20" : "bg-transparent h-24 border-transparent"
+    )}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex-shrink-0 flex items-center gap-3">
           <Image
             src="/images/logo.png"
             alt="VaranColleges"
-            width={120}
-            height={40}
-            className="h-9 w-auto object-contain"
+            width={666}
+            height={375}
+            className="h-12 w-auto object-contain"
+            priority
           />
         </Link>
 
         {/* Center nav */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="/exam"
-            className="flex items-center gap-1.5 text-sm font-medium text-accent"
-          >
-            <BookOpen className="h-4 w-4" />
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="/exam" className="text-sm font-medium text-accent tracking-wide">
             {t("mockExams")}
           </Link>
-        </nav>
+          <Link href="/" className="text-sm font-medium text-slate-400 hover:text-white transition-colors tracking-wide">
+            VaranColleges
+          </Link>
+        </div>
 
         {/* Auth */}
         {isLoaded && (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {isSignedIn ? (
               <>
                 <Link
                   href="/profile"
-                  className="hidden sm:block text-sm text-slate-300 hover:text-white transition-colors font-medium"
+                  className="hidden sm:block text-sm font-medium text-slate-300 hover:text-accent transition-colors tracking-wide"
                 >
                   {t("myExams")}
                 </Link>
+                <div className="h-5 w-px bg-white/10 hidden sm:block" />
                 <UserButton />
               </>
             ) : (
               <>
                 <SignInButton mode="modal">
-                  <button className="text-sm text-slate-300 hover:text-white transition-colors font-medium border border-white/20 px-3 py-1.5 rounded-lg">
+                  <button className="text-sm font-medium text-slate-300 hover:text-white transition-colors tracking-wide">
                     {t("signIn")}
                   </button>
                 </SignInButton>
                 <SignUpButton mode="modal">
-                  <button className="text-sm bg-accent text-primary px-3 py-1.5 rounded-lg font-semibold hover:bg-accent/90 transition-colors">
+                  <button className="text-sm bg-accent text-primary px-4 py-2 rounded font-semibold hover:bg-accent/90 transition-colors tracking-wide">
                     {t("signUp")}
                   </button>
                 </SignUpButton>
@@ -65,6 +77,6 @@ export default function ExamNavbar() {
           </div>
         )}
       </div>
-    </header>
+    </nav>
   );
 }
