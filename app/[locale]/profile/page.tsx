@@ -184,12 +184,13 @@ export default async function ProfilePage({
 
                     {/* Actions */}
                     <div className="flex flex-wrap gap-3 mt-5">
-                      {isPending ? (
-                        <div className="flex items-center gap-2 bg-white/5 border border-white/10 text-slate-400 px-4 py-2 rounded-lg text-sm font-medium">
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                          Processing payment...
+                      {isPending && (
+                        <div className="flex items-center gap-2 text-xs text-yellow-400 mb-1 w-full">
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                          Payment is being verified — you can still start the exam
                         </div>
-                      ) : inProgress ? (
+                      )}
+                      {inProgress ? (
                         <Link
                           href={`/exam/${exam.slug}/take`}
                           className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
