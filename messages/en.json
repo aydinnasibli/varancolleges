@@ -16,7 +16,10 @@
     "studyAbroad": "Study Abroad",
     "contact": "Contact",
     "blog": "Blog",
-    "mockExams": "Mock Exams"
+    "mockExams": "Mock Exams",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "myProfile": "My Profile"
   },
   "Footer": {
     "language": "Language",
@@ -606,7 +609,10 @@
     "individualApproach": "Individual Approach",
     "individualApproachDesc": "We prepare an individual strategy to maximize every student's potential.",
     "fullSupport": "Full Support",
-    "fullSupportDesc": "We are with you every step of the way, from the admission process to university placement."
+    "fullSupportDesc": "We are with you every step of the way, from the admission process to university placement.",
+    "exploreDestinations": "Destinations",
+    "exploreCountry": "Explore",
+    "moreFeatures": "more"
   },
   "ServicesPage": {
     "heroTitle": "Our Services",
