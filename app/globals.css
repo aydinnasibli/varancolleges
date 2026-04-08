@@ -7,6 +7,8 @@
   --color-primary: #152C55;
   --color-accent: #d4af37;
   --color-accent-light: #f4d03f;
+  --color-secondary: #0d9488;
+  --color-secondary-light: #14b8a6;
 
   /* Font Families */
   --font-serif: var(--font-serif);

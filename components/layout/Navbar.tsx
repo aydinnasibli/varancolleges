@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import { useUser, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,6 +18,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const t = useTranslations("Navigation");
   const tGen = useTranslations("General");
+  const { isSignedIn, isLoaded } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,7 +100,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden lg:flex space-x-10 items-center">
+            <div className="hidden lg:flex space-x-8 items-center">
               {[
                 { name: t("home"), href: "/" },
                 { name: t("services"), href: "/services" },
@@ -125,8 +127,33 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:flex items-center gap-6">
+            {/* CTA + Auth */}
+            <div className="hidden lg:flex items-center gap-3">
+              <div className="h-8 w-[1px] bg-white/10"></div>
+              {isLoaded && isSignedIn ? (
+                <>
+                  <Link
+                    href="/profile"
+                    className="text-sm text-slate-300 hover:text-white transition-colors font-medium"
+                  >
+                    {t("myProfile")}
+                  </Link>
+                  <UserButton />
+                </>
+              ) : isLoaded ? (
+                <>
+                  <SignInButton mode="modal">
+                    <button className="text-sm text-slate-300 hover:text-white transition-colors font-medium border border-white/20 px-3 py-1.5 rounded-lg">
+                      {t("signIn")}
+                    </button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <button className="text-sm bg-accent text-primary px-3 py-1.5 rounded-lg font-semibold hover:bg-accent/90 transition-colors">
+                      {t("signUp")}
+                    </button>
+                  </SignUpButton>
+                </>
+              ) : null}
               <div className="h-8 w-[1px] bg-white/10"></div>
               <ApplicationModal />
             </div>
@@ -167,7 +194,29 @@ const Navbar = () => {
             <div className="pt-2 pb-1">
               <LanguageSwitcher />
             </div>
-            <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
+            {isLoaded && !isSignedIn && (
+              <div className="flex gap-3 pt-1">
+                <SignInButton mode="modal">
+                  <button className="flex-1 text-sm text-white border border-white/20 px-3 py-2 rounded-lg font-medium">
+                    {t("signIn")}
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="flex-1 text-sm bg-accent text-primary px-3 py-2 rounded-lg font-semibold">
+                    {t("signUp")}
+                  </button>
+                </SignUpButton>
+              </div>
+            )}
+            {isLoaded && isSignedIn && (
+              <div className="flex items-center gap-3 pt-1">
+                <Link href="/profile" className="text-sm text-slate-300" onClick={() => setIsMobileMenuOpen(false)}>
+                  {t("myProfile")}
+                </Link>
+                <UserButton />
+              </div>
+            )}
+            <div className="w-full mt-2" onClick={() => setIsMobileMenuOpen(false)}>
               <ApplicationModal>
                  <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
               </ApplicationModal>
