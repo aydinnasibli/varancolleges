@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
-import { Clock, BookOpen, CheckCircle, ChevronRight } from "lucide-react";
+import { Clock, BookOpen, CheckCircle, ChevronRight, Calculator, Languages } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -11,8 +11,8 @@ import { getTranslations } from "next-intl/server";
 export const dynamic = "force-dynamic";
 
 const SAT_STRUCTURE = [
-  { section: "Reading & Writing", modules: 2, questionsPerModule: 27, minutesPerModule: 32 },
-  { section: "Math", modules: 2, questionsPerModule: 22, minutesPerModule: 35 },
+  { section: "Reading & Writing", modules: 2, questionsPerModule: 27, minutesPerModule: 32, icon: Languages, accentClass: "border-t-accent/60 border-accent/20", iconColor: "text-accent", iconBg: "bg-accent/15", totalColor: "text-accent" },
+  { section: "Math", modules: 2, questionsPerModule: 22, minutesPerModule: 35, icon: Calculator, accentClass: "border-t-secondary/60 border-secondary/20", iconColor: "text-secondary", iconBg: "bg-secondary/15", totalColor: "text-secondary" },
 ];
 
 export default async function ExamDetailPage({
@@ -69,8 +69,11 @@ export default async function ExamDetailPage({
       <ExamNavbar />
       <main className="min-h-screen bg-background-dark">
         {/* Hero */}
-        <section className="relative pt-16 pb-12 border-b border-white/5">
-          <div className="max-w-5xl mx-auto px-6">
+        <section className="relative pt-16 pb-12 border-b border-white/5 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/30 to-transparent pointer-events-none"></div>
+          <div className="absolute top-10 right-10 w-64 h-64 bg-accent/6 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 left-10 w-56 h-56 bg-secondary/6 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="max-w-5xl mx-auto px-6 relative z-10">
             <div className="flex flex-col lg:flex-row gap-10 items-start">
               {/* Left: info */}
               <div className="flex-1">
@@ -97,7 +100,12 @@ export default async function ExamDetailPage({
               </div>
 
               {/* Right: purchase card */}
-              <div className="w-full lg:w-80 bg-white/5 border border-white/10 rounded-2xl p-6 flex-shrink-0">
+              <div className="w-full lg:w-80 bg-gradient-to-b from-white/8 to-white/3 border border-white/20 rounded-2xl p-6 flex-shrink-0 shadow-lg shadow-accent/10">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-accent/20 text-accent">
+                    {exam.type}
+                  </span>
+                </div>
                 <div className="text-3xl font-bold text-white mb-1">
                   ₼{(exam.price / 100).toFixed(2)}
                 </div>
@@ -176,31 +184,39 @@ export default async function ExamDetailPage({
         <section className="max-w-5xl mx-auto px-6 py-12">
           <h2 className="text-xl font-bold text-white mb-6">{t("examStructure")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {SAT_STRUCTURE.map((s) => (
-              <div key={s.section} className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h3 className="text-white font-semibold mb-3">{s.section}</h3>
-                <div className="space-y-2 text-sm text-slate-400">
-                  <div className="flex justify-between">
-                    <span>{t("modules")}</span>
-                    <span className="text-white font-medium">{s.modules}</span>
+            {SAT_STRUCTURE.map((s) => {
+              const Icon = s.icon;
+              return (
+                <div key={s.section} className={`bg-white/5 border border-t-2 ${s.accentClass} rounded-xl p-5`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`w-9 h-9 rounded-lg ${s.iconBg} flex items-center justify-center flex-shrink-0`}>
+                      <Icon className={`h-5 w-5 ${s.iconColor}`} />
+                    </div>
+                    <h3 className="text-white font-semibold">{s.section}</h3>
                   </div>
-                  <div className="flex justify-between">
-                    <span>{t("questionsPerModule")}</span>
-                    <span className="text-white font-medium">{s.questionsPerModule}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>{t("timePerModule")}</span>
-                    <span className="text-white font-medium">{s.minutesPerModule} min</span>
-                  </div>
-                  <div className="flex justify-between border-t border-white/10 pt-2 mt-2">
-                    <span>{t("totalTime")}</span>
-                    <span className="text-accent font-semibold">
-                      {s.modules * s.minutesPerModule} min
-                    </span>
+                  <div className="space-y-2 text-sm text-slate-400">
+                    <div className="flex justify-between">
+                      <span>{t("modules")}</span>
+                      <span className="text-white font-medium">{s.modules}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>{t("questionsPerModule")}</span>
+                      <span className="text-white font-medium">{s.questionsPerModule}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>{t("timePerModule")}</span>
+                      <span className="text-white font-medium">{s.minutesPerModule} min</span>
+                    </div>
+                    <div className="flex justify-between border-t border-white/10 pt-2 mt-2">
+                      <span>{t("totalTime")}</span>
+                      <span className={`font-semibold ${s.totalColor}`}>
+                        {s.modules * s.minutesPerModule} min
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 

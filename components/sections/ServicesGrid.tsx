@@ -33,6 +33,7 @@ const ServicesGrid = () => {
   return (
     <section className="py-24 bg-background-dark relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -48,18 +49,24 @@ const ServicesGrid = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {servicesData.map((service, index) => {
             const Icon = iconMap[service.slug as keyof typeof iconMap] || BookOpen;
+            const isEven = index % 2 === 0;
 
-            // We retrieve the dynamic title and description from translation files using slug mapping
-            // Note: Since `tData` holds all services by slug, we index into it:
-            // e.g. `tData("ielts.title")`
+            const iconBg = isEven
+              ? "bg-accent/10 group-hover:bg-accent text-accent group-hover:text-primary"
+              : "bg-secondary/10 group-hover:bg-secondary text-secondary group-hover:text-white";
+
+            const topBorder = isEven ? "border-t-accent/30" : "border-t-secondary/30";
 
             return (
-              <div key={index} className="glass-card p-8 rounded-xl group relative overflow-hidden">
+              <div
+                key={index}
+                className={`glass-card p-8 rounded-xl group relative overflow-hidden border-t-2 ${topBorder}`}
+              >
                 <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
                   <Icon className="w-24 h-24 text-white" />
                 </div>
 
-                <div className="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-primary transition-colors duration-300 text-accent">
+                <div className={`w-14 h-14 rounded-lg flex items-center justify-center mb-6 transition-colors duration-300 ${iconBg}`}>
                   <Icon className="w-8 h-8" />
                 </div>
 
@@ -70,7 +77,10 @@ const ServicesGrid = () => {
                   {tData.has(`${service.slug}.description`) ? tData(`${service.slug}.description`) : service.description}
                 </p>
 
-                <Link href={`/services/${service.slug}`} className="inline-flex items-center text-sm font-medium text-accent hover:text-white transition-colors uppercase tracking-wider">
+                <Link
+                  href={`/services/${service.slug}`}
+                  className={`inline-flex items-center text-sm font-medium transition-colors uppercase tracking-wider ${isEven ? "text-accent hover:text-white" : "text-secondary hover:text-white"}`}
+                >
                   {tData("details")}
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Link>

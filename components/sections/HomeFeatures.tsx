@@ -10,7 +10,7 @@ const HomeFeatures = () => {
   return (
     <section className="py-24 bg-background-dark relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/8 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -85,16 +85,16 @@ const HomeFeatures = () => {
           </div>
 
           {/* Small Box 1 - IELTS Preparation (Spans 1 col, 1 row) */}
-          <div className="md:col-span-1 lg:col-span-1 md:row-span-1 glass-card p-6 md:p-8 rounded-2xl group relative overflow-hidden flex flex-col justify-between border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent hover:border-accent/30 transition-all duration-500">
+          <div className="md:col-span-1 lg:col-span-1 md:row-span-1 glass-card p-6 md:p-8 rounded-2xl group relative overflow-hidden flex flex-col justify-between border border-white/5 bg-gradient-to-br from-white/[0.03] to-transparent hover:border-secondary/30 transition-all duration-500">
              <div className="absolute -bottom-4 -right-4 p-4 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
                <Languages className="w-32 h-32 text-white" />
              </div>
 
              <div>
-                <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-primary transition-colors duration-300 text-accent">
+                <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:text-white transition-colors duration-300 text-secondary">
                   <Languages className="w-5 h-5" />
                 </div>
-                <h4 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors line-clamp-1">
+                <h4 className="text-xl font-serif text-white mb-2 group-hover:text-secondary transition-colors line-clamp-1">
                   {tData("ielts.title")}
                 </h4>
                 <p className="text-slate-400 text-sm leading-relaxed font-light line-clamp-2">
@@ -103,7 +103,7 @@ const HomeFeatures = () => {
              </div>
              <Link
                href="/services/ielts"
-               className="mt-4 inline-flex items-center text-xs font-medium text-slate-300 hover:text-accent transition-colors uppercase tracking-wider"
+               className="mt-4 inline-flex items-center text-xs font-medium text-slate-300 hover:text-secondary transition-colors uppercase tracking-wider"
              >
                {tData("details")}
                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
