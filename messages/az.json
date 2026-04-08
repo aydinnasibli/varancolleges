@@ -612,7 +612,10 @@
     "fullSupportDesc": "Qəbul prosesindən etibarən universitetə yerləşənə qədər hər addımda yanınızdayıq.",
     "exploreDestinations": "Təyinat Ölkələri",
     "exploreCountry": "Ətraflı bax",
-    "moreFeatures": "daha çox"
+    "moreFeatures": "daha çox",
+    "whyStudyHere": "Niyə burada oxumalı?",
+    "howWeHelpYou": "Necə kömək edirik?",
+    "whatsIncluded": "Nələr daxildir?"
   },
   "ServicesPage": {
     "heroTitle": "Xidmətlərimiz",
@@ -802,6 +805,11 @@
       "description": "Vaxtlı bölmələr və ətraflı bal hesabatları ilə tam uzunluqlu rəqəmsal SAT simulyasiyaları — real imtahan kimi.",
       "noExams": "Hələ imtahan mövcud deyil. Tezliklə yoxlayın!",
       "viewDetails": "Ətraflı bax",
+      "browseExams": "İmtahanlara bax",
+      "howItWorks": "Necə işləyir?",
+      "yourTargetScore": "Hədəf Balınız",
+      "readingWriting": "Oxu və Yazı",
+      "math": "Riyaziyyat",
       "questions": "sual",
       "features": {
         "timedModules": {

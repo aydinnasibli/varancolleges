@@ -612,7 +612,10 @@
     "fullSupportDesc": "We are with you every step of the way, from the admission process to university placement.",
     "exploreDestinations": "Destinations",
     "exploreCountry": "Explore",
-    "moreFeatures": "more"
+    "moreFeatures": "more",
+    "whyStudyHere": "Why Study Here?",
+    "howWeHelpYou": "How We Help You",
+    "whatsIncluded": "What's Included"
   },
   "ServicesPage": {
     "heroTitle": "Our Services",
@@ -802,6 +805,11 @@
       "description": "Full-length digital SAT simulations with timed sections and detailed score reports — just like the real exam.",
       "noExams": "No exams available yet. Check back soon!",
       "viewDetails": "View Details",
+      "browseExams": "Browse Exams",
+      "howItWorks": "How It Works",
+      "yourTargetScore": "Your Target Score",
+      "readingWriting": "Reading & Writing",
+      "math": "Math",
       "questions": "questions",
       "features": {
         "timedModules": {
