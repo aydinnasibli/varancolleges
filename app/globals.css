@@ -3,8 +3,8 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-background-dark: #0B1120;
-  --color-primary: #152C55;
+  --color-background-dark: #07101e;
+  --color-primary: #1e3a8a;
   --color-accent: #d4af37;
   --color-accent-light: #f4d03f;
 
@@ -19,22 +19,22 @@
 
 @layer base {
   :root {
-    --background: 222 47% 9%; /* #0B1120 */
+    --background: 222 52% 8%; /* #07101e */
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 9%;
+    --card: 222 52% 8%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 9%;
+    --popover: 222 52% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 218 60% 21%; /* #152C55 */
+    --primary: 220 64% 33%; /* #1e3a8a */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 220 40% 18%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 220 40% 18%;
     --muted-foreground: 215 20.2% 65.1%;
 
     --accent: 46 65% 52%; /* #d4af37 */
@@ -43,29 +43,29 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 220 40% 18%;
+    --input: 220 40% 18%;
     --ring: 212.7 26.8% 83.9%;
   }
 
   /* Force dark mode behavior by default */
   .dark {
-    --background: 222 47% 9%;
+    --background: 222 52% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 9%;
+    --card: 222 52% 8%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 9%;
+    --popover: 222 52% 8%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 218 60% 21%;
+    --primary: 220 64% 33%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 220 40% 18%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 220 40% 18%;
     --muted-foreground: 215 20.2% 65.1%;
 
     --accent: 46 65% 52%;
@@ -74,9 +74,15 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 220 40% 18%;
+    --input: 220 40% 18%;
     --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  body {
+    background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(30, 58, 138, 0.18) 0%, transparent 100%);
   }
 }
 
@@ -87,5 +93,19 @@
 
   .glass-card {
     @apply bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-300;
+  }
+
+  /* Surface elevation layers — distinct card backgrounds */
+  .surface-1 {
+    background: linear-gradient(135deg, #0d1f38 0%, #0a1628 100%);
+  }
+
+  .surface-2 {
+    background: linear-gradient(135deg, #0f2444 0%, #0c1d36 100%);
+  }
+
+  /* Section with subtle depth variation */
+  .section-alt {
+    background: linear-gradient(180deg, #07101e 0%, #060d1a 50%, #07101e 100%);
   }
 }
