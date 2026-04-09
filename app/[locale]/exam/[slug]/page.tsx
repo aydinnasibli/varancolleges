@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
-import { Clock, BookOpen, CheckCircle, ChevronRight } from "lucide-react";
+import { Clock, BookOpen, CheckCircle, ChevronRight, PenLine, Calculator } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -11,8 +11,8 @@ import { getTranslations } from "next-intl/server";
 export const dynamic = "force-dynamic";
 
 const SAT_STRUCTURE = [
-  { section: "Reading & Writing", modules: 2, questionsPerModule: 27, minutesPerModule: 32 },
-  { section: "Math", modules: 2, questionsPerModule: 22, minutesPerModule: 35 },
+  { section: "Reading & Writing", icon: PenLine, modules: 2, questionsPerModule: 27, minutesPerModule: 32 },
+  { section: "Math", icon: Calculator, modules: 2, questionsPerModule: 22, minutesPerModule: 35 },
 ];
 
 export default async function ExamDetailPage({
@@ -68,176 +68,240 @@ export default async function ExamDetailPage({
     <>
       <ExamNavbar />
       <main className="min-h-screen bg-background-dark">
-        {/* Hero */}
-        <section className="relative pt-16 pb-12 border-b border-white/5">
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="flex flex-col lg:flex-row gap-10 items-start">
-              {/* Left: info */}
-              <div className="flex-1">
-                <span className="inline-block text-xs font-semibold uppercase tracking-widest text-accent mb-4">
-                  {exam.type} {t("mockExam")}
-                </span>
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  {exam.title}
-                </h1>
-                <p className="text-slate-400 text-base leading-relaxed mb-6">
+
+        {/* ── HERO ─────────────────────────────────────────────────── */}
+        <section className="relative pt-28 pb-16 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/25 via-background-dark to-background-dark" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="relative max-w-6xl mx-auto px-6 text-center">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/30 bg-accent/5 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+              <span className="text-accent text-xs font-semibold uppercase tracking-widest">
+                {exam.type} {t("mockExam")}
+              </span>
+            </span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-6 max-w-4xl mx-auto">
+              {exam.title}
+            </h1>
+            <div className="flex items-center justify-center gap-6 text-sm text-accent">
+              <span className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                {exam.totalDuration} {t("minutesTotal")}
+              </span>
+              <span className="w-px h-4 bg-accent/30" />
+              <span className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                98 {t("questionsAcross")}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTENT ──────────────────────────────────────────────── */}
+        <section className="max-w-6xl mx-auto px-6 pb-16">
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+
+            {/* ── LEFT COLUMN ────────────────────────────────────── */}
+            <div className="flex-1 min-w-0 space-y-10">
+
+              {/* Description */}
+              <div>
+                <p className="text-slate-300 text-base leading-relaxed">
                   {exam.description}
                 </p>
+              </div>
 
-                <div className="flex flex-wrap gap-4 text-sm text-slate-400">
-                  <span className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-accent" />
-                    {exam.totalDuration} {t("minutesTotal")}
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-accent" />
-                    98 {t("questionsAcross")}
-                  </span>
+              {/* Exam Structure */}
+              <div>
+                <h2 className="text-xl font-serif font-bold text-white mb-5 flex items-center gap-3">
+                  <span className="w-6 h-px bg-accent" />
+                  {t("examStructure")}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {SAT_STRUCTURE.map((s) => {
+                    const Icon = s.icon;
+                    return (
+                      <div
+                        key={s.section}
+                        className="surface-1 border border-white/[0.07] rounded-2xl p-6 relative overflow-hidden group"
+                      >
+                        <div className="absolute -bottom-4 -right-4 opacity-5">
+                          <Icon className="w-28 h-28 text-white" />
+                        </div>
+                        <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center text-accent mb-4">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <h3 className="text-white font-semibold mb-4">{s.section}</h3>
+                        <div className="space-y-2.5 text-sm">
+                          <div className="flex justify-between text-slate-400">
+                            <span>{t("modules")}</span>
+                            <span className="text-white font-medium">{s.modules}</span>
+                          </div>
+                          <div className="flex justify-between text-slate-400">
+                            <span>{t("questionsPerModule")}</span>
+                            <span className="text-white font-medium">{s.questionsPerModule}</span>
+                          </div>
+                          <div className="flex justify-between text-slate-400">
+                            <span>{t("timePerModule")}</span>
+                            <span className="text-white font-medium">{s.minutesPerModule} min</span>
+                          </div>
+                          <div className="flex justify-between pt-2.5 border-t border-white/8">
+                            <span className="text-slate-400">{t("totalTime")}</span>
+                            <span className="text-accent font-bold text-base">
+                              {s.modules * s.minutesPerModule} min
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Right: purchase card */}
-              <div className="w-full lg:w-80 bg-white/5 border border-white/10 rounded-2xl p-6 flex-shrink-0">
-                <div className="text-3xl font-bold text-white mb-1">
-                  ₼{(exam.price / 100).toFixed(2)}
+              {/* Previous Attempts */}
+              {completedAttempts.length > 1 && (
+                <div>
+                  <h2 className="text-xl font-serif font-bold text-white mb-5 flex items-center gap-3">
+                    <span className="w-6 h-px bg-accent" />
+                    {t("previousAttempts")}
+                  </h2>
+                  <div className="space-y-3">
+                    {completedAttempts.map((attempt, i) => {
+                      const score = attempt.scores?.total;
+                      const pct = score !== undefined ? Math.round((score / 1600) * 100) : null;
+                      return (
+                        <Link
+                          key={attempt._id}
+                          href={`/exam/${slug}/results/${attempt._id}`}
+                          className="block surface-1 border border-white/[0.07] hover:border-accent/30 rounded-xl px-5 py-4 transition-all duration-200 group"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div>
+                              <p className="text-sm text-white font-medium group-hover:text-accent transition-colors">
+                                {t("attempt")} #{completedAttempts.length - i}
+                              </p>
+                              <p className="text-xs text-slate-500 mt-0.5">
+                                {new Date(attempt.startedAt).toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })}
+                              </p>
+                            </div>
+                            {score !== undefined && (
+                              <div className="text-right">
+                                <p className="text-xl font-bold text-accent leading-none">{score}</p>
+                                <p className="text-xs text-slate-500 mt-0.5">/ 1600</p>
+                              </div>
+                            )}
+                          </div>
+                          {pct !== null && (
+                            <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                              <div
+                                className="h-full bg-gradient-to-r from-accent/60 to-accent rounded-full transition-all duration-700"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-                <p className="text-slate-400 text-sm mb-6">{t("oneTimePayment")}</p>
+              )}
+            </div>
 
-                {!userId ? (
-                  <div className="space-y-3">
-                    <p className="text-xs text-slate-400 text-center">
-                      {t("signInToPurchase")}
+            {/* ── PURCHASE CARD ──────────────────────────────────── */}
+            <div className="w-full lg:w-80 shrink-0 lg:sticky lg:top-24">
+              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40">
+                {/* Gold accent top stripe */}
+                <div className="h-1 bg-gradient-to-r from-accent/40 via-accent to-accent/40" />
+                <div className="surface-1 p-6">
+                  {/* Price */}
+                  <div className="mb-5">
+                    <p className="text-4xl font-bold text-white">
+                      ₼{(exam.price / 100).toFixed(2)}
                     </p>
-                    <div className="flex gap-2">
-                      <a
-                        href="/sign-in"
-                        className="flex-1 text-center bg-white/10 hover:bg-white/20 text-white py-2.5 rounded-xl text-sm font-medium transition-colors"
-                      >
-                        {t("signIn")}
-                      </a>
-                      <a
-                        href="/sign-up"
-                        className="flex-1 text-center bg-accent hover:bg-accent/90 text-primary py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                      >
-                        {t("signUp")}
-                      </a>
-                    </div>
+                    <p className="text-slate-400 text-sm mt-1">{t("oneTimePayment")}</p>
                   </div>
-                ) : hasPurchase ? (
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-green-400 text-sm font-medium">
-                      <CheckCircle className="h-4 w-4" />
-                      {t("purchased")}
-                    </div>
-                    {inProgressAttempt ? (
-                      <Link
-                        href={`/exam/${slug}/take`}
-                        className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                      >
-                        {t("continueExam")}
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    ) : (
-                      <Link
-                        href={`/exam/${slug}/take`}
-                        className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                      >
-                        {t("startExam")}
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
-                    )}
-                    {completedAttempts.length > 0 && (
-                      <Link
-                        href={`/exam/${slug}/results/${completedAttempts[0]._id}`}
-                        className="flex items-center justify-center gap-2 w-full border border-white/20 hover:border-white/40 text-white py-2.5 rounded-xl text-sm font-medium transition-colors"
-                      >
-                        {t("viewLatestResults")}
-                      </Link>
-                    )}
-                  </div>
-                ) : (
-                  <ExamPurchaseButton examId={exam._id} price={exam.price} />
-                )}
 
-                <div className="mt-4 space-y-2">
-                  {(["fullSimulation", "timedModules", "sectionScores", "questionReview", "retakeAnytime"] as const).map((key) => (
-                    <div key={key} className="flex items-center gap-2 text-xs text-slate-400">
-                      <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                      {t(`features.${key}`)}
+                  {/* CTA section */}
+                  {!userId ? (
+                    <div className="space-y-3 mb-5">
+                      <p className="text-xs text-slate-400 text-center pb-1">
+                        {t("signInToPurchase")}
+                      </p>
+                      <div className="flex gap-2">
+                        <a
+                          href="/sign-in"
+                          className="flex-1 text-center surface-2 hover:bg-white/10 text-white py-2.5 rounded-xl text-sm font-medium transition-colors border border-white/10"
+                        >
+                          {t("signIn")}
+                        </a>
+                        <a
+                          href="/sign-up"
+                          className="flex-1 text-center bg-accent hover:bg-accent-light text-[#07101e] py-2.5 rounded-xl text-sm font-semibold transition-colors"
+                        >
+                          {t("signUp")}
+                        </a>
+                      </div>
                     </div>
-                  ))}
+                  ) : hasPurchase ? (
+                    <div className="space-y-3 mb-5">
+                      <div className="flex items-center gap-2 text-green-400 text-sm font-medium">
+                        <CheckCircle className="h-4 w-4" />
+                        {t("purchased")}
+                      </div>
+                      {inProgressAttempt ? (
+                        <Link
+                          href={`/exam/${slug}/take`}
+                          className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent-light text-[#07101e] py-3 rounded-xl text-sm font-semibold transition-colors"
+                        >
+                          {t("continueExam")}
+                          <ChevronRight className="h-4 w-4" />
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/exam/${slug}/take`}
+                          className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent-light text-[#07101e] py-3 rounded-xl text-sm font-semibold transition-colors"
+                        >
+                          {t("startExam")}
+                          <ChevronRight className="h-4 w-4" />
+                        </Link>
+                      )}
+                      {completedAttempts.length > 0 && (
+                        <Link
+                          href={`/exam/${slug}/results/${completedAttempts[0]._id}`}
+                          className="flex items-center justify-center gap-2 w-full border border-white/15 hover:border-white/30 text-white py-2.5 rounded-xl text-sm font-medium transition-colors"
+                        >
+                          {t("viewLatestResults")}
+                        </Link>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="mb-5">
+                      <ExamPurchaseButton examId={exam._id} price={exam.price} />
+                    </div>
+                  )}
+
+                  {/* Feature checklist */}
+                  <div className="pt-4 border-t border-white/8 space-y-2.5">
+                    {(["fullSimulation", "timedModules", "sectionScores", "questionReview", "retakeAnytime"] as const).map((key) => (
+                      <div key={key} className="flex items-center gap-2.5 text-xs text-slate-400">
+                        <CheckCircle className="h-3.5 w-3.5 text-accent shrink-0" />
+                        {t(`features.${key}`)}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
+
           </div>
         </section>
 
-        {/* Exam structure */}
-        <section className="max-w-5xl mx-auto px-6 py-12">
-          <h2 className="text-xl font-bold text-white mb-6">{t("examStructure")}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {SAT_STRUCTURE.map((s) => (
-              <div key={s.section} className="bg-white/5 border border-white/10 rounded-xl p-5">
-                <h3 className="text-white font-semibold mb-3">{s.section}</h3>
-                <div className="space-y-2 text-sm text-slate-400">
-                  <div className="flex justify-between">
-                    <span>{t("modules")}</span>
-                    <span className="text-white font-medium">{s.modules}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>{t("questionsPerModule")}</span>
-                    <span className="text-white font-medium">{s.questionsPerModule}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>{t("timePerModule")}</span>
-                    <span className="text-white font-medium">{s.minutesPerModule} min</span>
-                  </div>
-                  <div className="flex justify-between border-t border-white/10 pt-2 mt-2">
-                    <span>{t("totalTime")}</span>
-                    <span className="text-accent font-semibold">
-                      {s.modules * s.minutesPerModule} min
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Previous attempts */}
-        {completedAttempts.length > 1 && (
-          <section className="max-w-5xl mx-auto px-6 pb-12">
-            <h2 className="text-xl font-bold text-white mb-4">{t("previousAttempts")}</h2>
-            <div className="space-y-2">
-              {completedAttempts.map((attempt, i) => (
-                <Link
-                  key={attempt._id}
-                  href={`/exam/${slug}/results/${attempt._id}`}
-                  className="flex items-center justify-between bg-white/5 border border-white/10 hover:border-accent/30 rounded-xl px-5 py-3 transition-colors"
-                >
-                  <div>
-                    <p className="text-sm text-white font-medium">
-                      {t("attempt")} #{completedAttempts.length - i}
-                    </p>
-                    <p className="text-xs text-slate-400">
-                      {new Date(attempt.startedAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    {attempt.scores?.total !== undefined && (
-                      <p className="text-lg font-bold text-accent">{attempt.scores.total}</p>
-                    )}
-                    <p className="text-xs text-slate-400">/ 1600</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
       </main>
       <Footer />
     </>
