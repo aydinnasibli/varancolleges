@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { createQuestion, updateQuestion } from "@/app/actions/question-admin";
 import { uploadImage } from "@/app/actions/upload-image";
 import { toast } from "sonner";
-import { Loader2, Upload, X, Info } from "lucide-react";
+import { Loader2, Upload, X, Info, Eye, EyeOff, ChevronDown } from "lucide-react";
 import Image from "next/image";
+
+const MathRenderer = dynamic(() => import("@/components/MathRenderer"), { ssr: false });
 
 interface QuestionFormProps {
   examId: string;
@@ -26,10 +29,52 @@ interface QuestionFormProps {
   };
 }
 
+function PreviewToggle({
+  content,
+  label,
+}: {
+  content: string;
+  label: string;
+}) {
+  const [show, setShow] = useState(false);
+  if (!content.trim()) return null;
+  return (
+    <div className="mt-2">
+      <button
+        type="button"
+        onClick={() => setShow((s) => !s)}
+        className="flex items-center gap-1.5 text-xs text-[#1152d4] hover:text-[#0e42b0] font-medium"
+      >
+        {show ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+        {show ? `${label} önizləməni gizlət` : `${label} önizləməsini göstər`}
+      </button>
+      {show && (
+        <div className="mt-2 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 leading-relaxed min-h-[2rem]">
+          <MathRenderer content={content} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+const LATEX_EXAMPLES = [
+  { label: "İnline riyaziyyat", syntax: "$x^2$", note: "Dollar işarələri arasında" },
+  { label: "Blok riyaziyyat", syntax: "$$\\frac{a}{b}$$", note: "İki dollar işarəsi arasında, ayrı sətrdə" },
+  { label: "Kəsr", syntax: "$\\frac{x}{y}$", note: "" },
+  { label: "Kvadrat kök", syntax: "$\\sqrt{x}$", note: "" },
+  { label: "Üs", syntax: "$x^{10}$", note: "" },
+  { label: "Alt indeks", syntax: "$x_1$", note: "" },
+  { label: "Pi", syntax: "$\\pi$", note: "" },
+  { label: "Bərabərsizlik", syntax: "$\\leq$  $\\geq$  $\\neq$", note: "" },
+  { label: "Mütləq dəyər", syntax: "$|x|$", note: "" },
+  { label: "Summation", syntax: "$\\sum_{i=1}^{n} i$", note: "" },
+];
+
 export default function QuestionForm({ examId, initialData }: QuestionFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [showLatexGuide, setShowLatexGuide] = useState(false);
 
   const [section, setSection] = useState(initialData?.section || "reading_writing");
   const [module, setModule] = useState(initialData?.module?.toString() || "1");
@@ -133,6 +178,7 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
               rows={6}
               className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none font-mono"
             />
+            <PreviewToggle content={passageText} label="Mətn" />
           </div>
         )}
 
@@ -144,11 +190,12 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
           <textarea
             value={questionText}
             onChange={(e) => setQuestionText(e.target.value)}
-            placeholder="Sualı buraya yazın..."
+            placeholder="Sualı buraya yazın... Riyazi ifadə üçün: $x^2$ və ya $$\frac{a}{b}$$"
             rows={4}
             className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none"
             required
           />
+          <PreviewToggle content={questionText} label="Sual" />
         </div>
 
         {/* Options */}
@@ -160,36 +207,41 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
             { label: "C", value: optionC, setter: setOptionC },
             { label: "D", value: optionD, setter: setOptionD },
           ].map(({ label, value, setter }) => (
-            <div key={label} className="flex items-center gap-3">
-              <div className="flex items-center gap-2 min-w-[80px]">
+            <div key={label}>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 min-w-[80px]">
+                  <input
+                    type="radio"
+                    name="correctAnswer"
+                    value={label}
+                    checked={correctAnswer === label}
+                    onChange={(e) => setCorrectAnswer(e.target.value)}
+                    className="h-4 w-4 text-[#1152d4] cursor-pointer"
+                    id={`answer-${label}`}
+                  />
+                  <label
+                    htmlFor={`answer-${label}`}
+                    className={`text-sm font-semibold cursor-pointer px-2.5 py-0.5 rounded-full ${
+                      correctAnswer === label
+                        ? "bg-green-100 text-green-700"
+                        : "bg-slate-100 text-slate-600"
+                    }`}
+                  >
+                    {label}
+                  </label>
+                </div>
                 <input
-                  type="radio"
-                  name="correctAnswer"
-                  value={label}
-                  checked={correctAnswer === label}
-                  onChange={(e) => setCorrectAnswer(e.target.value)}
-                  className="h-4 w-4 text-[#1152d4] cursor-pointer"
-                  id={`answer-${label}`}
+                  type="text"
+                  value={value}
+                  onChange={(e) => setter(e.target.value)}
+                  placeholder={`Variant ${label} — riyazi ifadə üçün: $x^2$`}
+                  className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
+                  required
                 />
-                <label
-                  htmlFor={`answer-${label}`}
-                  className={`text-sm font-semibold cursor-pointer px-2.5 py-0.5 rounded-full ${
-                    correctAnswer === label
-                      ? "bg-green-100 text-green-700"
-                      : "bg-slate-100 text-slate-600"
-                  }`}
-                >
-                  {label}
-                </label>
               </div>
-              <input
-                type="text"
-                value={value}
-                onChange={(e) => setter(e.target.value)}
-                placeholder={`Variant ${label}`}
-                className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
-                required
-              />
+              <div className="ml-[88px]">
+                <PreviewToggle content={value} label={`Variant ${label}`} />
+              </div>
             </div>
           ))}
           <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-50 rounded-lg px-3 py-2">
@@ -253,6 +305,7 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
             rows={3}
             className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none"
           />
+          <PreviewToggle content={explanation} label="İzahat" />
         </div>
       </div>
 
@@ -336,6 +389,47 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
               <option value="hard">Çətin</option>
             </select>
           </div>
+        </div>
+
+        {/* LaTeX Math Guide */}
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setShowLatexGuide((s) => !s)}
+            className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <span className="text-base">∑</span>
+              LaTeX Riyaziyyat Bələdçisi
+            </span>
+            <ChevronDown
+              className={`h-4 w-4 text-slate-400 transition-transform ${showLatexGuide ? "rotate-180" : ""}`}
+            />
+          </button>
+          {showLatexGuide && (
+            <div className="px-4 pb-4 border-t border-slate-100">
+              <p className="text-xs text-slate-500 mt-3 mb-3">
+                Riyazi ifadə daxil etmək üçün LaTeX sintaksisindən istifadə edin. İnline üçün{" "}
+                <code className="bg-slate-100 px-1 rounded text-[#1152d4]">$...$</code>, blok üçün{" "}
+                <code className="bg-slate-100 px-1 rounded text-[#1152d4]">$$...$$</code>
+              </p>
+              <div className="space-y-2">
+                {LATEX_EXAMPLES.map((ex) => (
+                  <div key={ex.label} className="flex items-start gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs text-slate-500 mb-0.5">{ex.label}</p>
+                      <code className="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-700 break-all">
+                        {ex.syntax}
+                      </code>
+                      {ex.note && (
+                        <p className="text-xs text-slate-400 mt-0.5">{ex.note}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-3">
