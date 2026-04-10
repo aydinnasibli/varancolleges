@@ -1,15 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { createQuestion, updateQuestion } from "@/app/actions/question-admin";
 import { uploadImage } from "@/app/actions/upload-image";
 import { toast } from "sonner";
-import { Loader2, Upload, X, Info, Eye, EyeOff, ChevronDown } from "lucide-react";
+import { Loader2, Upload, X, Info, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 
 const MathRenderer = dynamic(() => import("@/components/MathRenderer"), { ssr: false });
+const MathEquationEditor = dynamic(
+  () => import("@/components/admin/MathEquationEditor"),
+  { ssr: false }
+);
 
 interface QuestionFormProps {
   examId: string;
@@ -29,13 +33,33 @@ interface QuestionFormProps {
   };
 }
 
-function PreviewToggle({
-  content,
-  label,
-}: {
-  content: string;
-  label: string;
-}) {
+// Insert LaTeX at the cursor position of a textarea or input
+function insertAtCursor(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  elRef: React.RefObject<any>,
+  currentValue: string,
+  setValue: (v: string) => void,
+  latex: string,
+  closeEditor: () => void
+) {
+  closeEditor();
+  const el = elRef.current;
+  if (!el) {
+    setValue(currentValue + latex);
+    return;
+  }
+  const start = el.selectionStart ?? currentValue.length;
+  const end = el.selectionEnd ?? currentValue.length;
+  const next = currentValue.substring(0, start) + latex + currentValue.substring(end);
+  setValue(next);
+  requestAnimationFrame(() => {
+    el.selectionStart = el.selectionEnd = start + latex.length;
+    el.focus();
+  });
+}
+
+// Small preview toggle component
+function PreviewToggle({ content, label }: { content: string; label: string }) {
   const [show, setShow] = useState(false);
   if (!content.trim()) return null;
   return (
@@ -57,25 +81,35 @@ function PreviewToggle({
   );
 }
 
-const LATEX_EXAMPLES = [
-  { label: "İnline riyaziyyat", syntax: "$x^2$", note: "Dollar işarələri arasında" },
-  { label: "Blok riyaziyyat", syntax: "$$\\frac{a}{b}$$", note: "İki dollar işarəsi arasında, ayrı sətrdə" },
-  { label: "Kəsr", syntax: "$\\frac{x}{y}$", note: "" },
-  { label: "Kvadrat kök", syntax: "$\\sqrt{x}$", note: "" },
-  { label: "Üs", syntax: "$x^{10}$", note: "" },
-  { label: "Alt indeks", syntax: "$x_1$", note: "" },
-  { label: "Pi", syntax: "$\\pi$", note: "" },
-  { label: "Bərabərsizlik", syntax: "$\\leq$  $\\geq$  $\\neq$", note: "" },
-  { label: "Mütləq dəyər", syntax: "$|x|$", note: "" },
-  { label: "Summation", syntax: "$\\sum_{i=1}^{n} i$", note: "" },
-];
+// Math button shown next to field labels
+function MathButton({ active, onClick }: { active: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-lg transition-colors ${
+        active
+          ? "bg-[#1152d4] text-white"
+          : "bg-slate-100 text-slate-600 hover:bg-[#1152d4]/10 hover:text-[#1152d4]"
+      }`}
+    >
+      <span className="text-sm leading-none">∑</span>
+      Tənlik
+    </button>
+  );
+}
 
 export default function QuestionForm({ examId, initialData }: QuestionFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [showLatexGuide, setShowLatexGuide] = useState(false);
 
+  // Track which field's equation editor is open
+  const [activeEditor, setActiveEditor] = useState<string | null>(null);
+  const toggleEditor = (field: string) =>
+    setActiveEditor((prev) => (prev === field ? null : field));
+
+  // Field values
   const [section, setSection] = useState(initialData?.section || "reading_writing");
   const [module, setModule] = useState(initialData?.module?.toString() || "1");
   const [questionNumber, setQuestionNumber] = useState(
@@ -92,6 +126,15 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
   const [domain, setDomain] = useState(initialData?.domain || "");
   const [difficulty, setDifficulty] = useState(initialData?.difficulty || "medium");
   const [image, setImage] = useState(initialData?.image || "");
+
+  // Refs for cursor-position insertion
+  const passageRef = useRef<HTMLTextAreaElement>(null);
+  const questionRef = useRef<HTMLTextAreaElement>(null);
+  const optionARef = useRef<HTMLInputElement>(null);
+  const optionBRef = useRef<HTMLInputElement>(null);
+  const optionCRef = useRef<HTMLInputElement>(null);
+  const optionDRef = useRef<HTMLInputElement>(null);
+  const explanationRef = useRef<HTMLTextAreaElement>(null);
 
   const isEditing = !!initialData;
 
@@ -122,7 +165,6 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
       toast.error("Sual mətni və bütün variantlar məcburidir");
       return;
     }
-
     setIsLoading(true);
     const formData = new FormData();
     formData.append("section", section);
@@ -139,15 +181,10 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
     formData.append("domain", domain);
     formData.append("difficulty", difficulty);
     formData.append("image", image);
-
     try {
-      let result;
-      if (isEditing) {
-        result = await updateQuestion(initialData._id, examId, formData);
-      } else {
-        result = await createQuestion(examId, formData);
-      }
-
+      const result = isEditing
+        ? await updateQuestion(initialData._id, examId, formData)
+        : await createQuestion(examId, formData);
       if (result.success) {
         toast.success(isEditing ? "Sual yeniləndi" : "Sual əlavə edildi");
         router.push(`/admin/exam/${examId}/questions`);
@@ -161,87 +198,122 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
     }
   };
 
+  const close = () => setActiveEditor(null);
+
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Main content */}
       <div className="lg:col-span-2 space-y-5">
-        {/* Passage text (optional, for RW) */}
+
+        {/* Passage text */}
         {section === "reading_writing" && (
           <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">
-              Mətn (Passage) <span className="text-slate-400 font-normal">— ixtiyari</span>
-            </label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Mətn (Passage) <span className="text-slate-400 font-normal">— ixtiyari</span>
+              </label>
+              <MathButton active={activeEditor === "passage"} onClick={() => toggleEditor("passage")} />
+            </div>
             <textarea
+              ref={passageRef}
               value={passageText}
               onChange={(e) => setPassageText(e.target.value)}
               placeholder="Reading passage mətni buraya yazın..."
               rows={6}
               className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none font-mono"
             />
+            {activeEditor === "passage" && (
+              <MathEquationEditor
+                onInsert={(l) => insertAtCursor(passageRef, passageText, setPassageText, l, close)}
+              />
+            )}
             <PreviewToggle content={passageText} label="Mətn" />
           </div>
         )}
 
         {/* Question text */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            Sual mətni <span className="text-red-500">*</span>
-          </label>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-sm font-medium text-slate-700">
+              Sual mətni <span className="text-red-500">*</span>
+            </label>
+            <MathButton active={activeEditor === "question"} onClick={() => toggleEditor("question")} />
+          </div>
           <textarea
+            ref={questionRef}
             value={questionText}
             onChange={(e) => setQuestionText(e.target.value)}
-            placeholder="Sualı buraya yazın... Riyazi ifadə üçün: $x^2$ və ya $$\frac{a}{b}$$"
+            placeholder="Sualı buraya yazın..."
             rows={4}
             className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none"
             required
           />
+          {activeEditor === "question" && (
+            <MathEquationEditor
+              onInsert={(l) => insertAtCursor(questionRef, questionText, setQuestionText, l, close)}
+            />
+          )}
           <PreviewToggle content={questionText} label="Sual" />
         </div>
 
         {/* Options */}
         <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
           <h3 className="text-sm font-semibold text-slate-700">Cavab variantları</h3>
-          {[
-            { label: "A", value: optionA, setter: setOptionA },
-            { label: "B", value: optionB, setter: setOptionB },
-            { label: "C", value: optionC, setter: setOptionC },
-            { label: "D", value: optionD, setter: setOptionD },
-          ].map(({ label, value, setter }) => (
-            <div key={label}>
+          {([
+            { key: "A", value: optionA, setter: setOptionA, ref: optionARef },
+            { key: "B", value: optionB, setter: setOptionB, ref: optionBRef },
+            { key: "C", value: optionC, setter: setOptionC, ref: optionCRef },
+            { key: "D", value: optionD, setter: setOptionD, ref: optionDRef },
+          ] as const).map(({ key, value, setter, ref }) => (
+            <div key={key}>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 min-w-[80px]">
                   <input
                     type="radio"
                     name="correctAnswer"
-                    value={label}
-                    checked={correctAnswer === label}
+                    value={key}
+                    checked={correctAnswer === key}
                     onChange={(e) => setCorrectAnswer(e.target.value)}
                     className="h-4 w-4 text-[#1152d4] cursor-pointer"
-                    id={`answer-${label}`}
+                    id={`answer-${key}`}
                   />
                   <label
-                    htmlFor={`answer-${label}`}
+                    htmlFor={`answer-${key}`}
                     className={`text-sm font-semibold cursor-pointer px-2.5 py-0.5 rounded-full ${
-                      correctAnswer === label
+                      correctAnswer === key
                         ? "bg-green-100 text-green-700"
                         : "bg-slate-100 text-slate-600"
                     }`}
                   >
-                    {label}
+                    {key}
                   </label>
                 </div>
                 <input
+                  ref={ref}
                   type="text"
                   value={value}
                   onChange={(e) => setter(e.target.value)}
-                  placeholder={`Variant ${label} — riyazi ifadə üçün: $x^2$`}
+                  placeholder={`Variant ${key}`}
                   className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
                   required
                 />
+                <MathButton
+                  active={activeEditor === `option${key}`}
+                  onClick={() => toggleEditor(`option${key}`)}
+                />
               </div>
-              <div className="ml-[88px]">
-                <PreviewToggle content={value} label={`Variant ${label}`} />
-              </div>
+              {activeEditor === `option${key}` && (
+                <div className="ml-[88px]">
+                  <MathEquationEditor
+                    onInsert={(l) => insertAtCursor(ref, value, setter, l, close)}
+                  />
+                </div>
+              )}
+              {value && (
+                <div className="ml-[88px]">
+                  <PreviewToggle content={value} label={`Variant ${key}`} />
+                </div>
+              )}
             </div>
           ))}
           <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-50 rounded-lg px-3 py-2">
@@ -295,16 +367,25 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
 
         {/* Explanation */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <label className="block text-sm font-medium text-slate-700 mb-1.5">
-            İzahat <span className="text-slate-400 font-normal">— nəticə səhifəsində göstəriləcək</span>
-          </label>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-sm font-medium text-slate-700">
+              İzahat <span className="text-slate-400 font-normal">— nəticə səhifəsində göstəriləcək</span>
+            </label>
+            <MathButton active={activeEditor === "explanation"} onClick={() => toggleEditor("explanation")} />
+          </div>
           <textarea
+            ref={explanationRef}
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
             placeholder="Bu sualın cavabını necə tapmaq olar..."
             rows={3}
             className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none"
           />
+          {activeEditor === "explanation" && (
+            <MathEquationEditor
+              onInsert={(l) => insertAtCursor(explanationRef, explanation, setExplanation, l, close)}
+            />
+          )}
           <PreviewToggle content={explanation} label="İzahat" />
         </div>
       </div>
@@ -389,47 +470,6 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
               <option value="hard">Çətin</option>
             </select>
           </div>
-        </div>
-
-        {/* LaTeX Math Guide */}
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <button
-            type="button"
-            onClick={() => setShowLatexGuide((s) => !s)}
-            className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-          >
-            <span className="flex items-center gap-2">
-              <span className="text-base">∑</span>
-              LaTeX Riyaziyyat Bələdçisi
-            </span>
-            <ChevronDown
-              className={`h-4 w-4 text-slate-400 transition-transform ${showLatexGuide ? "rotate-180" : ""}`}
-            />
-          </button>
-          {showLatexGuide && (
-            <div className="px-4 pb-4 border-t border-slate-100">
-              <p className="text-xs text-slate-500 mt-3 mb-3">
-                Riyazi ifadə daxil etmək üçün LaTeX sintaksisindən istifadə edin. İnline üçün{" "}
-                <code className="bg-slate-100 px-1 rounded text-[#1152d4]">$...$</code>, blok üçün{" "}
-                <code className="bg-slate-100 px-1 rounded text-[#1152d4]">$$...$$</code>
-              </p>
-              <div className="space-y-2">
-                {LATEX_EXAMPLES.map((ex) => (
-                  <div key={ex.label} className="flex items-start gap-2">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs text-slate-500 mb-0.5">{ex.label}</p>
-                      <code className="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-700 break-all">
-                        {ex.syntax}
-                      </code>
-                      {ex.note && (
-                        <p className="text-xs text-slate-400 mt-0.5">{ex.note}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="flex flex-col gap-3">
