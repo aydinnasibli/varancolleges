@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { saveAnswer, saveTimeRemaining, saveCurrentPosition, completeSection, submitExam } from "@/app/actions/exam-attempt";
 import { Flag, ChevronLeft, ChevronRight, List, X, Clock, AlertTriangle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import MathRenderer from "@/components/MathRenderer";
 
 // SAT section durations in seconds
 const SECTION_DURATIONS: Record<string, number> = {
@@ -401,9 +402,9 @@ export default function ExamInterface({
               )}
 
               {/* Question text */}
-              <div
+              <MathRenderer
+                content={currentQuestion.questionText}
                 className="text-white text-base leading-relaxed mb-8"
-                dangerouslySetInnerHTML={{ __html: currentQuestion.questionText }}
               />
 
               {/* Answer options */}
@@ -429,9 +430,10 @@ export default function ExamInterface({
                       >
                         {opt}
                       </span>
-                      <span className="text-sm leading-relaxed">
-                        {currentQuestion.options[opt]}
-                      </span>
+                      <MathRenderer
+                        content={currentQuestion.options[opt]}
+                        className="text-sm leading-relaxed"
+                      />
                     </button>
                   );
                 })}
