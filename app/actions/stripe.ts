@@ -67,6 +67,7 @@ export async function createCheckoutSession(examId: string) {
       metadata: {
         examId: examId.toString(),
         userId,
+        paymentType: "exam",
       },
       success_url: `${baseUrl}/profile?payment=success`,
       cancel_url: `${baseUrl}/exam/${exam.slug}?payment=cancelled`,

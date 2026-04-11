@@ -856,5 +856,20 @@
       "moreAttempts": "more attempts",
       "paymentSuccess": "Payment successful! Your exam is now available below."
     }
+  },
+  "Payment": {
+    "title": "Make a Payment",
+    "subtitle": "Pay your monthly tuition fee securely online",
+    "selectAmount": "Select Amount",
+    "customAmount": "Or enter custom amount (₼)",
+    "customAmountPlaceholder": "e.g. 175",
+    "note": "Payment Note (optional)",
+    "notePlaceholder": "e.g. April monthly payment",
+    "payButton": "Pay with Stripe",
+    "paying": "Redirecting to payment...",
+    "successBanner": "Payment successful! Thank you.",
+    "cancelledBanner": "Payment was cancelled. You can try again below.",
+    "validationMin": "Minimum payment is ₼1",
+    "validationMax": "Maximum payment is ₼5,000"
   }
 }
