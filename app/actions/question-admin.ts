@@ -75,12 +75,9 @@ export async function createQuestion(examId: string, formData: FormData) {
     const section = formData.get("section") as string;
     const module = parseInt(formData.get("module") as string);
     const questionNumber = parseInt(formData.get("questionNumber") as string);
+    const questionType = (formData.get("questionType") as string) || "multiple_choice";
     const passageText = (formData.get("passageText") as string) || "";
     const questionText = formData.get("questionText") as string;
-    const optionA = formData.get("optionA") as string;
-    const optionB = formData.get("optionB") as string;
-    const optionC = formData.get("optionC") as string;
-    const optionD = formData.get("optionD") as string;
     const correctAnswer = formData.get("correctAnswer") as string;
     const explanation = (formData.get("explanation") as string) || "";
     const domain = (formData.get("domain") as string) || "";
@@ -91,11 +88,23 @@ export async function createQuestion(examId: string, formData: FormData) {
       return { success: false, error: "Required fields missing" };
     }
 
+    // Only require options for multiple choice
+    const isMC = questionType === "multiple_choice";
+    const optionA = isMC ? (formData.get("optionA") as string) : "";
+    const optionB = isMC ? (formData.get("optionB") as string) : "";
+    const optionC = isMC ? (formData.get("optionC") as string) : "";
+    const optionD = isMC ? (formData.get("optionD") as string) : "";
+
+    if (isMC && (!optionA || !optionB || !optionC || !optionD)) {
+      return { success: false, error: "All four options are required for multiple choice questions" };
+    }
+
     const question = await Question.create({
       examId,
       section: section as "reading_writing" | "math",
       module: module as 1 | 2,
       questionNumber,
+      questionType: questionType as "multiple_choice" | "free_response",
       passageText,
       questionText,
       options: { A: optionA, B: optionB, C: optionC, D: optionD },
@@ -128,17 +137,20 @@ export async function updateQuestion(id: string, examId: string, formData: FormD
     const section = formData.get("section") as string;
     const module = parseInt(formData.get("module") as string);
     const questionNumber = parseInt(formData.get("questionNumber") as string);
+    const questionType = (formData.get("questionType") as string) || "multiple_choice";
     const passageText = (formData.get("passageText") as string) || "";
     const questionText = formData.get("questionText") as string;
-    const optionA = formData.get("optionA") as string;
-    const optionB = formData.get("optionB") as string;
-    const optionC = formData.get("optionC") as string;
-    const optionD = formData.get("optionD") as string;
     const correctAnswer = formData.get("correctAnswer") as string;
     const explanation = (formData.get("explanation") as string) || "";
     const domain = (formData.get("domain") as string) || "";
     const difficulty = (formData.get("difficulty") as string) || "medium";
     const image = (formData.get("image") as string) || "";
+
+    const isMC = questionType === "multiple_choice";
+    const optionA = isMC ? (formData.get("optionA") as string) : "";
+    const optionB = isMC ? (formData.get("optionB") as string) : "";
+    const optionC = isMC ? (formData.get("optionC") as string) : "";
+    const optionD = isMC ? (formData.get("optionD") as string) : "";
 
     const question = await Question.findByIdAndUpdate(
       id,
@@ -146,6 +158,7 @@ export async function updateQuestion(id: string, examId: string, formData: FormD
         section: section as "reading_writing" | "math",
         module: module as 1 | 2,
         questionNumber,
+        questionType: questionType as "multiple_choice" | "free_response",
         passageText,
         questionText,
         options: { A: optionA, B: optionB, C: optionC, D: optionD },

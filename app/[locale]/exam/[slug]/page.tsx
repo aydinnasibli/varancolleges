@@ -10,6 +10,28 @@ import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params;
+  const result = await getExamBySlug(slug);
+  if (!result.success || !result.exam) return {};
+  const exam = result.exam as { title: string; description: string };
+  const canonical = locale === 'az'
+    ? `https://www.varancolleges.com/exam/${slug}`
+    : `https://www.varancolleges.com/${locale}/exam/${slug}`;
+  return {
+    title: exam.title,
+    description: exam.description,
+    alternates: {
+      canonical,
+      languages: {
+        'x-default': `https://www.varancolleges.com/exam/${slug}`,
+        az: `https://www.varancolleges.com/exam/${slug}`,
+        en: `https://www.varancolleges.com/en/exam/${slug}`,
+      },
+    },
+  };
+}
+
 const SAT_STRUCTURE = [
   { section: "Reading & Writing", icon: PenLine, modules: 2, questionsPerModule: 27, minutesPerModule: 32 },
   { section: "Math", icon: Calculator, modules: 2, questionsPerModule: 22, minutesPerModule: 35 },

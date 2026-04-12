@@ -856,5 +856,20 @@
       "moreAttempts": "daha çox cəhd",
       "paymentSuccess": "Ödəniş uğurla tamamlandı! İmtahanınız aşağıda mövcuddur."
     }
+  },
+  "Payment": {
+    "title": "Ödəniş Et",
+    "subtitle": "Aylıq təhsil haqqınızı təhlükəsiz şəkildə onlayn ödəyin",
+    "selectAmount": "Məbləği Seçin",
+    "customAmount": "Və ya öz məbləğinizi daxil edin (₼)",
+    "customAmountPlaceholder": "məs. 175",
+    "note": "Ödəniş qeydi (isteğe bağlı)",
+    "notePlaceholder": "məs. Aprel ayı aylıq ödənişi",
+    "payButton": "Stripe ilə Ödə",
+    "paying": "Ödəniş səhifəsinə yönləndirilirsiniz...",
+    "successBanner": "Ödəniş uğurla tamamlandı! Təşəkkür edirik.",
+    "cancelledBanner": "Ödəniş ləğv edildi. Yenidən cəhd edə bilərsiniz.",
+    "validationMin": "Minimum ödəniş ₼1-dir",
+    "validationMax": "Maksimum ödəniş ₼5.000-dir"
   }
 }

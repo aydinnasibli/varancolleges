@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import dbConnect from "@/lib/db";
 import ExamPurchase from "@/models/ExamPurchase";
+import TuitionPayment from "@/models/TuitionPayment";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -30,24 +31,39 @@ export async function POST(request: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
+    const paymentType = session.metadata?.paymentType;
 
     try {
       await dbConnect();
 
-      await ExamPurchase.findOneAndUpdate(
-        { stripeSessionId: session.id },
-        {
-          status: "completed",
-          stripePaymentIntentId: session.payment_intent?.toString() || "",
-          purchasedAt: new Date(),
-        }
-      );
-
-      console.log(
-        `Purchase completed for session ${session.id}, user ${session.metadata?.userId}`
-      );
+      if (paymentType === "tuition") {
+        await TuitionPayment.findOneAndUpdate(
+          { stripeSessionId: session.id },
+          {
+            status: "completed",
+            stripePaymentIntentId: session.payment_intent?.toString() || "",
+            paidAt: new Date(),
+          }
+        );
+        console.log(
+          `Tuition payment completed for session ${session.id}, user ${session.metadata?.userId}`
+        );
+      } else {
+        // "exam" or legacy sessions without paymentType
+        await ExamPurchase.findOneAndUpdate(
+          { stripeSessionId: session.id },
+          {
+            status: "completed",
+            stripePaymentIntentId: session.payment_intent?.toString() || "",
+            purchasedAt: new Date(),
+          }
+        );
+        console.log(
+          `Exam purchase completed for session ${session.id}, user ${session.metadata?.userId}`
+        );
+      }
     } catch (error) {
-      console.error("Failed to update purchase status:", error);
+      console.error("Failed to update payment status:", error);
       return NextResponse.json(
         { error: "Failed to process payment" },
         { status: 500 }
@@ -59,10 +75,19 @@ export async function POST(request: NextRequest) {
     const charge = event.data.object as Stripe.Charge;
     try {
       await dbConnect();
-      await ExamPurchase.findOneAndUpdate(
+
+      // Try tuition payment first, then exam purchase
+      const tuitionUpdated = await TuitionPayment.findOneAndUpdate(
         { stripePaymentIntentId: charge.payment_intent?.toString() },
         { status: "refunded" }
       );
+
+      if (!tuitionUpdated) {
+        await ExamPurchase.findOneAndUpdate(
+          { stripePaymentIntentId: charge.payment_intent?.toString() },
+          { status: "refunded" }
+        );
+      }
     } catch (error) {
       console.error("Failed to process refund:", error);
     }

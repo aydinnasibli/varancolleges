@@ -4,7 +4,7 @@ export type CurrentSection = "rw_m1" | "rw_m2" | "math_m1" | "math_m2" | "comple
 
 export interface IAnswerEntry {
   questionId: mongoose.Types.ObjectId;
-  selectedAnswer: "A" | "B" | "C" | "D" | null;
+  selectedAnswer: string | null; // "A"/"B"/"C"/"D" for MC, arbitrary text for FR
   isFlagged: boolean;
 }
 
@@ -41,7 +41,7 @@ export interface IExamAttempt extends Document {
 const AnswerEntrySchema = new mongoose.Schema<IAnswerEntry>(
   {
     questionId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    selectedAnswer: { type: String, enum: ["A", "B", "C", "D", null], default: null },
+    selectedAnswer: { type: String, default: null },
     isFlagged: { type: Boolean, default: false },
   },
   { _id: false }

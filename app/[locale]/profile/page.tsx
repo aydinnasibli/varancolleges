@@ -8,6 +8,7 @@ import { BookOpen, Clock, ChevronRight, Trophy, RotateCcw, CheckCircle, PlayCirc
 import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
+export const metadata = { robots: { index: false, follow: false } };
 
 export default async function ProfilePage({
   searchParams,

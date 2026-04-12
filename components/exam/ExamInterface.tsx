@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { saveAnswer, saveTimeRemaining, saveCurrentPosition, completeSection, submitExam } from "@/app/actions/exam-attempt";
-import { Flag, ChevronLeft, ChevronRight, List, X, Clock, AlertTriangle, Loader2 } from "lucide-react";
+import { Flag, ChevronLeft, ChevronRight, List, X, Clock, AlertTriangle, Loader2, PenLine } from "lucide-react";
 import { toast } from "sonner";
 import MathRenderer from "@/components/MathRenderer";
 
@@ -32,6 +32,7 @@ interface QuestionData {
   passageText?: string;
   options: { A: string; B: string; C: string; D: string };
   correctAnswer: string;
+  questionType?: string;
   domain?: string;
   difficulty?: string;
   questionNumber: number;
@@ -75,6 +76,51 @@ function getSectionTimingKey(section: string): string {
     math_m2: "mathM2",
   };
   return map[section] || section;
+}
+
+// ─── Free Response Input ────────────────────────────────────────────────────
+function FreeResponseInput({
+  questionId,
+  value,
+  onChange,
+}: {
+  questionId: string;
+  value: string | null;
+  onChange: (val: string) => void;
+}) {
+  // Use a local ref so we can debounce saves without React re-render delays
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    onChange(val); // update local state immediately
+    // debounce the actual save
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      onChange(val);
+    }, 300);
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 text-sm text-slate-400 mb-1">
+        <PenLine className="h-4 w-4 text-accent" />
+        <span>Enter your answer below</span>
+      </div>
+      <input
+        key={questionId}
+        type="text"
+        defaultValue={value ?? ""}
+        onChange={handleChange}
+        placeholder="Type your answer here..."
+        autoComplete="off"
+        className="w-full bg-white/5 border-2 border-white/20 focus:border-accent rounded-xl px-5 py-4 text-white text-lg placeholder:text-slate-600 focus:outline-none transition-colors"
+      />
+      <p className="text-xs text-slate-500">
+        Fractions and decimals are both accepted — e.g. <span className="text-slate-400 font-mono">1/2</span> and <span className="text-slate-400 font-mono">0.5</span> are equivalent.
+      </p>
+    </div>
+  );
 }
 
 export default function ExamInterface({
@@ -408,36 +454,44 @@ export default function ExamInterface({
               />
 
               {/* Answer options */}
-              <div className="space-y-3">
-                {(["A", "B", "C", "D"] as const).map((opt) => {
-                  const isSelected = answers[currentQuestion._id] === opt;
-                  return (
-                    <button
-                      key={opt}
-                      onClick={() => handleAnswerSelect(opt)}
-                      className={`w-full flex items-start gap-4 p-4 rounded-xl border text-left transition-all duration-150 ${
-                        isSelected
-                          ? "bg-accent/15 border-accent/60 text-white"
-                          : "bg-white/5 border-white/10 text-slate-300 hover:border-white/30 hover:bg-white/8"
-                      }`}
-                    >
-                      <span
-                        className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-colors ${
+              {currentQuestion.questionType === "free_response" ? (
+                <FreeResponseInput
+                  questionId={currentQuestion._id}
+                  value={answers[currentQuestion._id] ?? ""}
+                  onChange={handleAnswerSelect}
+                />
+              ) : (
+                <div className="space-y-3">
+                  {(["A", "B", "C", "D"] as const).map((opt) => {
+                    const isSelected = answers[currentQuestion._id] === opt;
+                    return (
+                      <button
+                        key={opt}
+                        onClick={() => handleAnswerSelect(opt)}
+                        className={`w-full flex items-start gap-4 p-4 rounded-xl border text-left transition-all duration-150 ${
                           isSelected
-                            ? "border-accent bg-accent text-primary"
-                            : "border-white/30 text-slate-400"
+                            ? "bg-accent/15 border-accent/60 text-white"
+                            : "bg-white/5 border-white/10 text-slate-300 hover:border-white/30 hover:bg-white/8"
                         }`}
                       >
-                        {opt}
-                      </span>
-                      <MathRenderer
-                        content={currentQuestion.options[opt]}
-                        className="text-sm leading-relaxed"
-                      />
-                    </button>
-                  );
-                })}
-              </div>
+                        <span
+                          className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold transition-colors ${
+                            isSelected
+                              ? "border-accent bg-accent text-primary"
+                              : "border-white/30 text-slate-400"
+                          }`}
+                        >
+                          {opt}
+                        </span>
+                        <MathRenderer
+                          content={currentQuestion.options[opt]}
+                          className="text-sm leading-relaxed"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </>
           ) : (
             <div className="text-center py-20 text-slate-400">

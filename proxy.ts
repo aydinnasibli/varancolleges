@@ -11,6 +11,9 @@ const isStudentRoute = createRouteMatcher([
   '/profile(.*)',
   '/en/profile(.*)',
   '/az/profile(.*)',
+  '/payment(.*)',
+  '/en/payment(.*)',
+  '/az/payment(.*)',
 ])
 
 const intlMiddleware = createMiddleware(routing)

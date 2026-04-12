@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft, Plus, Edit, Trash2 } from "lucide-react";
+import { ChevronLeft, Plus, Edit, Trash2, PenLine } from "lucide-react";
 import { getExamById } from "@/app/actions/exam-admin";
 import { getQuestionsByExam } from "@/app/actions/question-admin";
 import { notFound } from "next/navigation";
@@ -149,9 +149,16 @@ export default async function QuestionsPage({
                           )}
                         </td>
                         <td className="px-6 py-3">
-                          <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-100 text-green-700 text-xs font-bold">
-                            {q.correctAnswer}
-                          </span>
+                          {q.questionType === "free_response" ? (
+                            <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-medium">
+                              <PenLine className="h-3 w-3" />
+                              FR
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-100 text-green-700 text-xs font-bold">
+                              {q.correctAnswer}
+                            </span>
+                          )}
                         </td>
                         <td className="px-6 py-3">
                           <span

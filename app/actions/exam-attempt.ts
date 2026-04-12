@@ -7,6 +7,7 @@ import Question from "@/models/Question";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
+import { answersMatch } from "@/lib/answer-utils";
 
 // SAT section durations in seconds
 const SECTION_DURATIONS: Record<string, number> = {
@@ -81,12 +82,14 @@ export async function startAttempt(examId: string, purchaseId: string) {
   try {
     await dbConnect();
 
-    // Verify the purchase belongs to this user and is completed
+    // Verify the purchase belongs to this user and is not refunded.
+    // "pending" is accepted — the webhook may still be in flight but the
+    // payment was initiated, so the student should be able to start.
     const purchase = await ExamPurchase.findOne({
       _id: purchaseId,
       userId,
       examId,
-      status: "completed",
+      status: { $in: ["pending", "completed"] },
     });
     if (!purchase) return { success: false, error: "Purchase not verified" };
 
@@ -318,12 +321,17 @@ export async function submitExam(attemptId: string, slug: string) {
     for (const answer of attempt.answers) {
       const question = questionMap.get(answer.questionId.toString());
       if (!question) continue;
+      const isFR = question.questionType === "free_response";
+      const isCorrect = isFR
+        ? answersMatch(answer.selectedAnswer ?? "", question.correctAnswer)
+        : answer.selectedAnswer === question.correctAnswer;
+
       if (question.section === "reading_writing") {
         rwTotal++;
-        if (answer.selectedAnswer === question.correctAnswer) rwCorrect++;
+        if (isCorrect) rwCorrect++;
       } else if (question.section === "math") {
         mathTotal++;
-        if (answer.selectedAnswer === question.correctAnswer) mathCorrect++;
+        if (isCorrect) mathCorrect++;
       }
     }
 
