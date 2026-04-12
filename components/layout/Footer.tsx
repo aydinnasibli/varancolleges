@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, CreditCard, ArrowRight } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { getTranslations } from "next-intl/server";
 
@@ -115,6 +115,28 @@ const Footer = async () => {
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Payment CTA — visually distinct from the rest of the footer */}
+        <div className="mb-10 rounded-2xl border border-accent/30 bg-accent/5 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden">
+          {/* subtle glow */}
+          <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="flex items-center gap-4 relative">
+            <div className="w-11 h-11 rounded-xl bg-accent/20 border border-accent/30 flex items-center justify-center shrink-0">
+              <CreditCard className="w-5 h-5 text-accent" />
+            </div>
+            <div>
+              <p className="text-white font-semibold text-sm">{tFoot("paymentCta")}</p>
+              <p className="text-slate-400 text-xs mt-0.5">{tFoot("paymentCtaDesc")}</p>
+            </div>
+          </div>
+          <Link
+            href="/payment"
+            className="relative shrink-0 inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-[#07101e] font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
+          >
+            {tFoot("paymentCta")}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
         {/* Bottom Bar */}

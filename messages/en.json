@@ -28,7 +28,9 @@
     "vacancies": "Vacancies",
     "ielts": "IELTS Preparation",
     "sat": "SAT Preparation",
-    "summer": "Summer Schools"
+    "summer": "Summer Schools",
+    "paymentCta": "Pay Your Tuition Online",
+    "paymentCtaDesc": "Secure payments — no need to visit the office"
   },
   "Hero": {
     "title1": "Discover the",

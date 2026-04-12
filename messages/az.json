@@ -28,7 +28,9 @@
     "vacancies": "Vakansiyalar",
     "ielts": "IELTS Hazırlığı",
     "sat": "SAT Hazırlığı",
-    "summer": "Yay Məktəbləri"
+    "summer": "Yay Məktəbləri",
+    "paymentCta": "Ödənişinizi Onlayn Edin",
+    "paymentCtaDesc": "Ofisə gəlmədən təhlükəsiz ödəniş"
   },
   "Hero": {
     "title1": "Gələcəyi",
