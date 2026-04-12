@@ -82,12 +82,14 @@ export async function startAttempt(examId: string, purchaseId: string) {
   try {
     await dbConnect();
 
-    // Verify the purchase belongs to this user and is completed
+    // Verify the purchase belongs to this user and is not refunded.
+    // "pending" is accepted — the webhook may still be in flight but the
+    // payment was initiated, so the student should be able to start.
     const purchase = await ExamPurchase.findOne({
       _id: purchaseId,
       userId,
       examId,
-      status: "completed",
+      status: { $in: ["pending", "completed"] },
     });
     if (!purchase) return { success: false, error: "Purchase not verified" };
 
