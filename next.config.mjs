@@ -4,6 +4,20 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        // Public pages — allow shared caches and CDNs to cache
+        source: '/((?!api|admin|_next/static|_next/image|images|.*\\.(?:ico|png|svg|jpg|jpeg|webp|css|js|woff2?|ttf)).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, s-maxage=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

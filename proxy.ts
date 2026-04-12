@@ -11,6 +11,9 @@ const isStudentRoute = createRouteMatcher([
   '/profile(.*)',
   '/en/profile(.*)',
   '/az/profile(.*)',
+  '/payment(.*)',
+  '/en/payment(.*)',
+  '/az/payment(.*)',
 ])
 
 const intlMiddleware = createMiddleware(routing)
@@ -77,12 +80,14 @@ export default clerkMiddleware(async (auth, req) => {
       // Visitor is already on the right locale path — record the preference and continue
       const res = intlMiddleware(req)
       res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname)
+      res.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
       res.cookies.set('NEXT_LOCALE', preferredLocale, { maxAge: LOCALE_COOKIE_MAX_AGE, path: '/' })
       return res
     }
 
     const res = intlMiddleware(req)
     res.headers.set('x-middleware-request-x-pathname', req.nextUrl.pathname)
+    res.headers.set('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
     return res
   }
 })

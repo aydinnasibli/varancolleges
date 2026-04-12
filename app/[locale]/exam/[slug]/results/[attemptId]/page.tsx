@@ -11,6 +11,7 @@ import { Trophy, Target, RotateCcw } from "lucide-react";
 import { answersMatch } from "@/lib/answer-utils";
 
 export const dynamic = "force-dynamic";
+export const metadata = { robots: { index: false, follow: false } };
 
 export default async function ResultsPage({
   params,
