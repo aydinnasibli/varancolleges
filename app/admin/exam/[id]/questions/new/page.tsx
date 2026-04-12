@@ -6,10 +6,13 @@ import { notFound } from "next/navigation";
 
 export default async function NewQuestionPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ section?: string; module?: string }>;
 }) {
   const { id } = await params;
+  const sp = await searchParams;
   const result = await getExamById(id);
   if (!result.success || !result.exam) notFound();
   const exam = result.exam as { title: string };
@@ -29,7 +32,11 @@ export default async function NewQuestionPage({
           <p className="text-sm text-slate-500 mt-0.5">{exam.title}</p>
         </div>
       </div>
-      <QuestionForm examId={id} />
+      <QuestionForm
+        examId={id}
+        defaultSection={sp.section}
+        defaultModule={sp.module}
+      />
     </div>
   );
 }

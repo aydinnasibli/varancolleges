@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { ArrowRight, School } from "lucide-react";
+import { ArrowRight, School, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
@@ -75,6 +75,11 @@ const Hero = () => {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-white/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] border border-accent/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
         </div>
+      </div>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 animate-bounce">
+        <span className="text-xs text-slate-500 tracking-widest uppercase">Scroll</span>
+        <ChevronDown className="w-5 h-5 text-accent/70" />
       </div>
     </section>
   );

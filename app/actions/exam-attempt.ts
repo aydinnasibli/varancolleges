@@ -102,18 +102,29 @@ export async function startAttempt(examId: string, purchaseId: string) {
     }).lean();
 
     if (existing) {
-      const questions = await loadQuestionsForSection(
-        examId,
-        existing.currentSection as string
-      );
-      return {
-        success: true,
-        attempt: serializeAttempt(existing as unknown as Record<string, unknown>),
-        questions: questions.map((q) =>
-          serializeQuestion(q as unknown as Record<string, unknown>)
-        ),
-        isResuming: true,
-      };
+      // If the attempt has no answered questions it's an empty shell — abandon it
+      // and fall through to create a fresh attempt (prevents "Continue Exam" showing
+      // on the profile page after a student has already submitted and viewed results).
+      const hasProgress = (existing.answers as Array<{ selectedAnswer: string | null }>)
+        .some((a) => a.selectedAnswer !== null);
+
+      if (hasProgress) {
+        const questions = await loadQuestionsForSection(
+          examId,
+          existing.currentSection as string
+        );
+        return {
+          success: true,
+          attempt: serializeAttempt(existing as unknown as Record<string, unknown>),
+          questions: questions.map((q) =>
+            serializeQuestion(q as unknown as Record<string, unknown>)
+          ),
+          isResuming: true,
+        };
+      }
+
+      // No progress — discard the empty attempt
+      await ExamAttempt.findByIdAndUpdate(existing._id, { status: "abandoned" });
     }
 
     // Start fresh — load Module 1 R&W

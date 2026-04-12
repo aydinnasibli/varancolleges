@@ -62,7 +62,7 @@ export default async function QuestionsPage({
           </div>
         </div>
         <Link
-          href={`/admin/exam/${id}/questions/new`}
+          href={`/admin/exam/${id}/questions/new${sp.section ? `?section=${sp.section}&module=${sp.module}` : ""}`}
           className="flex items-center gap-2 bg-[#1152d4] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#0e42b0] transition-colors"
         >
           <Plus className="h-4 w-4" />
@@ -104,7 +104,7 @@ export default async function QuestionsPage({
         <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
           <p className="text-slate-500 font-medium">Bu filtrdə sual tapılmadı</p>
           <Link
-            href={`/admin/exam/${id}/questions/new`}
+            href={`/admin/exam/${id}/questions/new${sp.section ? `?section=${sp.section}&module=${sp.module}` : ""}`}
             className="inline-flex items-center gap-2 mt-4 text-sm text-[#1152d4] hover:underline"
           >
             <Plus className="h-4 w-4" />

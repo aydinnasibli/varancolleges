@@ -17,6 +17,8 @@ const MathEquationEditor = dynamic(
 
 interface QuestionFormProps {
   examId: string;
+  defaultSection?: string;
+  defaultModule?: string;
   initialData?: {
     _id: string;
     section: string;
@@ -100,7 +102,7 @@ function MathButton({ active, onClick }: { active: boolean; onClick: () => void 
   );
 }
 
-export default function QuestionForm({ examId, initialData }: QuestionFormProps) {
+export default function QuestionForm({ examId, initialData, defaultSection, defaultModule }: QuestionFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -117,8 +119,8 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
   const isFR = questionType === "free_response";
 
   // Field values
-  const [section, setSection] = useState(initialData?.section || "reading_writing");
-  const [module, setModule] = useState(initialData?.module?.toString() || "1");
+  const [section, setSection] = useState(initialData?.section || defaultSection || "reading_writing");
+  const [module, setModule] = useState(initialData?.module?.toString() || defaultModule || "1");
   const [questionNumber, setQuestionNumber] = useState(
     initialData?.questionNumber?.toString() || "1"
   );
