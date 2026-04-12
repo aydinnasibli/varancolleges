@@ -7,6 +7,7 @@ import Question from "@/models/Question";
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
+import { answersMatch } from "@/lib/answer-utils";
 
 // SAT section durations in seconds
 const SECTION_DURATIONS: Record<string, number> = {
@@ -318,12 +319,17 @@ export async function submitExam(attemptId: string, slug: string) {
     for (const answer of attempt.answers) {
       const question = questionMap.get(answer.questionId.toString());
       if (!question) continue;
+      const isFR = question.questionType === "free_response";
+      const isCorrect = isFR
+        ? answersMatch(answer.selectedAnswer ?? "", question.correctAnswer)
+        : answer.selectedAnswer === question.correctAnswer;
+
       if (question.section === "reading_writing") {
         rwTotal++;
-        if (answer.selectedAnswer === question.correctAnswer) rwCorrect++;
+        if (isCorrect) rwCorrect++;
       } else if (question.section === "math") {
         mathTotal++;
-        if (answer.selectedAnswer === question.correctAnswer) mathCorrect++;
+        if (isCorrect) mathCorrect++;
       }
     }
 

@@ -8,6 +8,7 @@ import ExamNavbar from "@/components/exam/ExamNavbar";
 import ResultsQuestionCard from "@/components/exam/ResultsQuestionCard";
 import Link from "next/link";
 import { Trophy, Target, RotateCcw } from "lucide-react";
+import { answersMatch } from "@/lib/answer-utils";
 
 export const dynamic = "force-dynamic";
 
@@ -74,12 +75,18 @@ export default async function ResultsPage({
   // Count by section
   const rwQuestions = reviewQuestions.filter((q) => q.section === "reading_writing");
   const mathQuestions = reviewQuestions.filter((q) => q.section === "math");
-  const rwCorrect = rwQuestions.filter(
-    (q) => answerMap.get(q._id.toString())?.selectedAnswer === q.correctAnswer
-  ).length;
-  const mathCorrect = mathQuestions.filter(
-    (q) => answerMap.get(q._id.toString())?.selectedAnswer === q.correctAnswer
-  ).length;
+  const rwCorrect = rwQuestions.filter((q) => {
+    const sel = answerMap.get(q._id.toString())?.selectedAnswer ?? null;
+    return q.questionType === "free_response"
+      ? answersMatch(sel ?? "", q.correctAnswer)
+      : sel === q.correctAnswer;
+  }).length;
+  const mathCorrect = mathQuestions.filter((q) => {
+    const sel = answerMap.get(q._id.toString())?.selectedAnswer ?? null;
+    return q.questionType === "free_response"
+      ? answersMatch(sel ?? "", q.correctAnswer)
+      : sel === q.correctAnswer;
+  }).length;
 
   return (
     <>
@@ -186,6 +193,7 @@ function QuestionSection({
     passageText?: string;
     options: { A: string; B: string; C: string; D: string };
     correctAnswer: string;
+    questionType?: string;
     explanation?: string;
     domain?: string;
   }>;
@@ -193,9 +201,12 @@ function QuestionSection({
 }) {
   if (questions.length === 0) return null;
 
-  const correct = questions.filter(
-    (q) => answerMap.get(q._id.toString())?.selectedAnswer === q.correctAnswer
-  ).length;
+  const correct = questions.filter((q) => {
+    const sel = answerMap.get(q._id.toString())?.selectedAnswer ?? null;
+    return q.questionType === "free_response"
+      ? answersMatch(sel ?? "", q.correctAnswer)
+      : sel === q.correctAnswer;
+  }).length;
 
   return (
     <div className="mb-8">
@@ -209,7 +220,10 @@ function QuestionSection({
         {questions.map((q, i) => {
           const answer = answerMap.get(q._id.toString());
           const selected = answer?.selectedAnswer;
-          const isCorrect = selected === q.correctAnswer;
+          const isFR = q.questionType === "free_response";
+          const isCorrect = isFR
+            ? answersMatch(selected ?? "", q.correctAnswer)
+            : selected === q.correctAnswer;
           const isSkipped = !selected;
 
           return (

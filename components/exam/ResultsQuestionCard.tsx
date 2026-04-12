@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle, XCircle, MinusCircle, ChevronDown } from "lucide-react";
+import { CheckCircle, XCircle, MinusCircle, ChevronDown, PenLine } from "lucide-react";
 import MathRenderer from "@/components/MathRenderer";
 
 interface ResultsQuestionCardProps {
@@ -12,6 +12,7 @@ interface ResultsQuestionCardProps {
     passageText?: string;
     options: { A: string; B: string; C: string; D: string };
     correctAnswer: string;
+    questionType?: string;
     explanation?: string;
     domain?: string;
   };
@@ -27,6 +28,8 @@ export default function ResultsQuestionCard({
   isCorrect,
   isSkipped,
 }: ResultsQuestionCardProps) {
+  const isFR = question.questionType === "free_response";
+
   const statusIcon = isSkipped ? (
     <MinusCircle className="h-5 w-5 text-slate-400 flex-shrink-0" />
   ) : isCorrect ? (
@@ -48,6 +51,12 @@ export default function ResultsQuestionCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
             <span className="text-xs font-semibold text-slate-500">Q{index}</span>
+            {isFR && (
+              <span className="inline-flex items-center gap-1 text-xs text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
+                <PenLine className="h-2.5 w-2.5" />
+                Free Response
+              </span>
+            )}
             {question.domain && (
               <span className="text-xs text-slate-500 bg-white/5 px-2 py-0.5 rounded-full">
                 {question.domain}
@@ -63,11 +72,11 @@ export default function ResultsQuestionCard({
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
           {!isSkipped && !isCorrect && (
-            <span className="text-xs text-red-400">
+            <span className="text-xs text-red-400 max-w-[80px] truncate">
               You: {selected}
             </span>
           )}
-          <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+          <span className={`text-xs font-bold px-2 py-0.5 rounded-full max-w-[100px] truncate ${
             isCorrect ? "bg-green-500/20 text-green-400" : "bg-accent/20 text-accent"
           }`}>
             {question.correctAnswer}
@@ -88,34 +97,65 @@ export default function ResultsQuestionCard({
           className="text-sm text-slate-300 mb-4 leading-relaxed"
         />
 
-        <div className="space-y-2 mb-4">
-          {(["A", "B", "C", "D"] as const).map((opt) => {
-            const isThisCorrect = question.correctAnswer === opt;
-            const isThisSelected = selected === opt;
-            return (
-              <div
-                key={opt}
-                className={`flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm ${
-                  isThisCorrect
-                    ? "bg-green-500/15 border border-green-500/40 text-green-300"
-                    : isThisSelected && !isThisCorrect
-                    ? "bg-red-500/15 border border-red-500/40 text-red-300"
-                    : "bg-white/5 border border-transparent text-slate-400"
-                }`}
-              >
-                <span className={`font-bold flex-shrink-0 ${
-                  isThisCorrect ? "text-green-400" : isThisSelected ? "text-red-400" : "text-slate-500"
-                }`}>
-                  {opt})
-                </span>
-                <MathRenderer content={question.options[opt]} className="flex-1" />
-                {isThisCorrect && (
-                  <CheckCircle className="h-3.5 w-3.5 text-green-400 ml-auto flex-shrink-0 mt-0.5" />
-                )}
+        {isFR ? (
+          /* Free-response answer comparison */
+          <div className="space-y-2 mb-4">
+            <div className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm ${
+              isSkipped
+                ? "bg-white/5 border border-transparent text-slate-400"
+                : isCorrect
+                ? "bg-green-500/15 border border-green-500/40 text-green-300"
+                : "bg-red-500/15 border border-red-500/40 text-red-300"
+            }`}>
+              <span className="text-xs font-semibold text-slate-400 w-20 flex-shrink-0">Your answer</span>
+              <span className="font-mono">
+                {selected ? selected : <span className="italic text-slate-500">Skipped</span>}
+              </span>
+              {!isSkipped && isCorrect && <CheckCircle className="h-3.5 w-3.5 text-green-400 ml-auto flex-shrink-0" />}
+              {!isSkipped && !isCorrect && <XCircle className="h-3.5 w-3.5 text-red-400 ml-auto flex-shrink-0" />}
+            </div>
+            {!isCorrect && (
+              <div className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm bg-green-500/15 border border-green-500/40 text-green-300">
+                <span className="text-xs font-semibold text-slate-400 w-20 flex-shrink-0">Correct</span>
+                <MathRenderer content={question.correctAnswer} className="font-mono" />
+                <CheckCircle className="h-3.5 w-3.5 text-green-400 ml-auto flex-shrink-0" />
               </div>
-            );
-          })}
-        </div>
+            )}
+            <p className="text-xs text-slate-500 pt-1">
+              Note: equivalent values like <span className="font-mono text-slate-400">1/2</span> and <span className="font-mono text-slate-400">0.5</span> are treated as the same answer.
+            </p>
+          </div>
+        ) : (
+          /* Multiple-choice options */
+          <div className="space-y-2 mb-4">
+            {(["A", "B", "C", "D"] as const).map((opt) => {
+              const isThisCorrect = question.correctAnswer === opt;
+              const isThisSelected = selected === opt;
+              return (
+                <div
+                  key={opt}
+                  className={`flex items-start gap-3 px-3 py-2.5 rounded-lg text-sm ${
+                    isThisCorrect
+                      ? "bg-green-500/15 border border-green-500/40 text-green-300"
+                      : isThisSelected && !isThisCorrect
+                      ? "bg-red-500/15 border border-red-500/40 text-red-300"
+                      : "bg-white/5 border border-transparent text-slate-400"
+                  }`}
+                >
+                  <span className={`font-bold flex-shrink-0 ${
+                    isThisCorrect ? "text-green-400" : isThisSelected ? "text-red-400" : "text-slate-500"
+                  }`}>
+                    {opt})
+                  </span>
+                  <MathRenderer content={question.options[opt]} className="flex-1" />
+                  {isThisCorrect && (
+                    <CheckCircle className="h-3.5 w-3.5 text-green-400 ml-auto flex-shrink-0 mt-0.5" />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {question.explanation && (
           <div className="bg-accent/5 border border-accent/20 rounded-lg p-3">

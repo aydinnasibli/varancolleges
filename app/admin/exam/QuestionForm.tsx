@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { createQuestion, updateQuestion } from "@/app/actions/question-admin";
 import { uploadImage } from "@/app/actions/upload-image";
 import { toast } from "sonner";
-import { Loader2, Upload, X, Info, Eye, EyeOff } from "lucide-react";
+import { Loader2, Upload, X, Info, Eye, EyeOff, PenLine, ListChecks } from "lucide-react";
 import Image from "next/image";
 
 const MathRenderer = dynamic(() => import("@/components/MathRenderer"), { ssr: false });
@@ -22,6 +22,7 @@ interface QuestionFormProps {
     section: string;
     module: number;
     questionNumber: number;
+    questionType?: string;
     passageText: string;
     questionText: string;
     options: { A: string; B: string; C: string; D: string };
@@ -109,6 +110,12 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
   const toggleEditor = (field: string) =>
     setActiveEditor((prev) => (prev === field ? null : field));
 
+  // Question type
+  const [questionType, setQuestionType] = useState(
+    initialData?.questionType || "multiple_choice"
+  );
+  const isFR = questionType === "free_response";
+
   // Field values
   const [section, setSection] = useState(initialData?.section || "reading_writing");
   const [module, setModule] = useState(initialData?.module?.toString() || "1");
@@ -122,6 +129,10 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
   const [optionC, setOptionC] = useState(initialData?.options?.C || "");
   const [optionD, setOptionD] = useState(initialData?.options?.D || "");
   const [correctAnswer, setCorrectAnswer] = useState(initialData?.correctAnswer || "A");
+  const [frCorrectAnswer, setFrCorrectAnswer] = useState(
+    // Populate free-response answer field when editing an existing FR question
+    initialData?.questionType === "free_response" ? (initialData?.correctAnswer || "") : ""
+  );
   const [explanation, setExplanation] = useState(initialData?.explanation || "");
   const [domain, setDomain] = useState(initialData?.domain || "");
   const [difficulty, setDifficulty] = useState(initialData?.difficulty || "medium");
@@ -134,6 +145,7 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
   const optionBRef = useRef<HTMLInputElement>(null);
   const optionCRef = useRef<HTMLInputElement>(null);
   const optionDRef = useRef<HTMLInputElement>(null);
+  const frCorrectRef = useRef<HTMLInputElement>(null);
   const explanationRef = useRef<HTMLTextAreaElement>(null);
 
   const isEditing = !!initialData;
@@ -161,26 +173,45 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!questionText.trim() || !optionA || !optionB || !optionC || !optionD) {
+
+    if (!questionText.trim()) {
+      toast.error("Sual mətni məcburidir");
+      return;
+    }
+
+    if (!isFR && (!optionA || !optionB || !optionC || !optionD)) {
       toast.error("Sual mətni və bütün variantlar məcburidir");
       return;
     }
+
+    if (isFR && !frCorrectAnswer.trim()) {
+      toast.error("Düzgün cavab məcburidir");
+      return;
+    }
+
     setIsLoading(true);
     const formData = new FormData();
     formData.append("section", section);
     formData.append("module", module);
     formData.append("questionNumber", questionNumber);
+    formData.append("questionType", questionType);
     formData.append("passageText", passageText);
     formData.append("questionText", questionText);
-    formData.append("optionA", optionA);
-    formData.append("optionB", optionB);
-    formData.append("optionC", optionC);
-    formData.append("optionD", optionD);
-    formData.append("correctAnswer", correctAnswer);
     formData.append("explanation", explanation);
     formData.append("domain", domain);
     formData.append("difficulty", difficulty);
     formData.append("image", image);
+
+    if (isFR) {
+      formData.append("correctAnswer", frCorrectAnswer.trim());
+    } else {
+      formData.append("optionA", optionA);
+      formData.append("optionB", optionB);
+      formData.append("optionC", optionC);
+      formData.append("optionD", optionD);
+      formData.append("correctAnswer", correctAnswer);
+    }
+
     try {
       const result = isEditing
         ? await updateQuestion(initialData._id, examId, formData)
@@ -204,6 +235,48 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
     <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Main content */}
       <div className="lg:col-span-2 space-y-5">
+
+        {/* Question type toggle */}
+        <div className="bg-white rounded-xl border border-slate-200 p-5">
+          <label className="block text-sm font-medium text-slate-700 mb-3">
+            Sual növü <span className="text-red-500">*</span>
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setQuestionType("multiple_choice");
+                if (!["A","B","C","D"].includes(correctAnswer)) setCorrectAnswer("A");
+              }}
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl border-2 text-sm font-medium transition-colors ${
+                !isFR
+                  ? "border-[#1152d4] bg-[#1152d4]/5 text-[#1152d4]"
+                  : "border-slate-200 text-slate-600 hover:border-slate-300"
+              }`}
+            >
+              <ListChecks className="h-4 w-4 flex-shrink-0" />
+              <div className="text-left">
+                <div className="font-semibold">Çoxvariantlı</div>
+                <div className="text-xs font-normal opacity-70">A / B / C / D</div>
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuestionType("free_response")}
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl border-2 text-sm font-medium transition-colors ${
+                isFR
+                  ? "border-[#1152d4] bg-[#1152d4]/5 text-[#1152d4]"
+                  : "border-slate-200 text-slate-600 hover:border-slate-300"
+              }`}
+            >
+              <PenLine className="h-4 w-4 flex-shrink-0" />
+              <div className="text-left">
+                <div className="font-semibold">Sərbəst cavab</div>
+                <div className="text-xs font-normal opacity-70">Şagird özü yazır</div>
+              </div>
+            </button>
+          </div>
+        </div>
 
         {/* Passage text */}
         {section === "reading_writing" && (
@@ -256,71 +329,110 @@ export default function QuestionForm({ examId, initialData }: QuestionFormProps)
           <PreviewToggle content={questionText} label="Sual" />
         </div>
 
-        {/* Options */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
-          <h3 className="text-sm font-semibold text-slate-700">Cavab variantları</h3>
-          {([
-            { key: "A", value: optionA, setter: setOptionA, ref: optionARef },
-            { key: "B", value: optionB, setter: setOptionB, ref: optionBRef },
-            { key: "C", value: optionC, setter: setOptionC, ref: optionCRef },
-            { key: "D", value: optionD, setter: setOptionD, ref: optionDRef },
-          ] as const).map(({ key, value, setter, ref }) => (
-            <div key={key}>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 min-w-[80px]">
+        {/* Multiple choice options */}
+        {!isFR && (
+          <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
+            <h3 className="text-sm font-semibold text-slate-700">Cavab variantları</h3>
+            {([
+              { key: "A", value: optionA, setter: setOptionA, ref: optionARef },
+              { key: "B", value: optionB, setter: setOptionB, ref: optionBRef },
+              { key: "C", value: optionC, setter: setOptionC, ref: optionCRef },
+              { key: "D", value: optionD, setter: setOptionD, ref: optionDRef },
+            ] as const).map(({ key, value, setter, ref }) => (
+              <div key={key}>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 min-w-[80px]">
+                    <input
+                      type="radio"
+                      name="correctAnswer"
+                      value={key}
+                      checked={correctAnswer === key}
+                      onChange={(e) => setCorrectAnswer(e.target.value)}
+                      className="h-4 w-4 text-[#1152d4] cursor-pointer"
+                      id={`answer-${key}`}
+                    />
+                    <label
+                      htmlFor={`answer-${key}`}
+                      className={`text-sm font-semibold cursor-pointer px-2.5 py-0.5 rounded-full ${
+                        correctAnswer === key
+                          ? "bg-green-100 text-green-700"
+                          : "bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      {key}
+                    </label>
+                  </div>
                   <input
-                    type="radio"
-                    name="correctAnswer"
-                    value={key}
-                    checked={correctAnswer === key}
-                    onChange={(e) => setCorrectAnswer(e.target.value)}
-                    className="h-4 w-4 text-[#1152d4] cursor-pointer"
-                    id={`answer-${key}`}
+                    ref={ref}
+                    type="text"
+                    value={value}
+                    onChange={(e) => setter(e.target.value)}
+                    placeholder={`Variant ${key}`}
+                    className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
+                    required
                   />
-                  <label
-                    htmlFor={`answer-${key}`}
-                    className={`text-sm font-semibold cursor-pointer px-2.5 py-0.5 rounded-full ${
-                      correctAnswer === key
-                        ? "bg-green-100 text-green-700"
-                        : "bg-slate-100 text-slate-600"
-                    }`}
-                  >
-                    {key}
-                  </label>
+                  <MathButton
+                    active={activeEditor === `option${key}`}
+                    onClick={() => toggleEditor(`option${key}`)}
+                  />
                 </div>
-                <input
-                  ref={ref}
-                  type="text"
-                  value={value}
-                  onChange={(e) => setter(e.target.value)}
-                  placeholder={`Variant ${key}`}
-                  className="flex-1 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
-                  required
-                />
-                <MathButton
-                  active={activeEditor === `option${key}`}
-                  onClick={() => toggleEditor(`option${key}`)}
-                />
+                {activeEditor === `option${key}` && (
+                  <div className="ml-[88px]">
+                    <MathEquationEditor
+                      onInsert={(l) => insertAtCursor(ref, value, setter, l, close)}
+                    />
+                  </div>
+                )}
+                {value && (
+                  <div className="ml-[88px]">
+                    <PreviewToggle content={value} label={`Variant ${key}`} />
+                  </div>
+                )}
               </div>
-              {activeEditor === `option${key}` && (
-                <div className="ml-[88px]">
-                  <MathEquationEditor
-                    onInsert={(l) => insertAtCursor(ref, value, setter, l, close)}
-                  />
-                </div>
-              )}
-              {value && (
-                <div className="ml-[88px]">
-                  <PreviewToggle content={value} label={`Variant ${key}`} />
-                </div>
-              )}
+            ))}
+            <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-50 rounded-lg px-3 py-2">
+              <Info className="h-3.5 w-3.5 flex-shrink-0" />
+              Düzgün cavabı sol tərəfdəki radio düyməsini seçərək işarələyin
             </div>
-          ))}
-          <div className="flex items-center gap-2 text-xs text-slate-400 bg-slate-50 rounded-lg px-3 py-2">
-            <Info className="h-3.5 w-3.5 flex-shrink-0" />
-            Düzgün cavabı sol tərəfdəki radio düyməsini seçərək işarələyin
           </div>
-        </div>
+        )}
+
+        {/* Free response correct answer */}
+        {isFR && (
+          <div className="bg-white rounded-xl border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Düzgün cavab <span className="text-red-500">*</span>
+              </label>
+              <MathButton active={activeEditor === "frCorrect"} onClick={() => toggleEditor("frCorrect")} />
+            </div>
+            <input
+              ref={frCorrectRef}
+              type="text"
+              value={frCorrectAnswer}
+              onChange={(e) => setFrCorrectAnswer(e.target.value)}
+              placeholder="məs. 1/2  və ya  0.5  və ya  14"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
+            />
+            {activeEditor === "frCorrect" && (
+              <MathEquationEditor
+                onInsert={(l) =>
+                  insertAtCursor(frCorrectRef, frCorrectAnswer, setFrCorrectAnswer, l, close)
+                }
+              />
+            )}
+            <div className="flex items-start gap-2 mt-3 text-xs text-slate-500 bg-blue-50 border border-blue-100 rounded-lg px-3 py-2.5">
+              <Info className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-blue-400" />
+              <span>
+                Şagirdin cavabı avtomatik yoxlanılacaq.{" "}
+                <strong className="text-slate-700">1/2</strong> yazsanız,{" "}
+                <strong className="text-slate-700">0.5</strong> da düzgün sayılacaq. Rəqəmlər
+                üçün kəsr və onluq hər ikisi qəbul edilir.
+              </span>
+            </div>
+            <PreviewToggle content={frCorrectAnswer} label="Düzgün cavab" />
+          </div>
+        )}
 
         {/* Optional image */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
