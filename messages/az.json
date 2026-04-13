@@ -791,7 +791,8 @@
       "mockExams": "Sınaq İmtahanları",
       "myExams": "İmtahanlarım",
       "signIn": "Daxil ol",
-      "signUp": "Qeydiyyat"
+      "signUp": "Qeydiyyat",
+      "panel": "Panel"
     },
     "listing": {
       "label": "Sınaq İmtahanları",
@@ -812,6 +813,32 @@
         "detailedResults": {
           "title": "Ətraflı Nəticələr",
           "desc": "Bölmə balları, sual-sual nəzərdən keçirmə və hər cavab üçün izahat alın."
+        }
+      },
+      "browseExams": "İmtahanlara bax",
+      "availableExams": "Mövcud İmtahanlar",
+      "examsAvailable": "imtahan mövcuddur",
+      "adaptive": "Adaptiv",
+      "stats": {
+        "timedModules": "Vaxtlı Modullar",
+        "questions": "Suallar",
+        "fullDuration": "Ümumi Müddət",
+        "retakes": "Yenidən Cəhd"
+      },
+      "howItWorks": {
+        "title": "Necə İşləyir",
+        "subtitle": "Dəqiqələr içində başlayın və SAT hazırlığınızı növbəti səviyyəyə çıxarın.",
+        "step1": {
+          "title": "Qeydiyyat və Giriş",
+          "desc": "E-poçt və ya Google ilə 30 saniyəyə pulsuz hesab açın."
+        },
+        "step2": {
+          "title": "İmtahan Satın Al",
+          "desc": "Onlayn təhlükəsiz ödəniş. Bir dəfəlik ödəniş, limitsiz yenidən cəhd."
+        },
+        "step3": {
+          "title": "İmtahan Ver və Nəzərdən Keçir",
+          "desc": "Tam 4 modullu adaptiv testi keçin, sonra hər sualı ətraflı nəzərdən keçirin."
         }
       }
     },

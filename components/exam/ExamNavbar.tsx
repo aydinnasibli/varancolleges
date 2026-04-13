@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { BookOpen, Phone, Mail, Clock, CreditCard, LayoutDashboard } from "lucide-react";
@@ -44,7 +44,7 @@ export default function ExamNavbar() {
             className="flex items-center gap-1.5 text-xs font-semibold text-accent hover:text-accent/80 transition-colors"
           >
             <CreditCard className="h-3 w-3" />
-            Pay Online
+            {tGen("payOnline")}
           </Link>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function ExamNavbar() {
                     className="hidden sm:flex items-center gap-1.5 bg-accent hover:bg-accent/90 text-[#07101e] text-sm font-semibold px-3.5 py-1.5 rounded-lg transition-colors"
                   >
                     <LayoutDashboard className="h-3.5 w-3.5" />
-                    Panel
+                    {t("panel")}
                   </Link>
                   {/* Mobile profile link */}
                   <Link

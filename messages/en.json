@@ -791,7 +791,8 @@
       "mockExams": "Mock Exams",
       "myExams": "My Exams",
       "signIn": "Sign In",
-      "signUp": "Sign Up"
+      "signUp": "Sign Up",
+      "panel": "Panel"
     },
     "listing": {
       "label": "Mock Exams",
@@ -812,6 +813,32 @@
         "detailedResults": {
           "title": "Detailed Results",
           "desc": "Get section scores, question-by-question review, and explanations for every answer."
+        }
+      },
+      "browseExams": "Browse Exams",
+      "availableExams": "Available Exams",
+      "examsAvailable": "exams available",
+      "adaptive": "Adaptive",
+      "stats": {
+        "timedModules": "Timed Modules",
+        "questions": "Questions",
+        "fullDuration": "Full Duration",
+        "retakes": "Retakes"
+      },
+      "howItWorks": {
+        "title": "How It Works",
+        "subtitle": "Get started in minutes and take your SAT prep to the next level.",
+        "step1": {
+          "title": "Register & Sign In",
+          "desc": "Create a free account with your email or Google in under 30 seconds."
+        },
+        "step2": {
+          "title": "Purchase an Exam",
+          "desc": "Pay securely online. One-time payment with unlimited retakes included."
+        },
+        "step3": {
+          "title": "Take & Review",
+          "desc": "Sit the full 4-module adaptive test, then review every question in detail."
         }
       }
     },
