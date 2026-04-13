@@ -120,10 +120,15 @@ export default async function ProfilePage({
                   scores?: { total?: number; rw?: number; math?: number };
                   startedAt: string;
                   completedAt?: string | null;
+                  answers: Array<{ selectedAnswer: string | null }>;
                 }>;
 
                 const isPending = (purchase as { status: string }).status === "pending";
-                const inProgress = examAttempts.find((a) => a.status === "in_progress");
+                const inProgressAttempt = examAttempts.find((a) => a.status === "in_progress");
+                // Only show "Continue Exam" if the student has actually answered at least one question
+                const inProgress = inProgressAttempt?.answers.some((a) => a.selectedAnswer !== null)
+                  ? inProgressAttempt
+                  : null;
                 const completed = examAttempts
                   .filter((a) => a.status === "completed")
                   .sort((a, b) => new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime());

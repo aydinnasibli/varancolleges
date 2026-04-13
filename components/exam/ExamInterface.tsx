@@ -166,6 +166,7 @@ export default function ExamInterface({
   const [showNav, setShowNav] = useState(false);
   const [phase, setPhase] = useState<"exam" | "section_break" | "submitting">("exam");
   const [breakType, setBreakType] = useState<SectionBreakType>("module");
+  const [breakTimeLeft, setBreakTimeLeft] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
 
@@ -283,7 +284,9 @@ export default function ExamInterface({
 
     // Show appropriate break screen
     const isRwToMath = currentSection === "rw_m2" && nextSection === "math_m1";
-    setBreakType(isRwToMath ? "sections" : "module");
+    const bt = isRwToMath ? "sections" : "module";
+    setBreakType(bt);
+    setBreakTimeLeft(bt === "sections" ? 10 * 60 : 0);
 
     // Update questions for next section
     setQuestions((result.questions ?? []) as unknown as QuestionData[]);
@@ -296,8 +299,28 @@ export default function ExamInterface({
   };
 
   const handleBreakContinue = () => {
+    setBreakTimeLeft(0);
     setPhase("exam");
   };
+
+  // Countdown for the 10-minute R&W → Math break
+  useEffect(() => {
+    if (phase !== "section_break" || breakType !== "sections") return;
+    if (breakTimeLeft <= 0) return;
+
+    const id = setInterval(() => {
+      setBreakTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(id);
+          setPhase("exam");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, [phase, breakType, breakTimeLeft]);
 
   // Submit the final exam explicitly
   const handleFinalSubmit = async () => {
@@ -322,6 +345,9 @@ export default function ExamInterface({
   if (phase === "section_break") {
     const nextSection = currentSection;
     const isMainBreak = breakType === "sections";
+    const breakMins = Math.floor(breakTimeLeft / 60);
+    const breakSecs = breakTimeLeft % 60;
+    const breakProgress = isMainBreak ? (breakTimeLeft / (10 * 60)) * 100 : 0;
 
     return (
       <div className="min-h-screen bg-background-dark flex items-center justify-center p-6">
@@ -330,23 +356,44 @@ export default function ExamInterface({
           <h2 className="text-2xl font-bold text-white mb-2">
             {isMainBreak ? "Section Break" : "Next Module"}
           </h2>
-          {isMainBreak && (
-            <p className="text-slate-400 text-sm mb-2">
-              You&apos;ve completed Reading & Writing. Take a short break before Math.
+          {isMainBreak ? (
+            <>
+              <p className="text-slate-400 text-sm mb-6">
+                You&apos;ve completed Reading &amp; Writing. Take a 10-minute break before Math.
+              </p>
+              {/* Countdown timer */}
+              <div className="mb-2">
+                <span className={`text-5xl font-mono font-bold tabular-nums ${breakTimeLeft <= 60 ? "text-red-400" : "text-white"}`}>
+                  {String(breakMins).padStart(2, "0")}:{String(breakSecs).padStart(2, "0")}
+                </span>
+              </div>
+              {/* Progress bar */}
+              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-6">
+                <div
+                  className="h-full bg-accent rounded-full transition-all duration-1000"
+                  style={{ width: `${breakProgress}%` }}
+                />
+              </div>
+              <p className="text-xs text-slate-500 mb-6">
+                Next: <span className="text-white font-medium">{SECTION_LABELS[nextSection]}</span>
+                {" · "}{Math.round((SECTION_DURATIONS[nextSection] ?? 0) / 60)} min
+              </p>
+            </>
+          ) : (
+            <p className="text-slate-400 text-sm mb-6">
+              Next: <span className="text-white font-medium">{SECTION_LABELS[nextSection]}</span>
+              {" · "}{Math.round((SECTION_DURATIONS[nextSection] ?? 0) / 60)} min
             </p>
           )}
-          <p className="text-slate-400 text-sm mb-6">
-            Next: <span className="text-white font-medium">{SECTION_LABELS[nextSection]}</span>
-          </p>
-          <p className="text-xs text-slate-500 mb-6">
-            Time limit: {Math.round((SECTION_DURATIONS[nextSection] ?? 0) / 60)} minutes
-          </p>
           <button
             onClick={handleBreakContinue}
             className="w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl font-semibold transition-colors"
           >
-            Begin {SECTION_LABELS[nextSection]}
+            {isMainBreak ? "Start Early" : `Begin ${SECTION_LABELS[nextSection]}`}
           </button>
+          {isMainBreak && (
+            <p className="text-xs text-slate-600 mt-3">The exam will continue automatically when the timer ends.</p>
+          )}
         </div>
       </div>
     );
