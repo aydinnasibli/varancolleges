@@ -1,5 +1,5 @@
 import { getActiveExams } from "@/app/actions/exam-public";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import {
   Clock,
   BookOpen,
@@ -74,7 +74,7 @@ export default async function ExamListingPage() {
                   href="#exams"
                   className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-[#07101e] font-semibold px-6 py-3 rounded-xl transition-colors text-sm"
                 >
-                  Browse Exams
+                  {t("browseExams")}
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
@@ -115,10 +115,10 @@ export default async function ExamListingPage() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
               {[
-                { icon: Zap, value: "4", label: "Timed Modules" },
-                { icon: BookOpen, value: "98", label: "Questions" },
-                { icon: Timer, value: "2h 14m", label: "Full Duration" },
-                { icon: BarChart3, value: "∞", label: "Retakes" },
+                { icon: Zap, value: "4", label: t("stats.timedModules") },
+                { icon: BookOpen, value: "98", label: t("stats.questions") },
+                { icon: Timer, value: "2h 14m", label: t("stats.fullDuration") },
+                { icon: BarChart3, value: "∞", label: t("stats.retakes") },
               ].map(({ icon: Icon, value, label }) => (
                 <div key={label} className="py-6 px-6 text-center flex flex-col items-center gap-2">
                   <div className="w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center mb-1">
@@ -136,9 +136,9 @@ export default async function ExamListingPage() {
         <section id="exams" className="max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-2xl font-serif font-bold text-white">Available Exams</h2>
+              <h2 className="text-2xl font-serif font-bold text-white">{t("availableExams")}</h2>
               <p className="text-slate-500 text-sm mt-1">
-                {exams.length} {exams.length === 1 ? "exam" : "exams"} available
+                {exams.length} {t("examsAvailable")}
               </p>
             </div>
           </div>
@@ -209,7 +209,7 @@ export default async function ExamListingPage() {
                         </span>
                         <span className="ml-auto flex items-center gap-1 text-accent/70 font-medium">
                           <Zap className="h-3 w-3" />
-                          Adaptive
+                          {t("adaptive")}
                         </span>
                       </div>
 
@@ -232,9 +232,9 @@ export default async function ExamListingPage() {
         <section className="border-t border-white/5 bg-white/[0.015]">
           <div className="max-w-7xl mx-auto px-6 py-16">
             <div className="text-center mb-12">
-              <h2 className="text-2xl font-serif font-bold text-white mb-3">How It Works</h2>
+              <h2 className="text-2xl font-serif font-bold text-white mb-3">{t("howItWorks.title")}</h2>
               <p className="text-slate-400 text-sm max-w-md mx-auto">
-                Get started in minutes and take your SAT prep to the next level.
+                {t("howItWorks.subtitle")}
               </p>
             </div>
 
@@ -246,20 +246,20 @@ export default async function ExamListingPage() {
                 {
                   step: "01",
                   icon: ClipboardList,
-                  title: "Register & Sign In",
-                  desc: "Create a free account with your email or Google in under 30 seconds.",
+                  title: t("howItWorks.step1.title"),
+                  desc: t("howItWorks.step1.desc"),
                 },
                 {
                   step: "02",
                   icon: CreditCard,
-                  title: "Purchase an Exam",
-                  desc: "Pay securely online. One-time payment with unlimited retakes included.",
+                  title: t("howItWorks.step2.title"),
+                  desc: t("howItWorks.step2.desc"),
                 },
                 {
                   step: "03",
                   icon: Pencil,
-                  title: "Take & Review",
-                  desc: "Sit the full 4-module adaptive test, then review every question in detail.",
+                  title: t("howItWorks.step3.title"),
+                  desc: t("howItWorks.step3.desc"),
                 },
               ].map(({ step, icon: Icon, title, desc }) => (
                 <div key={step} className="flex flex-col items-center text-center gap-4 relative">
