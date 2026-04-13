@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail, Clock } from "lucide-react";
+import { Menu, X, Phone, Mail, Clock, CreditCard } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
@@ -49,6 +49,11 @@ const Navbar = () => {
               <Clock className="w-4 h-4 mr-2 text-accent" />
               {tGen("workingHours")}
             </span>
+            <span className="text-slate-700">|</span>
+            <Link href="/payment" className="flex items-center gap-1.5 text-accent hover:text-accent/80 font-semibold transition-colors">
+              <CreditCard className="w-3.5 h-3.5" />
+              {tGen("payOnline")}
+            </Link>
           </div>
           <div className="flex items-center space-x-4">
             <a

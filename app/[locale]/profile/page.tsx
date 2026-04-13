@@ -318,92 +318,84 @@ export default async function ProfilePage({
                     )}
                   </div>
 
-                  {/* ── Attempts table ── */}
+                  {/* ── Attempts list ── */}
                   {completed.length > 0 && (
                     <div className="border-t border-white/5">
-                      {/* Section heading */}
-                      <div className="flex items-center gap-2 px-6 pt-4 pb-3">
-                        <Target className="h-4 w-4 text-slate-500" />
-                        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                          {t("attemptHistory")} · {completed.length}{" "}
-                          {completed.length === 1 ? "attempt" : "attempts"}
-                        </span>
+                      <div className="flex items-center justify-between px-6 pt-4 pb-3">
+                        <div className="flex items-center gap-2">
+                          <Target className="h-4 w-4 text-slate-500" />
+                          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                            {t("attemptHistory")} · {completed.length}{" "}
+                            {completed.length === 1 ? "attempt" : "attempts"}
+                          </span>
+                        </div>
+                        {/* Column headers */}
+                        <div className="hidden sm:flex items-center gap-8 pr-10 text-xs text-slate-600 font-medium">
+                          <span className="w-10 text-center">R&W</span>
+                          <span className="w-10 text-center">Math</span>
+                          <span className="w-14 text-center">Total</span>
+                        </div>
                       </div>
 
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b border-white/5">
-                              <th className="text-left px-6 py-2 text-xs text-slate-600 font-medium w-10">#</th>
-                              <th className="text-left px-3 py-2 text-xs text-slate-600 font-medium">Date</th>
-                              <th className="text-center px-3 py-2 text-xs text-slate-600 font-medium">R&W</th>
-                              <th className="text-center px-3 py-2 text-xs text-slate-600 font-medium">Math</th>
-                              <th className="text-center px-3 py-2 text-xs text-slate-600 font-medium">Total</th>
-                              <th className="w-10" />
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {completed.map((attempt, i) => {
-                              const isLatest = i === 0;
-                              const isBest = attempt.scores?.total === examBestScore && examBestScore > 0;
-                              return (
-                                <tr
-                                  key={attempt._id}
-                                  className="border-b border-white/[0.03] last:border-0 hover:bg-white/[0.03] transition-colors group"
-                                >
-                                  <td className="px-6 py-3 text-slate-600 text-xs font-mono">
-                                    {completed.length - i}
-                                  </td>
-                                  <td className="px-3 py-3">
-                                    <div className="flex items-center gap-2">
-                                      <span className="text-slate-400 text-xs">
-                                        {new Date(attempt.startedAt).toLocaleDateString("en-US", {
-                                          month: "short",
-                                          day: "numeric",
-                                          year: "numeric",
-                                        })}
-                                      </span>
-                                      {isLatest && (
-                                        <span className="text-xs text-blue-400 bg-blue-400/10 px-1.5 py-0.5 rounded-full">
-                                          Latest
-                                        </span>
-                                      )}
-                                      {isBest && (
-                                        <span className="text-xs text-yellow-400 bg-yellow-400/10 px-1.5 py-0.5 rounded-full">
-                                          Best
-                                        </span>
-                                      )}
-                                    </div>
-                                  </td>
-                                  <td className="px-3 py-3 text-center text-slate-300 text-sm tabular-nums">
-                                    {attempt.scores?.rw ?? "—"}
-                                  </td>
-                                  <td className="px-3 py-3 text-center text-slate-300 text-sm tabular-nums">
-                                    {attempt.scores?.math ?? "—"}
-                                  </td>
-                                  <td className="px-3 py-3 text-center">
-                                    <span
-                                      className={`font-bold tabular-nums text-sm ${
-                                        isBest ? "text-accent" : "text-white"
-                                      }`}
-                                    >
-                                      {attempt.scores?.total ?? "—"}
-                                    </span>
-                                  </td>
-                                  <td className="px-3 py-3 text-right pr-5">
-                                    <Link
-                                      href={`/exam/${exam.slug}/results/${attempt._id}`}
-                                      className="inline-flex items-center gap-1 text-xs text-slate-500 group-hover:text-accent transition-colors"
-                                    >
-                                      Results
-                                      <ChevronRight className="h-3.5 w-3.5" />
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                      <div className="divide-y divide-white/[0.04]">
+                        {completed.map((attempt, i) => {
+                          const isLatest = i === 0;
+                          const isBest = attempt.scores?.total === examBestScore && examBestScore > 0;
+                          return (
+                            <Link
+                              key={attempt._id}
+                              href={`/exam/${exam.slug}/results/${attempt._id}`}
+                              className="flex items-center gap-4 px-6 py-3.5 hover:bg-white/[0.04] transition-colors group"
+                            >
+                              {/* Attempt number */}
+                              <span className="text-xs font-mono text-slate-600 w-5 flex-shrink-0">
+                                {completed.length - i}
+                              </span>
+
+                              {/* Date + badges */}
+                              <div className="flex-1 flex items-center gap-2 min-w-0">
+                                <span className="text-xs text-slate-400">
+                                  {new Date(attempt.startedAt).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                  })}
+                                </span>
+                                {isLatest && (
+                                  <span className="text-xs text-blue-400 bg-blue-400/10 border border-blue-400/20 px-1.5 py-0.5 rounded-full">
+                                    Latest
+                                  </span>
+                                )}
+                                {isBest && (
+                                  <span className="text-xs text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 px-1.5 py-0.5 rounded-full">
+                                    Best
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Scores */}
+                              <div className="hidden sm:flex items-center gap-8 flex-shrink-0">
+                                <span className="w-10 text-center text-sm text-slate-300 tabular-nums">
+                                  {attempt.scores?.rw ?? "—"}
+                                </span>
+                                <span className="w-10 text-center text-sm text-slate-300 tabular-nums">
+                                  {attempt.scores?.math ?? "—"}
+                                </span>
+                                <span className={`w-14 text-center text-sm font-bold tabular-nums ${isBest ? "text-accent" : "text-white"}`}>
+                                  {attempt.scores?.total ?? "—"}
+                                </span>
+                              </div>
+
+                              {/* Mobile score */}
+                              <span className={`sm:hidden text-sm font-bold tabular-nums flex-shrink-0 ${isBest ? "text-accent" : "text-white"}`}>
+                                {attempt.scores?.total ?? "—"}
+                              </span>
+
+                              {/* Arrow */}
+                              <ChevronRight className="h-4 w-4 text-slate-600 group-hover:text-accent transition-colors flex-shrink-0" />
+                            </Link>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
