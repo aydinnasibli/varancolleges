@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { createQuestion, updateQuestion } from "@/app/actions/question-admin";
@@ -118,6 +118,8 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
   );
   const isFR = questionType === "free_response";
 
+  const cacheKey = `question-cache-${examId}`;
+
   // Field values
   const [section, setSection] = useState(initialData?.section || defaultSection || "reading_writing");
   const [module, setModule] = useState(initialData?.module?.toString() || defaultModule || "1");
@@ -151,6 +153,42 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
   const explanationRef = useRef<HTMLTextAreaElement>(null);
 
   const isEditing = !!initialData;
+
+  // Load cached section/module for new questions (only when no URL defaults provided)
+  useEffect(() => {
+    if (isEditing || defaultSection || defaultModule) return;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const { section: s, module: m } = JSON.parse(cached);
+        if (s) setSection(s);
+        if (m) setModule(m);
+      }
+    } catch {}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSectionChange = (value: string) => {
+    setSection(value);
+    if (!isEditing) {
+      try {
+        const cached = localStorage.getItem(cacheKey);
+        const prev = cached ? JSON.parse(cached) : {};
+        localStorage.setItem(cacheKey, JSON.stringify({ ...prev, section: value }));
+      } catch {}
+    }
+  };
+
+  const handleModuleChange = (value: string) => {
+    setModule(value);
+    if (!isEditing) {
+      try {
+        const cached = localStorage.getItem(cacheKey);
+        const prev = cached ? JSON.parse(cached) : {};
+        localStorage.setItem(cacheKey, JSON.stringify({ ...prev, module: value }));
+      } catch {}
+    }
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -233,6 +271,45 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
 
   const close = () => setActiveEditor(null);
 
+  const handlePassagePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const html = e.clipboardData.getData("text/html");
+    if (!html) return;
+
+    // Walk DOM nodes, keeping only <u>, <strong>, <em> inline formatting
+    function extractFormatted(node: Node): string {
+      if (node.nodeType === Node.TEXT_NODE) return node.textContent || "";
+      if (node.nodeType !== Node.ELEMENT_NODE) return "";
+      const el = node as HTMLElement;
+      const tag = el.tagName.toLowerCase();
+      const inner = Array.from(el.childNodes).map(extractFormatted).join("");
+      if (tag === "u") return `<u>${inner}</u>`;
+      if (tag === "strong" || tag === "b") return `<strong>${inner}</strong>`;
+      if (tag === "em" || tag === "i") return `<em>${inner}</em>`;
+      // Block elements: add newline after
+      const block = ["p", "div", "br", "li", "tr", "h1", "h2", "h3", "h4", "h5", "h6"];
+      return block.includes(tag) ? `${inner}\n` : inner;
+    }
+
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    const cleaned = extractFormatted(div).replace(/\n{3,}/g, "\n\n").trimEnd();
+
+    e.preventDefault();
+    const textarea = passageRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const next = passageText.substring(0, start) + cleaned + passageText.substring(end);
+      setPassageText(next);
+      requestAnimationFrame(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + cleaned.length;
+        textarea.focus();
+      });
+    } else {
+      setPassageText(passageText + cleaned);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Main content */}
@@ -293,6 +370,7 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
               ref={passageRef}
               value={passageText}
               onChange={(e) => setPassageText(e.target.value)}
+              onPaste={handlePassagePaste}
               placeholder="Reading passage mətni buraya yazın..."
               rows={6}
               className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none font-mono"
@@ -513,7 +591,7 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
             </label>
             <select
               value={section}
-              onChange={(e) => setSection(e.target.value)}
+              onChange={(e) => handleSectionChange(e.target.value)}
               className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] bg-white"
             >
               <option value="reading_writing">Reading &amp; Writing</option>
@@ -527,7 +605,7 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
             </label>
             <select
               value={module}
-              onChange={(e) => setModule(e.target.value)}
+              onChange={(e) => handleModuleChange(e.target.value)}
               className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] bg-white"
             >
               <option value="1">Modul 1</option>
