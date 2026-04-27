@@ -816,7 +816,9 @@
         }
       },
       "browseExams": "İmtahanlara bax",
-      "availableExams": "Mövcud İmtahanlar",
+      "availableExams": "Yaxınlaşan İmtahanlar",
+      "pastExams": "Keçmiş İmtahanlar",
+      "examDate": "İmtahan tarixi",
       "examsAvailable": "imtahan mövcuddur",
       "adaptive": "Adaptiv",
       "stats": {
@@ -851,6 +853,7 @@
       "signIn": "Daxil ol",
       "signUp": "Qeydiyyat",
       "purchased": "Satın alınıb",
+      "unlocksOn": "İmtahan açılır",
       "continueExam": "İmtahanı davam et",
       "startExam": "İmtahana başla",
       "viewLatestResults": "Son nəticələrə bax",

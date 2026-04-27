@@ -1,6 +1,6 @@
-import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { getGeneralFaqs } from "@/lib/data/faqs";
 import { getTranslations } from "next-intl/server";
+import FAQContactWrapper from "./FAQContactWrapper";
 
 interface FAQProps {
   customFaqs?: { question: string, answer: string }[];
@@ -26,12 +26,7 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
             <p className="text-slate-400 font-light leading-relaxed mb-8 max-w-lg">
               {t("description")}
             </p>
-            <ApplicationModal>
-              <button className="inline-flex items-center text-accent hover:text-white transition-colors font-medium text-sm tracking-wider uppercase">
-                {t("contactUs")}
-                <span className="w-8 h-[1px] bg-accent ml-4 inline-block"></span>
-              </button>
-            </ApplicationModal>
+            <FAQContactWrapper label={t("contactUs")} />
           </div>
 
           <div className="space-y-4">

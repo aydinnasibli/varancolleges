@@ -27,6 +27,7 @@ export default async function EditExamPage({
     isActive: boolean;
     coverImage: string;
     totalDuration: number;
+    examDate: string;
   };
 
   return (

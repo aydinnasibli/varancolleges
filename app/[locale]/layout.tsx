@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import { Toaster } from "sonner";
 import "../globals.css";
 
@@ -128,17 +129,16 @@ export default async function RootLayout({
           className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-primary`}
         >
           <NextIntlClientProvider messages={messages}>
-            <script
+            <Script
+              id="json-ld"
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            {/* Cloudflare Web Analytics */}
-            <script
-              defer
-              src='https://static.cloudflareinsights.com/beacon.min.js'
+            <Script
+              strategy="afterInteractive"
+              src="https://static.cloudflareinsights.com/beacon.min.js"
               data-cf-beacon='{"token": "1d9b481741fb4b02ac93c816ca4a0371"}'
-            ></script>
-            {/* End Cloudflare Web Analytics */}
+            />
             {children}
             <Toaster position="bottom-left" />
           </NextIntlClientProvider>

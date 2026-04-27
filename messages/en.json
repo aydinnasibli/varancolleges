@@ -816,7 +816,9 @@
         }
       },
       "browseExams": "Browse Exams",
-      "availableExams": "Available Exams",
+      "availableExams": "Upcoming Exams",
+      "pastExams": "Past Exams",
+      "examDate": "Exam date",
       "examsAvailable": "exams available",
       "adaptive": "Adaptive",
       "stats": {
@@ -851,6 +853,7 @@
       "signIn": "Sign In",
       "signUp": "Sign Up",
       "purchased": "Purchased",
+      "unlocksOn": "Exam unlocks on",
       "continueExam": "Continue Exam",
       "startExam": "Start Exam",
       "viewLatestResults": "View Latest Results",

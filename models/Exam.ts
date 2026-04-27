@@ -9,6 +9,7 @@ export interface IExam extends Document {
   isActive: boolean;
   coverImage: string;
   totalDuration: number; // total minutes
+  examDate: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,6 +28,7 @@ const ExamSchema = new mongoose.Schema<IExam>(
     isActive: { type: Boolean, default: false },
     coverImage: { type: String, default: "" },
     totalDuration: { type: Number, default: 134 }, // SAT: 134 minutes
+    examDate: { type: Date, required: true },
   },
   { timestamps: true }
 );

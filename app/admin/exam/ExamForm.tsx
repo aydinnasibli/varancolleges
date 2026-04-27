@@ -18,6 +18,7 @@ interface ExamFormProps {
     isActive: boolean;
     coverImage: string;
     totalDuration: number;
+    examDate: string;
   };
 }
 
@@ -36,6 +37,9 @@ export default function ExamForm({ initialData }: ExamFormProps) {
   const [coverImage, setCoverImage] = useState(initialData?.coverImage || "");
   const [totalDuration, setTotalDuration] = useState(
     initialData?.totalDuration?.toString() || "134"
+  );
+  const [examDate, setExamDate] = useState(
+    initialData?.examDate ? initialData.examDate.slice(0, 10) : ""
   );
 
   const isEditing = !!initialData;
@@ -63,8 +67,8 @@ export default function ExamForm({ initialData }: ExamFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !description.trim()) {
-      toast.error("Ad və təsvir məcburidir");
+    if (!title.trim() || !description.trim() || !examDate) {
+      toast.error("Ad, təsvir və imtahan tarixi məcburidir");
       return;
     }
 
@@ -77,6 +81,7 @@ export default function ExamForm({ initialData }: ExamFormProps) {
     formData.append("isActive", isActive.toString());
     formData.append("coverImage", coverImage);
     formData.append("totalDuration", totalDuration);
+    formData.append("examDate", examDate);
 
     try {
       let result;
@@ -160,6 +165,22 @@ export default function ExamForm({ initialData }: ExamFormProps) {
                 className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              İmtahan tarixi <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="date"
+              value={examDate}
+              onChange={(e) => setExamDate(e.target.value)}
+              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4]"
+              required
+            />
+            <p className="text-xs text-slate-400 mt-1">
+              Bu tarixdən əvvəl satın alınan istifadəçilər imtahanı bu tarixdə başlaya bilər
+            </p>
           </div>
         </div>
 

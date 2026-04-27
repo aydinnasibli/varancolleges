@@ -305,9 +305,6 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     );
   }
 
-  // Dual-Column Logic
-  const hasPassage = !!currentQuestion?.passageText;
-
   return (
     <div className="h-screen w-screen bg-white flex flex-col text-slate-900 font-sans overflow-hidden">
       {/* HEADER */}
@@ -326,52 +323,57 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
         </div>
       </header>
 
-      {/* MAIN CONTENT ZONE */}
-      <main className="flex-1 flex flex-col md:flex-row overflow-hidden relative">
-        
-        {/* Left Side (Passage or Question) */}
-        <div className={`md:flex-1 h-full overflow-y-auto border-r border-slate-300 border-dashed bg-white p-8 md:p-12 ${hasPassage ? 'block' : 'hidden md:block'}`}>
-          {hasPassage ? (
-            <div className="max-w-xl mx-auto prose prose-slate">
-              <p className="text-lg leading-loose text-slate-800 whitespace-pre-wrap font-serif">
-                {currentQuestion.passageText}
-              </p>
+      {/* MAIN CONTENT ZONE — always book split */}
+      <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+
+        {/* LEFT — question number + passage (if any) + question text */}
+        <div className="md:w-1/2 h-full overflow-y-auto border-r border-dashed border-slate-300 bg-white p-8 md:p-12">
+          <div className="max-w-xl mx-auto">
+            <div className="bg-slate-900 text-white w-7 h-7 flex items-center justify-center font-bold text-sm mb-6 rounded-sm">
+              {currentIndex + 1}
             </div>
-          ) : (
-            <div className="max-w-xl mx-auto">
-              <div className="bg-slate-900 text-white w-7 h-7 flex items-center justify-center font-bold text-sm mb-6 rounded-sm">
-                {currentIndex + 1}
+            {currentQuestion?.passageText && (
+              <div className="mb-8 prose prose-slate">
+                <p className="text-base leading-loose text-slate-700 whitespace-pre-wrap font-serif">
+                  {currentQuestion.passageText}
+                </p>
               </div>
-              <MathRenderer content={currentQuestion?.questionText || ""} className="text-lg leading-relaxed text-slate-900 font-serif" />
-              {currentQuestion?.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={currentQuestion.image} alt="Diagram" className="max-w-full my-6 border border-slate-200" />
-              )}
-            </div>
-          )}
+            )}
+            <MathRenderer
+              content={currentQuestion?.questionText || ""}
+              className="text-lg leading-relaxed text-slate-900 font-serif"
+            />
+            {currentQuestion?.image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={currentQuestion.image} alt="Diagram" className="max-w-full my-6 border border-slate-200" />
+            )}
+          </div>
         </div>
 
-        {/* Right Side (Question/Options OR Options only) */}
-        <div className="flex-1 h-full overflow-y-auto bg-white p-8 md:p-12 relative">
+        {/* RIGHT — answers only */}
+        <div className="md:w-1/2 h-full overflow-y-auto bg-white p-8 md:p-12 relative">
           <div className="max-w-xl mx-auto">
-            
-            {/* If there was a passage, we show the question text here. */}
-            {hasPassage && (
-               <div className="mb-8">
-                 <div className="bg-slate-900 text-white w-7 h-7 flex items-center justify-center font-bold text-sm mb-6 rounded-sm">
-                   {currentIndex + 1}
-                 </div>
-                 <MathRenderer content={currentQuestion?.questionText || ""} className="text-lg leading-relaxed text-slate-900 font-serif" />
-                 {currentQuestion?.image && (
-                   // eslint-disable-next-line @next/next/no-img-element
-                   <img src={currentQuestion.image} alt="Diagram" className="max-w-full my-6 border border-slate-200" />
-                 )}
-               </div>
-            )}
+            {/* Flag button anchored to top-right of answer panel */}
+            <div className="flex justify-end mb-6">
+              <button
+                onClick={handleFlagToggle}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded border font-bold text-xs transition-colors ${
+                  flagged.has(currentQuestion?._id || '')
+                    ? "text-[#b20000] border-[#b20000]/30"
+                    : "text-slate-600 border-transparent hover:text-black hover:border-slate-300"
+                }`}
+              >
+                <Bookmark className={`w-4 h-4 ${flagged.has(currentQuestion?._id || '') ? "fill-[#b20000]" : ""}`} />
+                {flagged.has(currentQuestion?._id || '') ? "Clear mark" : "Mark for Review"}
+              </button>
+            </div>
 
-            {/* Answer Region */}
             {currentQuestion?.questionType === "free_response" ? (
-              <FreeResponseInput questionId={currentQuestion._id} value={answers[currentQuestion._id] ?? ""} onChange={handleAnswerSelect} />
+              <FreeResponseInput
+                questionId={currentQuestion._id}
+                value={answers[currentQuestion._id] ?? ""}
+                onChange={handleAnswerSelect}
+              />
             ) : (
               <div className="space-y-3">
                 {(["A", "B", "C", "D"] as const).map((opt) => {
@@ -391,7 +393,10 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                       }`}>
                         {opt}
                       </span>
-                      <MathRenderer content={currentQuestion?.options[opt] || ""} className="text-base leading-relaxed text-slate-800 self-center" />
+                      <MathRenderer
+                        content={currentQuestion?.options[opt] || ""}
+                        className="text-base leading-relaxed text-slate-800 self-center"
+                      />
                     </button>
                   );
                 })}
@@ -399,17 +404,6 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
             )}
           </div>
         </div>
-
-        {/* Floating Flag Button (Matches Top Anchor in Bluebook) */}
-        <button
-          onClick={handleFlagToggle}
-          className={`absolute top-4 right-8 flex items-center gap-2 px-3 py-1.5 rounded border border-transparent font-bold text-xs transition-colors ${
-            flagged.has(currentQuestion?._id || '') ? "text-[#b20000]" : "text-slate-600 hover:text-black hover:border-slate-300"
-          }`}
-        >
-          <Bookmark className={`w-4 h-4 ${flagged.has(currentQuestion?._id || '') ? "fill-[#b20000]" : ""}`} />
-          {flagged.has(currentQuestion?._id || '') ? "Clear mark" : "Mark for Review"}
-        </button>
 
       </main>
 

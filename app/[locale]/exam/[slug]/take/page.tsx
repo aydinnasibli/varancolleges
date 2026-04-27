@@ -22,7 +22,12 @@ export default async function TakeExamPage({
   // Get exam
   const examResult = await getExamBySlug(slug);
   if (!examResult.success || !examResult.exam) notFound();
-  const exam = examResult.exam as { _id: string; title: string; slug: string; type: string };
+  const exam = examResult.exam as { _id: string; title: string; slug: string; type: string; examDate: string };
+
+  // Block access if exam date hasn't arrived yet
+  if (new Date(exam.examDate) > new Date()) {
+    redirect(`/exam/${slug}`);
+  }
 
   // Verify purchase
   const purchaseResult = await getUserPurchaseForExam(userId, exam._id);

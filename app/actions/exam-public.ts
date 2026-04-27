@@ -14,6 +14,7 @@ export async function getActiveExams() {
       exams: exams.map((e) => ({
         ...e,
         _id: e._id.toString(),
+        examDate: (e.examDate as Date).toISOString(),
         createdAt: (e.createdAt as Date).toISOString(),
         updatedAt: (e.updatedAt as Date).toISOString(),
       })),
@@ -34,6 +35,7 @@ export async function getExamBySlug(slug: string) {
       exam: {
         ...exam,
         _id: exam._id.toString(),
+        examDate: (exam.examDate as Date).toISOString(),
         createdAt: (exam.createdAt as Date).toISOString(),
         updatedAt: (exam.updatedAt as Date).toISOString(),
       },

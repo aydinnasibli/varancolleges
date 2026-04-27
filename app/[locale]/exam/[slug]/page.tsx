@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
-import { Clock, BookOpen, CheckCircle, ChevronRight, PenLine, Calculator } from "lucide-react";
+import { Clock, BookOpen, CheckCircle, ChevronRight, PenLine, Calculator, Calendar, Lock } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -60,7 +60,16 @@ export default async function ExamDetailPage({
     totalDuration: number;
     coverImage: string;
     slug: string;
+    examDate: string;
   };
+
+  const examDateObj = new Date(exam.examDate);
+  const isExamUnlocked = examDateObj <= new Date();
+  const examDateFormatted = examDateObj.toLocaleDateString("az-AZ", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   let purchase = null;
   let inProgressAttempt = null;
@@ -107,7 +116,7 @@ export default async function ExamDetailPage({
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-6 max-w-4xl mx-auto">
               {exam.title}
             </h1>
-            <div className="flex items-center justify-center gap-6 text-sm text-accent">
+            <div className="flex items-center justify-center gap-6 text-sm text-accent flex-wrap">
               <span className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
                 {exam.totalDuration} {t("minutesTotal")}
@@ -116,6 +125,11 @@ export default async function ExamDetailPage({
               <span className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 98 {t("questionsAcross")}
+              </span>
+              <span className="w-px h-4 bg-accent/30" />
+              <span className={`flex items-center gap-2 ${isExamUnlocked ? "text-green-400" : "text-accent"}`}>
+                <Calendar className="h-4 w-4" />
+                {examDateFormatted}
               </span>
             </div>
           </div>
@@ -276,7 +290,13 @@ export default async function ExamDetailPage({
                         <CheckCircle className="h-4 w-4" />
                         {t("purchased")}
                       </div>
-                      {inProgressAttempt ? (
+                      {!isExamUnlocked ? (
+                        <div className="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-4 text-center">
+                          <Lock className="h-5 w-5 text-slate-400 mx-auto mb-2" />
+                          <p className="text-sm text-slate-300 font-medium">{t("unlocksOn")}</p>
+                          <p className="text-accent font-bold mt-1">{examDateFormatted}</p>
+                        </div>
+                      ) : inProgressAttempt ? (
                         <Link
                           href={`/exam/${slug}/take`}
                           className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent-light text-[#07101e] py-3 rounded-xl text-sm font-semibold transition-colors"

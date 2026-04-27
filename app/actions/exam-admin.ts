@@ -22,6 +22,7 @@ export async function getAllExams() {
       exams: exams.map((e) => ({
         ...e,
         _id: e._id.toString(),
+        examDate: (e.examDate as Date).toISOString(),
         createdAt: (e.createdAt as Date).toISOString(),
         updatedAt: (e.updatedAt as Date).toISOString(),
       })),
@@ -43,6 +44,7 @@ export async function getExamById(id: string) {
       exam: {
         ...exam,
         _id: exam._id.toString(),
+        examDate: (exam.examDate as Date).toISOString(),
         createdAt: (exam.createdAt as Date).toISOString(),
         updatedAt: (exam.updatedAt as Date).toISOString(),
       },
@@ -66,10 +68,13 @@ export async function createExam(formData: FormData) {
     const isActive = formData.get("isActive") === "true";
     const coverImage = (formData.get("coverImage") as string) || "";
     const totalDuration = parseInt(formData.get("totalDuration") as string) || 134;
+    const examDateStr = formData.get("examDate") as string;
 
-    if (!title || !description) {
-      return { success: false, error: "Title and description are required" };
+    if (!title || !description || !examDateStr) {
+      return { success: false, error: "Title, description and exam date are required" };
     }
+
+    const examDate = new Date(examDateStr);
 
     let slug = slugify(title, { lower: true, strict: true });
     const existing = await Exam.findOne({ slug });
@@ -78,7 +83,7 @@ export async function createExam(formData: FormData) {
     const exam = await Exam.create({
       title, slug, description,
       type: type || "SAT",
-      price, isActive, coverImage, totalDuration,
+      price, isActive, coverImage, totalDuration, examDate,
     });
 
     revalidatePath("/admin/exam");
@@ -103,10 +108,13 @@ export async function updateExam(id: string, formData: FormData) {
     const isActive = formData.get("isActive") === "true";
     const coverImage = (formData.get("coverImage") as string) || "";
     const totalDuration = parseInt(formData.get("totalDuration") as string) || 134;
+    const examDateStr = formData.get("examDate") as string;
 
-    if (!title || !description) {
-      return { success: false, error: "Title and description are required" };
+    if (!title || !description || !examDateStr) {
+      return { success: false, error: "Title, description and exam date are required" };
     }
+
+    const examDate = new Date(examDateStr);
 
     let slug = slugify(title, { lower: true, strict: true });
     const existing = await Exam.findOne({ slug, _id: { $ne: id } });
@@ -114,7 +122,7 @@ export async function updateExam(id: string, formData: FormData) {
 
     const exam = await Exam.findByIdAndUpdate(
       id,
-      { title, slug, description, type, price, isActive, coverImage, totalDuration },
+      { title, slug, description, type, price, isActive, coverImage, totalDuration, examDate },
       { new: true }
     );
     if (!exam) return { success: false, error: "Exam not found" };
