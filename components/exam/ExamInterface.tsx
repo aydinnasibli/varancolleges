@@ -434,7 +434,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
               Back
             </button>
             <button
-              onClick={() => handleSectionComplete(false)}
+              onClick={() => handleSectionComplete()}
               className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full transition-colors"
             >
               Next
