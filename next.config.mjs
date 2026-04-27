@@ -4,6 +4,15 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     // CDN caches for 24 h, stale-while-revalidate for 7 days.
     // max-age=0 so browsers always revalidate; s-maxage is for CDN/Vercel edge.
