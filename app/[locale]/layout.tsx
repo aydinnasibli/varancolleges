@@ -125,7 +125,7 @@ export default async function RootLayout({
           <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         </head>
         <body
-          className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background-dark text-slate-300 selection:bg-accent selection:text-primary`}
+          className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-primary`}
         >
           <NextIntlClientProvider messages={messages}>
             <script

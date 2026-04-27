@@ -79,7 +79,7 @@ export default async function ContactPage() {
                   <div>
                     <h3 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors">{tGen("address")}</h3>
                     <p className="text-slate-400 leading-relaxed">
-                      137A Samad Vurgun,<br/>
+                      137A Samad Vurgun,<br />
                       Baku 1022, Azerbaijan
                     </p>
                   </div>
@@ -141,12 +141,12 @@ export default async function ContactPage() {
 
             {/* Right Column: Form */}
             <div className="relative animate-in slide-in-from-right duration-700 delay-200">
-               {/* Decorative blob behind form */}
-               <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-primary/20 rounded-3xl blur-2xl -z-10 opacity-30"></div>
+              {/* Decorative blob behind form */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-primary/20 rounded-3xl blur-2xl -z-10 opacity-30"></div>
 
-               <div className="relative">
-                  <ContactForm />
-               </div>
+              <div className="relative">
+                <ContactForm />
+              </div>
             </div>
 
           </div>
@@ -156,8 +156,8 @@ export default async function ContactPage() {
       {/* Map Section */}
       <section className="py-20 bg-background-dark/50 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-serif text-white mb-8 text-center">{t("findUsOnMap")}</h2>
-            <Map />
+          <h2 className="text-3xl font-serif text-white mb-8 text-center">{t("findUsOnMap")}</h2>
+          <Map />
         </div>
       </section>
 

@@ -85,7 +85,7 @@ const Navbar = () => {
       <nav
         className={cn(
           "sticky top-0 z-50 transition-all duration-300 border-b border-white/5",
-          isScrolled ? "glass-panel h-20" : "bg-transparent h-24 border-transparent"
+          isScrolled ? "glass-panel h-20" : "bg-[#0a192f]/20 h-24 border-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
@@ -174,7 +174,7 @@ const Navbar = () => {
             </div>
             <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
               <ApplicationModal>
-                 <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
+                <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
               </ApplicationModal>
             </div>
           </div>

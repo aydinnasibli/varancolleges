@@ -64,20 +64,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
       {/* Hero Section */}
       <section className="relative py-24 lg:py-32 bg-primary">
         <div className="absolute inset-0 bg-gradient-to-b from-[#05080f]/80 to-[#05080f]/95">
-           {post.mainImage && (
-             <Image
-               src={post.mainImage}
-               alt={post.title}
-               fill
-               className="object-cover opacity-20 mix-blend-overlay"
-               priority
-             />
-           )}
-           <div className="absolute inset-0 bg-primary mix-blend-multiply opacity-50"></div>
+          {post.mainImage && (
+            <Image
+              src={post.mainImage}
+              alt={post.title}
+              fill
+              className="object-cover opacity-20 mix-blend-overlay"
+              priority
+            />
+          )}
+          <div className="absolute inset-0 bg-primary mix-blend-multiply opacity-50"></div>
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-12">
           <div className="inline-block bg-accent/10 px-4 py-1.5 rounded-full text-accent text-sm font-medium mb-6">
-             {new Date(post.publishedAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
+            {new Date(post.publishedAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
             {post.title}
@@ -92,7 +92,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
             <Link href="/blog" className="hover:text-white transition-colors">
               Blog
             </Link>
-             <span className="text-accent">•</span>
+            <span className="text-accent">•</span>
             <span className="text-white truncate max-w-[150px]">{post.title}</span>
           </div>
         </div>
@@ -112,14 +112,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
           </div>
 
           <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-             <ShareButtons title={post.title} />
+            <ShareButtons title={post.title} />
 
-             <Link href="/blog" className="flex items-center text-accent hover:text-white transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-                Bütün yazılara qayıt
-             </Link>
+            <Link href="/blog" className="flex items-center text-accent hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+              Bütün yazılara qayıt
+            </Link>
           </div>
         </div>
       </section>

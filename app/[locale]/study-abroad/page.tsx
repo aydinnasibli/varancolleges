@@ -1,9 +1,8 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/study-abroad/Hero";
-import AdviceSection from "@/components/study-abroad/AdviceSection";
+import JourneyTimeline from "@/components/study-abroad/JourneyTimeline";
 import CountriesSection from "@/components/study-abroad/CountriesSection";
-import ServicesSection from "@/components/study-abroad/ServicesSection";
 import CTASection from "@/components/study-abroad/CTASection";
 import { getTranslations } from "next-intl/server";
 
@@ -45,11 +44,10 @@ export default async function StudyAbroadPage({ params }: { params: Promise<{ lo
   const { locale } = await params;
 
   return (
-    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
+    <main className="min-h-screen flex flex-col font-sans bg-[#0a192f] selection:bg-accent selection:text-primary overflow-x-hidden">
       <Navbar />
       <Hero />
-      <AdviceSection locale={locale} />
-      <ServicesSection locale={locale} />
+      <JourneyTimeline locale={locale} />
       <CountriesSection locale={locale} />
       <CTASection />
       <Footer />

@@ -74,9 +74,9 @@ export default async function BlogPage() {
       <section className="py-20 bg-background-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {posts.length === 0 ? (
-             <div className="text-center py-20">
-                <p className="text-xl text-slate-500 font-light">Hazırda heç bir yazı yoxdur.</p>
-             </div>
+            <div className="text-center py-20">
+              <p className="text-xl text-slate-500 font-light">Hazırda heç bir yazı yoxdur.</p>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {posts.map((post) => (
