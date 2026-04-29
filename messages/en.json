@@ -817,6 +817,7 @@
       },
       "browseExams": "Browse Exams",
       "availableExams": "Upcoming Exams",
+      "activeSession": "Active",
       "pastExams": "Past Exams",
       "examDate": "Exam date",
       "examsAvailable": "exams available",

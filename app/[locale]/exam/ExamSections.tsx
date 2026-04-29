@@ -20,6 +20,7 @@ interface ExamSectionsProps {
   pastExams: Exam[];
   labels: {
     upcomingExams: string;
+    activeSession: string;
     pastExams: string;
     questions: string;
     adaptive: string;
@@ -41,7 +42,7 @@ function ExamCard({ exam, isPast, labels }: { exam: Exam; isPast: boolean; label
   });
 
   return (
-    <div className="group bg-white/[0.03] border border-white/[0.08] hover:border-accent/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 hover:-translate-y-0.5 flex flex-col">
+    <div className={`group bg-white/[0.03] border ${isPast ? "border-white/[0.08]" : "border-accent/20 bg-white/[0.04] shadow-lg shadow-accent/5"} hover:border-accent/50 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 hover:-translate-y-0.5 flex flex-col`}>
       <div className="relative h-40 flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/60 to-[#07101e]">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-transparent to-accent/5" />
         <span
@@ -122,11 +123,20 @@ export default function ExamSections({ upcomingExams, pastExams, labels }: ExamS
   return (
     <div className="space-y-16">
       {/* Upcoming */}
-      <div>
-        <div className="flex items-center justify-between mb-10">
-          <div>
-            <h2 className="text-2xl font-serif font-bold text-white">{labels.upcomingExams}</h2>
-            <p className="text-slate-500 text-sm mt-1">
+      <div className="relative">
+        {/* Decorative background glow */}
+        <div className="absolute -top-12 -left-12 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[80px] pointer-events-none" />
+        
+        <div className="flex items-center justify-between mb-10 relative z-10">
+          <div className="flex flex-col gap-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/20 bg-accent/5 w-fit">
+              <Calendar className="h-4 w-4 text-accent animate-pulse" />
+              <span className="text-accent text-xs font-semibold tracking-wider uppercase">{labels.activeSession}</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-wide">
+              {labels.upcomingExams}
+            </h2>
+            <p className="text-slate-400 text-base">
               {upcomingExams.length} {labels.upcomingExams.toLowerCase()}
             </p>
           </div>

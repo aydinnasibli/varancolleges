@@ -149,6 +149,7 @@ export default async function ExamListingPage({
             pastExams={pastExams as Parameters<typeof ExamSections>[0]["pastExams"]}
             labels={{
               upcomingExams: t("availableExams"),
+              activeSession: t("activeSession"),
               pastExams: t("pastExams"),
               questions: t("questions"),
               adaptive: t("adaptive"),
