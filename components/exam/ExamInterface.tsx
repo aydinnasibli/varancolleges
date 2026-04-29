@@ -131,6 +131,8 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
   const [breakType, setBreakType] = useState<SectionBreakType>("module");
   const [breakTimeLeft, setBreakTimeLeft] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const submittingRef = useRef(false);
+  const timeUpRef = useRef(false);
 
   const timeLeftRef = useRef(timeLeft);
   const currentSectionRef = useRef(currentSection);
@@ -141,14 +143,18 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
   const currentQuestion = questions[currentIndex];
 
+  // Timer countdown — sets a ref flag when time is up instead of
+  // calling handleSectionComplete() directly inside a setState updater
+  // (which would capture a stale closure over submitting).
   useEffect(() => {
     if (phase !== "exam") return;
+    timeUpRef.current = false;
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         const next = Math.max(0, prev - 1);
         if (next === 0) {
           clearInterval(interval);
-          handleSectionComplete();
+          timeUpRef.current = true;
         }
         return next;
       });
@@ -156,6 +162,15 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, currentSection]);
+
+  // Separate effect watches for the time-up signal and fires section complete
+  useEffect(() => {
+    if (timeLeft !== 0 || phase !== "exam") return;
+    if (!timeUpRef.current) return;
+    timeUpRef.current = false;
+    handleSectionComplete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeLeft, phase]);
 
   useEffect(() => {
     if (phase !== "exam") return;
@@ -208,7 +223,8 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
   };
 
   const handleSectionComplete = async () => {
-    if (submitting) return;
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setSubmitting(true);
     const sectionIdx = SECTION_ORDER.indexOf(currentSection);
     const isLastSection = sectionIdx === SECTION_ORDER.length - 1;
@@ -221,6 +237,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
       } else {
         toast.error("Failed to submit exam.");
         setPhase("exam");
+        submittingRef.current = false;
         setSubmitting(false);
       }
       return;
@@ -229,6 +246,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     const result = await completeSection(attemptId, currentSection);
     if (!result.success) {
       toast.error("Failed to advance.");
+      submittingRef.current = false;
       setSubmitting(false);
       return;
     }
@@ -243,6 +261,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     setCurrentIndex(0);
     setTimeLeft(SECTION_DURATIONS[nextSection] ?? 35 * 60);
     setPhase("section_break");
+    submittingRef.current = false;
     setSubmitting(false);
   };
 
@@ -428,10 +447,16 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
               Back
             </button>
             <button
-              onClick={() => handleSectionComplete()}
+              onClick={() => {
+                if (currentIndex < questions.length - 1) {
+                  goToQuestion(currentIndex + 1);
+                } else {
+                  handleSectionComplete();
+                }
+              }}
               className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full transition-colors"
             >
-              Next
+              {currentIndex < questions.length - 1 ? "Next" : "Finish Section"}
             </button>
          </div>
       </footer>

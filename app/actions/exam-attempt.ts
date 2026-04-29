@@ -276,18 +276,28 @@ export async function completeSection(attemptId: string, section: string) {
       isFlagged: false,
     }));
 
-    await ExamAttempt.updateOne(
-      { _id: attemptId, userId },
-      {
-        $set: {
-          currentSection: nextSection,
-          currentQuestionIndex: 0,
-          [`sectionStartTimes.${timingKey}`]: new Date(),
-          [`sectionTimeRemaining.${timingKey}`]: SECTION_DURATIONS[nextSection],
-        },
-        $push: { answers: { $each: newAnswerSlots } },
-      }
+    // Check if slots for the next section already exist (idempotency guard)
+    const freshAttempt = await ExamAttempt.findOne({ _id: attemptId, userId }).lean();
+    const existingIds = new Set(
+      (freshAttempt?.answers ?? []).map((a) => a.questionId.toString())
     );
+    const slotsToAdd = newAnswerSlots.filter(
+      (s) => !existingIds.has(s.questionId.toString())
+    );
+
+    const updateOp: Record<string, unknown> = {
+      $set: {
+        currentSection: nextSection,
+        currentQuestionIndex: 0,
+        [`sectionStartTimes.${timingKey}`]: new Date(),
+        [`sectionTimeRemaining.${timingKey}`]: SECTION_DURATIONS[nextSection],
+      },
+    };
+    if (slotsToAdd.length > 0) {
+      updateOp.$push = { answers: { $each: slotsToAdd } };
+    }
+
+    await ExamAttempt.updateOne({ _id: attemptId, userId }, updateOp);
 
     return {
       success: true,

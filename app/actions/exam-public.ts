@@ -14,9 +14,9 @@ export async function getActiveExams() {
       exams: exams.map((e) => ({
         ...e,
         _id: e._id.toString(),
-        examDate: (e.examDate as Date).toISOString(),
-        createdAt: (e.createdAt as Date).toISOString(),
-        updatedAt: (e.updatedAt as Date).toISOString(),
+        examDate: e.examDate ? (e.examDate as Date).toISOString() : null,
+        createdAt: e.createdAt ? (e.createdAt as Date).toISOString() : null,
+        updatedAt: e.updatedAt ? (e.updatedAt as Date).toISOString() : null,
       })),
     };
   } catch (error) {
@@ -35,9 +35,9 @@ export async function getExamBySlug(slug: string) {
       exam: {
         ...exam,
         _id: exam._id.toString(),
-        examDate: (exam.examDate as Date).toISOString(),
-        createdAt: (exam.createdAt as Date).toISOString(),
-        updatedAt: (exam.updatedAt as Date).toISOString(),
+        examDate: exam.examDate ? (exam.examDate as Date).toISOString() : null,
+        createdAt: exam.createdAt ? (exam.createdAt as Date).toISOString() : null,
+        updatedAt: exam.updatedAt ? (exam.updatedAt as Date).toISOString() : null,
       },
     };
   } catch (error) {
