@@ -5,7 +5,8 @@ import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
 import { Clock, BookOpen, CheckCircle, ChevronRight, PenLine, Calculator, Calendar, Lock } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
-import Link from "next/link";
+import TakeExamButton from "./TakeExamButton";
+import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
@@ -42,10 +43,10 @@ export default async function ExamDetailPage({
 }: {
   params: Promise<{ slug: string; locale: string }>;
 }) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const [{ userId }, t] = await Promise.all([
     auth(),
-    getTranslations("Exam.detail"),
+    getTranslations({ locale, namespace: "Exam.detail" }),
   ]);
 
   const examResult = await getExamBySlug(slug);
@@ -297,21 +298,15 @@ export default async function ExamDetailPage({
                           <p className="text-accent font-bold mt-1">{examDateFormatted}</p>
                         </div>
                       ) : inProgressAttempt ? (
-                        <Link
+                        <TakeExamButton
                           href={`/exam/${slug}/take`}
-                          className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent-light text-[#07101e] py-3 rounded-xl text-sm font-semibold transition-colors"
-                        >
-                          {t("continueExam")}
-                          <ChevronRight className="h-4 w-4" />
-                        </Link>
+                          label={t("continueExam")}
+                        />
                       ) : (
-                        <Link
+                        <TakeExamButton
                           href={`/exam/${slug}/take`}
-                          className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent-light text-[#07101e] py-3 rounded-xl text-sm font-semibold transition-colors"
-                        >
-                          {t("startExam")}
-                          <ChevronRight className="h-4 w-4" />
-                        </Link>
+                          label={t("startExam")}
+                        />
                       )}
                       {completedAttempts.length > 0 && (
                         <Link

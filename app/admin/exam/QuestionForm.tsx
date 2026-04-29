@@ -271,11 +271,8 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
 
   const close = () => setActiveEditor(null);
 
-  const handlePassagePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    const html = e.clipboardData.getData("text/html");
-    if (!html) return;
-
-    // Walk DOM nodes, keeping only <u>, <strong>, <em> inline formatting
+  // Shared Word HTML stripper — keeps <u>, <strong>, <em> and converts blocks to newlines
+  function stripWordHtml(html: string): string {
     function extractFormatted(node: Node): string {
       if (node.nodeType === Node.TEXT_NODE) return node.textContent || "";
       if (node.nodeType !== Node.ELEMENT_NODE) return "";
@@ -285,30 +282,43 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
       if (tag === "u") return `<u>${inner}</u>`;
       if (tag === "strong" || tag === "b") return `<strong>${inner}</strong>`;
       if (tag === "em" || tag === "i") return `<em>${inner}</em>`;
-      // Block elements: add newline after
       const block = ["p", "div", "br", "li", "tr", "h1", "h2", "h3", "h4", "h5", "h6"];
       return block.includes(tag) ? `${inner}\n` : inner;
     }
-
     const div = document.createElement("div");
     div.innerHTML = html;
-    const cleaned = extractFormatted(div).replace(/\n{3,}/g, "\n\n").trimEnd();
+    return extractFormatted(div).replace(/\n{3,}/g, "\n\n").trimEnd();
+  }
 
-    e.preventDefault();
-    const textarea = passageRef.current;
-    if (textarea) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const next = passageText.substring(0, start) + cleaned + passageText.substring(end);
-      setPassageText(next);
-      requestAnimationFrame(() => {
-        textarea.selectionStart = textarea.selectionEnd = start + cleaned.length;
-        textarea.focus();
-      });
-    } else {
-      setPassageText(passageText + cleaned);
-    }
-  };
+  function makePasteHandler(
+    ref: React.RefObject<HTMLTextAreaElement | HTMLInputElement | null>,
+    currentValue: string,
+    setValue: (v: string) => void
+  ) {
+    return (e: React.ClipboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      const html = e.clipboardData.getData("text/html");
+      if (!html) return;
+      e.preventDefault();
+      const cleaned = stripWordHtml(html);
+      const el = ref.current;
+      if (el) {
+        const start = (el as HTMLInputElement).selectionStart ?? currentValue.length;
+        const end = (el as HTMLInputElement).selectionEnd ?? currentValue.length;
+        const next = currentValue.substring(0, start) + cleaned + currentValue.substring(end);
+        setValue(next);
+        requestAnimationFrame(() => {
+          (el as HTMLInputElement).selectionStart = (el as HTMLInputElement).selectionEnd = start + cleaned.length;
+          el.focus();
+        });
+      } else {
+        setValue(currentValue + cleaned);
+      }
+    };
+  }
+
+  const handlePassagePaste = makePasteHandler(passageRef, passageText, setPassageText);
+  const handleQuestionPaste = makePasteHandler(questionRef, questionText, setQuestionText);
+  const handleExplanationPaste = makePasteHandler(explanationRef, explanation, setExplanation);
 
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -396,6 +406,7 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
             ref={questionRef}
             value={questionText}
             onChange={(e) => setQuestionText(e.target.value)}
+            onPaste={handleQuestionPaste}
             placeholder="Sualı buraya yazın..."
             rows={4}
             className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none"
@@ -569,6 +580,7 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
             ref={explanationRef}
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
+            onPaste={handleExplanationPaste}
             placeholder="Bu sualın cavabını necə tapmaq olar..."
             rows={3}
             className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] resize-none"

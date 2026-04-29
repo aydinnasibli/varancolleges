@@ -36,8 +36,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function ExamListingPage() {
-  const [result, t] = await Promise.all([getActiveExams(), getTranslations("Exam.listing")]);
+export default async function ExamListingPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const [result, t] = await Promise.all([
+    getActiveExams(),
+    getTranslations({ locale, namespace: "Exam.listing" }),
+  ]);
   const allExams = result.success ? result.exams : [];
   const now = new Date();
   const upcomingExams = allExams.filter((e) => new Date((e as { examDate: string }).examDate) > now);

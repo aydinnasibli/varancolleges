@@ -6,7 +6,8 @@ import Question from "@/models/Question";
 import dbConnect from "@/lib/db";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import ResultsQuestionCard from "@/components/exam/ResultsQuestionCard";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import TakeExamButton from "../../TakeExamButton";
 import { Trophy, Target, RotateCcw, CheckCircle, XCircle, MinusCircle, User } from "lucide-react";
 import { answersMatch } from "@/lib/answer-utils";
 
@@ -222,13 +223,10 @@ export default async function ResultsPage({
 
             {/* Actions */}
             <div className="mt-6 flex gap-3">
-              <Link
+              <TakeExamButton
                 href={`/exam/${slug}/take`}
-                className="flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-              >
-                <RotateCcw className="h-4 w-4" />
-                Retake Exam
-              </Link>
+                label="Retake Exam"
+              />
               <Link
                 href="/profile"
                 className="flex items-center gap-2 border border-white/15 hover:border-white/30 text-slate-300 hover:text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"

@@ -454,8 +454,12 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                   handleSectionComplete();
                 }
               }}
-              className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full transition-colors"
+              disabled={submitting}
+              className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full transition-colors flex items-center gap-2"
             >
+              {submitting && currentIndex === questions.length - 1 && (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              )}
               {currentIndex < questions.length - 1 ? "Next" : "Finish Section"}
             </button>
          </div>
