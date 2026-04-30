@@ -821,7 +821,7 @@
       "pastExams": "Keçmiş İmtahanlar",
       "examDate": "İmtahan tarixi",
       "examsAvailable": "imtahan mövcuddur",
-      "adaptive": "Adaptiv",
+      "adaptive": "",
       "stats": {
         "timedModules": "Vaxtlı Modullar",
         "questions": "Suallar",
@@ -841,7 +841,7 @@
         },
         "step3": {
           "title": "İmtahan Ver və Nəzərdən Keçir",
-          "desc": "Tam 4 modullu adaptiv testi keçin, sonra hər sualı ətraflı nəzərdən keçirin."
+          "desc": "Tam 4 modullu testi keçin, sonra hər sualı ətraflı nəzərdən keçirin."
         }
       }
     },

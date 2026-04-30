@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link } from "@/i18n/routing";
-import { Clock, BookOpen, ChevronRight, Zap, Calendar, History } from "lucide-react";
+import { Clock, BookOpen, ChevronRight, Calendar, History } from "lucide-react";
 
 interface Exam {
   _id: string;
@@ -98,10 +98,6 @@ function ExamCard({ exam, isPast, labels }: { exam: Exam; isPast: boolean; label
           <span className="flex items-center gap-1.5">
             <BookOpen className="h-3.5 w-3.5 text-accent/60" />
             98 {labels.questions}
-          </span>
-          <span className="ml-auto flex items-center gap-1 text-accent/70 font-medium">
-            <Zap className="h-3 w-3" />
-            {labels.adaptive}
           </span>
         </div>
 

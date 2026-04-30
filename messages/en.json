@@ -821,7 +821,7 @@
       "pastExams": "Past Exams",
       "examDate": "Exam date",
       "examsAvailable": "exams available",
-      "adaptive": "Adaptive",
+      "adaptive": "",
       "stats": {
         "timedModules": "Timed Modules",
         "questions": "Questions",
@@ -841,7 +841,7 @@
         },
         "step3": {
           "title": "Take & Review",
-          "desc": "Sit the full 4-module adaptive test, then review every question in detail."
+          "desc": "Sit the full 4-module test, then review every question in detail."
         }
       }
     },

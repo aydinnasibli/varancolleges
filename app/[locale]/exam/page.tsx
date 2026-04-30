@@ -2,7 +2,6 @@ import { getActiveExams } from "@/app/actions/exam-public";
 import {
   Timer,
   BarChart3,
-  Zap,
   ClipboardList,
   CreditCard,
   Pencil,
@@ -123,9 +122,8 @@ export default async function ExamListingPage({
         {/* ── STATS STRIP ──────────────────────────────────────────────── */}
         <div className="border-y border-white/5 bg-white/[0.02]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
+            <div className="grid grid-cols-2 md:grid-cols-3 divide-x divide-white/5">
               {[
-                { icon: Zap, value: "4", label: t("stats.timedModules") },
                 { icon: BookOpen, value: "98", label: t("stats.questions") },
                 { icon: Timer, value: "2h 14m", label: t("stats.fullDuration") },
                 { icon: BarChart3, value: "∞", label: t("stats.retakes") },
