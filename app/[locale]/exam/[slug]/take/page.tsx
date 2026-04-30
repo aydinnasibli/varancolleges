@@ -24,11 +24,6 @@ export default async function TakeExamPage({
   if (!examResult.success || !examResult.exam) notFound();
   const exam = examResult.exam as { _id: string; title: string; slug: string; type: string; examDate: string };
 
-  // Block access if exam date hasn't arrived yet
-  if (new Date(exam.examDate) > new Date()) {
-    redirect(`/exam/${slug}`);
-  }
-
   // Verify purchase
   const purchaseResult = await getUserPurchaseForExam(userId, exam._id);
   if (!purchaseResult.purchase) {
@@ -36,6 +31,17 @@ export default async function TakeExamPage({
   }
 
   const purchase = purchaseResult.purchase as { _id: string };
+
+  // Block access if exam date hasn't arrived yet — but only for first-time takers.
+  // Users who have already completed the exam can always retake.
+  if (exam.examDate && new Date(exam.examDate) > new Date()) {
+    const attemptsResult = await getUserAttempts(userId, exam._id);
+    const hasCompleted = attemptsResult.success &&
+      attemptsResult.attempts.some((a) => a.status === "completed");
+    if (!hasCompleted) {
+      redirect(`/exam/${slug}`);
+    }
+  }
 
   // Start or resume attempt
   const attemptResult = await startAttempt(exam._id, purchase._id);
