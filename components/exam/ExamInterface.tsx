@@ -353,9 +353,10 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
             </div>
             {currentQuestion?.passageText && (
               <div className="mb-8 prose prose-slate">
-                <p className="text-base leading-loose text-slate-700 whitespace-pre-wrap font-serif">
-                  {currentQuestion.passageText}
-                </p>
+                <MathRenderer
+                  content={currentQuestion.passageText}
+                  className="text-base leading-loose text-slate-700 whitespace-pre-wrap font-serif"
+                />
               </div>
             )}
             <MathRenderer

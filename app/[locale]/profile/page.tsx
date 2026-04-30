@@ -4,6 +4,7 @@ import { getUserPurchases, getUserAttempts } from "@/app/actions/exam-public";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
+import ExamActionButton from "./ExamActionButton";
 import {
   BookOpen,
   Clock,
@@ -288,21 +289,17 @@ export default async function ProfilePage({
                   {/* ── Action buttons ── */}
                   <div className="flex flex-wrap items-center gap-3 px-6 pb-5">
                     {inProgress ? (
-                      <Link
+                      <ExamActionButton
                         href={`/exam/${exam.slug}/take`}
-                        className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                      >
-                        <PlayCircle className="h-4 w-4" />
-                        {t("continueExam")}
-                      </Link>
+                        label={t("continueExam")}
+                        variant="continue"
+                      />
                     ) : (
-                      <Link
+                      <ExamActionButton
                         href={`/exam/${exam.slug}/take`}
-                        className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                        {completed.length > 0 ? t("retakeExam") : t("startExam")}
-                      </Link>
+                        label={completed.length > 0 ? t("retakeExam") : t("startExam")}
+                        variant={completed.length > 0 ? "retake" : "start"}
+                      />
                     )}
                     {latestCompleted && (
                       <Link
