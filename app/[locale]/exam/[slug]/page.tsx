@@ -66,7 +66,7 @@ export default async function ExamDetailPage({
 
   const examDateObj = new Date(exam.examDate);
   const isExamUnlocked = examDateObj <= new Date();
-  const examDateFormatted = examDateObj.toLocaleDateString("az-AZ", {
+  const examDateFormatted = examDateObj.toLocaleDateString(locale === "az" ? "az-AZ" : "en-US", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -220,7 +220,7 @@ export default async function ExamDetailPage({
                                 {t("attempt")} #{completedAttempts.length - i}
                               </p>
                               <p className="text-xs text-slate-500 mt-0.5">
-                                {new Date(attempt.startedAt).toLocaleDateString("en-US", {
+                                {new Date(attempt.startedAt).toLocaleDateString(locale === "az" ? "az-AZ" : "en-US", {
                                   month: "short",
                                   day: "numeric",
                                   year: "numeric",

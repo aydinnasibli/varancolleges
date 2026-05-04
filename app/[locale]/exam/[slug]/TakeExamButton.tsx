@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronRight, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface TakeExamButtonProps {
   href: string;
@@ -12,6 +13,7 @@ interface TakeExamButtonProps {
 
 export default function TakeExamButton({ href, label, variant = "primary" }: TakeExamButtonProps) {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("Exam.nav");
 
   const base =
     "flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200";
@@ -30,7 +32,7 @@ export default function TakeExamButton({ href, label, variant = "primary" }: Tak
       {loading ? (
         <>
           <Loader2 className="h-4 w-4 animate-spin" />
-          <span>Yüklənir...</span>
+          <span>{t("loading")}</span>
         </>
       ) : (
         <>

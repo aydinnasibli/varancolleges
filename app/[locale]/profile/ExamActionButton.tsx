@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Loader2, PlayCircle, RotateCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ExamActionButtonProps {
   href: string;
@@ -12,6 +13,7 @@ interface ExamActionButtonProps {
 
 export default function ExamActionButton({ href, label, variant }: ExamActionButtonProps) {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("Exam.nav");
 
   const Icon = variant === "continue" ? PlayCircle : RotateCcw;
 
@@ -25,7 +27,7 @@ export default function ExamActionButton({ href, label, variant }: ExamActionBut
       {loading ? (
         <>
           <Loader2 className="h-4 w-4 animate-spin" />
-          Yüklənir...
+          {t("loading")}
         </>
       ) : (
         <>

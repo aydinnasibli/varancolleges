@@ -6,6 +6,7 @@ import { saveAnswer, saveTimeRemaining, saveCurrentPosition, completeSection, su
 import { Flag, ChevronLeft, ChevronRight, Grid, X, Clock, Loader2, Bookmark } from "lucide-react";
 import { toast } from "sonner";
 import MathRenderer from "@/components/MathRenderer";
+import { useTranslations } from "next-intl";
 
 // SAT section durations in seconds
 const SECTION_DURATIONS: Record<string, number> = {
@@ -15,11 +16,8 @@ const SECTION_DURATIONS: Record<string, number> = {
   math_m2: 35 * 60,
 };
 
-const SECTION_LABELS: Record<string, string> = {
-  rw_m1: "Section 1: Reading and Writing",
-  rw_m2: "Section 1: Reading and Writing",
-  math_m1: "Section 2: Math",
-  math_m2: "Section 2: Math",
+const getSectionLabel = (section: string, t: any) => {
+  return section.startsWith("rw") ? t("section1") : t("section2");
 };
 
 const SECTION_ORDER = ["rw_m1", "rw_m2", "math_m1", "math_m2"];
@@ -78,6 +76,7 @@ function getSectionTimingKey(section: string): string {
 
 function FreeResponseInput({ questionId, value, onChange }: { questionId: string; value: string | null; onChange: (val: string) => void; }) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const t = useTranslations("Exam.interface");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -88,13 +87,13 @@ function FreeResponseInput({ questionId, value, onChange }: { questionId: string
 
   return (
     <div className="mt-8 border border-slate-300 rounded-lg p-6 bg-white shadow-sm">
-      <div className="font-bold text-slate-800 mb-4 text-sm">Student-Produced Response</div>
+      <div className="font-bold text-slate-800 mb-4 text-sm">{t("spr")}</div>
       <input
         key={questionId}
         type="text"
         defaultValue={value ?? ""}
         onChange={handleChange}
-        placeholder="Enter your answer"
+        placeholder={t("sprPlaceholder")}
         autoComplete="off"
         className="w-full border-2 border-slate-300 hover:border-slate-400 focus:border-[#0052a3] focus:ring-1 focus:ring-[#0052a3] rounded-md px-4 py-3 text-slate-900 text-lg font-mono outline-none transition-all"
       />
@@ -105,6 +104,7 @@ function FreeResponseInput({ questionId, value, onChange }: { questionId: string
 export default function ExamInterface({ attempt, questions: initialQuestions, examId, examTitle, examSlug, isResuming }: ExamInterfaceProps) {
   const router = useRouter();
   const attemptId = attempt._id;
+  const t = useTranslations("Exam.interface");
 
   const [currentSection, setCurrentSection] = useState(attempt.currentSection);
   const [questions, setQuestions] = useState<QuestionData[]>(initialQuestions);
@@ -288,24 +288,24 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     const breakSecs = breakTimeLeft % 60;
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-slate-900 font-sans">
-        <h1 className="text-3xl font-bold mb-6">{isMainBreak ? "Break Details" : "Module Complete"}</h1>
+        <h1 className="text-3xl font-bold mb-6">{isMainBreak ? t("breakDetails") : t("moduleComplete")}</h1>
         {isMainBreak ? (
           <div className="bg-white border border-slate-300 p-10 rounded-xl shadow-sm text-center max-w-lg w-full">
-            <h2 className="text-xl font-bold mb-4">10-Minute Break</h2>
+            <h2 className="text-xl font-bold mb-4">{t("mainBreakLength")}</h2>
             <div className="text-5xl font-mono font-bold mb-6">
               {String(breakMins).padStart(2, "0")}:{String(breakSecs).padStart(2, "0")}
             </div>
-            <p className="text-slate-600 mb-8">Do not close your device. When the break is over, the exam will resume automatically.</p>
+            <p className="text-slate-600 mb-8">{t("mainBreakDesc")}</p>
             <button onClick={() => { setBreakTimeLeft(0); setPhase("exam"); }} className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full shadow-sm">
-              Resume Testing
+              {t("resumeTesting")}
             </button>
           </div>
         ) : (
           <div className="bg-white border border-slate-300 p-10 rounded-xl shadow-sm text-center max-w-lg w-full">
-            <h2 className="text-xl font-bold mb-4">Are you ready to move on?</h2>
-            <p className="text-slate-600 mb-8">You have completed this module. Once you move on, you cannot return to these questions.</p>
+            <h2 className="text-xl font-bold mb-4">{t("readyToMoveOn")}</h2>
+            <p className="text-slate-600 mb-8">{t("moduleCompleteDesc")}</p>
             <button onClick={() => setPhase("exam")} className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full shadow-sm">
-              Next Module
+              {t("nextModule")}
             </button>
           </div>
         )}
@@ -318,7 +318,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
       <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-900 font-sans">
         <div className="text-center">
           <Loader2 className="h-10 w-10 text-[#0052a3] animate-spin mx-auto mb-4" />
-          <p className="text-xl font-bold">Submitting Score...</p>
+          <p className="text-xl font-bold">{t("submittingScore")}</p>
         </div>
       </div>
     );
@@ -330,7 +330,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
       <header className="h-[52px] bg-white border-b border-slate-300 flex items-center justify-between px-6 shrink-0 text-sm font-semibold text-slate-700">
         <div className="flex-1"></div>
         <div className="flex-1 flex justify-center text-black font-bold">
-          {SECTION_LABELS[currentSection]}
+          {getSectionLabel(currentSection, t)}
         </div>
         <div className="flex-1 flex justify-end gap-6 items-center">
           <span className="font-mono text-base tracking-widest font-bold">
@@ -384,7 +384,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                 }`}
               >
                 <Bookmark className={`w-4 h-4 ${flagged.has(currentQuestion?._id || '') ? "fill-[#b20000]" : ""}`} />
-                {flagged.has(currentQuestion?._id || '') ? "Clear mark" : "Mark for Review"}
+                {flagged.has(currentQuestion?._id || '') ? t("clearMark") : t("markForReview")}
               </button>
             </div>
 
@@ -435,7 +435,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                onClick={() => setShowNav(true)}
                className="font-bold text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 px-5 py-2 rounded-full transition-colors flex items-center gap-2"
             >
-               Question {currentIndex + 1} of {questions.length}
+               {t("question")} {currentIndex + 1} {t("of")} {questions.length}
                <Grid className="w-4 h-4" />
             </button>
          </div>
@@ -445,7 +445,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
               disabled={currentIndex === 0}
               className="px-6 py-2 font-bold text-[#0052a3] disabled:text-slate-300 disabled:cursor-not-allowed hover:bg-slate-100 rounded-full transition-colors"
             >
-              Back
+              {t("back")}
             </button>
             <button
               onClick={() => {
@@ -461,7 +461,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
               {submitting && currentIndex === questions.length - 1 && (
                 <Loader2 className="w-4 h-4 animate-spin" />
               )}
-              {currentIndex < questions.length - 1 ? "Next" : "Finish Section"}
+              {currentIndex < questions.length - 1 ? t("next") : t("finishSection")}
             </button>
          </div>
       </footer>
@@ -473,16 +473,16 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
             <button onClick={() => setShowNav(false)} className="absolute right-6 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-100 rounded-full text-slate-600">
                <X className="w-6 h-6" />
             </button>
-            Review Page
+            {t("reviewPage")}
           </header>
           <div className="p-12 flex-1 overflow-y-auto">
              <div className="max-w-4xl mx-auto">
-                <h3 className="text-xl font-bold mb-8">Section {SECTION_ORDER.indexOf(currentSection) + 1} Overview</h3>
+                <h3 className="text-xl font-bold mb-8">{t("sectionOverview", { number: SECTION_ORDER.indexOf(currentSection) + 1 })}</h3>
                 <div className="flex gap-8 mb-10 text-sm font-bold text-slate-700">
-                   <div className="flex items-center gap-2"><span className="block w-4 h-4 border border-slate-300 bg-white" /> Unanswered</div>
-                   <div className="flex items-center gap-2"><span className="block w-4 h-4 bg-[#0052a3]" /> Answered</div>
+                   <div className="flex items-center gap-2"><span className="block w-4 h-4 border border-slate-300 bg-white" /> {t("unanswered")}</div>
+                   <div className="flex items-center gap-2"><span className="block w-4 h-4 bg-[#0052a3]" /> {t("answered")}</div>
                    <div className="flex items-center gap-2">
-                       <Bookmark className="w-4 h-4 text-[#b20000] fill-[#b20000]" /> For Review
+                       <Bookmark className="w-4 h-4 text-[#b20000] fill-[#b20000]" /> {t("forReview")}
                    </div>
                 </div>
                 

@@ -792,7 +792,8 @@
       "myExams": "İmtahanlarım",
       "signIn": "Daxil ol",
       "signUp": "Qeydiyyat",
-      "panel": "Panel"
+      "panel": "Panel",
+      "loading": "Yüklənir..."
     },
     "listing": {
       "label": "Sınaq İmtahanları",
@@ -889,6 +890,48 @@
       "purchased": "Satın alınıb",
       "moreAttempts": "daha çox cəhd",
       "paymentSuccess": "Ödəniş uğurla tamamlandı! İmtahanınız aşağıda mövcuddur."
+    },
+    "interface": {
+      "section1": "Bölmə 1: Oxu və Yazı",
+      "section2": "Bölmə 2: Riyaziyyat",
+      "spr": "Tələbə tərəfindən yazılan cavab",
+      "sprPlaceholder": "Cavabınızı daxil edin",
+      "markForReview": "Nəzərdən keçirmək üçün işarələ",
+      "clearMark": "İşarəni sil",
+      "moduleComplete": "Modul Tamamlandı",
+      "breakDetails": "Fasilə Detalları",
+      "mainBreakLength": "10 Dəqiqəlik Fasilə",
+      "mainBreakDesc": "Cihazınızı bağlamayın. Fasilə bitdikdə imtahan avtomatik davam edəcək.",
+      "resumeTesting": "İmtahana Davam Et",
+      "readyToMoveOn": "Davam etməyə hazırsınız?",
+      "moduleCompleteDesc": "Bu modulu tamamladınız. Davam etdikdən sonra bu suallara qayıda bilməzsiniz.",
+      "nextModule": "Növbəti Modul",
+      "submittingScore": "Nəticə Göndərilir...",
+      "question": "Sual",
+      "of": "/",
+      "back": "Geri",
+      "next": "İrəli",
+      "finishSection": "Bölməni Bitir",
+      "reviewPage": "Nəzərdən Keçirmə Səhifəsi",
+      "sectionOverview": "Bölmə {number} İcmalı",
+      "unanswered": "Cavablandırılmayıb",
+      "answered": "Cavablandırılıb",
+      "forReview": "Nəzərdən Keçiriləcək"
+    },
+    "results": {
+      "resultsLabel": "Nəticələr",
+      "outOf": "1600 üzərindən",
+      "correct": "düzgün",
+      "wrong": "səhv",
+      "skipped": "keçirilmiş",
+      "retakeExam": "Yenidən imtahan ver",
+      "myProfile": "Mənim Paneliim",
+      "questionOverview": "Sual İcmalı",
+      "questionReview": "Sual Nəzərdən Keçirmə",
+      "correctLegend": "Düzgün",
+      "wrongLegend": "Səhv",
+      "skippedLegend": "Keçirilmiş",
+      "module": "Modul"
     }
   },
   "Payment": {

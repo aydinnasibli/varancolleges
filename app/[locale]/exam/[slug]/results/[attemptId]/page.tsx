@@ -6,9 +6,10 @@ import Question from "@/models/Question";
 import dbConnect from "@/lib/db";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import ResultsQuestionCard from "@/components/exam/ResultsQuestionCard";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import TakeExamButton from "../../TakeExamButton";
-import { Trophy, Target, RotateCcw, CheckCircle, XCircle, MinusCircle, User } from "lucide-react";
+import { Trophy, Target, CheckCircle, XCircle, MinusCircle, User } from "lucide-react";
 import { answersMatch } from "@/lib/answer-utils";
 
 export const dynamic = "force-dynamic";
@@ -31,15 +32,16 @@ type QuestionRow = {
 export default async function ResultsPage({
   params,
 }: {
-  params: Promise<{ slug: string; attemptId: string }>;
+  params: Promise<{ slug: string; attemptId: string; locale: string }>;
 }) {
-  const { slug, attemptId } = await params;
+  const { slug, attemptId, locale } = await params;
   const { userId } = await auth();
   if (!userId) redirect(`/exam/${slug}`);
 
-  const [examResult, attemptResult] = await Promise.all([
+  const [examResult, attemptResult, t] = await Promise.all([
     getExamBySlug(slug),
     getAttemptById(attemptId, userId),
+    getTranslations({ locale, namespace: "Exam.results" }),
   ]);
 
   if (!examResult.success || !examResult.exam) notFound();
@@ -124,13 +126,13 @@ export default async function ResultsPage({
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-xs text-slate-500 mb-6">
               <Link href="/profile" className="hover:text-accent transition-colors flex items-center gap-1">
-                <User className="h-3.5 w-3.5" /> My Profile
+                <User className="h-3.5 w-3.5" /> {t("myProfile")}
               </Link>
               <span>/</span>
               <span className="text-slate-400">{exam.title}</span>
               <span>/</span>
               <span>
-                {new Date(attempt.startedAt).toLocaleDateString("en-US", {
+                {new Date(attempt.startedAt).toLocaleDateString(locale === "az" ? "az-AZ" : "en-US", {
                   month: "short",
                   day: "numeric",
                   year: "numeric",
@@ -143,10 +145,10 @@ export default async function ResultsPage({
               <div>
                 <div className="flex items-center gap-2 text-sm text-slate-400 mb-3">
                   <Trophy className="h-4 w-4 text-accent" />
-                  {exam.title} — Results
+                  {exam.title} — {t("resultsLabel")}
                 </div>
                 <div className={`text-7xl font-bold mb-1 ${scoreColour}`}>{totalScore}</div>
-                <div className="text-slate-500 text-base mb-6">out of 1600</div>
+                <div className="text-slate-500 text-base mb-6">{t("outOf")}</div>
 
                 {/* Score bar */}
                 <div className="max-w-xs">
@@ -189,7 +191,7 @@ export default async function ResultsPage({
                     <div className="flex items-end justify-between gap-4">
                       <span className="text-3xl font-bold text-white">{s.score}</span>
                       <span className="text-sm text-slate-400 mb-0.5">
-                        {s.correct}/{s.total} correct
+                        {s.correct}/{s.total} {t("correct")}
                       </span>
                     </div>
                     <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -207,16 +209,16 @@ export default async function ResultsPage({
             <div className="flex flex-wrap gap-3 mt-8">
               <span className="flex items-center gap-1.5 text-sm text-green-400 bg-green-400/10 border border-green-400/20 px-3 py-1.5 rounded-full">
                 <CheckCircle className="h-3.5 w-3.5" />
-                {totalCorrect} correct
+                {totalCorrect} {t("correct")}
               </span>
               <span className="flex items-center gap-1.5 text-sm text-red-400 bg-red-400/10 border border-red-400/20 px-3 py-1.5 rounded-full">
                 <XCircle className="h-3.5 w-3.5" />
-                {totalWrong} wrong
+                {totalWrong} {t("wrong")}
               </span>
               {totalSkipped > 0 && (
                 <span className="flex items-center gap-1.5 text-sm text-slate-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
                   <MinusCircle className="h-3.5 w-3.5" />
-                  {totalSkipped} skipped
+                  {totalSkipped} {t("skipped")}
                 </span>
               )}
             </div>
@@ -225,13 +227,13 @@ export default async function ResultsPage({
             <div className="mt-6 flex gap-3">
               <TakeExamButton
                 href={`/exam/${slug}/take`}
-                label="Retake Exam"
+                label={t("retakeExam")}
               />
               <Link
                 href="/profile"
                 className="flex items-center gap-2 border border-white/15 hover:border-white/30 text-slate-300 hover:text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
               >
-                My Profile
+                {t("myProfile")}
               </Link>
             </div>
           </div>
@@ -241,7 +243,7 @@ export default async function ResultsPage({
         <section className="max-w-4xl mx-auto px-6 pt-10">
           <h2 className="text-lg font-semibold text-white mb-5 flex items-center gap-2">
             <Target className="h-5 w-5 text-accent" />
-            Question Overview
+            {t("questionOverview")}
           </h2>
 
           <div className="space-y-5">
@@ -251,7 +253,7 @@ export default async function ResultsPage({
                 <div key={mod.key}>
                   <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
                     {mod.label} ·{" "}
-                    {mod.qs.filter(isCorrectQ).length}/{mod.qs.length} correct
+                    {mod.qs.filter(isCorrectQ).length}/{mod.qs.length} {t("correct")}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {mod.qs.map((q) => {
@@ -285,13 +287,13 @@ export default async function ResultsPage({
           {/* Legend */}
           <div className="flex items-center gap-5 mt-5 pt-4 border-t border-white/5">
             <span className="flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="w-3 h-3 rounded bg-green-500/30 inline-block" /> Correct
+              <span className="w-3 h-3 rounded bg-green-500/30 inline-block" /> {t("correctLegend")}
             </span>
             <span className="flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="w-3 h-3 rounded bg-red-500/30 inline-block" /> Wrong
+              <span className="w-3 h-3 rounded bg-red-500/30 inline-block" /> {t("wrongLegend")}
             </span>
             <span className="flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="w-3 h-3 rounded bg-white/10 inline-block" /> Skipped
+              <span className="w-3 h-3 rounded bg-white/10 inline-block" /> {t("skippedLegend")}
             </span>
           </div>
         </section>
@@ -300,7 +302,7 @@ export default async function ResultsPage({
         <section className="max-w-4xl mx-auto px-6 pt-10">
           <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
             <Target className="h-5 w-5 text-accent" />
-            Question Review
+            {t("questionReview")}
           </h2>
 
           <QuestionSection
@@ -309,6 +311,7 @@ export default async function ResultsPage({
             answerMap={answerMap}
             isCorrectQ={isCorrectQ}
             indexedQuestions={indexedQuestions}
+            t={t}
           />
 
           <QuestionSection
@@ -317,6 +320,7 @@ export default async function ResultsPage({
             answerMap={answerMap}
             isCorrectQ={isCorrectQ}
             indexedQuestions={indexedQuestions}
+            t={t}
           />
         </section>
       </main>
@@ -330,12 +334,14 @@ function QuestionSection({
   answerMap,
   isCorrectQ,
   indexedQuestions,
+  t,
 }: {
   title: string;
   questions: QuestionRow[];
   answerMap: Map<string, { selectedAnswer: string | null; isFlagged: boolean }>;
   isCorrectQ: (q: QuestionRow) => boolean;
   indexedQuestions: Array<{ q: QuestionRow; gi: number }>;
+  t: any;
 }) {
   if (questions.length === 0) return null;
 
@@ -347,7 +353,7 @@ function QuestionSection({
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-base font-semibold text-white">{title}</h3>
         <span className="text-sm text-slate-400">
-          {correct}/{questions.length} correct
+          {correct}/{questions.length} {t("correct")}
         </span>
       </div>
 
@@ -356,7 +362,7 @@ function QuestionSection({
         return (
           <div key={mi} className="mb-6">
             <p className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">
-              Module {mi + 1}
+              {t("module")} {mi + 1}
             </p>
             <div className="space-y-2">
               {qs.map((q) => {

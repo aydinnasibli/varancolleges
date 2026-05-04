@@ -48,19 +48,21 @@ function SubScore({ label, value }: { label: string; value?: number }) {
 }
 
 export default async function ProfilePage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ payment?: string }>;
 }) {
   const { userId } = await auth();
   if (!userId) redirect("/exam");
 
-  const sp = await searchParams;
+  const [{ locale }, sp] = await Promise.all([params, searchParams]);
   const paymentSuccess = sp.payment === "success";
 
   const [user, t, purchasesResult, attemptsResult] = await Promise.all([
     currentUser(),
-    getTranslations("Exam.profile"),
+    getTranslations({ locale, namespace: "Exam.profile" }),
     getUserPurchases(userId),
     getUserAttempts(userId),
   ]);

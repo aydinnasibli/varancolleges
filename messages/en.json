@@ -792,7 +792,8 @@
       "myExams": "My Exams",
       "signIn": "Sign In",
       "signUp": "Sign Up",
-      "panel": "Panel"
+      "panel": "Panel",
+      "loading": "Loading..."
     },
     "listing": {
       "label": "Mock Exams",
@@ -889,6 +890,48 @@
       "purchased": "Purchased",
       "moreAttempts": "more attempts",
       "paymentSuccess": "Payment successful! Your exam is now available below."
+    },
+    "interface": {
+      "section1": "Section 1: Reading and Writing",
+      "section2": "Section 2: Math",
+      "spr": "Student-Produced Response",
+      "sprPlaceholder": "Enter your answer",
+      "markForReview": "Mark for Review",
+      "clearMark": "Clear mark",
+      "moduleComplete": "Module Complete",
+      "breakDetails": "Break Details",
+      "mainBreakLength": "10-Minute Break",
+      "mainBreakDesc": "Do not close your device. When the break is over, the exam will resume automatically.",
+      "resumeTesting": "Resume Testing",
+      "readyToMoveOn": "Are you ready to move on?",
+      "moduleCompleteDesc": "You have completed this module. Once you move on, you cannot return to these questions.",
+      "nextModule": "Next Module",
+      "submittingScore": "Submitting Score...",
+      "question": "Question",
+      "of": "of",
+      "back": "Back",
+      "next": "Next",
+      "finishSection": "Finish Section",
+      "reviewPage": "Review Page",
+      "sectionOverview": "Section {number} Overview",
+      "unanswered": "Unanswered",
+      "answered": "Answered",
+      "forReview": "For Review"
+    },
+    "results": {
+      "resultsLabel": "Results",
+      "outOf": "out of 1600",
+      "correct": "correct",
+      "wrong": "wrong",
+      "skipped": "skipped",
+      "retakeExam": "Retake Exam",
+      "myProfile": "My Profile",
+      "questionOverview": "Question Overview",
+      "questionReview": "Question Review",
+      "correctLegend": "Correct",
+      "wrongLegend": "Wrong",
+      "skippedLegend": "Skipped",
+      "module": "Module"
     }
   },
   "Payment": {
