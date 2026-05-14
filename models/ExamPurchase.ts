@@ -7,7 +7,7 @@ export interface IExamPurchase extends Document {
   stripePaymentIntentId: string;
   amount: number; // in qəpik
   currency: string;
-  status: "pending" | "completed" | "refunded";
+  status: "pending" | "completed" | "refunded" | "cancelled";
   purchasedAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -23,7 +23,7 @@ const ExamPurchaseSchema = new mongoose.Schema<IExamPurchase>(
     currency: { type: String, default: "azn" },
     status: {
       type: String,
-      enum: ["pending", "completed", "refunded"],
+      enum: ["pending", "completed", "refunded", "cancelled"],
       default: "pending",
     },
     purchasedAt: { type: Date, default: Date.now },

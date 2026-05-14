@@ -6,7 +6,7 @@ export interface ITuitionPayment extends Document {
   stripePaymentIntentId: string;
   amount: number; // in qəpik
   currency: string;
-  status: "pending" | "completed" | "refunded";
+  status: "pending" | "completed" | "refunded" | "cancelled";
   description: string;
   paidAt: Date;
   createdAt: Date;
@@ -22,7 +22,7 @@ const TuitionPaymentSchema = new mongoose.Schema<ITuitionPayment>(
     currency: { type: String, default: "azn" },
     status: {
       type: String,
-      enum: ["pending", "completed", "refunded"],
+      enum: ["pending", "completed", "refunded", "cancelled"],
       default: "pending",
     },
     description: { type: String, default: "" },

@@ -8,6 +8,8 @@ import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { answersMatch } from "@/lib/answer-utils";
+import { rateLimit } from "@/lib/rate-limit";
+import { startAttemptSchema } from "@/lib/validations";
 
 // SAT section durations in seconds
 const SECTION_DURATIONS: Record<string, number> = {
@@ -79,17 +81,21 @@ export async function startAttempt(examId: string, purchaseId: string) {
   const { userId } = await auth();
   if (!userId) return { success: false, error: "Not authenticated" };
 
+  const parsed = startAttemptSchema.safeParse({ examId, purchaseId });
+  if (!parsed.success) return { success: false, error: "Invalid request" };
+
+  if (rateLimit(`start-attempt:${userId}`, 10, 60 * 60 * 1000)) {
+    return { success: false, error: "Too many requests. Please try again later." };
+  }
+
   try {
     await dbConnect();
 
-    // Verify the purchase belongs to this user and is not refunded.
-    // "pending" is accepted — the webhook may still be in flight but the
-    // payment was initiated, so the student should be able to start.
     const purchase = await ExamPurchase.findOne({
       _id: purchaseId,
       userId,
       examId,
-      status: { $in: ["pending", "completed"] },
+      status: "completed",
     });
     if (!purchase) return { success: false, error: "Purchase not verified" };
 

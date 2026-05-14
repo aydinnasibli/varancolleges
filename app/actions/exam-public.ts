@@ -52,7 +52,7 @@ export async function getUserPurchaseForExam(userId: string, examId: string) {
     const purchase = await ExamPurchase.findOne({
       userId,
       examId,
-      status: { $in: ["pending", "completed"] },
+      status: "completed",
     }).lean();
     if (!purchase) return { success: true, purchase: null };
     return {
@@ -132,7 +132,7 @@ export async function getAttemptById(attemptId: string, userId: string) {
 export async function getUserPurchases(userId: string) {
   try {
     await dbConnect();
-    const purchases = await ExamPurchase.find({ userId, status: { $in: ["pending", "completed"] } })
+    const purchases = await ExamPurchase.find({ userId, status: "completed" })
       .sort({ purchasedAt: -1 })
       .lean();
 

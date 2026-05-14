@@ -8,3 +8,19 @@ export const contactSchema = z.object({
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
+
+const objectId = z.string().regex(/^[a-f\d]{24}$/i, "Invalid ID");
+
+export const checkoutSessionSchema = z.object({
+  examId: objectId,
+});
+
+export const tuitionPaymentSchema = z.object({
+  amount: z.number().int().min(100).max(500000),
+  description: z.string().max(500).optional(),
+});
+
+export const startAttemptSchema = z.object({
+  examId: objectId,
+  purchaseId: objectId,
+});

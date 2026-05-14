@@ -71,6 +71,23 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  if (event.type === "checkout.session.expired") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    try {
+      await dbConnect();
+      await ExamPurchase.findOneAndUpdate(
+        { stripeSessionId: session.id, status: "pending" },
+        { status: "cancelled" }
+      );
+      await TuitionPayment.findOneAndUpdate(
+        { stripeSessionId: session.id, status: "pending" },
+        { status: "cancelled" }
+      );
+    } catch (error) {
+      console.error("Failed to cancel expired session:", error);
+    }
+  }
+
   if (event.type === "charge.refunded") {
     const charge = event.data.object as Stripe.Charge;
     try {

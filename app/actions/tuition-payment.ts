@@ -5,13 +5,15 @@ import dbConnect from "@/lib/db";
 import TuitionPayment from "@/models/TuitionPayment";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
+import { rateLimit } from "@/lib/rate-limit";
+import { tuitionPaymentSchema } from "@/lib/validations";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
 });
 
 export async function createTuitionPaymentSession(
-  amount: number, // in qəpik
+  amount: number,
   description?: string
 ) {
   const { userId } = await auth();
@@ -19,8 +21,12 @@ export async function createTuitionPaymentSession(
     return { success: false, error: "You must be signed in to make a payment" };
   }
 
-  // Validate amount: 1₼ (100 qəpik) to 5000₼ (500000 qəpik)
-  if (!amount || amount < 100 || amount > 500000) {
+  if (rateLimit(`tuition:${userId}`, 10, 60 * 60 * 1000)) {
+    return { success: false, error: "Too many requests. Please try again later." };
+  }
+
+  const parsed = tuitionPaymentSchema.safeParse({ amount, description });
+  if (!parsed.success) {
     return { success: false, error: "Amount must be between ₼1 and ₼5,000" };
   }
 
@@ -45,7 +51,7 @@ export async function createTuitionPaymentSession(
             currency: "azn",
             unit_amount: amount,
             product_data: {
-              name: description || "Tuition Payment — VaranColleges",
+              name: parsed.data.description || "Tuition Payment — VaranColleges",
               description: `Online payment via VaranColleges`,
             },
           },
@@ -56,7 +62,7 @@ export async function createTuitionPaymentSession(
       metadata: {
         userId,
         paymentType: "tuition",
-        description: description || "",
+        description: parsed.data.description || "",
       },
       success_url: `${baseUrl}/payment?payment=success`,
       cancel_url: `${baseUrl}/payment?payment=cancelled`,
@@ -68,7 +74,7 @@ export async function createTuitionPaymentSession(
       amount,
       currency: "azn",
       status: "pending",
-      description: description || "",
+      description: parsed.data.description || "",
       paidAt: new Date(),
     });
 
