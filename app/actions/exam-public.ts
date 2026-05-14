@@ -97,6 +97,7 @@ export async function getUserAttempts(userId: string, examId?: string) {
         purchaseId: a.purchaseId.toString(),
         startedAt: (a.startedAt as Date).toISOString(),
         completedAt: a.completedAt ? (a.completedAt as Date).toISOString() : null,
+        updatedAt: (a.updatedAt as Date).toISOString(),
         answers: a.answers.map((ans) => ({
           ...ans,
           questionId: ans.questionId.toString(),
@@ -110,6 +111,9 @@ export async function getUserAttempts(userId: string, examId?: string) {
 }
 
 export async function getAttemptById(attemptId: string, userId: string) {
+  const { userId: authedId } = await auth();
+  if (!authedId || authedId !== userId) return { success: false, error: "Unauthorized" };
+
   try {
     await dbConnect();
     const attempt = await ExamAttempt.findOne({ _id: attemptId, userId }).lean();

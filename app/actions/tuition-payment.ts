@@ -75,7 +75,7 @@ export async function createTuitionPaymentSession(
       currency: "azn",
       status: "pending",
       description: parsed.data.description || "",
-      paidAt: new Date(),
+      // paidAt is intentionally omitted — set by the Stripe webhook on confirmation
     });
 
     return { success: true, sessionUrl: session.url };

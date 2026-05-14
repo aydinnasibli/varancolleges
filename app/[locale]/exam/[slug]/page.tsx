@@ -83,13 +83,21 @@ export default async function ExamDetailPage({
     ]);
     purchase = purchaseResult.purchase;
     if (attemptsResult.success) {
+      const RESUME_TIMEOUT_MS = 5 * 60 * 1000;
       const attempts = attemptsResult.attempts as Array<{
         _id: string;
         status: string;
         scores?: { total?: number };
         startedAt: string;
+        updatedAt: string;
       }>;
-      inProgressAttempt = attempts.find((a) => a.status === "in_progress") || null;
+      // Only treat an in_progress attempt as resumable if it was active within
+      // the last 5 minutes — matches the server-side abandonment threshold
+      inProgressAttempt = attempts.find(
+        (a) =>
+          a.status === "in_progress" &&
+          Date.now() - new Date(a.updatedAt).getTime() < RESUME_TIMEOUT_MS
+      ) || null;
       completedAttempts = attempts.filter((a) => a.status === "completed");
     }
   }

@@ -191,13 +191,22 @@ export async function saveAnswer(
   const { userId } = await auth();
   if (!userId) return { success: false, error: "Not authenticated" };
 
+  // Validate selectedAnswer: null, A/B/C/D (MC), or a short string (free response)
+  if (selectedAnswer !== null) {
+    const isMcAnswer = /^[A-D]$/.test(selectedAnswer);
+    const isFrAnswer = selectedAnswer.length <= 50;
+    if (!isMcAnswer && !isFrAnswer) {
+      return { success: false, error: "Invalid answer" };
+    }
+  }
+
   try {
     await dbConnect();
-    // Filter by userId so users can only modify their own attempts
     await ExamAttempt.updateOne(
       {
         _id: attemptId,
         userId,
+        status: "in_progress",
         "answers.questionId": new mongoose.Types.ObjectId(questionId),
       },
       {
@@ -245,14 +254,18 @@ export async function saveTimeRemaining(
   const { userId } = await auth();
   if (!userId) return { success: false };
 
+  const fieldKey = TIMING_KEY[section];
+  if (!fieldKey) return { success: false };
+
+  // Clamp to valid range — prevents clients from freezing the timer
+  const maxDuration = SECTION_DURATIONS[section] ?? 0;
+  const clamped = Math.max(0, Math.min(secondsLeft, maxDuration));
+
   try {
     await dbConnect();
-    const fieldKey = TIMING_KEY[section];
-    if (!fieldKey) return { success: false };
-
     await ExamAttempt.updateOne(
-      { _id: attemptId, userId },
-      { $set: { [`sectionTimeRemaining.${fieldKey}`]: secondsLeft } }
+      { _id: attemptId, userId, status: "in_progress" },
+      { $set: { [`sectionTimeRemaining.${fieldKey}`]: clamped } }
     );
     return { success: true };
   } catch (error) {
@@ -265,6 +278,10 @@ export async function saveTimeRemaining(
 export async function completeSection(attemptId: string, section: string) {
   const { userId } = await auth();
   if (!userId) return { success: false, error: "Not authenticated" };
+
+  if (rateLimit(`complete-section:${userId}`, 20, 60 * 60 * 1000)) {
+    return { success: false, error: "Too many requests. Please try again later." };
+  }
 
   try {
     await dbConnect();
