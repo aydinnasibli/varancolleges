@@ -4,6 +4,7 @@ import dbConnect from "@/lib/db";
 import Exam from "@/models/Exam";
 import ExamPurchase from "@/models/ExamPurchase";
 import ExamAttempt from "@/models/ExamAttempt";
+import { auth } from "@clerk/nextjs/server";
 
 export async function getActiveExams() {
   try {
@@ -47,6 +48,9 @@ export async function getExamBySlug(slug: string) {
 }
 
 export async function getUserPurchaseForExam(userId: string, examId: string) {
+  const { userId: authedId } = await auth();
+  if (!authedId || authedId !== userId) return { success: false, purchase: null };
+
   try {
     await dbConnect();
     const purchase = await ExamPurchase.findOne({
@@ -71,6 +75,9 @@ export async function getUserPurchaseForExam(userId: string, examId: string) {
 }
 
 export async function getUserAttempts(userId: string, examId?: string) {
+  const { userId: authedId } = await auth();
+  if (!authedId || authedId !== userId) return { success: false, attempts: [] };
+
   try {
     await dbConnect();
     const filter: Record<string, unknown> = { userId };
@@ -78,6 +85,7 @@ export async function getUserAttempts(userId: string, examId?: string) {
 
     const attempts = await ExamAttempt.find(filter)
       .sort({ startedAt: -1 })
+      .limit(200)
       .lean();
 
     return {
@@ -130,9 +138,15 @@ export async function getAttemptById(attemptId: string, userId: string) {
 }
 
 export async function getUserPurchases(userId: string) {
+  const { userId: authedId } = await auth();
+  if (!authedId || authedId !== userId) return { success: false, purchases: [] };
+
   try {
     await dbConnect();
-    const purchases = await ExamPurchase.find({ userId, status: "completed" })
+    const purchases = await ExamPurchase.find({
+      userId,
+      status: { $in: ["completed", "pending"] },
+    })
       .sort({ purchasedAt: -1 })
       .lean();
 

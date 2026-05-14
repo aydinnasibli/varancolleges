@@ -108,29 +108,37 @@ export async function startAttempt(examId: string, purchaseId: string) {
     }).lean();
 
     if (existing) {
-      // If the attempt has no answered questions it's an empty shell — abandon it
-      // and fall through to create a fresh attempt (prevents "Continue Exam" showing
-      // on the profile page after a student has already submitted and viewed results).
       const hasProgress = (existing.answers as Array<{ selectedAnswer: string | null }>)
         .some((a) => a.selectedAnswer !== null);
 
       if (hasProgress) {
-        const questions = await loadQuestionsForSection(
-          examId,
-          existing.currentSection as string
-        );
-        return {
-          success: true,
-          attempt: serializeAttempt(existing as unknown as Record<string, unknown>),
-          questions: questions.map((q) =>
-            serializeQuestion(q as unknown as Record<string, unknown>)
-          ),
-          isResuming: true,
-        };
-      }
+        // If the student was inactive for more than 5 minutes, the attempt is
+        // considered expired. saveTimeRemaining writes every 30s while active,
+        // so updatedAt is a reliable proxy for "last active at".
+        const RESUME_TIMEOUT_MS = 5 * 60 * 1000;
+        const isTimedOut = Date.now() - existing.updatedAt.getTime() > RESUME_TIMEOUT_MS;
 
-      // No progress — discard the empty attempt
-      await ExamAttempt.findByIdAndUpdate(existing._id, { status: "abandoned" });
+        if (isTimedOut) {
+          await ExamAttempt.findByIdAndUpdate(existing._id, { status: "abandoned" });
+          // Fall through to create a fresh attempt below
+        } else {
+          const questions = await loadQuestionsForSection(
+            examId,
+            existing.currentSection as string
+          );
+          return {
+            success: true,
+            attempt: serializeAttempt(existing as unknown as Record<string, unknown>),
+            questions: questions.map((q) =>
+              serializeQuestion(q as unknown as Record<string, unknown>)
+            ),
+            isResuming: true,
+          };
+        }
+      } else {
+        // No progress — discard the empty shell
+        await ExamAttempt.findByIdAndUpdate(existing._id, { status: "abandoned" });
+      }
     }
 
     // Start fresh — load Module 1 R&W

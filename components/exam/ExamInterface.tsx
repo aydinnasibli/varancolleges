@@ -130,6 +130,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
   const [phase, setPhase] = useState<"exam" | "section_break" | "submitting">("exam");
   const [breakType, setBreakType] = useState<SectionBreakType>("module");
   const [breakTimeLeft, setBreakTimeLeft] = useState(0);
+  const [nextQuestionsReady, setNextQuestionsReady] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const timeUpRef = useRef(false);
@@ -226,6 +227,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     if (submittingRef.current) return;
     submittingRef.current = true;
     setSubmitting(true);
+
     const sectionIdx = SECTION_ORDER.indexOf(currentSection);
     const isLastSection = sectionIdx === SECTION_ORDER.length - 1;
 
@@ -243,26 +245,31 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
       return;
     }
 
-    const result = await completeSection(attemptId, currentSection);
-    if (!result.success) {
-      toast.error("Failed to advance.");
-      submittingRef.current = false;
-      setSubmitting(false);
-      return;
-    }
-
+    // Capture before any state changes — closures in async code below need this
+    const completingSection = currentSection;
     const nextSection = SECTION_ORDER[sectionIdx + 1];
-    const isRwToMath = currentSection === "rw_m2" && nextSection === "math_m1";
+    const isRwToMath = completingSection === "rw_m2" && nextSection === "math_m1";
     const bt = isRwToMath ? "sections" : "module";
+
+    // Transition to break screen immediately — no waiting for DB
     setBreakType(bt);
     setBreakTimeLeft(bt === "sections" ? 10 * 60 : 0);
-    setQuestions((result.questions ?? []) as unknown as QuestionData[]);
     setCurrentSection(nextSection);
     setCurrentIndex(0);
     setTimeLeft(SECTION_DURATIONS[nextSection] ?? 35 * 60);
+    setNextQuestionsReady(false);
     setPhase("section_break");
     submittingRef.current = false;
     setSubmitting(false);
+
+    // Load next section questions in the background while the break screen is visible
+    const result = await completeSection(attemptId, completingSection);
+    if (result.success && result.questions) {
+      setQuestions(result.questions as unknown as QuestionData[]);
+      setNextQuestionsReady(true);
+    } else {
+      toast.error("Failed to load next section. Please refresh.");
+    }
   };
 
   useEffect(() => {
@@ -296,7 +303,12 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
               {String(breakMins).padStart(2, "0")}:{String(breakSecs).padStart(2, "0")}
             </div>
             <p className="text-slate-600 mb-8">{t("mainBreakDesc")}</p>
-            <button onClick={() => { setBreakTimeLeft(0); setPhase("exam"); }} className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full shadow-sm">
+            <button
+              onClick={() => { if (nextQuestionsReady) { setBreakTimeLeft(0); setPhase("exam"); } }}
+              disabled={!nextQuestionsReady}
+              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm flex items-center gap-2 mx-auto"
+            >
+              {!nextQuestionsReady && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("resumeTesting")}
             </button>
           </div>
@@ -304,7 +316,12 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
           <div className="bg-white border border-slate-300 p-10 rounded-xl shadow-sm text-center max-w-lg w-full">
             <h2 className="text-xl font-bold mb-4">{t("readyToMoveOn")}</h2>
             <p className="text-slate-600 mb-8">{t("moduleCompleteDesc")}</p>
-            <button onClick={() => setPhase("exam")} className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] text-white font-bold rounded-full shadow-sm">
+            <button
+              onClick={() => { if (nextQuestionsReady) setPhase("exam"); }}
+              disabled={!nextQuestionsReady}
+              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm flex items-center gap-2 mx-auto"
+            >
+              {!nextQuestionsReady && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("nextModule")}
             </button>
           </div>

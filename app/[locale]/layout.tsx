@@ -105,6 +105,7 @@ const jsonLd = {
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ensureUserInDb } from "@/lib/ensure-user";
 
 export default async function RootLayout({
   children,
@@ -115,6 +116,10 @@ export default async function RootLayout({
 }>) {
   const { locale } = await params;
   const messages = await getMessages({locale});
+
+  // Ensure signed-in user exists in DB (primary sync is via Clerk webhook;
+  // this catches webhook failures, pre-existing users, and race conditions)
+  await ensureUserInDb();
 
   return (
     <ClerkProvider>
