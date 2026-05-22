@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { saveAnswer, saveTimeRemaining, saveCurrentPosition, completeSection, submitExam } from "@/app/actions/exam-attempt";
+import { saveAnswer, saveTimeRemaining, saveCurrentPosition, completeSection, submitExam, prefetchNextSectionQuestions } from "@/app/actions/exam-attempt";
 import { Flag, ChevronLeft, ChevronRight, Grid, X, Clock, Loader2, Bookmark } from "lucide-react";
 import { toast } from "sonner";
 import MathRenderer from "@/components/MathRenderer";
@@ -134,6 +134,8 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
   const [submitting, setSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const timeUpRef = useRef(false);
+  const prefetchedQuestionsRef = useRef<QuestionData[] | null>(null);
+  const prefetchingRef = useRef(false);
 
   const timeLeftRef = useRef(timeLeft);
   const currentSectionRef = useRef(currentSection);
@@ -186,6 +188,23 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     saveCurrentPosition(attemptId, currentSection, currentIndex).catch(console.error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, currentSection]);
+
+  // Prefetch next section questions when the student reaches the last question,
+  // so the "Next Module" button is immediately ready on the break screen.
+  useEffect(() => {
+    if (phase !== "exam") return;
+    if (currentIndex !== questions.length - 1) return;
+    const sectionIdx = SECTION_ORDER.indexOf(currentSection);
+    if (sectionIdx < 0 || sectionIdx >= SECTION_ORDER.length - 1) return;
+    if (prefetchingRef.current || prefetchedQuestionsRef.current) return;
+
+    prefetchingRef.current = true;
+    prefetchNextSectionQuestions(examId, currentSection).then((qs) => {
+      if (qs) prefetchedQuestionsRef.current = qs as QuestionData[];
+      prefetchingRef.current = false;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex, questions.length, currentSection, phase]);
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60);
@@ -251,25 +270,36 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     const isRwToMath = completingSection === "rw_m2" && nextSection === "math_m1";
     const bt = isRwToMath ? "sections" : "module";
 
+    // If we prefetched questions already (user was on last question for ≥1s),
+    // apply them immediately so the break screen button needs no spinner.
+    const cached = prefetchedQuestionsRef.current;
+    prefetchedQuestionsRef.current = null;
+    prefetchingRef.current = false;
+
+    if (cached) setQuestions(cached);
+
     // Transition to break screen immediately — no waiting for DB
     setBreakType(bt);
     setBreakTimeLeft(bt === "sections" ? 10 * 60 : 0);
     setCurrentSection(nextSection);
     setCurrentIndex(0);
     setTimeLeft(SECTION_DURATIONS[nextSection] ?? 35 * 60);
-    setNextQuestionsReady(false);
+    setNextQuestionsReady(!!cached);
     setPhase("section_break");
     submittingRef.current = false;
     setSubmitting(false);
 
-    // Load next section questions in the background while the break screen is visible
+    // Always call completeSection for DB writes (answer slots + currentSection update).
+    // If we already have questions from the prefetch, ignore the returned questions.
     const result = await completeSection(attemptId, completingSection);
-    if (result.success && result.questions) {
-      setQuestions(result.questions as unknown as QuestionData[]);
-      setNextQuestionsReady(true);
-    } else {
+    if (!result.success) {
       toast.error("Failed to load next section. Please refresh.");
+      return;
     }
+    if (!cached && result.questions) {
+      setQuestions(result.questions as unknown as QuestionData[]);
+    }
+    setNextQuestionsReady(true);
   };
 
   useEffect(() => {

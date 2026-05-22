@@ -406,3 +406,22 @@ export async function submitExam(attemptId: string, slug: string) {
     return { success: false, error: "Failed to submit exam" };
   }
 }
+
+// ─── prefetchNextSectionQuestions ─────────────────────────────────────────────
+// Read-only. Called in the background when the student reaches the last question
+// of a section, so questions are ready before they click "Finish Section".
+export async function prefetchNextSectionQuestions(examId: string, currentSection: string) {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  try {
+    await dbConnect();
+    const sectionIdx = SECTION_ORDER.indexOf(currentSection);
+    if (sectionIdx < 0 || sectionIdx >= SECTION_ORDER.length - 1) return null;
+    const nextSection = SECTION_ORDER[sectionIdx + 1];
+    const questions = await loadQuestionsForSection(examId, nextSection);
+    return questions.map((q) => serializeQuestion(q as unknown as Record<string, unknown>));
+  } catch {
+    return null;
+  }
+}

@@ -195,9 +195,9 @@ export default async function ExamListingPage({
                   desc: t("howItWorks.step3.desc"),
                 },
               ].map(({ step, icon: Icon, title, desc }) => (
-                <div key={step} className="flex flex-col items-center text-center gap-4 relative">
-                  {/* Icon circle */}
-                  <div className="relative">
+                <div key={step} className="flex flex-col items-center text-center gap-4 relative z-10">
+                  {/* bg-background-dark padding blocks the connector line from bleeding through the transparent icon bg */}
+                  <div className="relative bg-background-dark px-4 rounded-3xl">
                     <div className="w-16 h-16 rounded-2xl bg-accent/10 border border-accent/25 flex items-center justify-center">
                       <Icon className="w-7 h-7 text-accent" />
                     </div>
