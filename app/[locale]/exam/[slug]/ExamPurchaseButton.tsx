@@ -2,22 +2,33 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { Loader2, ShoppingCart, CheckCircle } from "lucide-react";
+import { Loader2, ShoppingCart, CheckCircle, AlertTriangle, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { createCheckoutSession } from "@/app/actions/stripe";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface ExamPurchaseButtonProps {
   examId: string;
   price: number;
+  isUpcoming: boolean;
 }
 
 export default function ExamPurchaseButton({
   examId,
   price,
+  isUpcoming,
 }: ExamPurchaseButtonProps) {
+  const t = useTranslations("Exam.detail.purchaseModal");
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alreadyBought, setAlreadyBought] = useState(false);
 
-  const handlePurchase = async () => {
+  const handleAgreeAndPay = async () => {
     setLoading(true);
     try {
       const result = await createCheckoutSession(examId);
@@ -25,6 +36,7 @@ export default function ExamPurchaseButton({
       if (!result.success || !result.sessionUrl) {
         if (result.error === "You have already purchased this exam") {
           setAlreadyBought(true);
+          setOpen(false);
         } else {
           toast.error(result.error || "Payment session could not be created");
         }
@@ -33,8 +45,7 @@ export default function ExamPurchaseButton({
       }
 
       window.location.href = result.sessionUrl;
-    } catch (error) {
-      console.error("Purchase error:", error);
+    } catch {
       toast.error("Something went wrong. Please try again.");
       setLoading(false);
     }
@@ -47,28 +58,98 @@ export default function ExamPurchaseButton({
         className="flex items-center justify-center gap-2 w-full bg-white/5 border border-white/10 text-slate-400 py-3 rounded-xl text-sm font-semibold cursor-not-allowed"
       >
         <CheckCircle className="h-4 w-4 text-green-400" />
-        Already Purchased
+        <span>{t("agreeButton")}</span>
       </button>
     );
   }
 
   return (
-    <button
-      onClick={handlePurchase}
-      disabled={loading}
-      className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
-    >
-      {loading ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" />
-          Redirecting to payment...
-        </>
-      ) : (
-        <>
-          <ShoppingCart className="h-4 w-4" />
-          Purchase for ₼{(price / 100).toFixed(2)}
-        </>
-      )}
-    </button>
+    <>
+      {/* Trigger button */}
+      <button
+        onClick={() => setOpen(true)}
+        className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl text-sm font-semibold transition-colors"
+      >
+        <ShoppingCart className="h-4 w-4" />
+        ₼{(price / 100).toFixed(2)}
+      </button>
+
+      {/* Disclaimer modal */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent
+          showCloseButton={false}
+          className="bg-[#0d1829] border border-white/10 text-white max-w-lg p-0 overflow-hidden"
+        >
+          {/* Gold stripe */}
+          <div className="h-1 bg-gradient-to-r from-accent/40 via-accent to-accent/40" />
+
+          <div className="p-6 space-y-5">
+            <DialogHeader>
+              <div className="flex items-center justify-between">
+                <DialogTitle className="text-lg font-serif font-bold text-white">
+                  {t("title")}
+                </DialogTitle>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-slate-500 hover:text-slate-300 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </DialogHeader>
+
+            {/* Physical attendance warning — only for upcoming exams */}
+            {isUpcoming && (
+              <div className="flex gap-3 bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-semibold text-amber-300">
+                    {t("physicalAttendanceWarning")}
+                  </p>
+                  <p className="text-xs text-amber-200/70 mt-1 leading-relaxed">
+                    {t("physicalAttendanceDetail")}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Terms list */}
+            <ul className="space-y-3">
+              {(["term1", "term2", "term3", "term4"] as const).map((key) => (
+                <li key={key} className="flex gap-2.5 text-xs text-slate-400 leading-relaxed">
+                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-accent/60 shrink-0" />
+                  {t(key)}
+                </li>
+              ))}
+            </ul>
+
+            {/* Action buttons */}
+            <div className="flex flex-col gap-2 pt-1">
+              <button
+                onClick={handleAgreeAndPay}
+                disabled={loading}
+                className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>...</span>
+                  </>
+                ) : (
+                  t("agreeButton")
+                )}
+              </button>
+              <button
+                onClick={() => setOpen(false)}
+                disabled={loading}
+                className="w-full border border-white/10 text-slate-400 hover:text-white hover:border-white/20 py-2.5 rounded-xl text-sm font-medium transition-colors"
+              >
+                {t("cancelButton")}
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

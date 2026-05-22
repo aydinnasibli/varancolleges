@@ -872,7 +872,37 @@
       "timePerModule": "Modulda vaxt",
       "totalTime": "Ümumi vaxt",
       "previousAttempts": "Əvvəlki Cəhdlər",
-      "attempt": "Cəhd"
+      "attempt": "Cəhd",
+      "purchaseModal": {
+        "title": "Satın Almadan Əvvəl",
+        "physicalAttendanceWarning": "Fiziki iştirak məcburidir",
+        "physicalAttendanceDetail": "Bu gələcək imtahana aiddir. İmtahan günü mərkəzimizdə fiziki olaraq iştirak etməlisiniz. Giriş şifrəsi yalnız mərkəzdəki heyət tərəfindən veriləcəkdir — uzaqdan giriş qəbul edilmir.",
+        "term1": "Bu yalnız məşq (mock) imtahanıdır — College Board, British Council, ETS və ya hər hansı digər rəsmi sertifikasiya orqanı tərəfindən tanınmır.",
+        "term2": "Nəticəniz yalnız göstərici xarakter daşıyır; rəsmi imtahanda hər hansı nəticəni zəmanət vermir.",
+        "term3": "Bütün satışlar qətidir. Ödənişdən sonra geri qaytarılma həyata keçirilmir, istisna hallarda VaranColleges idarəçiliyi ilə əvvəlcədən razılaşma tələb olunur.",
+        "term4": "Adınız və e-poçtunuz yalnız imtahanın idarə edilməsi və dəstək məqsədləri üçün istifadə ediləcəkdir.",
+        "agreeButton": "Razıyam — Ödənişə Keç",
+        "cancelButton": "Ləğv et"
+      },
+      "passwordGate": {
+        "title": "İmtahan Şifrəsi Tələb Olunur",
+        "description": "Başlamaq üçün mərkəzimizdə sizə verilən şifrəni daxil edin.",
+        "label": "İmtahan şifrəsi",
+        "placeholder": "Şifrəni daxil edin",
+        "submit": "İmtahana Daxil Ol",
+        "loading": "Yoxlanılır...",
+        "wrongPassword": "Şifrə yanlışdır. Zəhmət olmasa yenidən cəhd edin.",
+        "rateLimited": "Çox sayda cəhd. Zəhmət olmasa 15 dəqiqə sonra yenidən cəhd edin.",
+        "help": "Şifrəniz yoxdursa, imtahan mərkəzi ilə əlaqə saxlayın."
+      },
+      "disclaimerSection": {
+        "title": "Məsuliyyətdən İmtina Bəyannaməsi",
+        "mockExam": "Bu platforma üzərindəki bütün imtahanlar məşq (mock) imtahanlarıdır və heç bir rəsmi sertifikasiya orqanı (College Board, British Council, ETS və s.) tərəfindən tanınmır.",
+        "indicative": "Mock imtahan nəticələri yalnız göstərici xarakter daşıyır; real imtahan nəticəsini təmin etmir və ona zəmanət vermir.",
+        "physicalAttendance": "Gələcək imtahanlar üçün mərkəzimizdə fiziki iştirak məcburidir. Giriş şifrəsi yalnız imtahan günü mərkəzdə veriləcəkdir — uzaqdan giriş qəbul edilmir.",
+        "noRefund": "Ödəniş tamamlandıqdan sonra geri qaytarılma həyata keçirilmir. İstisna hallarda VaranColleges idarəçiliyi ilə əvvəlcədən razılaşma tələb olunur.",
+        "dataConsent": "Satın alma prosesini tamamlayaraq bu şərtləri oxuduğunuzu və qəbul etdiyinizi təsdiq etmiş olursunuz. Şəxsi məlumatlarınız (ad, e-poçt) VaranColleges tərəfindən yalnız imtahanın idarə edilməsi və əlaqə məqsədləri üçün istifadə ediləcəkdir."
+      }
     },
     "profile": {
       "myExams": "İmtahanlarım",

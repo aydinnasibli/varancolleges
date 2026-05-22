@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import nodemailer from "nodemailer";
 import dbConnect from "@/lib/db";
 import ExamPurchase from "@/models/ExamPurchase";
 import TuitionPayment from "@/models/TuitionPayment";
+import Exam from "@/models/Exam";
+import User from "@/models/User";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -61,6 +64,47 @@ export async function POST(request: NextRequest) {
         console.log(
           `Exam purchase completed for session ${session.id}, user ${session.metadata?.userId}`
         );
+
+        // Send marketing notification for upcoming exam purchases
+        const examId = session.metadata?.examId;
+        const userId = session.metadata?.userId;
+        if (examId && userId) {
+          try {
+            const [exam, user] = await Promise.all([
+              Exam.findById(examId).lean(),
+              User.findOne({ clerkId: userId }).lean(),
+            ]);
+            if (exam && user && exam.examDate > new Date()) {
+              const esc = (s: string) =>
+                s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+              const transporter = nodemailer.createTransport({
+                service: "gmail",
+                auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+              });
+              await transporter.sendMail({
+                from: `"VaranColleges" <${process.env.EMAIL_USER}>`,
+                to: "marketing@varancolleges.com",
+                subject: `Yeni İmtahan Qeydiyyatı: ${exam.title}`,
+                html: `
+                  <div style="font-family:sans-serif;line-height:1.6;color:#333;">
+                    <h2 style="color:#0f2142;border-bottom:2px solid #d4af37;padding-bottom:10px;">
+                      Yeni Mock İmtahan Qeydiyyatı
+                    </h2>
+                    <div style="background:#f9f9f9;padding:20px;border-radius:8px;">
+                      <p><strong>Ad:</strong> ${esc(user.firstName)} ${esc(user.lastName)}</p>
+                      <p><strong>Email:</strong> ${esc(user.email)}</p>
+                      <p><strong>İmtahan:</strong> ${esc(exam.title)}</p>
+                      <p><strong>İmtahan tarixi:</strong> ${exam.examDate.toLocaleDateString("az-AZ")}</p>
+                      <p><strong>Ödəniş tarixi:</strong> ${new Date().toLocaleDateString("az-AZ")}</p>
+                    </div>
+                  </div>
+                `,
+              });
+            }
+          } catch (emailErr) {
+            console.error("Marketing email failed:", emailErr);
+          }
+        }
       }
     } catch (error) {
       console.error("Failed to update payment status:", error);

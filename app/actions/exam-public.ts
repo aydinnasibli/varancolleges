@@ -31,14 +31,18 @@ export async function getExamBySlug(slug: string) {
     await dbConnect();
     const exam = await Exam.findOne({ slug, isActive: true }).lean();
     if (!exam) return { success: false, error: "Exam not found" };
+    const { examPassword, ...rest } = exam;
+    const examDate = rest.examDate ? (rest.examDate as Date) : null;
+    const isUnlocked = examDate ? examDate <= new Date() : false;
     return {
       success: true,
       exam: {
-        ...exam,
-        _id: exam._id.toString(),
-        examDate: exam.examDate ? (exam.examDate as Date).toISOString() : null,
-        createdAt: exam.createdAt ? (exam.createdAt as Date).toISOString() : null,
-        updatedAt: exam.updatedAt ? (exam.updatedAt as Date).toISOString() : null,
+        ...rest,
+        _id: rest._id.toString(),
+        examDate: examDate ? examDate.toISOString() : null,
+        createdAt: rest.createdAt ? (rest.createdAt as Date).toISOString() : null,
+        updatedAt: rest.updatedAt ? (rest.updatedAt as Date).toISOString() : null,
+        requiresPassword: isUnlocked && !!examPassword,
       },
     };
   } catch (error) {

@@ -3,6 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import { getExamBySlug, getUserPurchaseForExam, getUserAttempts } from "@/app/actions/exam-public";
 import { startAttempt } from "@/app/actions/exam-attempt";
 import ExamInterface from "@/components/exam/ExamInterface";
+import ExamPasswordGate from "../ExamPasswordGate";
 
 export const dynamic = "force-dynamic";
 export const metadata = { robots: { index: false, follow: false } };
@@ -22,7 +23,7 @@ export default async function TakeExamPage({
   // Get exam
   const examResult = await getExamBySlug(slug);
   if (!examResult.success || !examResult.exam) notFound();
-  const exam = examResult.exam as { _id: string; title: string; slug: string; type: string; examDate: string };
+  const exam = examResult.exam as { _id: string; title: string; slug: string; type: string; examDate: string; requiresPassword: boolean };
 
   // Verify purchase
   const purchaseResult = await getUserPurchaseForExam(userId, exam._id);
@@ -41,6 +42,18 @@ export default async function TakeExamPage({
     if (!hasCompleted) {
       redirect(`/exam/${slug}`);
     }
+  }
+
+  // If the exam requires a password, show the gate — don't start the attempt yet
+  if (exam.requiresPassword) {
+    return (
+      <ExamPasswordGate
+        examId={exam._id}
+        examSlug={slug}
+        examTitle={exam.title}
+        purchaseId={purchase._id}
+      />
+    );
   }
 
   // Start or resume attempt

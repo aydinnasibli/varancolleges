@@ -45,6 +45,7 @@ export async function getExamById(id: string) {
         ...exam,
         _id: exam._id.toString(),
         examDate: exam.examDate ? (exam.examDate as Date).toISOString() : null,
+        examPassword: exam.examPassword ?? "",
         createdAt: exam.createdAt ? (exam.createdAt as Date).toISOString() : null,
         updatedAt: exam.updatedAt ? (exam.updatedAt as Date).toISOString() : null,
       },
@@ -69,6 +70,7 @@ export async function createExam(formData: FormData) {
     const coverImage = (formData.get("coverImage") as string) || "";
     const totalDuration = parseInt(formData.get("totalDuration") as string) || 134;
     const examDateStr = formData.get("examDate") as string;
+    const examPassword = (formData.get("examPassword") as string) || "";
 
     if (!title || !description || !examDateStr) {
       return { success: false, error: "Title, description and exam date are required" };
@@ -83,7 +85,7 @@ export async function createExam(formData: FormData) {
     const exam = await Exam.create({
       title, slug, description,
       type: type || "SAT",
-      price, isActive, coverImage, totalDuration, examDate,
+      price, isActive, coverImage, totalDuration, examDate, examPassword,
     });
 
     revalidatePath("/admin/exam");
@@ -109,6 +111,7 @@ export async function updateExam(id: string, formData: FormData) {
     const coverImage = (formData.get("coverImage") as string) || "";
     const totalDuration = parseInt(formData.get("totalDuration") as string) || 134;
     const examDateStr = formData.get("examDate") as string;
+    const examPassword = (formData.get("examPassword") as string) || "";
 
     if (!title || !description || !examDateStr) {
       return { success: false, error: "Title, description and exam date are required" };
@@ -122,7 +125,7 @@ export async function updateExam(id: string, formData: FormData) {
 
     const exam = await Exam.findByIdAndUpdate(
       id,
-      { title, slug, description, type, price, isActive, coverImage, totalDuration, examDate },
+      { title, slug, description, type, price, isActive, coverImage, totalDuration, examDate, examPassword },
       { new: true }
     );
     if (!exam) return { success: false, error: "Exam not found" };

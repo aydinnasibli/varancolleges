@@ -10,6 +10,7 @@ export interface IExam extends Document {
   coverImage: string;
   totalDuration: number; // total minutes
   examDate: Date;
+  examPassword: string; // set by admin on exam day; empty = no password required
   createdAt: Date;
   updatedAt: Date;
 }
@@ -29,6 +30,7 @@ const ExamSchema = new mongoose.Schema<IExam>(
     coverImage: { type: String, default: "" },
     totalDuration: { type: Number, default: 134 }, // SAT: 134 minutes
     examDate: { type: Date, required: true },
+    examPassword: { type: String, default: "" },
   },
   { timestamps: true }
 );

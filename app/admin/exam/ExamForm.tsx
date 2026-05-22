@@ -19,6 +19,7 @@ interface ExamFormProps {
     coverImage: string;
     totalDuration: number;
     examDate: string;
+    examPassword?: string;
   };
 }
 
@@ -41,6 +42,7 @@ export default function ExamForm({ initialData }: ExamFormProps) {
   const [examDate, setExamDate] = useState(
     initialData?.examDate ? initialData.examDate.slice(0, 10) : ""
   );
+  const [examPassword, setExamPassword] = useState(initialData?.examPassword || "");
 
   const isEditing = !!initialData;
 
@@ -82,6 +84,7 @@ export default function ExamForm({ initialData }: ExamFormProps) {
     formData.append("coverImage", coverImage);
     formData.append("totalDuration", totalDuration);
     formData.append("examDate", examDate);
+    formData.append("examPassword", examPassword);
 
     try {
       let result;
@@ -180,6 +183,22 @@ export default function ExamForm({ initialData }: ExamFormProps) {
             />
             <p className="text-xs text-slate-400 mt-1">
               Bu tarixdən əvvəl satın alınan istifadəçilər imtahanı bu tarixdə başlaya bilər
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
+              İmtahan günü şifrəsi
+            </label>
+            <input
+              type="text"
+              value={examPassword}
+              onChange={(e) => setExamPassword(e.target.value)}
+              placeholder="Mərkəzdə paylaşılacaq şifrəni daxil edin"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] font-mono"
+            />
+            <p className="text-xs text-slate-400 mt-1">
+              Şifrə təyin edilərsə, tələbələr imtahan günü bu şifrəni daxil etmədən başlaya bilməz. İmtahan bitdikdən sonra silin ki, köhnə imtahan kimi sərbəst əlçatan olsun.
             </p>
           </div>
         </div>

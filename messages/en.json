@@ -872,7 +872,37 @@
       "timePerModule": "Time per module",
       "totalTime": "Total time",
       "previousAttempts": "Previous Attempts",
-      "attempt": "Attempt"
+      "attempt": "Attempt",
+      "purchaseModal": {
+        "title": "Before You Purchase",
+        "physicalAttendanceWarning": "Physical attendance required",
+        "physicalAttendanceDetail": "This is an upcoming exam. To take it you must physically attend our education center on exam day. Your access password will be provided by staff at the center — remote access is not permitted.",
+        "term1": "This is a mock (practice) exam only and is not recognised by College Board, British Council, ETS, or any other official certification body.",
+        "term2": "Your score is indicative only and does not guarantee any outcome on the official exam.",
+        "term3": "All sales are final. No refunds are issued after purchase, except by prior arrangement with VaranColleges management.",
+        "term4": "Your name and email will be used solely for exam administration and support purposes.",
+        "agreeButton": "I Agree — Continue to Payment",
+        "cancelButton": "Cancel"
+      },
+      "passwordGate": {
+        "title": "Exam Password Required",
+        "description": "Enter the password given to you at our education center to begin.",
+        "label": "Exam password",
+        "placeholder": "Enter password",
+        "submit": "Enter Exam",
+        "loading": "Verifying...",
+        "wrongPassword": "Incorrect password. Please try again.",
+        "rateLimited": "Too many attempts. Please try again in 15 minutes.",
+        "help": "If you don't have the password, contact the exam center."
+      },
+      "disclaimerSection": {
+        "title": "Disclaimer",
+        "mockExam": "All exams on this platform are practice (mock) exams and are not recognised by any official certification body (College Board, British Council, ETS, etc.).",
+        "indicative": "Mock exam results are for indication only and do not guarantee or predict your official exam outcome.",
+        "physicalAttendance": "Physical attendance at our education center is mandatory for upcoming exams. The access password is issued on-site on exam day only — remote access is not permitted.",
+        "noRefund": "No refunds are issued after payment is completed. Exceptions require prior arrangement with VaranColleges management.",
+        "dataConsent": "By completing a purchase you confirm that you have read and agreed to these terms. Your personal data (name, email) will be used by VaranColleges solely for exam administration and communication purposes."
+      }
     },
     "profile": {
       "myExams": "My Exams",

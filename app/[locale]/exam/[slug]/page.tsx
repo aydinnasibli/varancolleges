@@ -66,6 +66,7 @@ export default async function ExamDetailPage({
 
   const examDateObj = new Date(exam.examDate);
   const isExamUnlocked = examDateObj <= new Date();
+  const isUpcoming = !isExamUnlocked;
   const examDateFormatted = examDateObj.toLocaleDateString(locale === "az" ? "az-AZ" : "en-US", {
     day: "numeric",
     month: "long",
@@ -327,7 +328,7 @@ export default async function ExamDetailPage({
                     </div>
                   ) : (
                     <div className="mb-5">
-                      <ExamPurchaseButton examId={exam._id} price={exam.price} />
+                      <ExamPurchaseButton examId={exam._id} price={exam.price} isUpcoming={isUpcoming} />
                     </div>
                   )}
 
@@ -344,6 +345,26 @@ export default async function ExamDetailPage({
               </div>
             </div>
 
+          </div>
+        </section>
+
+        {/* ── DISCLAIMER ───────────────────────────────────────────── */}
+        <section className="max-w-6xl mx-auto px-6 pb-16">
+          <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+              {t("disclaimerSection.title")}
+            </h3>
+            <ul className="space-y-2 text-xs text-slate-500 leading-relaxed list-disc list-inside">
+              <li>{t("disclaimerSection.mockExam")}</li>
+              <li>{t("disclaimerSection.indicative")}</li>
+              {isUpcoming && (
+                <li className="text-amber-500/80">
+                  {t("disclaimerSection.physicalAttendance")}
+                </li>
+              )}
+              <li>{t("disclaimerSection.noRefund")}</li>
+              <li>{t("disclaimerSection.dataConsent")}</li>
+            </ul>
           </div>
         </section>
 
