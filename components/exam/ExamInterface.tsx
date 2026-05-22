@@ -200,7 +200,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
     prefetchingRef.current = true;
     prefetchNextSectionQuestions(examId, currentSection).then((qs) => {
-      if (qs) prefetchedQuestionsRef.current = qs as QuestionData[];
+      if (qs) prefetchedQuestionsRef.current = qs as unknown as QuestionData[];
       prefetchingRef.current = false;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
