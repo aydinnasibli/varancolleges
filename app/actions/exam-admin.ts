@@ -2,7 +2,9 @@
 
 import dbConnect from "@/lib/db";
 import Exam from "@/models/Exam";
+import ExamPurchase from "@/models/ExamPurchase";
 import Question from "@/models/Question";
+import User from "@/models/User";
 import slugify from "slugify";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
@@ -166,5 +168,119 @@ export async function toggleExamActive(id: string, isActive: boolean) {
   } catch (error) {
     console.error("toggleExamActive error:", error);
     return { success: false, error: "Failed to update exam" };
+  }
+}
+
+export async function getAllUsers() {
+  await requireAdmin();
+  try {
+    await dbConnect();
+    const users = await User.find({ isDeleted: false }).sort({ createdAt: -1 }).lean();
+    return {
+      success: true,
+      users: users.map((u) => ({
+        _id: u._id.toString(),
+        clerkId: u.clerkId,
+        email: u.email,
+        firstName: u.firstName,
+        lastName: u.lastName,
+      })),
+    };
+  } catch (error) {
+    console.error("getAllUsers error:", error);
+    return { success: false, error: "Failed to fetch users" };
+  }
+}
+
+export async function grantExamAccess(userId: string, examId: string) {
+  await requireAdmin();
+  try {
+    await dbConnect();
+
+    const user = await User.findOne({ clerkId: userId, isDeleted: false });
+    if (!user) return { success: false, error: "İstifadəçi tapılmadı" };
+
+    const exam = await Exam.findById(examId);
+    if (!exam) return { success: false, error: "İmtahan tapılmadı" };
+
+    const existing = await ExamPurchase.findOne({ userId, examId, status: "completed" });
+    if (existing) return { success: false, error: "İstifadəçi artıq bu imtahana girişə malikdir" };
+
+    const uniqueId = `cash_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    await ExamPurchase.create({
+      userId,
+      examId,
+      stripeSessionId: uniqueId,
+      stripePaymentIntentId: "",
+      amount: exam.price,
+      currency: "azn",
+      status: "completed",
+      paymentMethod: "cash",
+      purchasedAt: new Date(),
+    });
+
+    revalidatePath("/admin/enrollments");
+    return { success: true };
+  } catch (error) {
+    console.error("grantExamAccess error:", error);
+    return { success: false, error: "Giriş vermək mümkün olmadı" };
+  }
+}
+
+export async function revokeExamAccess(purchaseId: string) {
+  await requireAdmin();
+  try {
+    await dbConnect();
+    const purchase = await ExamPurchase.findById(purchaseId);
+    if (!purchase) return { success: false, error: "Qeydiyyat tapılmadı" };
+    if (purchase.paymentMethod !== "cash") {
+      return { success: false, error: "Yalnız nağd ödəniş qeydiyyatlarını ləğv etmək olar" };
+    }
+    await ExamPurchase.findByIdAndUpdate(purchaseId, { status: "cancelled" });
+    revalidatePath("/admin/enrollments");
+    return { success: true };
+  } catch (error) {
+    console.error("revokeExamAccess error:", error);
+    return { success: false, error: "Girişi ləğv etmək mümkün olmadı" };
+  }
+}
+
+export async function getManualEnrollments() {
+  await requireAdmin();
+  try {
+    await dbConnect();
+    const purchases = await ExamPurchase.find({ paymentMethod: "cash" })
+      .populate("examId", "title type")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const userIds = [...new Set(purchases.map((p) => p.userId))];
+    const users = await User.find({ clerkId: { $in: userIds } }).lean();
+    const userMap = Object.fromEntries(users.map((u) => [u.clerkId, u]));
+
+    return {
+      success: true,
+      enrollments: purchases.map((p) => {
+        const user = userMap[p.userId];
+        const exam = p.examId as unknown as { _id: { toString(): string }; title: string; type: string } | null;
+        return {
+          _id: p._id.toString(),
+          userId: p.userId,
+          status: p.status,
+          amount: p.amount,
+          purchasedAt: p.purchasedAt ? (p.purchasedAt as Date).toISOString() : null,
+          createdAt: p.createdAt ? (p.createdAt as Date).toISOString() : null,
+          user: user
+            ? { email: user.email, firstName: user.firstName, lastName: user.lastName }
+            : null,
+          exam: exam
+            ? { _id: exam._id.toString(), title: exam.title, type: exam.type }
+            : null,
+        };
+      }),
+    };
+  } catch (error) {
+    console.error("getManualEnrollments error:", error);
+    return { success: false, error: "Qeydiyyatları yükləmək mümkün olmadı" };
   }
 }

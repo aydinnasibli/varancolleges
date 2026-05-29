@@ -8,6 +8,7 @@ export interface IExamPurchase extends Document {
   amount: number; // in qəpik
   currency: string;
   status: "pending" | "completed" | "refunded" | "cancelled";
+  paymentMethod: "stripe" | "cash";
   purchasedAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -25,6 +26,11 @@ const ExamPurchaseSchema = new mongoose.Schema<IExamPurchase>(
       type: String,
       enum: ["pending", "completed", "refunded", "cancelled"],
       default: "pending",
+    },
+    paymentMethod: {
+      type: String,
+      enum: ["stripe", "cash"],
+      default: "stripe",
     },
     purchasedAt: { type: Date, default: Date.now },
   },
