@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { UserPlus, Trash2, Users, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { UserPlus, Trash2, Users, CheckCircle, XCircle, AlertCircle, Search, X } from "lucide-react";
 import { grantExamAccess, revokeExamAccess } from "@/app/actions/exam-admin";
 
 type User = {
@@ -43,11 +43,61 @@ export function EnrollmentClient({
   const router = useRouter();
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedExamId, setSelectedExamId] = useState("");
+  const [userInputValue, setUserInputValue] = useState("");
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [revokeError, setRevokeError] = useState("");
   const [isGrantPending, startGrantTransition] = useTransition();
   const [isRevokePending, startRevokeTransition] = useTransition();
+  const userDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
+        setShowUserDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedUser = users.find((u) => u.clerkId === selectedUserId) ?? null;
+
+  const filteredUsers = userInputValue.trim()
+    ? users.filter((u) => {
+        const q = userInputValue.toLowerCase();
+        return (
+          u.firstName.toLowerCase().includes(q) ||
+          u.lastName.toLowerCase().includes(q) ||
+          u.email.toLowerCase().includes(q)
+        );
+      })
+    : users;
+
+  const handleUserInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInputValue(e.target.value);
+    if (selectedUserId) {
+      setSelectedUserId("");
+      setError("");
+      setSuccess("");
+    }
+    setShowUserDropdown(true);
+  };
+
+  const handleUserSelect = (user: User) => {
+    setSelectedUserId(user.clerkId);
+    setUserInputValue(`${user.firstName} ${user.lastName}`);
+    setShowUserDropdown(false);
+    setError("");
+    setSuccess("");
+  };
+
+  const handleUserClear = () => {
+    setSelectedUserId("");
+    setUserInputValue("");
+    setShowUserDropdown(true);
+  };
 
   const handleGrant = () => {
     setError("");
@@ -62,6 +112,7 @@ export function EnrollmentClient({
         setSuccess("Giriş uğurla verildi!");
         setSelectedUserId("");
         setSelectedExamId("");
+        setUserInputValue("");
         router.refresh();
       } else {
         setError(result.error ?? "Xəta baş verdi");
@@ -98,23 +149,62 @@ export function EnrollmentClient({
             <label className="block text-sm font-medium text-slate-700 mb-1.5">
               İstifadəçi
             </label>
-            <select
-              value={selectedUserId}
-              onChange={(e) => {
-                setSelectedUserId(e.target.value);
-                setError("");
-                setSuccess("");
-              }}
-              disabled={isGrantPending}
-              className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] disabled:opacity-50"
-            >
-              <option value="">— İstifadəçi seçin —</option>
-              {users.map((u) => (
-                <option key={u.clerkId} value={u.clerkId}>
-                  {u.firstName} {u.lastName} — {u.email}
-                </option>
-              ))}
-            </select>
+            <div className="relative" ref={userDropdownRef}>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                <input
+                  type="text"
+                  value={userInputValue}
+                  onChange={handleUserInputChange}
+                  onFocus={() => {
+                    if (selectedUserId) setUserInputValue("");
+                    setShowUserDropdown(true);
+                  }}
+                  placeholder="Ad, soyad və ya email ilə axtar..."
+                  disabled={isGrantPending}
+                  className="w-full border border-slate-200 rounded-lg pl-9 pr-8 py-2.5 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#1152d4]/30 focus:border-[#1152d4] disabled:opacity-50"
+                />
+                {(selectedUserId || userInputValue) && (
+                  <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={handleUserClear}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+
+              {selectedUser && !showUserDropdown && (
+                <div className="mt-1.5 flex items-center gap-1.5 text-xs text-[#1152d4] bg-[#1152d4]/5 border border-[#1152d4]/20 rounded-lg px-3 py-1.5">
+                  <CheckCircle className="h-3.5 w-3.5 shrink-0" />
+                  <span className="font-medium">{selectedUser.firstName} {selectedUser.lastName}</span>
+                  <span className="text-slate-400">— {selectedUser.email}</span>
+                </div>
+              )}
+
+              {showUserDropdown && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-56 overflow-y-auto">
+                  {filteredUsers.length === 0 ? (
+                    <div className="px-4 py-3 text-sm text-slate-500 text-center">İstifadəçi tapılmadı</div>
+                  ) : (
+                    filteredUsers.map((u) => (
+                      <button
+                        key={u.clerkId}
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => handleUserSelect(u)}
+                        className={`w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0 ${u.clerkId === selectedUserId ? "bg-[#1152d4]/5" : ""}`}
+                      >
+                        <span className="font-medium text-slate-900">{u.firstName} {u.lastName}</span>
+                        <span className="text-slate-400 ml-1.5 text-xs">{u.email}</span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           <div>
