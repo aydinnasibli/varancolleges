@@ -245,6 +245,43 @@ export async function revokeExamAccess(purchaseId: string) {
   }
 }
 
+export async function getExamPayments(examId: string) {
+  await requireAdmin();
+  try {
+    await dbConnect();
+    const purchases = await ExamPurchase.find({ examId, status: "completed" })
+      .sort({ purchasedAt: -1 })
+      .lean();
+
+    const userIds = [...new Set(purchases.map((p) => p.userId))];
+    const users = await User.find({ clerkId: { $in: userIds } }).lean();
+    const userMap = Object.fromEntries(users.map((u) => [u.clerkId, u]));
+
+    return {
+      success: true,
+      payments: purchases.map((p) => {
+        const user = userMap[p.userId];
+        return {
+          _id: p._id.toString(),
+          userId: p.userId,
+          amount: p.amount,
+          currency: p.currency,
+          paymentMethod: p.paymentMethod,
+          stripeSessionId: p.stripeSessionId,
+          purchasedAt: p.purchasedAt ? (p.purchasedAt as Date).toISOString() : null,
+          createdAt: p.createdAt ? (p.createdAt as Date).toISOString() : null,
+          user: user
+            ? { email: user.email, firstName: user.firstName, lastName: user.lastName }
+            : null,
+        };
+      }),
+    };
+  } catch (error) {
+    console.error("getExamPayments error:", error);
+    return { success: false, error: "Ödənişləri yükləmək mümkün olmadı" };
+  }
+}
+
 export async function getManualEnrollments() {
   await requireAdmin();
   try {

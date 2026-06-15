@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Edit, Trash2, BookOpen, ToggleLeft, ToggleRight } from "lucide-react";
+import { Plus, Edit, Trash2, BookOpen, ToggleLeft, ToggleRight, Wallet } from "lucide-react";
 import { getAllExams } from "@/app/actions/exam-admin";
 import { DeleteExamButton } from "./DeleteExamButton";
 import { ToggleActiveButton } from "./ToggleActiveButton";
@@ -75,6 +75,13 @@ export default async function AdminSinaqPage() {
                       >
                         <BookOpen className="h-3.5 w-3.5" />
                         Suallar
+                      </Link>
+                      <Link
+                        href={`/admin/exam/${exam._id}/payments`}
+                        className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-[#1152d4] border border-slate-200 hover:border-[#1152d4] px-2.5 py-1.5 rounded-lg transition-colors"
+                      >
+                        <Wallet className="h-3.5 w-3.5" />
+                        Ödəyənlər
                       </Link>
                       <Link
                         href={`/admin/exam/${exam._id}/edit`}
