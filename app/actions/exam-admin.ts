@@ -246,6 +246,19 @@ export async function revokeExamAccess(purchaseId: string) {
   }
 }
 
+type PaymentRow = {
+  _id: string;
+  type: "exam" | "tuition";
+  userId: string;
+  amount: number;
+  currency: string;
+  paymentMethod: string;
+  paidAt: string | null;
+  user: { email: string; firstName: string; lastName: string } | null;
+  exam: { _id: string; title: string; type: string } | null;
+  description: string | null;
+};
+
 export async function getAllCompletedPayments() {
   await requireAdmin();
   try {
@@ -266,19 +279,6 @@ export async function getAllCompletedPayments() {
     ];
     const users = await User.find({ clerkId: { $in: allUserIds } }).lean();
     const userMap = Object.fromEntries(users.map((u) => [u.clerkId, u]));
-
-    type PaymentRow = {
-      _id: string;
-      type: "exam" | "tuition";
-      userId: string;
-      amount: number;
-      currency: string;
-      paymentMethod: string;
-      paidAt: string | null;
-      user: { email: string; firstName: string; lastName: string } | null;
-      exam: { _id: string; title: string; type: string } | null;
-      description: string | null;
-    };
 
     const examRows: PaymentRow[] = purchases.map((p) => {
       const exam = p.examId as unknown as { _id: { toString(): string }; title: string; type: string } | null;
@@ -314,9 +314,9 @@ export async function getAllCompletedPayments() {
     });
 
     const all = [...examRows, ...tuitionRows].sort((a, b) => {
-      const da = a.paidAt ? new Date(a.paidAt).getTime() : 0;
-      const db = b.paidAt ? new Date(b.paidAt).getTime() : 0;
-      return db - da;
+      const dateA = a.paidAt ? new Date(a.paidAt).getTime() : 0;
+      const dateB = b.paidAt ? new Date(b.paidAt).getTime() : 0;
+      return dateB - dateA;
     });
 
     return { success: true, payments: all };
