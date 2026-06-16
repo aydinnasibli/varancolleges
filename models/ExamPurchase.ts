@@ -9,6 +9,7 @@ export interface IExamPurchase extends Document {
   currency: string;
   status: "pending" | "completed" | "refunded" | "cancelled";
   paymentMethod: "stripe" | "cash";
+  isInternal: boolean; // true = team/teacher, hidden from payments tab
   purchasedAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -32,6 +33,7 @@ const ExamPurchaseSchema = new mongoose.Schema<IExamPurchase>(
       enum: ["stripe", "cash"],
       default: "stripe",
     },
+    isInternal: { type: Boolean, default: false },
     purchasedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }

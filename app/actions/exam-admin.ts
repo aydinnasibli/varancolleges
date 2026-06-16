@@ -193,7 +193,7 @@ export async function getAllUsers() {
   }
 }
 
-export async function grantExamAccess(userId: string, examId: string) {
+export async function grantExamAccess(userId: string, examId: string, isInternal = false) {
   await requireAdmin();
   try {
     await dbConnect();
@@ -217,10 +217,12 @@ export async function grantExamAccess(userId: string, examId: string) {
       currency: "azn",
       status: "completed",
       paymentMethod: "cash",
+      isInternal,
       purchasedAt: new Date(),
     });
 
     revalidatePath("/admin/enrollments");
+    revalidatePath("/admin/payments");
     return { success: true };
   } catch (error) {
     console.error("grantExamAccess error:", error);
@@ -265,10 +267,17 @@ export async function getAllCompletedPayments() {
     await dbConnect();
 
     const [purchases, tuitions] = await Promise.all([
-      ExamPurchase.find({ status: "completed" })
+      ExamPurchase.find({
+        status: "completed",
+        isInternal: { $ne: true },
+        stripeSessionId: { $not: /^cs_test_/ },
+      })
         .populate("examId", "title type")
         .lean(),
-      TuitionPayment.find({ status: "completed" }).lean(),
+      TuitionPayment.find({
+        status: "completed",
+        stripeSessionId: { $not: /^cs_test_/ },
+      }).lean(),
     ]);
 
     const allUserIds = [
@@ -330,7 +339,12 @@ export async function getExamPayments(examId: string) {
   await requireAdmin();
   try {
     await dbConnect();
-    const purchases = await ExamPurchase.find({ examId, status: "completed" })
+    const purchases = await ExamPurchase.find({
+      examId,
+      status: "completed",
+      isInternal: { $ne: true },
+      stripeSessionId: { $not: /^cs_test_/ },
+    })
       .sort({ purchasedAt: -1 })
       .lean();
 

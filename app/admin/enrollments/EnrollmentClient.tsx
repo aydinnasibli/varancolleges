@@ -43,6 +43,7 @@ export function EnrollmentClient({
   const router = useRouter();
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedExamId, setSelectedExamId] = useState("");
+  const [isInternal, setIsInternal] = useState(false);
   const [userInputValue, setUserInputValue] = useState("");
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [error, setError] = useState("");
@@ -107,12 +108,13 @@ export function EnrollmentClient({
       return;
     }
     startGrantTransition(async () => {
-      const result = await grantExamAccess(selectedUserId, selectedExamId);
+      const result = await grantExamAccess(selectedUserId, selectedExamId, isInternal);
       if (result.success) {
         setSuccess("Giriş uğurla verildi!");
         setSelectedUserId("");
         setSelectedExamId("");
         setUserInputValue("");
+        setIsInternal(false);
         router.refresh();
       } else {
         setError(result.error ?? "Xəta baş verdi");
@@ -230,6 +232,20 @@ export function EnrollmentClient({
             </select>
           </div>
         </div>
+
+        <label className="flex items-center gap-3 mt-1 cursor-pointer select-none w-fit">
+          <input
+            type="checkbox"
+            checked={isInternal}
+            onChange={(e) => setIsInternal(e.target.checked)}
+            disabled={isGrantPending}
+            className="w-4 h-4 rounded border-slate-300 text-[#1152d4] focus:ring-[#1152d4] disabled:opacity-50 cursor-pointer"
+          />
+          <span className="text-sm text-slate-700">
+            Komanda üzvü / Müəllim{" "}
+            <span className="text-slate-400 text-xs">(ödənişlər siyahısında görünməsin)</span>
+          </span>
+        </label>
 
         {error && (
           <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2.5 mb-4">
