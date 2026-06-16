@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, Mail, Settings, ClipboardList, UserPlus } from "lucide-react";
+import { LayoutDashboard, FileText, Mail, Settings, ClipboardList, UserPlus, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function AdminSidebar({ unreadCount = 0 }: { unreadCount?: number }) {
@@ -13,6 +13,7 @@ export function AdminSidebar({ unreadCount = 0 }: { unreadCount?: number }) {
     { name: "Blog İdarəetmə", href: "/admin/blog", icon: FileText, exact: false },
     { name: "Sınaq İdarəetmə", href: "/admin/exam", icon: ClipboardList, exact: false },
     { name: "Kassa Qeydiyyat", href: "/admin/enrollments", icon: UserPlus, exact: false },
+    { name: "Bütün Ödənişlər", href: "/admin/payments", icon: Wallet, exact: false },
     { name: "Müraciətlər", href: "/admin/inquiries", icon: Mail, badge: unreadCount > 0 ? unreadCount.toString() : undefined, exact: false },
     { name: "Settings", href: "/admin/settings", icon: Settings, pushDown: true, exact: true },
   ];

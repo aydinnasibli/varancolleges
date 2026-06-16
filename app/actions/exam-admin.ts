@@ -3,6 +3,7 @@
 import dbConnect from "@/lib/db";
 import Exam from "@/models/Exam";
 import ExamPurchase from "@/models/ExamPurchase";
+import TuitionPayment from "@/models/TuitionPayment";
 import Question from "@/models/Question";
 import User from "@/models/User";
 import slugify from "slugify";
@@ -242,6 +243,86 @@ export async function revokeExamAccess(purchaseId: string) {
   } catch (error) {
     console.error("revokeExamAccess error:", error);
     return { success: false, error: "Girişi ləğv etmək mümkün olmadı" };
+  }
+}
+
+export async function getAllCompletedPayments() {
+  await requireAdmin();
+  try {
+    await dbConnect();
+
+    const [purchases, tuitions] = await Promise.all([
+      ExamPurchase.find({ status: "completed" })
+        .populate("examId", "title type")
+        .lean(),
+      TuitionPayment.find({ status: "completed" }).lean(),
+    ]);
+
+    const allUserIds = [
+      ...new Set([
+        ...purchases.map((p) => p.userId),
+        ...tuitions.map((t) => t.userId),
+      ]),
+    ];
+    const users = await User.find({ clerkId: { $in: allUserIds } }).lean();
+    const userMap = Object.fromEntries(users.map((u) => [u.clerkId, u]));
+
+    type PaymentRow = {
+      _id: string;
+      type: "exam" | "tuition";
+      userId: string;
+      amount: number;
+      currency: string;
+      paymentMethod: string;
+      paidAt: string | null;
+      user: { email: string; firstName: string; lastName: string } | null;
+      exam: { _id: string; title: string; type: string } | null;
+      description: string | null;
+    };
+
+    const examRows: PaymentRow[] = purchases.map((p) => {
+      const exam = p.examId as unknown as { _id: { toString(): string }; title: string; type: string } | null;
+      const user = userMap[p.userId];
+      return {
+        _id: p._id.toString(),
+        type: "exam",
+        userId: p.userId,
+        amount: p.amount,
+        currency: p.currency ?? "azn",
+        paymentMethod: p.paymentMethod ?? "stripe",
+        paidAt: p.purchasedAt ? (p.purchasedAt as Date).toISOString() : (p.createdAt ? (p.createdAt as Date).toISOString() : null),
+        user: user ? { email: user.email, firstName: user.firstName, lastName: user.lastName } : null,
+        exam: exam ? { _id: exam._id.toString(), title: exam.title, type: exam.type } : null,
+        description: null,
+      };
+    });
+
+    const tuitionRows: PaymentRow[] = tuitions.map((t) => {
+      const user = userMap[t.userId];
+      return {
+        _id: t._id.toString(),
+        type: "tuition",
+        userId: t.userId,
+        amount: t.amount,
+        currency: t.currency ?? "azn",
+        paymentMethod: "stripe",
+        paidAt: t.paidAt ? (t.paidAt as Date).toISOString() : (t.createdAt ? (t.createdAt as Date).toISOString() : null),
+        user: user ? { email: user.email, firstName: user.firstName, lastName: user.lastName } : null,
+        exam: null,
+        description: t.description || null,
+      };
+    });
+
+    const all = [...examRows, ...tuitionRows].sort((a, b) => {
+      const da = a.paidAt ? new Date(a.paidAt).getTime() : 0;
+      const db = b.paidAt ? new Date(b.paidAt).getTime() : 0;
+      return db - da;
+    });
+
+    return { success: true, payments: all };
+  } catch (error) {
+    console.error("getAllCompletedPayments error:", error);
+    return { success: false, error: "Ödənişləri yükləmək mümkün olmadı" };
   }
 }
 
