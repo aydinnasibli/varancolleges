@@ -10,9 +10,9 @@ const Footer = async () => {
   const tGen = await getTranslations("General");
 
   return (
-    <footer className="bg-navy pt-[72px] border-t border-white/5">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1.4fr_1fr] gap-12 pb-14 border-b border-white/[0.07]">
+    <footer className="bg-navy pt-16 lg:pt-20 border-t border-white/5">
+      <div className="container-main">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1.4fr_1fr] gap-10 lg:gap-8 pb-12 border-b border-white/6">
           {/* Brand */}
           <div>
             <div className="mb-5">
@@ -22,25 +22,25 @@ const Footer = async () => {
                   alt="Varan Colleges"
                   width={800}
                   height={450}
-                  className="h-9 w-auto object-contain opacity-90"
+                  className="h-8 w-auto object-contain opacity-90"
                 />
               </Link>
             </div>
-            <p className="text-[13px] leading-[1.8] text-white/45 max-w-[260px] mb-6">
+            <p className="text-[13px] leading-[1.8] text-white/55 max-w-[260px] mb-5">
               {tFoot("brandDesc")}
             </p>
-            <p className="text-xs text-white/28 leading-[1.7]">
+            <p className="text-[12px] text-white/50 leading-[1.7]">
               137A Samad Vurgun, Baku 1022<br />
               +994 77 188 50 50
             </p>
           </div>
 
           {/* Pages */}
-          <div>
-            <h4 className="text-[10px] font-bold text-white/50 tracking-[0.16em] uppercase mb-5">
+          <nav aria-label="Footer navigation">
+            <h3 className="text-[10px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
               {tNav("home")}
-            </h4>
-            <div className="flex flex-col gap-3">
+            </h3>
+            <ul className="flex flex-col gap-2.5">
               {[
                 { label: tNav("home"), href: "/" },
                 { label: tNav("services"), href: "/services" },
@@ -50,62 +50,64 @@ const Footer = async () => {
                 { label: tNav("mockExams"), href: "/exam" },
                 { label: tNav("contact"), href: "/contact" },
               ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-[13px] text-white/45 hover:text-white transition-colors"
-                >
-                  {item.label}
-                </Link>
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-[13px] text-white/55 hover:text-white/75 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+          </nav>
 
           {/* Services */}
-          <div>
-            <h4 className="text-[10px] font-bold text-white/50 tracking-[0.16em] uppercase mb-5">
+          <nav aria-label="Services">
+            <h3 className="text-[10px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
               {tNav("services")}
-            </h4>
-            <div className="flex flex-col gap-3">
+            </h3>
+            <ul className="flex flex-col gap-2.5">
               {[
                 { label: tFoot("ielts"), href: "/services/ielts" },
                 { label: tFoot("sat"), href: "/services/sat" },
                 { label: tNav("studyAbroad"), href: "/study-abroad" },
                 { label: tNav("services"), href: "/services" },
               ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-[13px] text-white/45 hover:text-white transition-colors"
-                >
-                  {item.label}
-                </Link>
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-[13px] text-white/55 hover:text-white/75 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+          </nav>
 
           {/* Contact */}
           <div>
-            <h4 className="text-[10px] font-bold text-white/50 tracking-[0.16em] uppercase mb-5">
+            <h3 className="text-[10px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
               {tNav("contact")}
-            </h4>
-            <div className="flex flex-col gap-3">
-              <a href="mailto:info@varancolleges.com" className="text-[13px] text-white/45 hover:text-white transition-colors">
+            </h3>
+            <div className="flex flex-col gap-2.5">
+              <a href="mailto:info@varancolleges.com" className="text-[13px] text-white/55 hover:text-white/75 transition-colors">
                 info@varancolleges.com
               </a>
-              <a href="tel:+994771885050" className="text-[13px] text-white/45 hover:text-white transition-colors">
+              <a href="tel:+994771885050" className="text-[13px] text-white/55 hover:text-white/75 transition-colors">
                 +994 77 188 50 50
               </a>
-              <p className="text-[13px] text-white/45 leading-[1.65]">
+              <p className="text-[13px] text-white/55 leading-[1.65]">
                 {tGen("workingHours")}
               </p>
             </div>
-            <div className="flex gap-2 mt-6">
+            <div className="flex gap-2 mt-5">
               <a
                 href="https://wa.me/994771885050"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-[38px] h-[38px] border border-white/10 rounded-[5px] flex items-center justify-center text-white/40 hover:border-white/30 hover:text-white/80 transition-colors"
+                className="w-9 h-9 border border-white/10 rounded-md flex items-center justify-center text-white/55 hover:border-white/25 hover:text-white/70 transition-colors"
                 aria-label="WhatsApp"
               >
                 <WhatsAppIcon className="w-3.5 h-3.5" />
@@ -114,7 +116,7 @@ const Footer = async () => {
                 href="https://www.instagram.com/varancollegesltd/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-[38px] h-[38px] border border-white/10 rounded-[5px] flex items-center justify-center text-white/40 hover:border-white/30 hover:text-white/80 transition-colors"
+                className="w-9 h-9 border border-white/10 rounded-md flex items-center justify-center text-white/55 hover:border-white/25 hover:text-white/70 transition-colors"
                 aria-label="Instagram"
               >
                 <InstagramIcon className="w-3.5 h-3.5" />
@@ -124,29 +126,29 @@ const Footer = async () => {
         </div>
 
         {/* Payment CTA */}
-        <div className="my-8 rounded-lg border border-white/10 bg-white/5 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="my-7 rounded-lg border border-white/8 bg-white/3 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-11 h-11 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center shrink-0">
-              <CreditCard className="w-5 h-5 text-white/60" />
+            <div className="w-10 h-10 rounded-lg bg-white/6 border border-white/8 flex items-center justify-center shrink-0">
+              <CreditCard className="w-4.5 h-4.5 text-white/50" />
             </div>
             <div>
-              <p className="text-white font-semibold text-sm">{tFoot("paymentCta")}</p>
-              <p className="text-white/40 text-xs mt-0.5">{tFoot("paymentCtaDesc")}</p>
+              <p className="text-white font-semibold text-[13px]">{tFoot("paymentCta")}</p>
+              <p className="text-white/55 text-[12px] mt-0.5">{tFoot("paymentCtaDesc")}</p>
             </div>
           </div>
           <Link
             href="/payment"
-            className="shrink-0 inline-flex items-center gap-2 bg-white text-navy font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-surface-hover transition-colors"
+            className="shrink-0 inline-flex items-center gap-2 bg-white text-navy font-semibold text-[13px] px-5 py-2.5 rounded-md hover:bg-white/90 transition-colors"
           >
             {tFoot("paymentCta")}
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-[22px] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-white/25">© {new Date().getFullYear()} VaranColleges. {tFoot("rights")}</p>
-          <div className="flex gap-6 text-xs text-white/25">
+        <div className="py-5 flex flex-col md:flex-row justify-between items-center gap-3">
+          <p className="text-[11px] text-white/50">© {new Date().getFullYear()} VaranColleges. {tFoot("rights")}</p>
+          <div className="flex gap-5 text-[11px] text-white/50">
             <span>{tFoot("privacy")}</span>
             <span>{tFoot("terms")}</span>
           </div>

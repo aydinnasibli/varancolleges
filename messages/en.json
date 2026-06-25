@@ -21,7 +21,7 @@
   "Footer": {
     "language": "Language",
     "rights": "All rights reserved.",
-    "brandDesc": "Premium education consultancy. Make the most reliable investment in your future with us. Professionalism and quality at every step.",
+    "brandDesc": "Education consultancy based in Baku. IELTS, SAT, and TOEFL preparation, university admissions, and study abroad guidance since 2016.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "team": "Our Team",
@@ -33,9 +33,9 @@
     "paymentCtaDesc": "Secure payments — no need to visit the office"
   },
   "Hero": {
-    "title1": "Discover the",
-    "title2": "Future",
-    "description": "Cross borders with global education standards. VaranColleges is the architect of your international career.",
+    "title1": "Education",
+    "title2": "Without Borders",
+    "description": "IELTS & SAT preparation, university admissions, and visa support — from Baku to campuses worldwide.",
     "button1": "Study Abroad",
     "button2": "Services",
     "card1Title": "Top Universities",
@@ -1020,5 +1020,10 @@
     "cancelledBanner": "Payment was cancelled. You can try again below.",
     "validationMin": "Minimum payment is ₼1",
     "validationMax": "Maximum payment is ₼5,000"
+  },
+  "CTA": {
+    "title": "Talk to an Advisor",
+    "description": "Book a free 30-minute consultation. We'll discuss your goals, recommend the right program, and outline your next steps.",
+    "button": "Book a Free Consultation"
   }
 }

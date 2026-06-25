@@ -12,18 +12,26 @@ const HomeFeatures = () => {
   const getTitle = (service: typeof servicesData[0]) =>
     tData.has(`${service.slug}.title`) ? tData(`${service.slug}.title`) : service.title;
 
+  const getCategory = (service: typeof servicesData[0]) =>
+    tData.has(`${service.slug}.category`) ? tData(`${service.slug}.category`) : "";
+
   return (
-    <section className="py-24 bg-surface border-t border-border">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[52px] gap-4">
-          <h2 className="font-serif text-4xl md:text-[56px] font-bold text-navy leading-none">
-            {tServices("heroTitle") || "Our Programs"}
-          </h2>
+    <section className="section-padding bg-white border-t border-border">
+      <div className="container-main">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+              {tServices("academicDevelopment")}
+            </p>
+            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05]">
+              {tServices("heroTitle")}
+            </h2>
+          </div>
           <Link
             href="/services"
-            className="shrink-0 bg-transparent border-[1.5px] border-border cursor-pointer px-7 py-[11px] rounded text-[13px] font-semibold text-navy hover:border-navy transition-colors whitespace-nowrap"
+            className="shrink-0 border border-border px-6 py-2.5 rounded-md text-[13px] font-semibold text-navy hover:border-navy/25 transition-colors whitespace-nowrap"
           >
-            {tServices("services") || "View All"} →
+            {tServices("services")} →
           </Link>
         </div>
 
@@ -32,15 +40,17 @@ const HomeFeatures = () => {
             <Link
               key={service.slug}
               href={`/services/${service.slug}`}
-              className="bg-white px-9 py-10 flex flex-col min-h-[190px] hover:bg-surface transition-colors group"
+              className="bg-white px-7 py-8 flex flex-col min-h-[180px] hover:bg-surface transition-colors group"
             >
-              <p className="text-[10px] font-bold tracking-[0.14em] text-text-faint uppercase mb-[18px]">
-                {tData.has(`${service.slug}.category`) ? tData(`${service.slug}.category`) : "Program"}
+              <p className="text-[10px] font-bold tracking-[0.14em] text-text-muted uppercase mb-4">
+                {getCategory(service)}
               </p>
-              <h3 className="font-serif text-[28px] font-bold text-navy leading-[1.1] flex-1 group-hover:text-navy-light transition-colors">
+              <h3 className="font-serif text-[24px] font-bold text-navy leading-[1.15] flex-1 group-hover:text-navy-light transition-colors">
                 {getTitle(service)}
               </h3>
-              <div className="mt-6 w-6 h-[1.5px] bg-border"></div>
+              <div className="mt-5 flex items-center text-[12px] font-semibold text-navy-light opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
             </Link>
           ))}
         </div>

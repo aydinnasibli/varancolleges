@@ -13,27 +13,30 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
   const faqs = customFaqs || getGeneralFaqs(tFaqData);
 
   return (
-    <section className="py-24 bg-white border-t border-border">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-16 lg:gap-24 items-start">
+    <section className="section-padding bg-surface border-t border-border">
+      <div className="container-main">
+        <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 lg:gap-20 items-start">
           <div className="lg:sticky lg:top-24">
-            <h2 className="font-serif text-4xl md:text-[52px] font-bold text-navy leading-none mb-[22px]">
+            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+              {t("subtitle")}
+            </p>
+            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05] mb-5">
               {t("title")}
             </h2>
-            <p className="text-[15px] leading-[1.75] text-text-secondary mb-9">
+            <p className="text-[14px] leading-[1.75] text-text-secondary mb-8">
               {t("description")}
             </p>
             <FAQContactWrapper label={t("contactUs")} />
           </div>
 
-          <div className="flex flex-col gap-0 border border-border rounded-lg overflow-hidden">
+          <div className="border border-border rounded-lg overflow-hidden bg-white">
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden cursor-pointer"
+                className="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
               >
-                <summary className="px-7 py-[22px] flex justify-between items-start gap-4 bg-white hover:bg-surface transition-colors select-none">
-                  <span className="text-[15px] font-semibold text-navy leading-normal">
+                <summary className="px-6 py-5 flex justify-between items-start gap-4 hover:bg-surface/60 transition-colors select-none cursor-pointer">
+                  <span className="text-[14px] font-semibold text-navy leading-snug">
                     {faq.question}
                   </span>
                   <svg
@@ -41,17 +44,18 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
                     height="16"
                     viewBox="0 0 16 16"
                     fill="none"
-                    stroke="#1B3F8B"
+                    stroke="currentColor"
                     strokeWidth="1.5"
                     strokeLinecap="round"
-                    className="shrink-0 mt-[3px] transition-transform duration-200 group-open:rotate-45"
+                    className="shrink-0 mt-0.5 text-text-muted transition-transform duration-200 group-open:rotate-45"
+                    aria-hidden="true"
                   >
                     <line x1="8" y1="2" x2="8" y2="14" />
                     <line x1="2" y1="8" x2="14" y2="8" />
                   </svg>
                 </summary>
-                <div className="px-7 pb-[22px] bg-surface border-t border-border">
-                  <p className="text-sm leading-[1.8] text-text-secondary pt-[18px]">
+                <div className="px-6 pb-5 border-t border-border/60">
+                  <p className="text-[13px] leading-[1.85] text-text-secondary pt-4">
                     {faq.answer}
                   </p>
                 </div>

@@ -1,5 +1,4 @@
 import { Link } from "@/i18n/routing";
-import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const Hero = () => {
@@ -9,74 +8,81 @@ const Hero = () => {
   const tCountries = useTranslations("StudyAbroadData.countries");
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-[calc(100vh-108px)]">
-      {/* LEFT: White editorial */}
-      <div className="flex flex-col justify-center px-6 sm:px-12 lg:px-[52px] lg:pr-[72px] py-16 lg:py-24 lg:border-r border-border">
-        <p className="text-[11px] font-semibold tracking-[0.22em] text-text-muted uppercase mb-10 lg:mb-12">
+    <section className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] min-h-[min(calc(100vh-100px),800px)]">
+      {/* LEFT — Editorial introduction */}
+      <div className="flex flex-col justify-center px-5 sm:px-8 lg:px-10 xl:pl-[max(40px,calc((100vw-1240px)/2+40px))] lg:pr-16 py-14 lg:py-20">
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-text-muted uppercase mb-8">
           {t("subtitle")}
         </p>
-        <h1 className="font-serif text-5xl sm:text-7xl lg:text-[88px] font-semibold leading-[0.9] text-navy tracking-tight mb-8 lg:mb-10">
-          {t("title1")}<br />
-          <em className="italic">{t("title2")}</em>
+
+        <h1 className="font-serif text-[clamp(2.75rem,6vw,5.25rem)] font-semibold leading-[0.92] text-navy tracking-tight mb-7">
+          {t("title1")}
+          <br />
+          <em className="italic text-navy/70">{t("title2")}</em>
         </h1>
-        <div className="w-[52px] h-px bg-border mb-8 lg:mb-9"></div>
-        <p className="text-base leading-[1.9] text-text-secondary max-w-[380px] mb-10 lg:mb-[52px]">
+
+        <div className="w-10 h-px bg-border mb-7" aria-hidden="true" />
+
+        <p className="text-[15px] leading-[1.85] text-text-secondary max-w-[400px] mb-10">
           {t("description")}
         </p>
+
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
             href="/contact"
-            className="bg-navy text-white border-none cursor-pointer px-10 py-4 rounded-[3px] text-[13px] font-semibold tracking-[0.04em] hover:bg-navy-light transition-colors text-center"
+            className="bg-navy text-white px-9 py-3.5 rounded-md text-[13px] font-semibold tracking-[0.03em] hover:bg-navy-mid transition-colors text-center"
           >
             {t("button1")}
           </Link>
           <Link
             href="/services"
-            className="bg-transparent text-text-secondary border-[1.5px] border-border cursor-pointer px-10 py-[15px] rounded-[3px] text-[13px] font-semibold hover:border-text-faint hover:text-navy transition-colors text-center"
+            className="text-text-secondary border border-border px-9 py-3.5 rounded-md text-[13px] font-semibold hover:border-navy/25 hover:text-navy transition-colors text-center"
           >
             {t("button2")}
           </Link>
         </div>
       </div>
 
-      {/* RIGHT: Dark navy panel */}
-      <div className="bg-navy flex flex-col justify-center px-8 sm:px-14 py-12 lg:py-[72px]">
+      {/* RIGHT — Dark navy services panel */}
+      <div className="bg-navy flex flex-col justify-center px-5 sm:px-8 lg:px-14 py-12 lg:py-20 lg:pr-[max(40px,calc((100vw-1240px)/2+40px))]">
         {/* Exam Prep */}
-        <div className="mb-12">
-          <p className="text-[10px] font-bold tracking-[0.22em] text-white/32 uppercase mb-7">
-            {tData("details") || "Exam Preparation"}
+        <div className="mb-10">
+          <p className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
+            {tData("details")}
           </p>
-          <Link href="/services/ielts" className="block mb-3.5 hover:opacity-70 transition-opacity">
-            <span className="font-serif text-4xl sm:text-[54px] font-semibold text-white leading-none tracking-tight">
-              IELTS
-            </span>
-          </Link>
-          <Link href="/services/toefl" className="block mb-3.5 hover:opacity-70 transition-opacity">
-            <span className="font-serif text-2xl sm:text-[40px] font-semibold text-white/60 leading-none">
-              TOEFL · SAT
-            </span>
-          </Link>
-          <Link href="/services" className="block hover:opacity-70 transition-opacity">
-            <span className="font-serif text-xl sm:text-[28px] font-semibold text-white/[0.36] leading-none">
-              GMAT · GRE · AP · IB
-            </span>
-          </Link>
+          <div className="space-y-1.5">
+            <Link href="/services/ielts" className="block hover:translate-x-1 transition-transform duration-200">
+              <span className="font-serif text-[clamp(2rem,4vw,3.25rem)] font-semibold text-white leading-none tracking-tight">
+                IELTS
+              </span>
+            </Link>
+            <Link href="/services/toefl" className="block hover:translate-x-1 transition-transform duration-200">
+              <span className="font-serif text-[clamp(1.5rem,3vw,2.5rem)] font-semibold text-white/70 leading-none">
+                TOEFL · SAT
+              </span>
+            </Link>
+            <Link href="/services" className="block hover:translate-x-1 transition-transform duration-200">
+              <span className="font-serif text-[clamp(1.125rem,2vw,1.75rem)] font-semibold text-white/50 leading-none">
+                GMAT · GRE · AP · IB
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-white/[0.08] mb-12"></div>
+        <div className="h-px bg-white/[0.07] mb-10" aria-hidden="true" />
 
         {/* Study Abroad */}
         <div>
-          <p className="text-[10px] font-bold tracking-[0.22em] text-white/32 uppercase mb-7">
-            {tStudyAbroad("title") || "Study Abroad"}
+          <p className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
+            {tStudyAbroad("title")}
           </p>
-          <div className="grid grid-cols-2 gap-x-7 gap-y-2.5">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-2">
             {["usa", "canada", "uk", "europe", "australia", "turkey"].map((key) => (
               <Link
                 key={key}
                 href="/study-abroad"
-                className="font-serif text-lg sm:text-2xl font-semibold text-white/60 leading-[1.5] hover:text-white transition-colors"
+                className="font-serif text-lg sm:text-xl font-semibold text-white/50 leading-[1.6] hover:text-white transition-colors"
               >
                 {tCountries(`${key}.name`)}
               </Link>
@@ -87,9 +93,9 @@ const Hero = () => {
         {/* Bottom link */}
         <Link
           href="/study-abroad"
-          className="mt-11 self-start bg-transparent border border-white/[0.14] text-white/45 rounded-[3px] px-6 py-3 text-xs font-semibold tracking-[0.05em] hover:border-white/35 hover:text-white/80 transition-colors"
+          className="mt-10 self-start border border-white/15 text-white/55 rounded-md px-5 py-2.5 text-[12px] font-semibold tracking-[0.04em] hover:border-white/30 hover:text-white/80 transition-colors"
         >
-          {tStudyAbroad("title") || "Explore All Destinations"} →
+          {tStudyAbroad("title")} →
         </Link>
       </div>
     </section>

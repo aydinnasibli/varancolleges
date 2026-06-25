@@ -13,46 +13,51 @@ const BlogPreview = async () => {
   }
 
   return (
-    <section className="py-24 bg-surface border-t border-border">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-[52px]">
-          <h2 className="font-serif text-4xl md:text-[56px] font-bold text-navy leading-none">
-            {t("title")}
-          </h2>
+    <section className="section-padding bg-white border-t border-border">
+      <div className="container-main">
+        <div className="flex justify-between items-end mb-12">
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+              {t("subtitle")}
+            </p>
+            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05]">
+              {t("title")}
+            </h2>
+          </div>
           <Link
             href="/blog"
-            className="hidden md:inline-flex shrink-0 bg-transparent border-[1.5px] border-border cursor-pointer px-7 py-[11px] rounded text-[13px] font-semibold text-navy hover:border-navy transition-colors"
+            className="hidden md:inline-flex shrink-0 border border-border px-6 py-2.5 rounded-md text-[13px] font-semibold text-navy hover:border-navy/25 transition-colors"
           >
             {t("allPosts")} →
           </Link>
         </div>
 
-        <div className="border border-border rounded-lg overflow-hidden">
+        <div className="border border-border rounded-lg overflow-hidden bg-white">
           {recentPosts.map((post, i) => (
             <Link
               key={post._id}
               href={`/blog/${post.slug.current}`}
-              className={`bg-white hover:bg-surface transition-colors flex flex-col md:flex-row md:items-center gap-4 md:gap-9 px-6 md:px-9 py-6 md:py-[26px] group ${
+              className={`flex flex-col md:flex-row md:items-center gap-3 md:gap-8 px-6 md:px-8 py-6 hover:bg-surface transition-colors group ${
                 i < recentPosts.length - 1 ? "border-b border-border" : ""
               }`}
             >
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-bold tracking-[0.12em] text-navy-light uppercase mb-[7px]">
+                <span className="text-[10px] font-bold tracking-[0.12em] text-navy-light uppercase">
                   {t("subtitle")}
-                </div>
-                <div className="font-serif text-lg md:text-[22px] font-bold text-navy leading-[1.3] line-clamp-2 group-hover:text-navy-light transition-colors">
+                </span>
+                <h3 className="font-serif text-lg md:text-[21px] font-bold text-navy leading-[1.35] line-clamp-2 mt-1 group-hover:text-navy-light transition-colors">
                   {post.title}
-                </div>
+                </h3>
               </div>
-              <div className="flex items-center gap-5 shrink-0">
-                <span className="text-xs text-text-muted">
+              <div className="flex items-center gap-4 shrink-0">
+                <time className="text-xs text-text-muted" dateTime={post.publishedAt}>
                   {new Date(post.publishedAt).toLocaleDateString('az-AZ', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'
                   })}
-                </span>
-                <ArrowRight className="w-4 h-4 text-navy-light" />
+                </time>
+                <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-navy group-hover:translate-x-0.5 transition-all duration-200" />
               </div>
             </Link>
           ))}
@@ -61,10 +66,10 @@ const BlogPreview = async () => {
         <div className="md:hidden mt-6 text-center">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-navy hover:text-navy-light transition-colors"
+            className="inline-flex items-center gap-2 text-[13px] font-semibold text-navy hover:text-navy-light transition-colors"
           >
             {t("allPosts")}
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>

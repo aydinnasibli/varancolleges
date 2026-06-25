@@ -11,23 +11,25 @@ const Stats = () => {
   ];
 
   return (
-    <div className="bg-navy border-t border-white/6">
-      <div className="max-w-[1280px] mx-auto px-8 grid grid-cols-2 md:grid-cols-4">
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className={`py-11 text-center ${index < 3 ? "border-r border-white/6" : ""}`}
-          >
-            <div className="font-serif text-4xl md:text-[56px] font-bold text-white leading-none">
-              {stat.value}
+    <section className="border-t border-border bg-surface" aria-label="Key statistics">
+      <div className="container-main">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+          {stats.map((stat, index) => (
+            <div
+              key={index}
+              className="py-8 md:py-10 text-center first:pl-0 last:pr-0"
+            >
+              <span className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-none">
+                {stat.value}
+              </span>
+              <span className="block text-[10px] text-text-muted mt-2 tracking-[0.14em] uppercase">
+                {stat.label}
+              </span>
             </div>
-            <div className="text-[10px] text-white/38 mt-[7px] tracking-[0.14em] uppercase">
-              {stat.label}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

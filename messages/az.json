@@ -21,7 +21,7 @@
   "Footer": {
     "language": "Dil",
     "rights": "Bütün hüquqlar qorunur.",
-    "brandDesc": "Premium təhsil konsultasiyası. Bizimlə gələcəyinizə ən etibarlı sərmayəni qoyun. Hər addımda peşəkarlıq və keyfiyyət.",
+    "brandDesc": "Bakıda fəaliyyət göstərən təhsil konsaltinq şirkəti. 2016-cı ildən IELTS, SAT və TOEFL hazırlığı, universitetlərə qəbul və xaricdə təhsil dəstəyi.",
     "privacy": "Məxfilik Siyasəti",
     "terms": "İstifadə Şərtləri",
     "team": "Komandamız",
@@ -33,9 +33,9 @@
     "paymentCtaDesc": "Ofisə gəlmədən təhlükəsiz ödəniş"
   },
   "Hero": {
-    "title1": "Gələcəyi",
-    "title2": "Kəşf Edin",
-    "description": "Qlobal təhsil standartları ilə sərhədləri aşın. VaranColleges sizin beynəlxalq karyeranızın memarıdır.",
+    "title1": "Sərhədsiz",
+    "title2": "Təhsil",
+    "description": "IELTS və SAT hazırlığı, universitetlərə qəbul və viza dəstəyi — Bakıdan dünyanın kampuslarına.",
     "button1": "Xaricdə Təhsil",
     "button2": "Xidmətlər",
     "card1Title": "Top Universitetlər",
@@ -1020,5 +1020,10 @@
     "cancelledBanner": "Ödəniş ləğv edildi. Yenidən cəhd edə bilərsiniz.",
     "validationMin": "Minimum ödəniş ₼1-dir",
     "validationMax": "Maksimum ödəniş ₼5.000-dir"
+  },
+  "CTA": {
+    "title": "Məsləhətçi ilə Danışın",
+    "description": "Pulsuz 30 dəqiqəlik konsultasiya sifariş edin. Hədəflərinizi müzakirə edəcək, doğru proqramı tövsiyə edəcək və növbəti addımlarınızı planlaşdıracağıq.",
+    "button": "Pulsuz Konsultasiya"
   }
 }
