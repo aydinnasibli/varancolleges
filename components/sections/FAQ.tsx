@@ -13,39 +13,47 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
   const faqs = customFaqs || getGeneralFaqs(tFaqData);
 
   return (
-    <section className="py-24 bg-background-dark border-t border-white/5 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div className="flex flex-col justify-center">
-            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">{t("subtitle")}</h2>
-            <h3 className="text-4xl font-serif text-white mb-6">{t("title")}</h3>
-            <p className="text-slate-400 font-light leading-relaxed mb-8 max-w-lg">
+    <section className="py-24 bg-white border-t border-border">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-16 lg:gap-24 items-start">
+          <div className="lg:sticky lg:top-24">
+            <h2 className="font-serif text-4xl md:text-[52px] font-bold text-navy leading-none mb-[22px]">
+              {t("title")}
+            </h2>
+            <p className="text-[15px] leading-[1.75] text-text-secondary mb-9">
               {t("description")}
             </p>
             <FAQContactWrapper label={t("contactUs")} />
           </div>
 
-          <div className="space-y-4">
+          <div className="flex flex-col gap-0 border border-border rounded-lg overflow-hidden">
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group glass-card border border-white/5 rounded-2xl overflow-hidden [&_summary::-webkit-details-marker]:hidden cursor-pointer"
+                className="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden cursor-pointer"
               >
-                <summary className="flex items-center justify-between p-6 bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-                  <h4 className="text-white font-medium pr-8">{faq.question}</h4>
-                  <span className="relative flex-shrink-0 ml-4 w-6 h-6 flex items-center justify-center">
-                    <span className="absolute w-3 h-[2px] bg-accent rounded-full transition-transform duration-300 group-open:rotate-180"></span>
-                    <span className="absolute w-3 h-[2px] bg-accent rounded-full rotate-90 transition-transform duration-300 group-open:rotate-180 group-open:opacity-0"></span>
+                <summary className="px-7 py-[22px] flex justify-between items-start gap-4 bg-white hover:bg-surface transition-colors select-none">
+                  <span className="text-[15px] font-semibold text-navy leading-normal">
+                    {faq.question}
                   </span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="#1B3F8B"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    className="shrink-0 mt-[3px] transition-transform duration-200 group-open:rotate-45"
+                  >
+                    <line x1="8" y1="2" x2="8" y2="14" />
+                    <line x1="2" y1="8" x2="14" y2="8" />
+                  </svg>
                 </summary>
-                <div className="p-6 pt-0 text-slate-400 font-light leading-relaxed">
-                  <div className="pt-4 border-t border-white/5">
+                <div className="px-7 pb-[22px] bg-surface border-t border-border">
+                  <p className="text-sm leading-[1.8] text-text-secondary pt-[18px]">
                     {faq.answer}
-                  </div>
+                  </p>
                 </div>
               </details>
             ))}

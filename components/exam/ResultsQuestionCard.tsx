@@ -33,48 +33,48 @@ export default function ResultsQuestionCard({
   const isFR = question.questionType === "free_response";
 
   const statusIcon = isSkipped ? (
-    <MinusCircle className="h-5 w-5 text-slate-500 flex-shrink-0" />
+    <MinusCircle className="h-5 w-5 text-text-muted flex-shrink-0" />
   ) : isCorrect ? (
-    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
   ) : (
-    <XCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+    <XCircle className="h-5 w-5 text-red-600 flex-shrink-0" />
   );
 
   const borderColor = isSkipped
-    ? "border-white/10"
+    ? "border-border"
     : isCorrect
-    ? "border-green-500/30"
-    : "border-red-500/30";
+    ? "border-green-200"
+    : "border-red-200";
 
   const bgColor = isSkipped
-    ? "bg-white/[0.03]"
+    ? "bg-surface"
     : isCorrect
-    ? "bg-green-500/[0.04]"
-    : "bg-red-500/[0.04]";
+    ? "bg-green-50"
+    : "bg-red-50";
 
   return (
     <details id={id} className={`group ${bgColor} border ${borderColor} rounded-xl overflow-hidden`}>
-      <summary className="flex items-center gap-3 px-5 py-4 cursor-pointer list-none hover:bg-white/5 transition-colors">
+      <summary className="flex items-center gap-3 px-5 py-4 cursor-pointer list-none hover:bg-surface transition-colors">
         {statusIcon}
 
         {/* Question meta + preview */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-xs font-semibold text-slate-500">Q{index}</span>
+            <span className="text-xs font-semibold text-text-muted">Q{index}</span>
             {isFR && (
-              <span className="inline-flex items-center gap-1 text-xs text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">
+              <span className="inline-flex items-center gap-1 text-xs text-text-secondary bg-surface px-2 py-0.5 rounded-full">
                 <PenLine className="h-2.5 w-2.5" />
                 FR
               </span>
             )}
             {question.domain && (
-              <span className="text-xs text-slate-500 bg-white/5 px-2 py-0.5 rounded-full truncate max-w-[140px]">
+              <span className="text-xs text-text-muted bg-surface px-2 py-0.5 rounded-full truncate max-w-[140px]">
                 {question.domain}
               </span>
             )}
           </div>
           <p
-            className="text-sm text-white/80 line-clamp-1"
+            className="text-sm text-navy/80 line-clamp-1"
             dangerouslySetInnerHTML={{
               __html: question.questionText
                 .replace(/<[^>]+>/g, "")
@@ -86,7 +86,7 @@ export default function ResultsQuestionCard({
         {/* Answer summary chips */}
         <div className="flex items-center gap-2 flex-shrink-0">
           {isSkipped ? (
-            <span className="text-xs text-slate-500 bg-white/5 border border-white/10 px-2.5 py-1 rounded-lg">
+            <span className="text-xs text-text-muted bg-surface border border-border px-2.5 py-1 rounded-lg">
               Skipped
             </span>
           ) : (
@@ -95,35 +95,35 @@ export default function ResultsQuestionCard({
               <span
                 className={`text-xs font-bold px-2.5 py-1 rounded-lg border ${
                   isCorrect
-                    ? "bg-green-500/15 border-green-500/30 text-green-400"
-                    : "bg-red-500/15 border-red-500/30 text-red-400 line-through"
+                    ? "bg-green-50 border-green-200 text-green-600"
+                    : "bg-red-50 border-red-200 text-red-600 line-through"
                 }`}
               >
                 {isFR ? (selected ?? "—") : selected}
               </span>
               {/* Correct answer — only shown if wrong */}
               {!isCorrect && (
-                <span className="text-xs font-bold bg-green-500/15 border border-green-500/30 text-green-400 px-2.5 py-1 rounded-lg">
+                <span className="text-xs font-bold bg-green-50 border border-green-200 text-green-600 px-2.5 py-1 rounded-lg">
                   {isFR ? question.correctAnswer : question.correctAnswer}
                 </span>
               )}
             </>
           )}
-          <ChevronDown className="h-4 w-4 text-slate-500 group-open:rotate-180 transition-transform ml-1" />
+          <ChevronDown className="h-4 w-4 text-text-muted group-open:rotate-180 transition-transform ml-1" />
         </div>
       </summary>
 
       {/* Expanded body */}
-      <div className="px-5 pb-5 pt-3 border-t border-white/5">
+      <div className="px-5 pb-5 pt-3 border-t border-border">
         {question.passageText && (
-          <div className="mb-4 p-4 bg-white/5 rounded-xl text-sm text-slate-300 leading-relaxed max-h-52 overflow-y-auto border border-white/5">
+          <div className="mb-4 p-4 bg-surface rounded-xl text-sm text-text-secondary leading-relaxed max-h-52 overflow-y-auto border border-border">
             <MathRenderer content={question.passageText} />
           </div>
         )}
 
         <MathRenderer
           content={question.questionText}
-          className="text-sm text-white/90 mb-4 leading-relaxed"
+          className="text-sm text-navy mb-4 leading-relaxed"
         />
 
         {isFR ? (
@@ -132,38 +132,38 @@ export default function ResultsQuestionCard({
             <div
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm ${
                 isSkipped
-                  ? "bg-white/5 border border-white/10 text-slate-400"
+                  ? "bg-surface border border-border text-text-secondary"
                   : isCorrect
-                  ? "bg-green-500/15 border border-green-500/35 text-green-300"
-                  : "bg-red-500/15 border border-red-500/35 text-red-300"
+                  ? "bg-green-50 border border-green-200 text-green-700"
+                  : "bg-red-50 border border-red-200 text-red-700"
               }`}
             >
-              <span className="text-xs font-semibold text-slate-400 w-24 flex-shrink-0">
+              <span className="text-xs font-semibold text-text-secondary w-24 flex-shrink-0">
                 Your answer
               </span>
               <span className="font-mono">
-                {selected || <span className="italic text-slate-500">Skipped</span>}
+                {selected || <span className="italic text-text-muted">Skipped</span>}
               </span>
               {!isSkipped && isCorrect && (
-                <CheckCircle className="h-3.5 w-3.5 text-green-400 ml-auto flex-shrink-0" />
+                <CheckCircle className="h-3.5 w-3.5 text-green-600 ml-auto flex-shrink-0" />
               )}
               {!isSkipped && !isCorrect && (
-                <XCircle className="h-3.5 w-3.5 text-red-400 ml-auto flex-shrink-0" />
+                <XCircle className="h-3.5 w-3.5 text-red-600 ml-auto flex-shrink-0" />
               )}
             </div>
             {!isCorrect && (
-              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm bg-green-500/15 border border-green-500/35 text-green-300">
-                <span className="text-xs font-semibold text-slate-400 w-24 flex-shrink-0">
+              <div className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm bg-green-50 border border-green-200 text-green-700">
+                <span className="text-xs font-semibold text-text-secondary w-24 flex-shrink-0">
                   Correct
                 </span>
                 <MathRenderer content={question.correctAnswer} className="font-mono" />
-                <CheckCircle className="h-3.5 w-3.5 text-green-400 ml-auto flex-shrink-0" />
+                <CheckCircle className="h-3.5 w-3.5 text-green-600 ml-auto flex-shrink-0" />
               </div>
             )}
-            <p className="text-xs text-slate-500 pt-1">
+            <p className="text-xs text-text-muted pt-1">
               Equivalent forms like{" "}
-              <span className="font-mono text-slate-400">1/2</span> and{" "}
-              <span className="font-mono text-slate-400">0.5</span> count as correct.
+              <span className="font-mono text-text-secondary">1/2</span> and{" "}
+              <span className="font-mono text-text-secondary">0.5</span> count as correct.
             </p>
           </div>
         ) : (
@@ -178,29 +178,29 @@ export default function ResultsQuestionCard({
                   key={opt}
                   className={`flex items-start gap-3 px-4 py-3 rounded-xl text-sm border ${
                     isThisCorrect
-                      ? "bg-green-500/15 border-green-500/35 text-green-200"
+                      ? "bg-green-50 border-green-200 text-green-800"
                       : isWrongSelected
-                      ? "bg-red-500/15 border-red-500/35 text-red-200"
-                      : "bg-white/[0.03] border-white/5 text-slate-400"
+                      ? "bg-red-50 border-red-200 text-red-800"
+                      : "bg-surface border-border text-text-secondary"
                   }`}
                 >
                   <span
                     className={`font-bold flex-shrink-0 w-5 ${
                       isThisCorrect
-                        ? "text-green-400"
+                        ? "text-green-600"
                         : isWrongSelected
-                        ? "text-red-400"
-                        : "text-slate-600"
+                        ? "text-red-600"
+                        : "text-text-muted"
                     }`}
                   >
                     {opt}
                   </span>
                   <MathRenderer content={question.options[opt]} className="flex-1" />
                   {isThisCorrect && (
-                    <CheckCircle className="h-4 w-4 text-green-400 ml-auto flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="h-4 w-4 text-green-600 ml-auto flex-shrink-0 mt-0.5" />
                   )}
                   {isWrongSelected && (
-                    <XCircle className="h-4 w-4 text-red-400 ml-auto flex-shrink-0 mt-0.5" />
+                    <XCircle className="h-4 w-4 text-red-600 ml-auto flex-shrink-0 mt-0.5" />
                   )}
                 </div>
               );
@@ -209,9 +209,9 @@ export default function ResultsQuestionCard({
         )}
 
         {question.explanation && (
-          <div className="bg-accent/5 border border-accent/20 rounded-xl p-4 mt-2">
-            <p className="text-xs font-semibold text-accent mb-1.5">Explanation</p>
-            <MathRenderer content={question.explanation} className="text-sm text-slate-300 leading-relaxed" />
+          <div className="bg-navy/5 border border-navy/15 rounded-xl p-4 mt-2">
+            <p className="text-xs font-semibold text-navy-light mb-1.5">Explanation</p>
+            <MathRenderer content={question.explanation} className="text-sm text-text-secondary leading-relaxed" />
           </div>
         )}
       </div>

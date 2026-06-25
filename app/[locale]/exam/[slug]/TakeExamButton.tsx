@@ -19,8 +19,8 @@ export default function TakeExamButton({ href, label, variant = "primary" }: Tak
     "flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200";
   const styles =
     variant === "primary"
-      ? `${base} bg-accent hover:bg-accent-light text-[#07101e]`
-      : `${base} border border-white/15 hover:border-white/30 text-white`;
+      ? `${base} bg-navy hover:bg-navy-light text-white`
+      : `${base} border border-border hover:border-navy/30 text-navy`;
 
   return (
     <Link

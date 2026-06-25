@@ -41,7 +41,8 @@
     "card1Title": "Top Universitetlər",
     "card1Desc": "Dünya reytinqində ilk 100",
     "card2Title": "Uğur",
-    "card2Desc": "Viza müraciətlərinin təsdiq faizi"
+    "card2Desc": "Viza müraciətlərinin təsdiq faizi",
+    "subtitle": "Təhsil Konsaltinqi · Bakı"
   },
   "Stats": {
     "years": "İl Təcrübə",
@@ -86,7 +87,15 @@
     "feat5": "Qlobal Əməkdaşlıqlar",
     "feat6": "Karyera Dəstəyi",
     "visitUs": "Bizi Ziyarət Edin",
-    "visitUsDesc": "Ofisimizə yaxınlaşın, gələcəyiniz haqqında danışaq."
+    "visitUsDesc": "Ofisimizə yaxınlaşın, gələcəyiniz haqqında danışaq.",
+    "statExperience": "Təcrübə",
+    "statPlaced": "Yerləşdirilən",
+    "statNetwork": "Şəbəkə",
+    "statDestinations": "İstiqamətlər",
+    "statYearsActive": "İl Təcrübə",
+    "statGraduates": "Məzunlar",
+    "statPartnerUnis": "Partnyor Universitetlər",
+    "statCountries": "Ölkələr"
   },
   "Contact": {
     "title1": "Bizimlə",
@@ -321,7 +330,8 @@
       "examInfo": "SAT (Scholastic Assessment Test) ABŞ və bir çox digər ölkələrin ali təhsil müəssisələrinə qəbul üçün əsas imtahandır. Bu imtahan tələbənin kollec səviyyəsində akademik yüklənməyə nə dərəcədə hazır olduğunu ölçür. İmtahanın əsas məqsədi tələbənin tənqidi düşüncə və problem həlletmə bacarıqlarını qiymətləndirməkdir.",
       "format": "Yeni rəqəmsal (Digital) SAT iki əsas bölmədən ibarətdir: Oxuma/Yazma (Reading and Writing) və Riyaziyyat (Math). Hər iki bölmə iki modula ayrılır. İmtahanın ümumi müddəti təxminən 2 saat 14 dəqiqədir.",
       "grading": "Hər bir bölmə (Oxuma/Yazma və Riyaziyyat) 200-800 balla qiymətləndirilir. Ümumi SAT balı 400-1600 aralığında dəyişir. Səhv cavablar düzgün cavablardan bal çıxmır (cərimə yoxdur).",
-      "whyUs": "Bizimlə SAT hazırlığı zamanı siz hər həftə sınaq imtahanlarında iştirak edir, fərdi zəiflikləriniz üzərində işləyir və süni intellekt dəstəkli tədris proqramı ilə öyrənirsiniz. Təcrübəli müəllimlərimiz hər bir tələbəyə fərdi yanaşaraq onların potensialını maksimuma çatdırır."
+      "whyUs": "Bizimlə SAT hazırlığı zamanı siz hər həftə sınaq imtahanlarında iştirak edir, fərdi zəiflikləriniz üzərində işləyir və süni intellekt dəstəkli tədris proqramı ilə öyrənirsiniz. Təcrübəli müəllimlərimiz hər bir tələbəyə fərdi yanaşaraq onların potensialını maksimuma çatdırır.",
+      "category": "Universitet Qəbulu"
     },
     "ielts": {
       "title": "IELTS Hazırlığı",
@@ -329,7 +339,8 @@
       "examInfo": "IELTS (International English Language Testing System) dünyada ən populyar ingilis dili testidir. 140-dan çox ölkədə 11,000-dən çox təşkilat tərəfindən tanınır. İmtahanın iki növü var: Academic (təhsil üçün) və General Training (iş və miqrasiya üçün).",
       "format": "Test dörd bacarığı yoxlayır: Dinləmə (30 dəqiqə), Oxuma (60 dəqiqə), Yazma (60 dəqiqə) və Danışma (11-14 dəqiqə). Danışma imtahanı digər bölmələrdən fərqli gündə keçirilə bilər. Ümumi imtahan müddəti fasiləsiz olaraq təxminən 2 saat 45 dəqiqədir.",
       "grading": "Hər bölmə 0-9 aralığında tam və ya yarım ballarla qiymətləndirilir (məs. 6.5, 7.0). Ümumi (Overall) bal bu dörd bölmənin ədədi ortasıdır.",
-      "whyUs": "Təcrübəli IELTS ekspertlərimizlə sınaq imtahanları və fərdi analizlərlə hədəflədiyiniz bala zəmanət veririk."
+      "whyUs": "Təcrübəli IELTS ekspertlərimizlə sınaq imtahanları və fərdi analizlərlə hədəflədiyiniz bala zəmanət veririk.",
+      "category": "Dil İmtahanları"
     },
     "gmat": {
       "title": "GMAT Hazırlığı",
@@ -337,7 +348,8 @@
       "examInfo": "GMAT (Graduate Management Admission Test) dünyanın aparıcı biznes məktəbləri tərəfindən tələb olunan kompüter əsaslı adaptiv testdir. Bu imtahan real biznes mühitində uğur qazanmaq üçün vacib olan bacarıqları ölçür.",
       "format": "GMAT Focus Edition dörd bölmədən ibarətdir: Kəmiyyət (Quantitative), Şifahi (Verbal) və Data Insights. Hər bölmə 45 dəqiqə davam edir. Yazı (AWA) bölməsi yeni formatda çıxarılmışdır. Ümumi müddət 2 saat 15 dəqiqədir.",
       "grading": "Ümumi bal 205-805 aralığında hesablanır. Bütün üç bölmənin nəticələri ümumi bala bərabər çəkidə təsir edir. İmtahan adaptiv olduğu üçün ilk sualların düzgün cavablandırılması balın yüksək olmasına böyük təsir göstərir.",
-      "whyUs": "GMAT hazırlığında riyazi və məntiqi təfəkkürün inkişafına xüsusi önəm veririk. Çətin sual tipləri üzərində intensiv işləyərək tələbələrimizin analitik bacarıqlarını artırırıq."
+      "whyUs": "GMAT hazırlığında riyazi və məntiqi təfəkkürün inkişafına xüsusi önəm veririk. Çətin sual tipləri üzərində intensiv işləyərək tələbələrimizin analitik bacarıqlarını artırırıq.",
+      "category": "Magistratura"
     },
     "toefl": {
       "title": "TOEFL Hazırlığı",
@@ -345,7 +357,8 @@
       "examInfo": "TOEFL (Test of English as a Foreign Language) akademik mühitdə ingilis dili bacarıqlarını ölçən ən mötəbər testlərdən biridir. Xüsusilə ABŞ və Kanada universitetləri üçün əvəzolunmazdır.",
       "format": "Yenilənmiş TOEFL iBT formatı daha qısadır və təxminən 2 saat davam edir. Oxuma, Dinləmə, Danışma və Yazma bölmələrini əhatə edir. 'Writing for an Academic Discussion' adlı yeni tapşırıq növü əlavə edilib.",
       "grading": "Hər bölmə 0-30 bal aralığında qiymətləndirilir. Maksimum ümumi bal 120-dir. Rəqabətli universitetlər üçün adətən 90-100+ bal tələb olunur.",
-      "whyUs": "Kompüter əsaslı test mühitinə tam adaptasiya və akademik lüğət bazasının gücləndirilməsi üzrə ixtisaslaşmışıq."
+      "whyUs": "Kompüter əsaslı test mühitinə tam adaptasiya və akademik lüğət bazasının gücləndirilməsi üzrə ixtisaslaşmışıq.",
+      "category": "Dil İmtahanları"
     },
     "yos": {
       "title": "TR YÖS Hazırlığı",
@@ -353,7 +366,8 @@
       "examInfo": "TR YÖS (Yabancı Uyruklu Öğrenci Sınavı) Türkiyədə ali təhsil almaq istəyən əcnəbilər üçün keçirilən mərkəzləşdirilmiş qəbul imtahanıdır. Bu imtahan ÖSYM tərəfindən təşkil olunur və Türkiyənin əksər universitetləri tərəfindən qəbul edilir.",
       "format": "İmtahan əsasən Məntiq (IQ), Riyaziyyat və Həndəsə suallarından ibarətdir. TR YÖS formatında 80 sual təqdim olunur və 100 dəqiqə vaxt verilir.",
       "grading": "Maksimum bal 500 üzərindən hesablanır. Adətən səhv cavablar düzgün cavablara təsir etmir (4 səhv 1 düzü aparmır), lakin qaydalar dəyişə bilər.",
-      "whyUs": "TR YÖS proqramımız Türkiyə təhsil sisteminə və yeni imtahan formatına tam uyğundur. Riyaziyyat və məntiq üzrə mütəxəssislərimiz sizə ən qısa həll yollarını öyrədir."
+      "whyUs": "TR YÖS proqramımız Türkiyə təhsil sisteminə və yeni imtahan formatına tam uyğundur. Riyaziyyat və məntiq üzrə mütəxəssislərimiz sizə ən qısa həll yollarını öyrədir.",
+      "category": "Universitet Qəbulu"
     },
     "gre": {
       "title": "GRE Hazırlığı",
@@ -361,7 +375,8 @@
       "examInfo": "GRE (Graduate Record Examinations) texniki, humanitar və dəqiq elmlər üzrə magistratura və PhD proqramlarına qəbul üçün tələb olunan əsas testdir.",
       "format": "GRE General Test 3 hissədən ibarətdir: Verbal Reasoning (Şifahi məntiq), Quantitative Reasoning (Riyazi məntiq) və Analytical Writing (Analitik yazı). İmtahan müddəti 1 saat 58 dəqiqəyə endirilmişdir.",
       "grading": "Verbal və Kəmiyyət bölmələri 130-170, Yazı isə 0-6 bal arasında qiymətləndirilir. Rəqabətli nəticə üçün hər iki əsas bölmədən 160+ bal hədəflənməlidir.",
-      "whyUs": "GRE söz ehtiyatının (vocabulary) zənginləşdirilməsi və mürəkkəb mətnlərin analizi üzrə xüsusi metodikamız var. Riyazi hissədə isə vaxta qənaət edən həll üsulları öyrədilir."
+      "whyUs": "GRE söz ehtiyatının (vocabulary) zənginləşdirilməsi və mürəkkəb mətnlərin analizi üzrə xüsusi metodikamız var. Riyazi hissədə isə vaxta qənaət edən həll üsulları öyrədilir.",
+      "category": "Magistratura"
     },
     "ab": {
       "title": "AP (Advanced Placement)",
@@ -369,7 +384,8 @@
       "examInfo": "Advanced Placement (AP) proqramı College Board tərəfindən idarə olunur. Bu proqram şagirdlərə hələ məktəb illərində kollec səviyyəsində fənləri öyrənmək və kredit qazanmaq imkanı verir.",
       "format": "İmtahanlar fənnə görə dəyişir (Calculus, Physics, Biology, History və s.). Adətən çoxseçimli (multiple-choice) və sərbəst cavablı (free-response) suallardan ibarətdir.",
       "grading": "AP imtahanları 1-dən 5-ə qədər olan şkala ilə qiymətləndirilir. Əksər universitetlər kredit vermək üçün minimum 3 və ya 4 bal tələb edir.",
-      "whyUs": "Bizim tədris proqramımız şagirdlərin məktəb yükünü nəzərə alaraq hazırlanmışdır. Təcrübəli müəllimlərimiz AP kurikulumuna tam bələddir."
+      "whyUs": "Bizim tədris proqramımız şagirdlərin məktəb yükünü nəzərə alaraq hazırlanmışdır. Təcrübəli müəllimlərimiz AP kurikulumuna tam bələddir.",
+      "category": "Akademik Proqramlar"
     },
     "ib": {
       "title": "IB (International Baccalaureate)",
@@ -377,7 +393,8 @@
       "examInfo": "Beynəlxalq Bakalavriat (IB) Diplom Proqramı 16-19 yaşlı şagirdlər üçün nəzərdə tutulmuş nüfuzlu təhsil proqramıdır. Şagirdlərin intellektual, sosial, emosional və fiziki inkişafını hədəfləyir.",
       "format": "Tələbələr 6 fənn qrupundan dərslər alır. Əlavə olaraq TOK (Theory of Knowledge), CAS (Creativity, Activity, Service) və Extended Essay tələblərini yerinə yetirməlidirlər.",
       "grading": "Maksimum bal 45-dir. Hər fənn 7 balla qiymətləndirilir (6x7=42), əlavə 3 bal isə nüvə komponentlərindən (TOK, EE) gəlir. Diplom almaq üçün minimum 24 bal lazımdır.",
-      "whyUs": "IB proqramının çətinliklərini başa düşürük və tələbələrə həm akademik, həm də psixoloji dəstək veririk. Internal Assessment (IA) və Extended Essay yazımında mentorluq edirik."
+      "whyUs": "IB proqramının çətinliklərini başa düşürük və tələbələrə həm akademik, həm də psixoloji dəstək veririk. Internal Assessment (IA) və Extended Essay yazımında mentorluq edirik.",
+      "category": "Akademik Proqramlar"
     },
     "general-english": {
       "title": "General English",
@@ -385,7 +402,8 @@
       "examInfo": "General English kurslarımız CEFR (Common European Framework of Reference for Languages) standartlarına tam uyğundur. A1 (Beginner) səviyyəsindən C2 (Proficiency) səviyyəsinə qədər bütün mərhələləri əhatə edir.",
       "format": "Dərslər kommunikativ metodika əsasında qurulub. Qrammatika, lüğət, oxu, yazı, dinləmə və ən əsası danışıq bacarıqları kompleks şəkildə inkişaf etdirilir.",
       "grading": "Səviyyənin bitməsi hər mərhələnin sonunda keçirilən Final İmtahanı və dərslərdəki aktivlik əsasında müəyyən edilir.",
-      "whyUs": "Biz sadəcə qrammatika öyrətmirik, dilin real həyatda tətbiqinə önəm veririk. Danışıq klubları və əcnəbi müəllimlərlə dil mühitini sizə gətiririk."
+      "whyUs": "Biz sadəcə qrammatika öyrətmirik, dilin real həyatda tətbiqinə önəm veririk. Danışıq klubları və əcnəbi müəllimlərlə dil mühitini sizə gətiririk.",
+      "category": "Dil Kursları"
     },
     "tableOfContents": "Mündəricat",
     "haveQuestion": "Sualınız var?",
@@ -553,7 +571,8 @@
           "Community college və transfer proqramları",
           "Şərti qəbul imkanları",
           "F1 viza prosesi üzrə tam dəstək"
-        ]
+        ],
+        "shortDesc": "Ivy League · Tədqiqat universitetləri · Kollec proqramları"
       },
       "canada": {
         "name": "Kanada",
@@ -563,7 +582,8 @@
           "Post-Graduation Work Permit (PGWP) uyğun proqram seçimi",
           "Universitet transfer imkanları",
           "Study Permit sənədlərinin hazırlanması"
-        ]
+        ],
+        "shortDesc": "Dövlət kollecləri · Məzuniyyət sonrası iş icazəsi"
       },
       "australia": {
         "name": "Avstraliya",
@@ -572,7 +592,8 @@
           "Universitet və TAFE proqramları",
           "İngilis dili kursları",
           "Viza müraciəti və sənəd hazırlığı"
-        ]
+        ],
+        "shortDesc": "Dünya səviyyəli universitetlər · TAFE proqramları"
       },
       "europe": {
         "name": "Avropa",
@@ -582,7 +603,8 @@
           "Dövlət və özəl universitetlər",
           "İngilis və yerli dildə proqramlar",
           "Hazırlıq (foundation) və birbaşa qəbul imkanları"
-        ]
+        ],
+        "shortDesc": "Almaniya · Fransa · Niderland · İtaliya · Macarıstan"
       },
       "turkey": {
         "name": "Türkiyə",
@@ -591,7 +613,8 @@
           "Dövlət və özəl universitetlər",
           "YÖS və beynəlxalq qəbul sistemləri",
           "Tibb, mühəndislik və digər ixtisaslar üzrə müraciət"
-        ]
+        ],
+        "shortDesc": "YÖS & beynəlxalq qəbul · Yaxın məsafə"
       },
       "uk": {
         "name": "Böyük Britaniya",
@@ -601,7 +624,8 @@
           "Foundation və Pre-Master proqramları",
           "Tier 4 viza dəstəyi",
           "IELTS hazırlığı və imtahan qeydiyyatı"
-        ]
+        ],
+        "shortDesc": "Russell Group · Oxford & Cambridge · Tier 4 viza"
       }
     },
     "goBack": "Geri Qayıt",
@@ -620,7 +644,13 @@
     "worldIsYourCampus": "Dünya Sizin Kampusunuzdur",
     "academicDevelopment": "Akademik İnkişaf",
     "languageCourses": "Dil Kursları və İmtahanlar",
-    "coursesDesc": "Beynəlxalq sertifikatlar və xarici dil biliklərinizi təkmilləşdirmək üçün peşəkar proqramlar."
+    "coursesDesc": "Beynəlxalq sertifikatlar və xarici dil biliklərinizi təkmilləşdirmək üçün peşəkar proqramlar.",
+    "tagLanguage": "Dil İmtahanları",
+    "tagAdmissions": "Universitet Qəbulu",
+    "tagGraduate": "Magistratura",
+    "tagAcademic": "Akademik Proqramlar",
+    "programCount": "9 Proqram",
+    "destinations": "İstiqamətlər"
   },
   "FAQData": {
     "general": [
@@ -844,7 +874,8 @@
           "title": "İmtahan Ver və Nəzərdən Keçir",
           "desc": "Tam 4 modullu testi keçin, sonra hər sualı ətraflı nəzərdən keçirin."
         }
-      }
+      },
+      "registerNow": "İndi Qeydiyyatdan Keç"
     },
     "detail": {
       "mockExam": "Sınaq İmtahanı",
@@ -962,7 +993,18 @@
       "wrongLegend": "Səhv",
       "skippedLegend": "Keçirilmiş",
       "module": "Modul"
-    }
+    },
+    "examStructure": "Rəqəmsal SAT — İmtahan Strukturu",
+    "totalQuestions": "Ümumi: 98 sual · 2s 14d",
+    "scoreRange": "Bal aralığı: 400 – 1600",
+    "howItWorks": "Necə İşləyir",
+    "howItWorksDesc": "Bir neçə dəqiqə ərzində başlayın və SAT hazırlığınızı yeni səviyyəyə çatdırın.",
+    "step1Title": "Qeydiyyat & Giriş",
+    "step1Desc": "E-poçt və ya Google ilə 30 saniyə ərzində pulsuz hesab yaradın.",
+    "step2Title": "İmtahan Alın",
+    "step2Desc": "Onlayn təhlükəsiz ödəniş. Limitsiz təkrar cəhdlər daxildir.",
+    "step3Title": "İmtahan Verin & Nəzərdən Keçirin",
+    "step3Desc": "Tam 4 modulu tamamlayın, sonra hər sualı ətraflı nəzərdən keçirin."
   },
   "Payment": {
     "title": "Ödəniş Et",

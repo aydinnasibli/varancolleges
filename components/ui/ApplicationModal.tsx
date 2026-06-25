@@ -81,27 +81,27 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
       <DialogTrigger asChild>
         {children || <Button variant="accent">{tGen("applyNow")}</Button>}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-background-dark border-white/10 text-slate-300">
+      <DialogContent className="sm:max-w-[500px] bg-white border-border text-text-secondary">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-serif text-white">{t("title")}</DialogTitle>
-          <DialogDescription className="text-slate-400">
+          <DialogTitle className="text-2xl font-serif text-navy">{t("title")}</DialogTitle>
+          <DialogDescription className="text-text-secondary">
             {t("desc")}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-6 py-4">
           <div className="grid gap-2">
-            <Label htmlFor="name" className="text-slate-300">{t("nameLabel")}</Label>
+            <Label htmlFor="name" className="text-navy">{t("nameLabel")}</Label>
             <Input
               id="name"
               placeholder={t("namePlaceholder")}
               value={formData.name}
               onChange={handleChange}
               required
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-accent"
+              className="bg-surface border-border text-navy placeholder:text-text-faint focus-visible:ring-navy/20"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="email" className="text-slate-300">{t("emailLabel")}</Label>
+            <Label htmlFor="email" className="text-navy">{t("emailLabel")}</Label>
             <Input
               id="email"
               type="email"
@@ -109,28 +109,28 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
               value={formData.email}
               onChange={handleChange}
               required
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-accent"
+              className="bg-surface border-border text-navy placeholder:text-text-faint focus-visible:ring-navy/20"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="phone" className="text-slate-300">{t("phoneLabel")}</Label>
+            <Label htmlFor="phone" className="text-navy">{t("phoneLabel")}</Label>
             <Input
               id="phone"
               placeholder={t("phonePlaceholder")}
               value={formData.phone}
               onChange={handleChange}
               required
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-accent"
+              className="bg-surface border-border text-navy placeholder:text-text-faint focus-visible:ring-navy/20"
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="message" className="text-slate-300">{t("messageLabel")}</Label>
+            <Label htmlFor="message" className="text-navy">{t("messageLabel")}</Label>
             <Textarea
               id="message"
               placeholder={t("messagePlaceholder")}
               value={formData.message}
               onChange={handleChange}
-              className="bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus-visible:ring-accent min-h-[100px]"
+              className="bg-surface border-border text-navy placeholder:text-text-faint focus-visible:ring-navy/20 min-h-[100px]"
             />
           </div>
 

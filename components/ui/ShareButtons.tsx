@@ -32,25 +32,25 @@ export default function ShareButtons({ title, text }: { title: string, text?: st
       name: "WhatsApp",
       icon: <WhatsAppIcon className="w-4 h-4" />,
       href: `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`,
-      color: "hover:bg-[#25D366]/20 hover:text-[#25D366] text-slate-400",
+      color: "hover:bg-[#25D366]/20 hover:text-[#25D366] text-text-secondary",
     },
     {
       name: "Facebook",
       icon: <Facebook className="w-4 h-4" />,
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      color: "hover:bg-[#1877F2]/20 hover:text-[#1877F2] text-slate-400",
+      color: "hover:bg-[#1877F2]/20 hover:text-[#1877F2] text-text-secondary",
     },
     {
       name: "LinkedIn",
       icon: <Linkedin className="w-4 h-4" />,
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      color: "hover:bg-[#0A66C2]/20 hover:text-[#0A66C2] text-slate-400",
+      color: "hover:bg-[#0A66C2]/20 hover:text-[#0A66C2] text-text-secondary",
     },
     {
       name: "Twitter",
       icon: <Twitter className="w-4 h-4" />,
       href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
-      color: "hover:bg-[#1DA1F2]/20 hover:text-[#1DA1F2] text-slate-400",
+      color: "hover:bg-[#1DA1F2]/20 hover:text-[#1DA1F2] text-text-secondary",
     },
   ];
 
@@ -58,8 +58,8 @@ export default function ShareButtons({ title, text }: { title: string, text?: st
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <span className="text-sm text-slate-400 font-medium mr-2">Paylaş:</span>
-      <div className="flex items-center gap-2 bg-white/5 border border-white/10 p-1.5 rounded-full backdrop-blur-sm">
+      <span className="text-sm text-text-secondary font-medium mr-2">Paylaş:</span>
+      <div className="flex items-center gap-2 bg-surface border border-border p-1.5 rounded-full backdrop-blur-sm">
         {shareLinks.map((link) => (
           <a
             key={link.name}
@@ -73,11 +73,11 @@ export default function ShareButtons({ title, text }: { title: string, text?: st
             {link.icon}
           </a>
         ))}
-        <div className="w-px h-6 bg-white/10 mx-1"></div>
+        <div className="w-px h-6 bg-border mx-1"></div>
         <button
           onClick={handleCopy}
           className={`p-2 rounded-full transition-all duration-300 flex items-center justify-center ${
-            copied ? "bg-green-500/20 text-green-400" : "hover:bg-accent/20 hover:text-accent text-slate-400"
+            copied ? "bg-green-100 text-green-600" : "hover:bg-navy/10 hover:text-navy-light text-text-secondary"
           }`}
           aria-label="Copy link"
           title="Copy link"

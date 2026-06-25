@@ -1,7 +1,6 @@
 "use client";
 
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
 import { BookOpen, Phone, Mail, Clock, CreditCard, LayoutDashboard } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -14,26 +13,26 @@ export default function ExamNavbar() {
   return (
     <>
       {/* ── Top info bar (not sticky, scrolls away) ─────────────────── */}
-      <div className="bg-[#070e1b] border-b border-white/[0.06] hidden sm:block">
+      <div className="bg-navy border-b border-navy-light/20 hidden sm:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-9 flex items-center justify-between">
           {/* Left: contact info */}
-          <div className="flex items-center gap-5 text-xs text-slate-500">
+          <div className="flex items-center gap-5 text-xs text-white/60">
             <a
               href="tel:+994771885050"
-              className="flex items-center gap-1.5 hover:text-accent transition-colors"
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
             >
-              <Phone className="h-3 w-3 text-accent/70" />
+              <Phone className="h-3 w-3 text-white/50" />
               +994 77 188 50 50
             </a>
             <a
               href="mailto:info@varancolleges.com"
-              className="flex items-center gap-1.5 hover:text-accent transition-colors"
+              className="flex items-center gap-1.5 hover:text-white transition-colors"
             >
-              <Mail className="h-3 w-3 text-accent/70" />
+              <Mail className="h-3 w-3 text-white/50" />
               info@varancolleges.com
             </a>
-            <span className="flex items-center gap-1.5 text-slate-600">
-              <Clock className="h-3 w-3 text-accent/70" />
+            <span className="flex items-center gap-1.5 text-white/40">
+              <Clock className="h-3 w-3 text-white/50" />
               {tGen("workingHours")}
             </span>
           </div>
@@ -41,7 +40,7 @@ export default function ExamNavbar() {
           {/* Right: payment CTA */}
           <Link
             href="/payment"
-            className="flex items-center gap-1.5 text-xs font-semibold text-accent hover:text-accent/80 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-semibold text-white hover:text-white/80 transition-colors"
           >
             <CreditCard className="h-3 w-3" />
             {tGen("payOnline")}
@@ -50,25 +49,21 @@ export default function ExamNavbar() {
       </div>
 
       {/* ── Main sticky header ───────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-xl border-b border-white/10">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
 
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <Image
-              src="/images/logo.png"
-              alt="VaranColleges"
-              width={120}
-              height={40}
-              className="h-9 w-auto object-contain"
-            />
+            <span className="font-serif text-xl font-bold text-navy tracking-tight">
+              Varan<span className="font-normal ml-1">Colleges</span>
+            </span>
           </Link>
 
           {/* Center: mock exams nav link */}
           <nav className="hidden md:flex items-center gap-6">
             <Link
               href="/exam"
-              className="flex items-center gap-1.5 text-sm font-medium text-slate-300 hover:text-accent transition-colors"
+              className="flex items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-navy transition-colors"
             >
               <BookOpen className="h-4 w-4" />
               {t("mockExams")}
@@ -83,7 +78,7 @@ export default function ExamNavbar() {
                   {/* Panel button — links to profile dashboard */}
                   <Link
                     href="/profile"
-                    className="hidden sm:flex items-center gap-1.5 bg-accent hover:bg-accent/90 text-[#07101e] text-sm font-semibold px-3.5 py-1.5 rounded-lg transition-colors"
+                    className="hidden sm:flex items-center gap-1.5 bg-navy hover:bg-navy-light text-white text-sm font-semibold px-3.5 py-1.5 rounded-lg transition-colors"
                   >
                     <LayoutDashboard className="h-3.5 w-3.5" />
                     {t("panel")}
@@ -91,7 +86,7 @@ export default function ExamNavbar() {
                   {/* Mobile profile link */}
                   <Link
                     href="/profile"
-                    className="sm:hidden flex items-center gap-1.5 text-accent text-sm font-semibold"
+                    className="sm:hidden flex items-center gap-1.5 text-navy-light text-sm font-semibold"
                   >
                     <LayoutDashboard className="h-4 w-4" />
                   </Link>
@@ -103,10 +98,10 @@ export default function ExamNavbar() {
                       <img
                         src={user.imageUrl}
                         alt={user.fullName ?? "User"}
-                        className="w-8 h-8 rounded-full border-2 border-accent/30 object-cover"
+                        className="w-8 h-8 rounded-full border-2 border-navy/20 object-cover"
                       />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-accent/20 border-2 border-accent/30 flex items-center justify-center text-sm font-bold text-accent">
+                      <div className="w-8 h-8 rounded-full bg-navy/10 border-2 border-navy/20 flex items-center justify-center text-sm font-bold text-navy-light">
                         {user?.firstName?.[0] ?? "U"}
                       </div>
                     )}
@@ -115,12 +110,12 @@ export default function ExamNavbar() {
               ) : (
                 <>
                   <SignInButton mode="modal">
-                    <button className="text-sm text-slate-300 hover:text-white transition-colors font-medium border border-white/20 hover:border-white/40 px-3.5 py-1.5 rounded-lg">
+                    <button className="text-sm text-text-secondary hover:text-navy transition-colors font-medium border border-border hover:border-navy/30 px-3.5 py-1.5 rounded-lg">
                       {t("signIn")}
                     </button>
                   </SignInButton>
                   <SignUpButton mode="modal">
-                    <button className="text-sm bg-accent hover:bg-accent/90 text-[#07101e] px-3.5 py-1.5 rounded-lg font-semibold transition-colors">
+                    <button className="text-sm bg-navy hover:bg-navy-light text-white px-3.5 py-1.5 rounded-lg font-semibold transition-colors">
                       {t("signUp")}
                     </button>
                   </SignUpButton>

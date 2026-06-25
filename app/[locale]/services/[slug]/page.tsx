@@ -60,171 +60,162 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
   const tData = await getTranslations({ locale, namespace: `ServicesData.${slug}` });
 
   return (
-    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
+    <main className="min-h-screen bg-white text-navy font-sans selection:bg-navy selection:text-white overflow-x-hidden">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden border-b border-white/5">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
-          <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] bg-primary/30 rounded-full blur-[100px] mix-blend-screen pointer-events-none" />
-        </div>
-
+      {/* Hero Section — 58/42 split */}
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 bg-navy">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 leading-[1.1] tracking-tight">
-              {tData("title").split(" ").map((word: string, i: number) => (
-                <span key={i} className="block">{word}</span>
-              ))}
-            </h1>
-            <p className="text-xl md:text-2xl text-slate-300 font-light leading-relaxed max-w-2xl border-l-2 border-accent pl-6">
-              {tData("description")}
-            </p>
-            <div className="pt-4 flex flex-wrap gap-4">
-              <ApplicationModal>
-                <Button size="lg" variant="accent" className="text-lg px-8 py-6 rounded-full shadow-[0_0_30px_-5px_var(--accent)] hover:shadow-[0_0_50px_-10px_var(--accent)] transition-all duration-300">
-                  {tNav("contact")}
+          <div className="grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-12 lg:gap-16">
+            {/* Left side */}
+            <div>
+              {/* Breadcrumb */}
+              <div className="mb-10 flex items-center gap-2 text-sm text-white/50 tracking-wide">
+                <a href="/" className="hover:text-white transition-colors">{tNav("home")}</a>
+                <span>/</span>
+                <a href="/services" className="hover:text-white transition-colors">{tNav("services")}</a>
+                <span>/</span>
+                <span className="text-white">{tData("title")}</span>
+              </div>
+
+              <h1 className="text-5xl md:text-7xl font-serif text-white mb-8 leading-[1.1] tracking-tight">
+                {tData("title")}
+              </h1>
+              <p className="text-xl text-white/70 font-light leading-relaxed max-w-2xl border-l-2 border-white/25 pl-[18px] mb-8">
+                {tData("description")}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <ApplicationModal>
+                  <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-white text-navy hover:bg-white/90 transition-all duration-300 font-medium">
+                    {tNav("contact")}
+                  </Button>
+                </ApplicationModal>
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full border-white/20 text-white hover:bg-white/10 hover:border-white/40 transition-all bg-transparent">
+                  {t("freeConsultation")}
                 </Button>
-              </ApplicationModal>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 rounded-full border-white/20 text-white hover:bg-white/10 hover:border-white/40 transition-all">
-                {t("freeConsultation")}
-              </Button>
+              </div>
+            </div>
+
+            {/* Right side — 2x2 stat grid */}
+            <div className="grid grid-cols-2 border border-white/[0.07] rounded-lg overflow-hidden self-center">
+              {[
+                { label: t("duration"), value: t("personalPlan"), subtitle: t("duration") },
+                { label: t("lessons"), value: t("twiceAWeek"), subtitle: t("lessons") },
+                { label: t("result"), value: t("guaranteed"), subtitle: t("result") },
+                { label: t("mockExam"), value: t("free"), subtitle: t("mockExam") },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className={`p-6 md:p-8 ${i % 2 === 0 ? "border-r border-white/[0.07]" : ""} ${i < 2 ? "border-b border-white/[0.07]" : ""}`}
+                >
+                  <p className="text-xs text-white/40 uppercase tracking-[0.2em] font-medium mb-2">{stat.label}</p>
+                  <p className="text-2xl md:text-3xl font-serif text-white mb-1">{stat.value}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block text-slate-500">
-          <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-slate-500 to-transparent mx-auto"></div>
-        </div>
       </section>
 
-      {/* Quick Stats / Highlights */}
-      <section className="border-y border-white/5 bg-white/[0.02]">
+      {/* Main Content — Sidebar + Content (3fr + 5fr) */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/5">
-            {[
-              { icon: Clock, label: t("duration"), value: t("personalPlan") },
-              { icon: CalendarDays, label: t("lessons"), value: t("twiceAWeek") },
-              { icon: Award, label: t("result"), value: t("guaranteed") },
-              { icon: CheckCircle2, label: t("mockExam"), value: t("free") },
-            ].map((stat, i) => (
-              <div key={i} className="py-8 px-6 flex items-center justify-center md:justify-start gap-4 group hover:bg-white/5 transition-colors cursor-default">
-                <div className="p-3 rounded-full bg-accent/10 text-accent group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-xs text-slate-500 uppercase tracking-wider font-medium">{stat.label}</p>
-                  <p className="text-lg text-white font-serif">{stat.value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_5fr] gap-12 lg:gap-16">
 
-      {/* Main Content Layout */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-
-            {/* Sidebar / Navigation (Sticky) */}
-            <div className="hidden lg:block col-span-3">
+            {/* Sidebar (sticky) */}
+            <div className="hidden lg:block">
               <div className="sticky top-32 space-y-8">
-                <div>
-                  <h3 className="text-white font-serif text-xl mb-6">{t("tableOfContents")}</h3>
-                  <ul className="space-y-4 text-sm text-slate-400 border-l border-white/10 pl-4">
+                {/* Contents card */}
+                <div className="border border-border rounded-xl p-6">
+                  <h3 className="text-navy font-serif text-lg mb-5 pb-4 border-b border-border">{t("tableOfContents")}</h3>
+                  <ul className="space-y-3 text-sm text-text-secondary">
                     {[t("generalInfo"), t("format"), t("grading"), t("whyUs"), t("process")].map((item, i) => (
                       <li key={i}>
-                        <a href={`#section-${i}`} className="hover:text-accent transition-colors block py-1 relative group">
-                          <span className="absolute -left-[17px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        <a href={`#section-${i}`} className="hover:text-navy-light transition-colors block py-1 pl-3 border-l-2 border-transparent hover:border-navy-light">
                           {item}
                         </a>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-primary to-background-dark border border-white/10">
-                  <h4 className="text-white font-serif text-lg mb-2">{t("haveQuestion")}</h4>
-                  <p className="text-slate-400 text-sm mb-6 font-light">
+
+                {/* Contact CTA card */}
+                <div className="p-6 rounded-xl bg-surface border border-border">
+                  <h4 className="text-navy font-serif text-lg mb-2">{t("haveQuestion")}</h4>
+                  <p className="text-text-secondary text-sm mb-6 font-light">
                     {t("expertsReady")}
                   </p>
                   <ApplicationModal>
-                    <Button variant="accent" className="w-full">{t("contactUs")}</Button>
+                    <Button variant="accent" className="w-full bg-navy text-white hover:bg-navy-light">{t("contactUs")}</Button>
                   </ApplicationModal>
                 </div>
               </div>
             </div>
 
-            {/* Content Area */}
-            <div className="col-span-1 lg:col-span-9 space-y-24">
+            {/* Main content area */}
+            <div className="space-y-20">
 
-              {/* Exam Info */}
+              {/* About the Exam */}
               <div id="section-0" className="scroll-mt-32">
-                <span className="text-accent text-sm font-medium tracking-widest uppercase mb-3 block">{t("generalInfo")}</span>
-                <h2 className="text-3xl md:text-4xl font-serif text-white mb-8">{t("aboutExam")}</h2>
-                <div className="prose prose-invert prose-lg max-w-none text-slate-300 font-light leading-loose">
+                <span className="text-text-faint text-sm font-medium tracking-widest uppercase mb-3 block">{t("generalInfo")}</span>
+                <h2 className="text-3xl md:text-4xl font-serif text-navy mb-8">{t("aboutExam")}</h2>
+                <div className="prose prose-lg max-w-none text-text-secondary font-light leading-loose">
                   <p>{tData("examInfo")}</p>
                 </div>
               </div>
 
-              {/* Format & Grading Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div id="section-1" className="glass-card p-8 rounded-2xl border border-white/5 scroll-mt-32 hover:border-accent/30 transition-colors duration-500">
-                  <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-accent mb-6">
-                    <CalendarDays className="w-6 h-6" />
+              {/* Format & Grading — 2-column grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div id="section-1" className="bg-surface p-8 rounded-xl border border-border scroll-mt-32">
+                  <div className="w-10 h-10 bg-navy/10 rounded-lg flex items-center justify-center text-navy-light mb-5">
+                    <CalendarDays className="w-5 h-5" />
                   </div>
-                  <h3 className="text-2xl font-serif text-white mb-4">{t("format")}</h3>
-                  <p className="text-slate-400 leading-relaxed font-light">
+                  <h3 className="text-xl font-serif text-navy mb-3">{t("format")}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed font-light">
                     {tData.has("format") ? tData("format") : tData("examInfo")}
                   </p>
                 </div>
-                <div id="section-2" className="glass-card p-8 rounded-2xl border border-white/5 scroll-mt-32 hover:border-accent/30 transition-colors duration-500">
-                  <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-accent mb-6">
-                    <Award className="w-6 h-6" />
+                <div id="section-2" className="bg-surface p-8 rounded-xl border border-border scroll-mt-32">
+                  <div className="w-10 h-10 bg-navy/10 rounded-lg flex items-center justify-center text-navy-light mb-5">
+                    <Award className="w-5 h-5" />
                   </div>
-                  <h3 className="text-2xl font-serif text-white mb-4">{t("grading")}</h3>
-                  <p className="text-slate-400 leading-relaxed font-light">
+                  <h3 className="text-xl font-serif text-navy mb-3">{t("grading")}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed font-light">
                     {tData.has("grading") ? tData("grading") : tData("examInfo")}
                   </p>
                 </div>
               </div>
 
-              {/* Why Us */}
-              <div id="section-3" className="relative py-12 px-8 md:px-12 rounded-3xl overflow-hidden scroll-mt-32">
-                <div className="absolute inset-0 bg-accent/5 backdrop-blur-sm border border-accent/10"></div>
-                <div className="relative z-10">
-                   <h2 className="text-3xl font-serif text-white mb-6">{t("whyUs")}</h2>
-                   <p className="text-slate-300 text-lg leading-relaxed font-light mb-8">
-                     {tData.has("whyUs") ? tData("whyUs") : ""}
-                   </p>
-                   {/* If there are specific why us features we can map them, otherwise omit or use a generic list */}
-                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {t.raw("whyUsFeats")?.map((feature: string, i: number) => (
-                        <div key={i} className="flex items-center gap-3 text-slate-200">
-                          <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                   </div>
+              {/* Why Varan Colleges? — navy background card */}
+              <div id="section-3" className="bg-navy rounded-xl p-8 md:p-12 scroll-mt-32">
+                <h2 className="text-3xl font-serif text-white mb-4">{t("whyUs")}</h2>
+                <p className="text-white/60 text-base leading-relaxed font-light mb-8">
+                  {tData.has("whyUs") ? tData("whyUs") : ""}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {t.raw("whyUsFeats")?.map((feature: string, i: number) => (
+                    <div key={i} className="flex items-center gap-3 text-white">
+                      <CheckCircle2 className="w-5 h-5 text-white/60 shrink-0" />
+                      <span className="text-sm">{feature}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Process */}
+              {/* Preparation Process — numbered steps with timeline */}
               <div id="section-4" className="scroll-mt-32">
-                 <h2 className="text-3xl md:text-4xl font-serif text-white mb-12">{t("process")}</h2>
-                 <div className="space-y-12 relative before:absolute before:left-[19px] before:top-2 before:bottom-0 before:w-[2px] before:bg-white/5">
-                    {t.raw("processSteps")?.map((step: any, i: number) => (
-                      <div key={i} className="relative pl-16 group">
-                         <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-background-dark border border-white/10 flex items-center justify-center text-sm font-serif font-bold text-accent group-hover:border-accent transition-colors z-10 shadow-[0_0_15px_-5px_black]">
-                           {i + 1}
-                         </div>
-                         <h3 className="text-xl text-white font-medium mb-2 group-hover:text-accent transition-colors">{step.title}</h3>
-                         <p className="text-slate-400 font-light leading-relaxed">{step.desc || tData("preparationProcess")}</p>
+                <h2 className="text-3xl md:text-4xl font-serif text-navy mb-12">{t("process")}</h2>
+                <div className="space-y-10 relative before:absolute before:left-[19px] before:top-2 before:bottom-0 before:w-[2px] before:bg-border">
+                  {t.raw("processSteps")?.map((step: any, i: number) => (
+                    <div key={i} className="relative pl-14 group">
+                      <div className="absolute left-0 top-0 w-10 h-10 rounded-full bg-white border-2 border-border flex items-center justify-center text-sm font-serif font-bold text-navy-light group-hover:border-navy-light transition-colors z-10">
+                        {i + 1}
                       </div>
-                    ))}
-                 </div>
+                      <h3 className="text-lg text-navy font-medium mb-1 group-hover:text-navy-light transition-colors">{step.title}</h3>
+                      <p className="text-text-secondary text-sm font-light leading-relaxed">{step.desc || tData("preparationProcess")}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
             </div>
@@ -233,22 +224,18 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-transparent"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="bg-navy">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">{t("ctaTitle")}</h2>
-              <p className="text-slate-300 text-lg font-light leading-relaxed mb-8">
+              <h2 className="text-4xl md:text-5xl font-serif text-white mb-4">{t("ctaTitle")}</h2>
+              <p className="text-white/60 text-lg font-light leading-relaxed">
                 {t("ctaDesc")}
               </p>
             </div>
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <ApplicationModal>
-                <Button size="lg" variant="accent" className="h-16 px-10 text-lg rounded-full shadow-2xl shadow-black/50">
+                <Button size="lg" variant="accent" className="h-14 px-10 text-lg rounded-full bg-white text-navy hover:bg-white/90">
                   {tNav("contact")}
                 </Button>
               </ApplicationModal>

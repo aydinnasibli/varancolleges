@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, usePathname } from "@/i18n/routing";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, Mail, Clock, CreditCard } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
@@ -20,63 +19,53 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: t("home"), href: "/" },
+    { name: t("services"), href: "/services" },
+    { name: t("studyAbroad"), href: "/study-abroad" },
+    { name: t("about"), href: "/about" },
+    { name: t("blog"), href: "/blog" },
+    { name: t("mockExams"), href: "/exam" },
+    { name: t("contact"), href: "/contact" },
+  ];
+
   return (
     <>
-      {/* Top Bar - Hidden on mobile */}
-      <div className="bg-primary border-b border-white/5 py-2 hidden lg:block">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-xs text-slate-400 font-medium tracking-wide">
-          <div className="flex items-center space-x-6">
-            <a href="tel:+994771885050" className="flex items-center hover:text-accent transition-colors">
-              <Phone className="w-4 h-4 mr-2 text-accent" />
+      {/* Top Bar */}
+      <div className="bg-navy border-b border-white/6 hidden lg:block">
+        <div className="max-w-[1280px] mx-auto px-8 h-10 flex items-center justify-between">
+          <div className="flex items-center gap-7">
+            <a href="tel:+994771885050" className="flex items-center gap-[7px] text-xs text-white/50 tracking-wide hover:text-text-faint transition-colors">
+              <Phone className="w-3 h-3" />
               +994 77 188 50 50
             </a>
-            <a href="mailto:info@varancolleges.com" className="flex items-center hover:text-accent transition-colors">
-              <Mail className="w-4 h-4 mr-2 text-accent" />
+            <a href="mailto:info@varancolleges.com" className="flex items-center gap-[7px] text-xs text-white/50 tracking-wide hover:text-text-faint transition-colors">
+              <Mail className="w-3 h-3" />
               info@varancolleges.com
             </a>
-            <span className="flex items-center text-slate-500">
-              <Clock className="w-4 h-4 mr-2 text-accent" />
+            <span className="flex items-center gap-[7px] text-xs text-white/32 tracking-wide">
+              <Clock className="w-3 h-3" />
               {tGen("workingHours")}
             </span>
-            <span className="text-slate-700">|</span>
-            <Link href="/payment" className="flex items-center gap-1.5 text-accent hover:text-accent/80 font-semibold transition-colors">
-              <CreditCard className="w-3.5 h-3.5" />
+          </div>
+          <div className="flex items-center gap-[18px]">
+            <Link href="/payment" className="flex items-center gap-[7px] text-xs text-text-faint font-semibold tracking-wide hover:text-white/80 transition-colors">
+              <CreditCard className="w-3 h-3" />
               {tGen("payOnline")}
             </Link>
-          </div>
-          <div className="flex items-center space-x-4">
-            <a
-              href="https://wa.me/994771885050"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform hover:text-accent"
-              aria-label="WhatsApp"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
+            <span className="w-px h-3.5 bg-white/10"></span>
+            <a href="https://wa.me/994771885050" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-text-faint transition-colors" aria-label="WhatsApp">
+              <WhatsAppIcon className="w-3.5 h-3.5" />
             </a>
-            <span className="text-slate-700">|</span>
-            <a
-              href="https://www.instagram.com/varancollegesltd/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform hover:text-accent"
-              aria-label="Instagram"
-            >
-              <InstagramIcon className="w-5 h-5" />
+            <a href="https://www.instagram.com/varancollegesltd/" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-text-faint transition-colors" aria-label="Instagram">
+              <InstagramIcon className="w-3.5 h-3.5" />
             </a>
-            <span className="text-slate-700">|</span>
-            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -84,65 +73,54 @@ const Navbar = () => {
       {/* Main Navbar */}
       <nav
         className={cn(
-          "sticky top-0 z-50 transition-all duration-300 border-b border-white/5",
-          isScrolled ? "glass-panel h-20" : "bg-[#0a192f]/20 h-24 border-transparent"
+          "sticky top-0 z-50 transition-all duration-300 h-[68px]",
+          isScrolled
+            ? "bg-white/95 backdrop-blur-xl shadow-sm border-b border-border"
+            : "bg-white border-b border-border"
         )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex justify-between items-center h-full">
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0 flex items-center gap-3 cursor-pointer">
-              <Image
-                src="/images/logo.png"
-                alt="Varan Colleges"
-                width={666}
-                height={375}
-                className="h-12 w-auto object-contain"
-                priority
-              />
+            <Link href="/" className="shrink-0 flex items-center cursor-pointer">
+              <span className="font-serif text-2xl font-bold text-navy tracking-tight">
+                Varan<span className="font-normal ml-1">Colleges</span>
+              </span>
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden lg:flex space-x-10 items-center">
-              {[
-                { name: t("home"), href: "/" },
-                { name: t("services"), href: "/services" },
-                { name: t("studyAbroad"), href: "/study-abroad" },
-                { name: t("about"), href: "/about" },
-                { name: t("blog"), href: "/blog" },
-                { name: t("mockExams"), href: "/exam" },
-                { name: t("contact"), href: "/contact" },
-              ].map((item) => (
+            <div className="hidden lg:flex items-center gap-[26px]">
+              {navLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "text-sm font-medium transition-colors relative group py-2",
-                    pathname === item.href ? "text-white" : "text-slate-300 hover:text-accent"
+                    "text-[13px] font-medium tracking-[0.01em] transition-colors whitespace-nowrap",
+                    pathname === item.href ? "text-navy" : "text-text-secondary hover:text-navy"
                   )}
                 >
                   {item.name}
-                  <span className={cn(
-                    "absolute bottom-0 left-0 h-0.5 bg-accent transition-all duration-300",
-                    pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
-                  )}></span>
                 </Link>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:flex items-center gap-6">
-              <div className="h-8 w-[1px] bg-white/10"></div>
-              <ApplicationModal />
+            {/* Right side: Language + CTA */}
+            <div className="hidden lg:flex items-center gap-4">
+              <LanguageSwitcher />
+              <ApplicationModal>
+                <button className="bg-navy text-white border-none cursor-pointer px-[22px] py-[10px] rounded text-[13px] font-semibold tracking-[0.04em] hover:bg-navy-light transition-colors">
+                  {tGen("applyNow")}
+                </button>
+              </ApplicationModal>
             </div>
 
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-white hover:text-accent focus:outline-none"
+                className="text-navy hover:text-navy-light focus:outline-none"
               >
-                {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+                {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
               </button>
             </div>
           </div>
@@ -150,29 +128,21 @@ const Navbar = () => {
 
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 w-full bg-background-dark/95 backdrop-blur-xl border-b border-white/10 py-4 px-4 flex flex-col space-y-4 shadow-2xl animate-in slide-in-from-top-5">
-            {[
-              { name: t("home"), href: "/" },
-              { name: t("services"), href: "/services" },
-              { name: t("studyAbroad"), href: "/study-abroad" },
-              { name: t("about"), href: "/about" },
-              { name: t("blog"), href: "/blog" },
-              { name: t("mockExams"), href: "/exam" },
-              { name: t("contact"), href: "/contact" },
-            ].map((item) => (
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-border py-4 px-4 flex flex-col space-y-1 shadow-lg animate-in slide-in-from-top-2">
+            {navLinks.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-lg font-medium text-white hover:text-accent py-2 border-b border-white/5"
+                className="text-base font-medium text-navy hover:text-navy-light py-3 px-2 border-b border-border/50 transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="pt-2 pb-1">
+            <div className="pt-3 pb-1 px-2">
               <LanguageSwitcher />
             </div>
-            <div className="w-full mt-4" onClick={() => setIsMobileMenuOpen(false)}>
+            <div className="w-full pt-2 px-2" onClick={() => setIsMobileMenuOpen(false)}>
               <ApplicationModal>
                 <Button variant="accent" className="w-full">{tGen("applyNow")}</Button>
               </ApplicationModal>

@@ -29,30 +29,30 @@ export default async function PaymentPage({
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background-dark text-slate-300">
+      <main className="min-h-screen bg-white text-text-secondary">
         {paymentSuccess && (
-          <div className="bg-green-500/10 border-b border-green-500/20 py-3 px-6 text-center text-sm text-green-400 font-medium flex items-center justify-center gap-2">
+          <div className="bg-green-50 border-b border-green-200 py-3 px-6 text-center text-sm text-green-600 font-medium flex items-center justify-center gap-2">
             <CheckCircle className="h-4 w-4" />
             {t("successBanner")}
           </div>
         )}
         {paymentCancelled && (
-          <div className="bg-yellow-500/10 border-b border-yellow-500/20 py-3 px-6 text-center text-sm text-yellow-400 font-medium flex items-center justify-center gap-2">
+          <div className="bg-yellow-50 border-b border-yellow-200 py-3 px-6 text-center text-sm text-yellow-600 font-medium flex items-center justify-center gap-2">
             <XCircle className="h-4 w-4" />
             {t("cancelledBanner")}
           </div>
         )}
 
         {/* Header */}
-        <section className="border-b border-white/5 py-12 bg-gradient-to-b from-primary/20 to-transparent">
+        <section className="border-b border-border py-12 bg-gradient-to-b from-surface to-white">
           <div className="max-w-2xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-accent/20 border border-accent/30 mb-5">
-              <CreditCard className="h-7 w-7 text-accent" />
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-navy/10 border border-navy/20 mb-5">
+              <CreditCard className="h-7 w-7 text-navy-light" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">{t("title")}</h1>
-            <p className="text-slate-400">{t("subtitle")}</p>
+            <h1 className="text-3xl font-bold text-navy mb-2">{t("title")}</h1>
+            <p className="text-text-secondary">{t("subtitle")}</p>
             {user && (
-              <p className="text-sm text-slate-500 mt-3">
+              <p className="text-sm text-text-muted mt-3">
                 {user.firstName} {user.lastName} &middot;{" "}
                 {user.primaryEmailAddress?.emailAddress}
               </p>

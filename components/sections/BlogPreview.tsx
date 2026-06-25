@@ -1,5 +1,4 @@
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { getPosts } from "@/lib/data";
 import { getTranslations } from "next-intl/server";
@@ -14,54 +13,59 @@ const BlogPreview = async () => {
   }
 
   return (
-    <section className="py-24 bg-background-dark relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-16">
-          <div>
-            <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">{t("subtitle")}</h2>
-            <h3 className="text-4xl font-serif text-white">{t("title")}</h3>
-          </div>
-          <Link href="/blog" className="hidden md:flex items-center text-sm font-medium text-slate-400 hover:text-accent transition-colors">
-            {t("allPosts")}
-            <ArrowRight className="ml-2 h-5 w-5" />
+    <section className="py-24 bg-surface border-t border-border">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-end mb-[52px]">
+          <h2 className="font-serif text-4xl md:text-[56px] font-bold text-navy leading-none">
+            {t("title")}
+          </h2>
+          <Link
+            href="/blog"
+            className="hidden md:inline-flex shrink-0 bg-transparent border-[1.5px] border-border cursor-pointer px-7 py-[11px] rounded text-[13px] font-semibold text-navy hover:border-navy transition-colors"
+          >
+            {t("allPosts")} →
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recentPosts.map((post) => (
-            <Link key={post._id} href={`/blog/${post.slug.current}`} className="group block cursor-pointer">
-              <div className="relative overflow-hidden rounded-lg mb-6 h-64 bg-card border border-white/5">
-                <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors z-10"></div>
-                {post.mainImage && (
-                  <Image
-                    alt={post.title}
-                    className="object-cover transform group-hover:scale-110 transition-transform duration-700"
-                    src={post.mainImage}
-                    fill
-                  />
-                )}
-                <div className="absolute top-4 left-4 z-20 bg-black/50 backdrop-blur-md px-3 py-1 rounded text-xs text-white border border-white/10">
+        <div className="border border-border rounded-lg overflow-hidden">
+          {recentPosts.map((post, i) => (
+            <Link
+              key={post._id}
+              href={`/blog/${post.slug.current}`}
+              className={`bg-white hover:bg-surface transition-colors flex flex-col md:flex-row md:items-center gap-4 md:gap-9 px-6 md:px-9 py-6 md:py-[26px] group ${
+                i < recentPosts.length - 1 ? "border-b border-border" : ""
+              }`}
+            >
+              <div className="flex-1 min-w-0">
+                <div className="text-[10px] font-bold tracking-[0.12em] text-navy-light uppercase mb-[7px]">
+                  {t("subtitle")}
+                </div>
+                <div className="font-serif text-lg md:text-[22px] font-bold text-navy leading-[1.3] line-clamp-2 group-hover:text-navy-light transition-colors">
+                  {post.title}
+                </div>
+              </div>
+              <div className="flex items-center gap-5 shrink-0">
+                <span className="text-xs text-text-muted">
                   {new Date(post.publishedAt).toLocaleDateString('az-AZ', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'
                   })}
-                </div>
+                </span>
+                <ArrowRight className="w-4 h-4 text-navy-light" />
               </div>
-              <h4 className="text-xl font-serif text-white mb-3 group-hover:text-accent transition-colors line-clamp-2">
-                {post.title}
-              </h4>
-              {post.excerpt && (
-                <p className="text-slate-400 text-sm mb-4 line-clamp-2 font-light">
-                  {post.excerpt}
-                </p>
-              )}
-              <span className="inline-flex items-center text-accent text-sm font-medium opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-                {t("readMore")}
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </span>
             </Link>
           ))}
+        </div>
+
+        <div className="md:hidden mt-6 text-center">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-navy hover:text-navy-light transition-colors"
+          >
+            {t("allPosts")}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

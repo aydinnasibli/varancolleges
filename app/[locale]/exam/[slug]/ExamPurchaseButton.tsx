@@ -55,7 +55,7 @@ export default function ExamPurchaseButton({
     return (
       <button
         disabled
-        className="flex items-center justify-center gap-2 w-full bg-white/5 border border-white/10 text-slate-400 py-3 rounded-xl text-sm font-semibold cursor-not-allowed"
+        className="flex items-center justify-center gap-2 w-full bg-surface border border-border text-text-muted py-3 rounded-xl text-sm font-semibold cursor-not-allowed"
       >
         <CheckCircle className="h-4 w-4 text-green-400" />
         <span>{t("agreeButton")}</span>
@@ -68,7 +68,7 @@ export default function ExamPurchaseButton({
       {/* Trigger button */}
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl text-sm font-semibold transition-colors"
+        className="flex items-center justify-center gap-2 w-full bg-navy hover:bg-navy-light text-white py-3 rounded-xl text-sm font-semibold transition-colors"
       >
         <ShoppingCart className="h-4 w-4" />
         ₼{(price / 100).toFixed(2)}
@@ -78,20 +78,20 @@ export default function ExamPurchaseButton({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
           showCloseButton={false}
-          className="bg-[#0d1829] border border-white/10 text-white max-w-lg p-0 overflow-hidden"
+          className="bg-white border border-border text-navy max-w-lg p-0 overflow-hidden"
         >
-          {/* Gold stripe */}
-          <div className="h-1 bg-gradient-to-r from-accent/40 via-accent to-accent/40" />
+          {/* Navy stripe */}
+          <div className="h-1 bg-gradient-to-r from-navy/40 via-navy to-navy/40" />
 
           <div className="p-6 space-y-5">
             <DialogHeader>
               <div className="flex items-center justify-between">
-                <DialogTitle className="text-lg font-serif font-bold text-white">
+                <DialogTitle className="text-lg font-serif font-bold text-navy">
                   {t("title")}
                 </DialogTitle>
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-slate-500 hover:text-slate-300 transition-colors"
+                  className="text-text-muted hover:text-text-secondary transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -116,8 +116,8 @@ export default function ExamPurchaseButton({
             {/* Terms list */}
             <ul className="space-y-3">
               {(["term1", "term2", "term3", "term4"] as const).map((key) => (
-                <li key={key} className="flex gap-2.5 text-xs text-slate-400 leading-relaxed">
-                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-accent/60 shrink-0" />
+                <li key={key} className="flex gap-2.5 text-xs text-text-secondary leading-relaxed">
+                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-navy/40 shrink-0" />
                   {t(key)}
                 </li>
               ))}
@@ -128,7 +128,7 @@ export default function ExamPurchaseButton({
               <button
                 onClick={handleAgreeAndPay}
                 disabled={loading}
-                className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
+                className="flex items-center justify-center gap-2 w-full bg-navy hover:bg-navy-light text-white py-3 rounded-xl text-sm font-semibold transition-colors disabled:opacity-60"
               >
                 {loading ? (
                   <>
@@ -142,7 +142,7 @@ export default function ExamPurchaseButton({
               <button
                 onClick={() => setOpen(false)}
                 disabled={loading}
-                className="w-full border border-white/10 text-slate-400 hover:text-white hover:border-white/20 py-2.5 rounded-xl text-sm font-medium transition-colors"
+                className="w-full border border-border text-text-secondary hover:text-navy hover:border-navy/30 py-2.5 rounded-xl text-sm font-medium transition-colors"
               >
                 {t("cancelButton")}
               </button>

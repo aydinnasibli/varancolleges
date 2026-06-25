@@ -111,25 +111,25 @@ export default async function ResultsPage({
 
   const scoreColour =
     totalScore >= 1400
-      ? "text-emerald-400"
+      ? "text-emerald-600"
       : totalScore >= 1100
-      ? "text-accent"
-      : "text-orange-400";
+      ? "text-navy-light"
+      : "text-orange-500";
 
   return (
     <>
       <ExamNavbar />
-      <main className="min-h-screen bg-background-dark pb-24">
+      <main className="min-h-screen bg-white pb-24">
         {/* ── Score hero ──────────────────────────────────────────────── */}
-        <section className="border-b border-white/5 py-12 bg-gradient-to-b from-accent/5 via-primary/10 to-transparent">
+        <section className="border-b border-border py-12 bg-gradient-to-b from-surface via-surface to-white">
           <div className="max-w-4xl mx-auto px-6">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-xs text-slate-500 mb-6">
-              <Link href="/profile" className="hover:text-accent transition-colors flex items-center gap-1">
+            <div className="flex items-center gap-2 text-xs text-text-muted mb-6">
+              <Link href="/profile" className="hover:text-navy-light transition-colors flex items-center gap-1">
                 <User className="h-3.5 w-3.5" /> {t("myProfile")}
               </Link>
               <span>/</span>
-              <span className="text-slate-400">{exam.title}</span>
+              <span className="text-text-secondary">{exam.title}</span>
               <span>/</span>
               <span>
                 {new Date(attempt.startedAt).toLocaleDateString(locale === "az" ? "az-AZ" : "en-US", {
@@ -143,22 +143,22 @@ export default async function ResultsPage({
             <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-start">
               {/* Left: scores */}
               <div>
-                <div className="flex items-center gap-2 text-sm text-slate-400 mb-3">
-                  <Trophy className="h-4 w-4 text-accent" />
+                <div className="flex items-center gap-2 text-sm text-text-secondary mb-3">
+                  <Trophy className="h-4 w-4 text-navy-light" />
                   {exam.title} — {t("resultsLabel")}
                 </div>
                 <div className={`text-7xl font-bold mb-1 ${scoreColour}`}>{totalScore}</div>
-                <div className="text-slate-500 text-base mb-6">{t("outOf")}</div>
+                <div className="text-text-muted text-base mb-6">{t("outOf")}</div>
 
                 {/* Score bar */}
                 <div className="max-w-xs">
-                  <div className="flex justify-between text-xs text-slate-600 mb-1.5">
+                  <div className="flex justify-between text-xs text-text-muted mb-1.5">
                     <span>400</span>
                     <span>1600</span>
                   </div>
-                  <div className="h-2.5 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-2.5 bg-border rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-accent to-emerald-400 rounded-full"
+                      className="h-full bg-gradient-to-r from-navy-light to-emerald-500 rounded-full"
                       style={{ width: `${Math.max(0, ((totalScore - 400) / 1200) * 100)}%` }}
                     />
                   </div>
@@ -183,20 +183,20 @@ export default async function ResultsPage({
                 ].map((s) => (
                   <div
                     key={s.label}
-                    className="bg-white/5 border border-white/10 rounded-xl px-5 py-4"
+                    className="bg-surface border border-border rounded-xl px-5 py-4"
                   >
-                    <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-text-muted uppercase tracking-wider mb-1">
                       {s.label}
                     </p>
                     <div className="flex items-end justify-between gap-4">
-                      <span className="text-3xl font-bold text-white">{s.score}</span>
-                      <span className="text-sm text-slate-400 mb-0.5">
+                      <span className="text-3xl font-bold text-navy">{s.score}</span>
+                      <span className="text-sm text-text-secondary mb-0.5">
                         {s.correct}/{s.total} {t("correct")}
                       </span>
                     </div>
-                    <div className="mt-2 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="mt-2 h-1.5 bg-border rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-accent/70 rounded-full"
+                        className="h-full bg-navy-light/70 rounded-full"
                         style={{ width: `${s.total > 0 ? (s.correct / s.total) * 100 : 0}%` }}
                       />
                     </div>
@@ -207,16 +207,16 @@ export default async function ResultsPage({
 
             {/* Summary chips */}
             <div className="flex flex-wrap gap-3 mt-8">
-              <span className="flex items-center gap-1.5 text-sm text-green-400 bg-green-400/10 border border-green-400/20 px-3 py-1.5 rounded-full">
+              <span className="flex items-center gap-1.5 text-sm text-green-600 bg-green-50 border border-green-200 px-3 py-1.5 rounded-full">
                 <CheckCircle className="h-3.5 w-3.5" />
                 {totalCorrect} {t("correct")}
               </span>
-              <span className="flex items-center gap-1.5 text-sm text-red-400 bg-red-400/10 border border-red-400/20 px-3 py-1.5 rounded-full">
+              <span className="flex items-center gap-1.5 text-sm text-red-600 bg-red-50 border border-red-200 px-3 py-1.5 rounded-full">
                 <XCircle className="h-3.5 w-3.5" />
                 {totalWrong} {t("wrong")}
               </span>
               {totalSkipped > 0 && (
-                <span className="flex items-center gap-1.5 text-sm text-slate-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+                <span className="flex items-center gap-1.5 text-sm text-text-secondary bg-surface border border-border px-3 py-1.5 rounded-full">
                   <MinusCircle className="h-3.5 w-3.5" />
                   {totalSkipped} {t("skipped")}
                 </span>
@@ -231,7 +231,7 @@ export default async function ResultsPage({
               />
               <Link
                 href="/profile"
-                className="flex items-center gap-2 border border-white/15 hover:border-white/30 text-slate-300 hover:text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
+                className="flex items-center gap-2 border border-border hover:border-navy/30 text-text-secondary hover:text-navy px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
               >
                 {t("myProfile")}
               </Link>
@@ -241,8 +241,8 @@ export default async function ResultsPage({
 
         {/* ── Question overview grid ───────────────────────────────────── */}
         <section className="max-w-4xl mx-auto px-6 pt-10">
-          <h2 className="text-lg font-semibold text-white mb-5 flex items-center gap-2">
-            <Target className="h-5 w-5 text-accent" />
+          <h2 className="text-lg font-semibold text-navy mb-5 flex items-center gap-2">
+            <Target className="h-5 w-5 text-navy-light" />
             {t("questionOverview")}
           </h2>
 
@@ -251,7 +251,7 @@ export default async function ResultsPage({
               // find the global index offset for this module's questions
               return (
                 <div key={mod.key}>
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                  <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
                     {mod.label} ·{" "}
                     {mod.qs.filter(isCorrectQ).length}/{mod.qs.length} {t("correct")}
                   </p>
@@ -268,10 +268,10 @@ export default async function ResultsPage({
                           title={`Q${gi} — ${skipped ? "Skipped" : correct ? "Correct" : "Wrong"}`}
                           className={`w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold transition-transform hover:scale-110 ${
                             skipped
-                              ? "bg-white/10 text-slate-500 border border-white/10"
+                              ? "bg-surface text-text-muted border border-border"
                               : correct
-                              ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                              : "bg-red-500/20 text-red-400 border border-red-500/30"
+                              ? "bg-green-50 text-green-600 border border-green-200"
+                              : "bg-red-50 text-red-600 border border-red-200"
                           }`}
                         >
                           {q.questionNumber}
@@ -285,23 +285,23 @@ export default async function ResultsPage({
           </div>
 
           {/* Legend */}
-          <div className="flex items-center gap-5 mt-5 pt-4 border-t border-white/5">
-            <span className="flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="w-3 h-3 rounded bg-green-500/30 inline-block" /> {t("correctLegend")}
+          <div className="flex items-center gap-5 mt-5 pt-4 border-t border-border">
+            <span className="flex items-center gap-1.5 text-xs text-text-muted">
+              <span className="w-3 h-3 rounded bg-green-200 inline-block" /> {t("correctLegend")}
             </span>
-            <span className="flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="w-3 h-3 rounded bg-red-500/30 inline-block" /> {t("wrongLegend")}
+            <span className="flex items-center gap-1.5 text-xs text-text-muted">
+              <span className="w-3 h-3 rounded bg-red-200 inline-block" /> {t("wrongLegend")}
             </span>
-            <span className="flex items-center gap-1.5 text-xs text-slate-500">
-              <span className="w-3 h-3 rounded bg-white/10 inline-block" /> {t("skippedLegend")}
+            <span className="flex items-center gap-1.5 text-xs text-text-muted">
+              <span className="w-3 h-3 rounded bg-surface inline-block border border-border" /> {t("skippedLegend")}
             </span>
           </div>
         </section>
 
         {/* ── Question review ──────────────────────────────────────────── */}
         <section className="max-w-4xl mx-auto px-6 pt-10">
-          <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-            <Target className="h-5 w-5 text-accent" />
+          <h2 className="text-lg font-semibold text-navy mb-6 flex items-center gap-2">
+            <Target className="h-5 w-5 text-navy-light" />
             {t("questionReview")}
           </h2>
 
@@ -351,8 +351,8 @@ function QuestionSection({
   return (
     <div className="mb-10">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-base font-semibold text-white">{title}</h3>
-        <span className="text-sm text-slate-400">
+        <h3 className="text-base font-semibold text-navy">{title}</h3>
+        <span className="text-sm text-text-secondary">
           {correct}/{questions.length} {t("correct")}
         </span>
       </div>
@@ -361,7 +361,7 @@ function QuestionSection({
         if (qs.length === 0) return null;
         return (
           <div key={mi} className="mb-6">
-            <p className="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">
+            <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
               {t("module")} {mi + 1}
             </p>
             <div className="space-y-2">

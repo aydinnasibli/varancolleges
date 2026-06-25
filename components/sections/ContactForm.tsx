@@ -62,11 +62,11 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-card p-8 md:p-12 rounded-2xl border border-white/5 shadow-xl glass-panel">
+    <div className="bg-white p-8 md:p-12 rounded-2xl border border-border shadow-xl">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-white">{t("nameLabel")}</Label>
+            <Label htmlFor="name" className="text-navy">{t("nameLabel")}</Label>
             <Input
               id="name"
               name="name"
@@ -74,11 +74,11 @@ const ContactForm = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent"
+              className="bg-surface border-border text-navy placeholder:text-text-muted focus:border-navy-light focus:ring-navy-light"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-white">{t("phoneLabel")}</Label>
+            <Label htmlFor="phone" className="text-navy">{t("phoneLabel")}</Label>
             <Input
               id="phone"
               name="phone"
@@ -87,13 +87,13 @@ const ContactForm = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent"
+              className="bg-surface border-border text-navy placeholder:text-text-muted focus:border-navy-light focus:ring-navy-light"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-            <Label htmlFor="email" className="text-white">{t("emailLabel")}</Label>
+            <Label htmlFor="email" className="text-navy">{t("emailLabel")}</Label>
             <Input
               id="email"
               name="email"
@@ -102,19 +102,19 @@ const ContactForm = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent"
+              className="bg-surface border-border text-navy placeholder:text-text-muted focus:border-navy-light focus:ring-navy-light"
             />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-white">{t("messageLabel")}</Label>
+          <Label htmlFor="message" className="text-navy">{t("messageLabel")}</Label>
           <Textarea
             id="message"
             name="message"
             placeholder={t("messagePlaceholder")}
             value={formData.message}
             onChange={handleChange}
-            className="bg-background-dark/50 border-white/10 text-white placeholder:text-slate-500 focus:border-accent focus:ring-accent min-h-[120px]"
+            className="bg-surface border-border text-navy placeholder:text-text-muted focus:border-navy-light focus:ring-navy-light min-h-[120px]"
           />
         </div>
 

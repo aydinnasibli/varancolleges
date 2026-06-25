@@ -63,10 +63,10 @@ export default function PaymentForm() {
   };
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-8 space-y-8">
+    <div className="bg-surface border border-border rounded-2xl p-8 space-y-8">
       {/* Preset amounts */}
       <div>
-        <p className="text-sm font-medium text-slate-300 mb-3">
+        <p className="text-sm font-medium text-navy mb-3">
           {t("selectAmount")}
         </p>
         <div className="grid grid-cols-5 gap-2">
@@ -76,8 +76,8 @@ export default function PaymentForm() {
               onClick={() => handlePreset(amount)}
               className={`py-3 rounded-xl text-sm font-semibold border transition-colors ${
                 selectedPreset === amount
-                  ? "bg-accent text-primary border-accent"
-                  : "bg-white/5 border-white/10 text-slate-300 hover:border-accent/50 hover:text-white"
+                  ? "bg-navy text-white border-navy"
+                  : "bg-white border-border text-navy hover:border-navy/40 hover:text-navy-light"
               }`}
             >
               ₼{amount}
@@ -88,11 +88,11 @@ export default function PaymentForm() {
 
       {/* Custom amount */}
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-sm font-medium text-navy mb-2">
           {t("customAmount")}
         </label>
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary font-medium">
             ₼
           </span>
           <input
@@ -103,14 +103,14 @@ export default function PaymentForm() {
             value={customAmount}
             onChange={handleCustomAmountChange}
             placeholder={t("customAmountPlaceholder")}
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+            className="w-full bg-white border border-border rounded-xl pl-9 pr-4 py-3 text-navy placeholder:text-text-faint focus:outline-none focus:border-navy/40 focus:ring-1 focus:ring-navy/20 transition-colors"
           />
         </div>
       </div>
 
       {/* Description / note */}
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-sm font-medium text-navy mb-2">
           {t("note")}
         </label>
         <input
@@ -119,16 +119,16 @@ export default function PaymentForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder={t("notePlaceholder")}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+          className="w-full bg-white border border-border rounded-xl px-4 py-3 text-navy placeholder:text-text-faint focus:outline-none focus:border-navy/40 focus:ring-1 focus:ring-navy/20 transition-colors"
         />
       </div>
 
       {/* Summary + Pay button */}
-      <div className="pt-2 border-t border-white/5">
+      <div className="pt-2 border-t border-border">
         {resolvedAmount > 0 && (
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm text-slate-400">Total</span>
-            <span className="text-2xl font-bold text-white">
+            <span className="text-sm text-text-secondary">Total</span>
+            <span className="text-2xl font-bold text-navy">
               ₼{resolvedAmount.toFixed(2)}
             </span>
           </div>
@@ -136,7 +136,7 @@ export default function PaymentForm() {
         <button
           onClick={handlePay}
           disabled={loading || resolvedAmount < 1}
-          className="flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent/90 text-primary py-3.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 w-full bg-navy hover:bg-navy-light text-white py-3.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>

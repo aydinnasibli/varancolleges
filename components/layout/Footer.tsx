@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { MapPin, Phone, Mail, CreditCard, ArrowRight } from "lucide-react";
+import { CreditCard, ArrowRight } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { getTranslations } from "next-intl/server";
 
@@ -10,129 +10,133 @@ const Footer = async () => {
   const tGen = await getTranslations("General");
 
   return (
-    <footer className="bg-background-dark border-t border-white/5 pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand & Social */}
-          <div className="col-span-1">
-            <div className="mb-8">
+    <footer className="bg-navy pt-[72px] border-t border-white/5">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2.2fr_1fr_1.4fr_1fr] gap-12 pb-14 border-b border-white/[0.07]">
+          {/* Brand */}
+          <div>
+            <div className="mb-5">
               <Link href="/">
                 <Image
-                  src="/images/logo.png"
+                  src="/images/logo-light.png"
                   alt="Varan Colleges"
                   width={800}
                   height={450}
-                  className="h-20 w-auto object-contain"
+                  className="h-9 w-auto object-contain opacity-90"
                 />
               </Link>
             </div>
-            <p className="text-slate-500 text-sm leading-relaxed mb-8 font-light">
+            <p className="text-[13px] leading-[1.8] text-white/45 max-w-[260px] mb-6">
               {tFoot("brandDesc")}
             </p>
-            <div className="flex space-x-5">
-              <a href="https://www.instagram.com/varancollegesltd/" className="transform hover:scale-110 duration-300 text-slate-500 hover:text-accent" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <InstagramIcon className="w-5 h-5" />
-              </a>
-              <a href="https://wa.me/994771885050" className="transform hover:scale-110 duration-300 text-slate-500 hover:text-accent" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <WhatsAppIcon className="w-5 h-5" />
-              </a>
+            <p className="text-xs text-white/28 leading-[1.7]">
+              137A Samad Vurgun, Baku 1022<br />
+              +994 77 188 50 50
+            </p>
+          </div>
+
+          {/* Pages */}
+          <div>
+            <h4 className="text-[10px] font-bold text-white/50 tracking-[0.16em] uppercase mb-5">
+              {tNav("home")}
+            </h4>
+            <div className="flex flex-col gap-3">
+              {[
+                { label: tNav("home"), href: "/" },
+                { label: tNav("services"), href: "/services" },
+                { label: tNav("about"), href: "/about" },
+                { label: tNav("studyAbroad"), href: "/study-abroad" },
+                { label: tNav("blog"), href: "/blog" },
+                { label: tNav("mockExams"), href: "/exam" },
+                { label: tNav("contact"), href: "/contact" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-[13px] text-white/45 hover:text-white transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
 
-          {/* Services Links */}
+          {/* Services */}
           <div>
-            <h4 className="text-white font-serif font-medium mb-8">{tNav("services")}</h4>
-            <ul className="space-y-4 text-sm text-slate-500 font-light">
+            <h4 className="text-[10px] font-bold text-white/50 tracking-[0.16em] uppercase mb-5">
+              {tNav("services")}
+            </h4>
+            <div className="flex flex-col gap-3">
               {[
-                { label: tNav("services"), href: "/services" },
-                { label: tNav("studyAbroad"), href: "/study-abroad" },
                 { label: tFoot("ielts"), href: "/services/ielts" },
                 { label: tFoot("sat"), href: "/services/sat" },
+                { label: tNav("studyAbroad"), href: "/study-abroad" },
+                { label: tNav("services"), href: "/services" },
               ].map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
-                    <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item.label}
-                  </Link>
-                </li>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-[13px] text-white/45 hover:text-white transition-colors"
+                >
+                  {item.label}
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* Company Links */}
+          {/* Contact */}
           <div>
-            <h4 className="text-white font-serif font-medium mb-8">{tNav("about")}</h4>
-            <ul className="space-y-4 text-sm text-slate-500 font-light">
-              {[
-                { label: tNav("home"), href: "/" },
-                { label: tNav("about"), href: "/about" },
-                { label: tNav("blog"), href: "/blog" },
-                { label: tNav("contact"), href: "/contact" }
-              ].map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="hover:text-accent transition-colors flex items-center gap-2 group">
-                    <span className="w-1 h-1 bg-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-white font-serif font-medium mb-8">{tNav("contact")}</h4>
-            <ul className="space-y-6 text-sm text-slate-500 font-light">
-              <li className="flex items-start gap-4 group">
-                <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
-                  <MapPin className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
-                </div>
-                <div>
-                  <p className="text-white mb-1 font-medium">{tGen("address")}</p>
-                  <p className="group-hover:text-white transition-colors leading-relaxed">
-                    137A Samad Vurgun,<br/>
-                    Baku 1022, Azerbaijan
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-4 group">
-                <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
-                  <Phone className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
-                </div>
-                <div>
-                  <p className="text-white mb-1 font-medium">{tGen("phone")}</p>
-                  <a href="tel:+994771885050" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">+994 77 188 50 50</a>
-                </div>
-              </li>
-              <li className="flex items-start gap-4 group">
-                <div className="mt-1 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors duration-300">
-                  <Mail className="w-4 h-4 text-accent group-hover:text-primary transition-colors" />
-                </div>
-                <div>
-                  <p className="text-white mb-1 font-medium">{tGen("email")}</p>
-                  <a href="mailto:info@varancolleges.com" className="group-hover:text-white transition-colors block hover:translate-x-1 transition-transform">info@varancolleges.com</a>
-                </div>
-              </li>
-            </ul>
+            <h4 className="text-[10px] font-bold text-white/50 tracking-[0.16em] uppercase mb-5">
+              {tNav("contact")}
+            </h4>
+            <div className="flex flex-col gap-3">
+              <a href="mailto:info@varancolleges.com" className="text-[13px] text-white/45 hover:text-white transition-colors">
+                info@varancolleges.com
+              </a>
+              <a href="tel:+994771885050" className="text-[13px] text-white/45 hover:text-white transition-colors">
+                +994 77 188 50 50
+              </a>
+              <p className="text-[13px] text-white/45 leading-[1.65]">
+                {tGen("workingHours")}
+              </p>
+            </div>
+            <div className="flex gap-2 mt-6">
+              <a
+                href="https://wa.me/994771885050"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[38px] h-[38px] border border-white/10 rounded-[5px] flex items-center justify-center text-white/40 hover:border-white/30 hover:text-white/80 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="https://www.instagram.com/varancollegesltd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[38px] h-[38px] border border-white/10 rounded-[5px] flex items-center justify-center text-white/40 hover:border-white/30 hover:text-white/80 transition-colors"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Payment CTA — visually distinct from the rest of the footer */}
-        <div className="mb-10 rounded-2xl border border-accent/30 bg-accent/5 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden">
-          {/* subtle glow */}
-          <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-32 h-32 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="flex items-center gap-4 relative">
-            <div className="w-11 h-11 rounded-xl bg-accent/20 border border-accent/30 flex items-center justify-center shrink-0">
-              <CreditCard className="w-5 h-5 text-accent" />
+        {/* Payment CTA */}
+        <div className="my-8 rounded-lg border border-white/10 bg-white/5 px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center shrink-0">
+              <CreditCard className="w-5 h-5 text-white/60" />
             </div>
             <div>
               <p className="text-white font-semibold text-sm">{tFoot("paymentCta")}</p>
-              <p className="text-slate-400 text-xs mt-0.5">{tFoot("paymentCtaDesc")}</p>
+              <p className="text-white/40 text-xs mt-0.5">{tFoot("paymentCtaDesc")}</p>
             </div>
           </div>
           <Link
             href="/payment"
-            className="relative shrink-0 inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-[#07101e] font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors"
+            className="shrink-0 inline-flex items-center gap-2 bg-white text-navy font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-surface-hover transition-colors"
           >
             {tFoot("paymentCta")}
             <ArrowRight className="w-4 h-4" />
@@ -140,9 +144,11 @@ const Footer = async () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-600 text-xs">© {new Date().getFullYear()} VaranColleges. {tFoot("rights")}</p>
-          <div className="flex items-center space-x-8 text-xs text-slate-600">
+        <div className="py-[22px] flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-white/25">© {new Date().getFullYear()} VaranColleges. {tFoot("rights")}</p>
+          <div className="flex gap-6 text-xs text-white/25">
+            <span>{tFoot("privacy")}</span>
+            <span>{tFoot("terms")}</span>
           </div>
         </div>
       </div>

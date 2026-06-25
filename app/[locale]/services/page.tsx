@@ -43,37 +43,74 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   const t = await getTranslations({ locale, namespace: 'ServicesPage' });
 
   return (
-    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
+    <main className="min-h-screen bg-white text-navy font-sans selection:bg-navy selection:text-white overflow-x-hidden">
       <Navbar />
 
-      {/* Services Hero Section */}
-      <section className="relative py-24 lg:py-32 bg-primary">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#05080f]/80 to-[#05080f]/95">
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9_nE0QdxBZUviHeVSyuwfsGUBIQA4ffD7Rmj7UfFh6wX90Pom06l6Sk8zalGCGNSkEcP0YT7IHGFAmjIG5Ejg0_wZUMIE8unx5GkhKQeYj2ihm8DslFwNW38a-65g3tnL0b2G762LPILq50zNVkhQMY9X3uF0YejTMQykWD56O6IM6LRk-k1g7xLQ2UhLSy9cANKvvQw3pCBPKrYhqWU5Oq9nLWOi9haSC1RcXtm5QE2y6CSLicTy0bEsUYAYj4Q9lk9NQQ_--b2h"
-            className="w-full h-full object-cover opacity-20 mix-blend-overlay absolute inset-0"
-            alt="Hero Background"
-          />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 tracking-tight">
-            {t('heroTitle')}
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mb-8"></div>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
-            {t('heroDesc')}
-          </p>
-          <div className="mt-12 flex justify-center gap-2 text-sm text-slate-400 uppercase tracking-widest font-medium">
+      {/* Hero Section — 2-column on bg-navy */}
+      <section className="pt-32 pb-20 md:pt-40 md:pb-24 bg-navy">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <div className="mb-12 flex items-center gap-2 text-sm text-white/50 tracking-wide">
             <Link href="/" className="hover:text-white transition-colors">{t('home')}</Link>
-            <span className="text-accent">•</span>
+            <span>/</span>
             <span className="text-white">{t('services')}</span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            {/* Left column */}
+            <div>
+              <span className="text-xs font-bold tracking-[0.25em] uppercase text-white/50 mb-4 block">
+                {t("programCount")}
+              </span>
+              <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white tracking-tight">
+                {t('heroTitle')}
+              </h1>
+            </div>
+
+            {/* Right column */}
+            <div className="flex flex-col gap-6">
+              <p className="text-lg text-white/70 font-light leading-relaxed">
+                {t('heroDesc')}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[t("tagLanguage"), t("tagAdmissions"), t("tagGraduate"), t("tagAcademic")].map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs text-white/60 border border-white/20 rounded-full px-4 py-1.5 tracking-wide"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Services Grid */}
       <ServicesGrid />
 
-
+      {/* CTA Section */}
+      <section className="bg-navy">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-serif text-white mb-2">
+                {t('borderlessEducation')}
+              </h2>
+              <p className="text-white/60 font-light">
+                {t('worldIsYourCampus')}
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-white text-navy font-medium hover:bg-white/90 transition-colors whitespace-nowrap"
+            >
+              {t('home') === 'Ana Səhifə' ? 'Əlaqə' : 'Contact Us'}
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import "../globals.css";
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -123,15 +124,14 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang={locale} className="dark scroll-smooth">
+      <html lang={locale} className="scroll-smooth">
         <head>
           <link rel="icon" href="/images/logo-light.png" type="image/png" />
           <link rel="apple-touch-icon" href="/images/logo-light.png" />
-          <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)" />
-          <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+          <meta name="theme-color" content="#ffffff" />
         </head>
         <body
-          className={`${playfair.variable} ${plusJakarta.variable} font-sans antialiased bg-background text-foreground selection:bg-accent selection:text-primary`}
+          className={`${cormorant.variable} ${plusJakarta.variable} font-sans antialiased bg-white text-navy selection:bg-accent/20 selection:text-navy`}
         >
           <NextIntlClientProvider messages={messages}>
             <Script

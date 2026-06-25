@@ -1,85 +1,96 @@
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
-import { ArrowRight, School, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const Hero = () => {
   const t = useTranslations("Hero");
+  const tData = useTranslations("ServicesData");
+  const tStudyAbroad = useTranslations("StudyAbroad");
+  const tCountries = useTranslations("StudyAbroadData.countries");
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Image
-          alt="VaranColleges Office Environment"
-          className="object-cover scale-105"
-          src="/images/hero-bg.png"
-          fill
-          priority
-        />
-        <div className="absolute inset-0 bg-background-dark/90"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background-dark via-background-dark/80 to-transparent"></div>
-        <div className="absolute top-20 right-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 left-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "-2s" }}></div>
+    <section className="grid grid-cols-1 lg:grid-cols-[55%_45%] min-h-[calc(100vh-108px)]">
+      {/* LEFT: White editorial */}
+      <div className="flex flex-col justify-center px-6 sm:px-12 lg:px-[52px] lg:pr-[72px] py-16 lg:py-24 lg:border-r border-border">
+        <p className="text-[11px] font-semibold tracking-[0.22em] text-text-muted uppercase mb-10 lg:mb-12">
+          {t("subtitle")}
+        </p>
+        <h1 className="font-serif text-5xl sm:text-7xl lg:text-[88px] font-semibold leading-[0.9] text-navy tracking-tight mb-8 lg:mb-10">
+          {t("title1")}<br />
+          <em className="italic">{t("title2")}</em>
+        </h1>
+        <div className="w-[52px] h-px bg-border mb-8 lg:mb-9"></div>
+        <p className="text-base leading-[1.9] text-text-secondary max-w-[380px] mb-10 lg:mb-[52px]">
+          {t("description")}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link
+            href="/contact"
+            className="bg-navy text-white border-none cursor-pointer px-10 py-4 rounded-[3px] text-[13px] font-semibold tracking-[0.04em] hover:bg-navy-light transition-colors text-center"
+          >
+            {t("button1")}
+          </Link>
+          <Link
+            href="/services"
+            className="bg-transparent text-text-secondary border-[1.5px] border-border cursor-pointer px-10 py-[15px] rounded-[3px] text-[13px] font-semibold hover:border-text-faint hover:text-navy transition-colors text-center"
+          >
+            {t("button2")}
+          </Link>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="max-w-3xl">
-          <h1 className="text-6xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8">
-            {t("title1")} <br />
-            <span className="text-gold italic pr-2">{t("title2")}</span>
-          </h1>
-          <p className="text-lg text-slate-400 mb-12 leading-relaxed max-w-lg font-light border-l border-accent/30 pl-6">
-            {t("description")}
+      {/* RIGHT: Dark navy panel */}
+      <div className="bg-navy flex flex-col justify-center px-8 sm:px-14 py-12 lg:py-[72px]">
+        {/* Exam Prep */}
+        <div className="mb-12">
+          <p className="text-[10px] font-bold tracking-[0.22em] text-white/32 uppercase mb-7">
+            {tData("details") || "Exam Preparation"}
           </p>
-          <div className="flex flex-col sm:flex-row gap-6">
-            <Button variant="accent" size="lg" className="rounded-sm font-semibold tracking-wide uppercase" asChild>
-              <Link href="/study-abroad">
-                {t("button1")}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          <Link href="/services/ielts" className="block mb-3.5 hover:opacity-70 transition-opacity">
+            <span className="font-serif text-4xl sm:text-[54px] font-semibold text-white leading-none tracking-tight">
+              IELTS
+            </span>
+          </Link>
+          <Link href="/services/toefl" className="block mb-3.5 hover:opacity-70 transition-opacity">
+            <span className="font-serif text-2xl sm:text-[40px] font-semibold text-white/60 leading-none">
+              TOEFL · SAT
+            </span>
+          </Link>
+          <Link href="/services" className="block hover:opacity-70 transition-opacity">
+            <span className="font-serif text-xl sm:text-[28px] font-semibold text-white/[0.36] leading-none">
+              GMAT · GRE · AP · IB
+            </span>
+          </Link>
+        </div>
+
+        {/* Divider */}
+        <div className="h-px bg-white/[0.08] mb-12"></div>
+
+        {/* Study Abroad */}
+        <div>
+          <p className="text-[10px] font-bold tracking-[0.22em] text-white/32 uppercase mb-7">
+            {tStudyAbroad("title") || "Study Abroad"}
+          </p>
+          <div className="grid grid-cols-2 gap-x-7 gap-y-2.5">
+            {["usa", "canada", "uk", "europe", "australia", "turkey"].map((key) => (
+              <Link
+                key={key}
+                href="/study-abroad"
+                className="font-serif text-lg sm:text-2xl font-semibold text-white/60 leading-[1.5] hover:text-white transition-colors"
+              >
+                {tCountries(`${key}.name`)}
               </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="rounded-sm text-white border-white/20 hover:bg-accent hover:text-primary hover:border-accent font-semibold tracking-wide uppercase backdrop-blur-sm transition-all duration-300" asChild>
-              <Link href="/services">{t("button2")}</Link>
-            </Button>
+            ))}
           </div>
         </div>
 
-        <div className="relative hidden lg:block h-[600px]">
-          {/* Floating Card 1 */}
-          <div className="absolute top-10 right-10 w-72 p-6 glass-card rounded-xl animate-float z-20 hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
-                <School className="text-accent h-6 w-6" />
-              </div>
-              <div>
-                <h4 className="text-white font-serif text-lg">{t("card1Title")}</h4>
-                <p className="text-xs text-slate-400">{t("card1Desc")}</p>
-              </div>
-            </div>
-            <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full bg-accent w-4/5"></div>
-            </div>
-          </div>
-
-          {/* Floating Card 2 */}
-          <div className="absolute bottom-20 left-10 w-64 p-6 glass-card rounded-xl animate-float z-10 hover:scale-105 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer" style={{ animationDelay: "-3s" }}>
-            <div className="flex justify-between items-end mb-2">
-              <span className="text-4xl font-serif text-white">98%</span>
-              <span className="text-accent text-sm mb-1 font-medium">{t("card2Title")}</span>
-            </div>
-            <p className="text-xs text-slate-400">{t("card2Desc")}</p>
-          </div>
-
-          {/* Abstract Shapes */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-white/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] border border-accent/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-        </div>
-      </div>
-      {/* Scroll indicator */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1 animate-bounce">
-        <span className="text-xs text-slate-500 tracking-widest uppercase">Scroll</span>
-        <ChevronDown className="w-5 h-5 text-accent/70" />
+        {/* Bottom link */}
+        <Link
+          href="/study-abroad"
+          className="mt-11 self-start bg-transparent border border-white/[0.14] text-white/45 rounded-[3px] px-6 py-3 text-xs font-semibold tracking-[0.05em] hover:border-white/35 hover:text-white/80 transition-colors"
+        >
+          {tStudyAbroad("title") || "Explore All Destinations"} →
+        </Link>
       </div>
     </section>
   );

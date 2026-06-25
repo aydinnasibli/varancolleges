@@ -21,7 +21,7 @@ export default function ExamActionButton({ href, label, variant }: ExamActionBut
     <Link
       href={href}
       onClick={() => setLoading(true)}
-      className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-primary px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+      className="inline-flex items-center gap-2 bg-navy hover:bg-navy-light text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors"
       aria-disabled={loading}
     >
       {loading ? (

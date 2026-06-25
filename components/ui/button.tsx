@@ -19,9 +19,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         // Custom variants for this design
-        primary: "bg-primary text-white hover:bg-primary/90 border border-transparent",
-        accent: "bg-white text-primary font-semibold hover:bg-slate-200 shadow-md hover:shadow-lg transition-all border border-transparent",
-        glass: "bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white transition-all",
+        primary: "bg-navy text-white hover:bg-navy-light border border-transparent",
+        accent: "bg-navy text-white font-semibold hover:bg-navy-light transition-all border border-transparent",
+        glass: "bg-transparent border-[1.5px] border-border hover:border-navy text-navy transition-all",
       },
       size: {
         default: "h-10 px-4 py-2",

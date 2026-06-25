@@ -1,160 +1,48 @@
 import { Link } from "@/i18n/routing";
-import { ArrowRight, BookOpen, Globe, Calculator, Languages, Mic } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { servicesData } from "@/lib/services-data";
 
 const HomeFeatures = () => {
   const tServices = useTranslations("ServicesPage");
-  const tStudyAbroad = useTranslations("StudyAbroad");
   const tData = useTranslations("ServicesData");
 
-  return (
-    <section className="py-24 bg-background-dark relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
+  const homeServices = servicesData.slice(0, 6);
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-accent font-medium tracking-[0.2em] uppercase text-sm mb-3">
-            {tServices("borderlessEducation") || "Borderless Education"}
+  const getTitle = (service: typeof servicesData[0]) =>
+    tData.has(`${service.slug}.title`) ? tData(`${service.slug}.title`) : service.title;
+
+  return (
+    <section className="py-24 bg-surface border-t border-border">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-[52px] gap-4">
+          <h2 className="font-serif text-4xl md:text-[56px] font-bold text-navy leading-none">
+            {tServices("heroTitle") || "Our Programs"}
           </h2>
-          <h3 className="text-4xl font-serif text-white">
-            {tServices("heroTitle") || "Our Services"}
-          </h3>
+          <Link
+            href="/services"
+            className="shrink-0 bg-transparent border-[1.5px] border-border cursor-pointer px-7 py-[11px] rounded text-[13px] font-semibold text-navy hover:border-navy transition-colors whitespace-nowrap"
+          >
+            {tServices("services") || "View All"} →
+          </Link>
         </div>
 
-        {/* Bento Box Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[minmax(200px,auto)]">
-
-          {/* Large card — Study Abroad (2 cols × 2 rows) */}
-          <div className="md:col-span-2 md:row-span-2 group relative rounded-2xl overflow-hidden shadow-xl bg-[#07101e]">
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-              style={{ backgroundImage: "url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2670&auto=format&fit=crop')" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#07101e] via-[#07101e]/80 to-transparent" />
-            <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-colors duration-500" />
-            <div className="absolute inset-0 p-8 md:p-10 flex flex-col justify-end">
-              <div className="w-14 h-14 bg-accent/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-[#07101e] transition-all duration-300 text-accent">
-                <Globe className="w-7 h-7" />
-              </div>
-              <h4 className="text-3xl md:text-4xl font-serif text-white mb-3 group-hover:text-accent transition-colors drop-shadow-md">
-                {tStudyAbroad("title") || "Study Abroad Services"}
-              </h4>
-              <p className="text-slate-300 text-sm md:text-base mb-6 leading-relaxed font-light max-w-lg drop-shadow-sm">
-                {tStudyAbroad("heroDesc") ||
-                  "At Varan Colleges, we direct our students to universities and colleges located in the USA, Canada, Australia, European countries, and Turkey."}
-              </p>
-              <Link
-                href="/study-abroad"
-                className="inline-flex w-fit items-center px-6 py-3 bg-accent/10 border border-accent/20 backdrop-blur-sm rounded-lg text-sm font-medium text-accent hover:bg-accent hover:text-[#07101e] transition-all uppercase tracking-wider"
-              >
-                {tStudyAbroad("title") || "Study Abroad"}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Medium card — SAT (1 col × 2 rows) */}
-          <div className="md:col-span-1 lg:col-span-1 md:row-span-2 surface-1 p-8 rounded-2xl group relative overflow-hidden flex flex-col justify-between border border-white/5 hover:border-accent/30 transition-all duration-500">
-            <div className="absolute -top-10 -right-10 opacity-5 group-hover:opacity-10 transition-opacity duration-500 rotate-12">
-              <Calculator className="w-48 h-48 text-white" />
-            </div>
-            <div>
-              <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accent group-hover:text-primary transition-colors duration-300 text-accent">
-                <Calculator className="w-6 h-6" />
-              </div>
-              <h4 className="text-2xl font-serif text-white mb-3 group-hover:text-accent transition-colors">
-                {tData("sat.title")}
-              </h4>
-              <p className="text-slate-400 text-sm mb-6 leading-relaxed font-light">
-                {tData("sat.description")}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border rounded-lg overflow-hidden">
+          {homeServices.map((service) => (
             <Link
-              href="/services/sat"
-              className="inline-flex items-center text-sm font-medium text-slate-300 hover:text-accent transition-colors uppercase tracking-wider"
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              className="bg-white px-9 py-10 flex flex-col min-h-[190px] hover:bg-surface transition-colors group"
             >
-              {tData("details")}
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          {/* Small card — IELTS (1 col × 1 row) */}
-          <div className="md:col-span-1 lg:col-span-1 md:row-span-1 surface-1 p-6 md:p-8 rounded-2xl group relative overflow-hidden flex flex-col justify-between border border-white/5 hover:border-accent/30 transition-all duration-500">
-            <div className="absolute -bottom-4 -right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-              <Languages className="w-32 h-32 text-white" />
-            </div>
-            <div>
-              <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-primary transition-colors duration-300 text-accent">
-                <Languages className="w-5 h-5" />
-              </div>
-              <h4 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors line-clamp-1">
-                {tData("ielts.title")}
-              </h4>
-              <p className="text-slate-400 text-sm leading-relaxed font-light line-clamp-2">
-                {tData("ielts.description")}
+              <p className="text-[10px] font-bold tracking-[0.14em] text-text-faint uppercase mb-[18px]">
+                {tData.has(`${service.slug}.category`) ? tData(`${service.slug}.category`) : "Program"}
               </p>
-            </div>
-            <Link
-              href="/services/ielts"
-              className="mt-4 inline-flex items-center text-xs font-medium text-slate-300 hover:text-accent transition-colors uppercase tracking-wider"
-            >
-              {tData("details")}
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <h3 className="font-serif text-[28px] font-bold text-navy leading-[1.1] flex-1 group-hover:text-navy-light transition-colors">
+                {getTitle(service)}
+              </h3>
+              <div className="mt-6 w-6 h-[1.5px] bg-border"></div>
             </Link>
-          </div>
-
-          {/* Small card — General English (1 col × 1 row) */}
-          <div className="md:col-span-1 lg:col-span-1 md:row-span-1 surface-1 p-6 md:p-8 rounded-2xl group relative overflow-hidden flex flex-col justify-between border border-white/5 hover:border-accent/30 transition-all duration-500">
-            <div className="absolute -bottom-4 -right-4 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-              <Mic className="w-32 h-32 text-white" />
-            </div>
-            <div>
-              <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-accent group-hover:text-primary transition-colors duration-300 text-accent">
-                <Mic className="w-5 h-5" />
-              </div>
-              <h4 className="text-xl font-serif text-white mb-2 group-hover:text-accent transition-colors line-clamp-1">
-                {tData("general-english.title")}
-              </h4>
-              <p className="text-slate-400 text-sm leading-relaxed font-light line-clamp-2">
-                {tData("general-english.description")}
-              </p>
-            </div>
-            <Link
-              href="/services/general-english"
-              className="mt-4 inline-flex items-center text-xs font-medium text-slate-300 hover:text-accent transition-colors uppercase tracking-wider"
-            >
-              {tData("details")}
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          {/* Wide CTA — View All Services (full width) */}
-          <div className="md:col-span-3 lg:col-span-4 rounded-2xl p-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent group cursor-pointer overflow-hidden">
-            <div className="h-full w-full bg-[#07101e] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:bg-[#0f2142]/40 transition-colors duration-500">
-              <div className="flex items-center gap-6">
-                <div className="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center shrink-0">
-                  <BookOpen className="w-6 h-6 text-accent group-hover:scale-110 transition-transform duration-500" />
-                </div>
-                <div>
-                  <h4 className="text-xl md:text-2xl font-serif text-white mb-1 group-hover:text-accent transition-colors">
-                    {tServices("languageCourses") || "Language Courses & Exam Prep"}
-                  </h4>
-                  <p className="text-slate-400 text-sm font-light">
-                    {tServices("coursesDesc") || "Professional programs to improve your skills."}
-                  </p>
-                </div>
-              </div>
-              <Link
-                href="/services"
-                className="shrink-0 inline-flex items-center justify-center px-8 py-4 bg-accent text-[#07101e] font-medium rounded-lg hover:bg-white transition-all shadow-lg hover:shadow-accent/20 uppercase tracking-widest text-sm w-full md:w-auto"
-              >
-                {tServices("services") || "View All Services"}
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
     </section>

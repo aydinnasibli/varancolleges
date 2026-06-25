@@ -75,30 +75,30 @@ export default function ExamPasswordGate({
   };
 
   return (
-    <div className="min-h-screen bg-background-dark flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40">
-          <div className="h-1 bg-gradient-to-r from-accent/40 via-accent to-accent/40" />
-          <div className="surface-1 p-8">
+        <div className="rounded-2xl overflow-hidden border border-border shadow-xl shadow-navy/5">
+          <div className="h-1 bg-gradient-to-r from-navy/40 via-navy to-navy/40" />
+          <div className="bg-white p-8">
             <div className="flex flex-col items-center text-center mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-4">
-                <Lock className="w-7 h-7 text-accent" />
+              <div className="w-14 h-14 rounded-2xl bg-navy/10 flex items-center justify-center mb-4">
+                <Lock className="w-7 h-7 text-navy-light" />
               </div>
-              <h1 className="text-xl font-serif font-bold text-white mb-2">
+              <h1 className="text-xl font-serif font-bold text-navy mb-2">
                 {t("title")}
               </h1>
-              <p className="text-slate-400 text-sm leading-relaxed">
+              <p className="text-text-secondary text-sm leading-relaxed">
                 {t("description")}
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs text-slate-400 mb-2 font-medium uppercase tracking-widest">
+                <label className="block text-xs text-text-secondary mb-2 font-medium uppercase tracking-widest">
                   {t("label")}
                 </label>
                 <div className="relative">
-                  <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                   <input
                     type="text"
                     value={password}
@@ -107,20 +107,20 @@ export default function ExamPasswordGate({
                       setError("");
                     }}
                     placeholder={t("placeholder")}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/40 font-mono tracking-widest"
+                    className="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-3 text-navy placeholder-text-faint text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy/40 font-mono tracking-widest"
                     autoComplete="off"
                     autoFocus
                   />
                 </div>
                 {error && (
-                  <p className="text-red-400 text-xs mt-2">{error}</p>
+                  <p className="text-red-500 text-xs mt-2">{error}</p>
                 )}
               </div>
 
               <button
                 type="submit"
                 disabled={loading || !password.trim()}
-                className="w-full bg-accent hover:bg-accent/90 text-primary py-3 rounded-xl text-sm font-semibold transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                className="w-full bg-navy hover:bg-navy-light text-white py-3 rounded-xl text-sm font-semibold transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
@@ -133,7 +133,7 @@ export default function ExamPasswordGate({
               </button>
             </form>
 
-            <p className="text-center text-xs text-slate-500 mt-6">
+            <p className="text-center text-xs text-text-muted mt-6">
               {t("help")}
             </p>
           </div>

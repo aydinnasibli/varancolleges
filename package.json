@@ -22,6 +22,7 @@
     "framer-motion": "^12.34.0",
     "imagekit": "^6.0.0",
     "katex": "^0.16.45",
+    "lightningcss": "^1.32.0",
     "lucide-react": "^0.563.0",
     "mathlive": "^0.109.1",
     "mongodb-memory-server": "^11.0.1",

@@ -58,63 +58,62 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
   }
 
   return (
-    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
+    <main className="min-h-screen bg-white text-navy font-sans selection:bg-navy selection:text-white overflow-x-hidden">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-24 lg:py-32 bg-primary">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#05080f]/80 to-[#05080f]/95">
+      <section className="relative py-24 lg:py-32 bg-navy">
+        <div className="absolute inset-0">
           {post.mainImage && (
             <Image
               src={post.mainImage}
               alt={post.title}
               fill
-              className="object-cover opacity-20 mix-blend-overlay"
+              className="object-cover opacity-10"
               priority
             />
           )}
-          <div className="absolute inset-0 bg-primary mix-blend-multiply opacity-50"></div>
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-12">
-          <div className="inline-block bg-accent/10 px-4 py-1.5 rounded-full text-accent text-sm font-medium mb-6">
+          <div className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-white text-sm font-medium mb-6">
             {new Date(post.publishedAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
             {post.title}
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mb-8"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-8"></div>
 
-          <div className="mt-8 flex justify-center gap-2 text-sm text-slate-400 uppercase tracking-widest font-medium">
+          <div className="mt-8 flex justify-center gap-2 text-sm text-white/50 uppercase tracking-widest font-medium">
             <Link href="/" className="hover:text-white transition-colors">
               Ana Səhifə
             </Link>
-            <span className="text-accent">•</span>
+            <span className="text-white/40">•</span>
             <Link href="/blog" className="hover:text-white transition-colors">
               Blog
             </Link>
-            <span className="text-accent">•</span>
+            <span className="text-white/40">•</span>
             <span className="text-white truncate max-w-[150px]">{post.title}</span>
           </div>
         </div>
       </section>
 
       {/* Content Section */}
-      <section className="pb-20 bg-background-dark">
+      <section className="pb-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-primary/50 backdrop-blur-md border border-white/10 rounded-2xl p-8 md:p-12 lg:p-16 shadow-2xl mt-[-80px] relative z-20">
-            <div className="prose prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:text-white prose-a:text-accent hover:prose-a:text-accent-light prose-img:rounded-xl prose-img:shadow-lg prose-p:text-slate-300 prose-p:leading-relaxed">
+          <div className="bg-white border border-border rounded-2xl p-8 md:p-12 lg:p-16 shadow-xl mt-[-80px] relative z-20">
+            <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-navy prose-a:text-navy-light hover:prose-a:text-navy prose-img:rounded-xl prose-img:shadow-lg prose-p:text-text-secondary prose-p:leading-relaxed">
               {post.body ? (
                 <div dangerouslySetInnerHTML={{ __html: post.body }} />
               ) : (
-                <p className="text-slate-500 italic">Bu yazı üçün məzmun yoxdur.</p>
+                <p className="text-text-muted italic">Bu yazı üçün məzmun yoxdur.</p>
               )}
             </div>
           </div>
 
-          <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
             <ShareButtons title={post.title} />
 
-            <Link href="/blog" className="flex items-center text-accent hover:text-white transition-colors">
+            <Link href="/blog" className="flex items-center text-navy-light hover:text-navy transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 transform rotate-180" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>

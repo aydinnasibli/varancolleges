@@ -44,7 +44,7 @@ export default async function StudyAbroadPage({ params }: { params: Promise<{ lo
   const { locale } = await params;
 
   return (
-    <main className="min-h-screen flex flex-col font-sans bg-[#0a192f] selection:bg-accent selection:text-primary overflow-x-hidden">
+    <main className="min-h-screen flex flex-col font-sans bg-white selection:bg-navy selection:text-white overflow-x-hidden">
       <Navbar />
       <Hero />
       <JourneyTimeline locale={locale} />

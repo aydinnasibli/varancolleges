@@ -67,25 +67,25 @@ export default async function CountryPage({ params }: { params: Promise<{ locale
   const countryFaqs = getCountryFaqs(slug, tFaqData);
 
   return (
-    <main className="min-h-screen bg-background-dark text-slate-300 font-sans selection:bg-accent selection:text-primary overflow-x-hidden">
+    <main className="min-h-screen bg-white text-text-secondary font-sans selection:bg-navy selection:text-white overflow-x-hidden">
       <Navbar />
 
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden border-b border-white/5">
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden border-b border-border bg-navy">
         <div className="absolute inset-0 z-0">
           <Image
             src={country.flagUrl}
             alt={`${country.name} background`}
             fill
-            className="object-cover opacity-[0.03] grayscale"
+            className="object-cover opacity-[0.06] grayscale"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-background-dark/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-navy/40" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <Link
             href="/study-abroad"
-            className="inline-flex items-center text-sm font-medium text-accent hover:text-white transition-colors uppercase tracking-wider mb-8 group"
+            className="inline-flex items-center text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider mb-8 group"
           >
             <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
             {tData("goBack")}
@@ -94,7 +94,7 @@ export default async function CountryPage({ params }: { params: Promise<{ locale
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-4 mb-6">
-                <div className="relative w-16 h-12 rounded overflow-hidden shadow-2xl ring-1 ring-white/10">
+                <div className="relative w-16 h-12 rounded overflow-hidden shadow-2xl ring-1 ring-white/20">
                   <Image
                     src={country.flagUrl}
                     alt={`${country.name} flag`}
@@ -107,29 +107,29 @@ export default async function CountryPage({ params }: { params: Promise<{ locale
                 </h1>
               </div>
 
-              <p className="text-xl md:text-2xl text-slate-300 font-light leading-relaxed max-w-2xl border-l-2 border-accent pl-6 mb-10">
+              <p className="text-xl md:text-2xl text-white/80 font-light leading-relaxed max-w-2xl border-l-2 border-white/30 pl-6 mb-10">
                 {country.description}
               </p>
 
               <div className="flex flex-wrap gap-4">
                 <ApplicationModal>
-                  <button className="bg-accent text-primary px-8 py-4 rounded-sm font-medium hover:bg-white hover:text-primary transition-colors text-lg">
+                  <button className="bg-white text-navy px-8 py-4 rounded-sm font-medium hover:bg-surface transition-colors text-lg">
                     {tGen("applyNow")}
                   </button>
                 </ApplicationModal>
               </div>
             </div>
 
-            <div className="glass-card p-8 rounded-2xl border border-white/5">
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/15">
               <h3 className="text-2xl font-serif text-white mb-6 flex items-center gap-3">
-                <MapPin className="text-accent w-6 h-6" />
+                <MapPin className="text-white/70 w-6 h-6" />
                 {tData("advantages")}
               </h3>
               <ul className="space-y-4">
                 {country.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-2" />
-                    <span className="font-light text-slate-300 leading-relaxed">{feature}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/60 flex-shrink-0 mt-2" />
+                    <span className="font-light text-white/80 leading-relaxed">{feature}</span>
                   </li>
                 ))}
               </ul>

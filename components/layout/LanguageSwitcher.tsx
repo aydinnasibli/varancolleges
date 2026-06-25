@@ -19,15 +19,15 @@ export default function LanguageSwitcher() {
 
   return (
     <div className="flex items-center gap-1.5">
-      <Globe className="w-3.5 h-3.5 text-slate-500" />
-      <div className="flex items-center bg-white/5 rounded-full p-0.5 border border-white/10">
+      <Globe className="w-3.5 h-3.5 text-text-muted" />
+      <div className="flex items-center bg-navy/5 rounded-full p-0.5 border border-navy/10">
         <button
           disabled={isPending}
           onClick={() => handleLanguageChange('az')}
           className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 ${
             locale === 'az'
-              ? 'bg-accent text-primary font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-navy text-white font-semibold shadow-sm'
+              : 'text-text-muted hover:text-navy'
           }`}
         >
           AZ
@@ -37,8 +37,8 @@ export default function LanguageSwitcher() {
           onClick={() => handleLanguageChange('en')}
           className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 ${
             locale === 'en'
-              ? 'bg-accent text-primary font-semibold shadow-sm'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-navy text-white font-semibold shadow-sm'
+              : 'text-text-muted hover:text-navy'
           }`}
         >
           EN
