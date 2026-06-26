@@ -1,16 +1,25 @@
 import { Link } from "@/i18n/routing";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Languages, Calculator, TrendingUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { servicesData } from "@/lib/services-data";
+
+const highlightIcons: Record<string, typeof Calculator> = {
+  sat: Calculator,
+  ielts: Languages,
+  gmat: TrendingUp,
+};
 
 const HomeFeatures = () => {
   const tServices = useTranslations("ServicesPage");
   const tData = useTranslations("ServicesData");
 
-  const homeServices = servicesData.slice(0, 6);
+  const highlights = servicesData.slice(0, 3);
 
   const getTitle = (service: typeof servicesData[0]) =>
     tData.has(`${service.slug}.title`) ? tData(`${service.slug}.title`) : service.title;
+
+  const getDesc = (service: typeof servicesData[0]) =>
+    tData.has(`${service.slug}.description`) ? tData(`${service.slug}.description`) : service.description;
 
   const getCategory = (service: typeof servicesData[0]) =>
     tData.has(`${service.slug}.category`) ? tData(`${service.slug}.category`) : "";
@@ -35,24 +44,34 @@ const HomeFeatures = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border rounded-lg overflow-hidden">
-          {homeServices.map((service) => (
-            <Link
-              key={service.slug}
-              href={`/services/${service.slug}`}
-              className="bg-white px-7 py-8 flex flex-col min-h-[180px] hover:bg-surface transition-colors group"
-            >
-              <p className="text-[11px] font-bold tracking-[0.14em] text-text-muted uppercase mb-4">
-                {getCategory(service)}
-              </p>
-              <h3 className="font-serif text-[24px] font-bold text-navy leading-[1.15] flex-1 group-hover:text-navy-light transition-colors">
-                {getTitle(service)}
-              </h3>
-              <div className="mt-5 flex items-center text-[12px] font-semibold text-navy-light opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <ArrowRight className="w-3.5 h-3.5" />
-              </div>
-            </Link>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {highlights.map((service) => {
+            const Icon = highlightIcons[service.slug] || ArrowRight;
+            return (
+              <Link
+                key={service.slug}
+                href={`/services/${service.slug}`}
+                className="group rounded-xl bg-surface border border-border/60 p-8 hover:border-navy/15 hover:shadow-sm transition-all"
+              >
+                <div className="w-10 h-10 rounded-lg bg-navy/6 flex items-center justify-center mb-5">
+                  <Icon className="w-5 h-5 text-navy/60" />
+                </div>
+                <p className="text-[11px] font-bold tracking-[0.14em] text-text-muted uppercase mb-2">
+                  {getCategory(service)}
+                </p>
+                <h3 className="font-serif text-[22px] font-bold text-navy leading-[1.2] mb-3 group-hover:text-navy-light transition-colors">
+                  {getTitle(service)}
+                </h3>
+                <p className="text-[14px] leading-[1.7] text-text-secondary line-clamp-2 mb-5">
+                  {getDesc(service)}
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-navy-light group-hover:gap-2.5 transition-all">
+                  {tData("details")}
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
