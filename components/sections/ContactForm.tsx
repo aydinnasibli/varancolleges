@@ -44,19 +44,18 @@ const ContactForm = () => {
       if (response.success) {
         setStatus("success");
         setFormData({ name: "", email: "", phone: "", message: "" });
-        toast.success("Müraciətiniz qəbul edildi!");
+        toast.success(t("successToast"));
 
-        // Reset status after a few seconds
         setTimeout(() => setStatus("idle"), 5000);
       } else {
         setStatus("error");
-        toast.error(response.error || "Xəta baş verdi.");
+        toast.error(response.error || t("errorMessage"));
         setTimeout(() => setStatus("idle"), 3000);
       }
     } catch (error) {
       console.error("Submission error:", error);
       setStatus("error");
-      toast.error("Gözlənilməz xəta baş verdi.");
+      toast.error(t("errorMessage"));
       setTimeout(() => setStatus("idle"), 3000);
     }
   };
@@ -130,12 +129,12 @@ const ContactForm = () => {
           </Button>
           {status === "success" && (
             <p className="text-green-500 text-sm mt-3 text-center md:text-left animate-in fade-in slide-in-from-bottom-2">
-              Müraciətiniz qəbul edildi! Tezliklə sizinlə əlaqə saxlayacağıq.
+              {t("successMessage")}
             </p>
           )}
           {status === "error" && (
             <p className="text-red-500 text-sm mt-3 text-center md:text-left animate-in fade-in slide-in-from-bottom-2">
-              Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.
+              {t("errorMessage")}
             </p>
           )}
         </div>

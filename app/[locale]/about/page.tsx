@@ -52,14 +52,14 @@ export default async function AboutPage() {
       <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[520px]">
         {/* Left: navy panel */}
         <div className="bg-navy flex flex-col justify-between px-10 py-32 lg:py-40 lg:px-16">
-          <p className="text-[9px] font-bold tracking-[0.14em] text-white/50 uppercase">
+          <p className="text-[11px] font-bold tracking-[0.14em] text-white/55 uppercase">
             {t("whoWeAre")}
           </p>
           <div className="mt-auto">
             <h1 className="font-serif text-5xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight">
-              <em>{t("title")}</em>
+              {t("title")}
             </h1>
-            <p className="text-base leading-[1.85] text-white/60 mt-6 max-w-md">
+            <p className="text-[15px] leading-[1.85] text-white/60 mt-6 max-w-md">
               {t("heroDesc")}
             </p>
           </div>
@@ -79,13 +79,13 @@ export default async function AboutPage() {
                 i % 2 === 0 ? "border-r border-border" : ""
               } ${i < 2 ? "border-b border-border" : ""}`}
             >
-              <span className="text-[9px] font-bold tracking-[0.14em] text-text-faint uppercase">
+              <span className="text-[11px] font-bold tracking-[0.14em] text-text-faint uppercase">
                 {stat.label}
               </span>
               <span className="font-serif text-[60px] font-bold text-navy leading-none mt-2">
                 {stat.value}
               </span>
-              <span className="text-[9px] font-bold tracking-[0.14em] text-text-faint uppercase mt-3">
+              <span className="text-[11px] font-bold tracking-[0.14em] text-text-faint uppercase mt-3">
                 {stat.subtitle}
               </span>
             </div>
@@ -99,16 +99,16 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             {/* Left: text content */}
             <div>
-              <h2 className="text-4xl lg:text-6xl font-serif text-navy mb-10 leading-tight">
+              <h2 className="text-4xl lg:text-5xl font-sans font-extrabold text-navy mb-10 leading-tight tracking-tight">
                 {t("newStandards")} <br />
                 <span className="text-navy-light">{t("standards")}</span>
               </h2>
 
               <div className="space-y-6">
-                <p className="text-base leading-[1.85] text-text-secondary">
+                <p className="text-[15px] leading-[1.85] text-text-secondary">
                   {t("desc1")}
                 </p>
-                <p className="text-base leading-[1.85] text-text-secondary">
+                <p className="text-[15px] leading-[1.85] text-text-secondary">
                   {t("desc2")}
                 </p>
               </div>
@@ -138,7 +138,7 @@ export default async function AboutPage() {
                   <h3 className="text-[15px] font-semibold text-navy mb-2">
                     {feat.title}
                   </h3>
-                  <p className="text-[13px] leading-[1.65] text-text-secondary">
+                  <p className="text-[15px] leading-[1.65] text-text-secondary">
                     {feat.desc}
                   </p>
                 </div>

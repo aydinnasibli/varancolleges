@@ -9,14 +9,14 @@ const Hero = async () => {
     <section className="bg-navy min-h-[520px] grid grid-cols-1 lg:grid-cols-2">
       {/* Left: text */}
       <div className="px-8 sm:px-12 lg:px-14 py-16 lg:py-20 flex flex-col justify-center lg:border-r border-white/[0.07]">
-        <p className="text-[10px] font-bold tracking-[0.22em] text-white/40 uppercase mb-7">
-          {t("subtitle") || "Study Abroad"}
+        <p className="text-[11px] font-bold tracking-[0.22em] text-white/50 uppercase mb-7">
+          {t("subtitle")}
         </p>
         <h1 className="font-serif text-5xl sm:text-6xl lg:text-[76px] font-bold text-white leading-[0.92] mb-6 tracking-tight">
           {t("heroTitle")}<br />
-          <em className="italic">{t("subtitle") || "Borders."}</em>
+          <em className="italic">{t("heroSubtitle")}</em>
         </h1>
-        <p className="text-base text-white/45 leading-[1.8] max-w-[360px] mb-10">
+        <p className="text-[15px] text-white/55 leading-[1.8] max-w-[360px] mb-10">
           {t("heroDesc")}
         </p>
         <div className="flex items-center gap-3">

@@ -9,11 +9,11 @@ const StudyAbroadTeaser = async () => {
   const tCountries = await getTranslations("StudyAbroadData.countries");
 
   return (
-    <section className="section-padding bg-surface border-t border-border">
+    <section className="py-20 lg:py-32 bg-surface border-t border-border">
       <div className="container-main">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
           <div>
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
               {t("subtitle")}
             </p>
             <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05]">
@@ -21,7 +21,7 @@ const StudyAbroadTeaser = async () => {
             </h2>
           </div>
           <div className="md:text-right">
-            <p className="text-[14px] text-text-secondary max-w-[320px] leading-[1.75] mb-4">
+            <p className="text-[15px] text-text-secondary max-w-[340px] leading-[1.75] mb-4">
               {t("heroDesc")}
             </p>
             <Link
@@ -45,7 +45,7 @@ const StudyAbroadTeaser = async () => {
               <span className="font-serif text-xl md:text-[26px] font-bold text-navy min-w-[160px] md:min-w-[200px] leading-none">
                 {tCountries(`${key}.name`)}
               </span>
-              <span className="text-[13px] text-text-muted flex-1 hidden sm:block leading-relaxed">
+              <span className="text-[13px] text-text-secondary flex-1 hidden sm:block leading-relaxed">
                 {tCountries(`${key}.shortDesc`)}
               </span>
               <ArrowRight className="w-4 h-4 text-text-muted shrink-0 group-hover:text-navy group-hover:translate-x-0.5 transition-all duration-200" />

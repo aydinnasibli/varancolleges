@@ -11,7 +11,7 @@ const Hero = () => {
     <section className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] min-h-[min(calc(100vh-100px),800px)]">
       {/* LEFT — Editorial introduction */}
       <div className="flex flex-col justify-center px-5 sm:px-8 lg:px-10 xl:pl-[max(40px,calc((100vw-1240px)/2+40px))] lg:pr-16 py-14 lg:py-20">
-        <p className="text-[11px] font-semibold tracking-[0.2em] text-text-muted uppercase mb-8">
+        <p className="text-xs font-semibold tracking-[0.2em] text-text-muted uppercase mb-8">
           {t("subtitle")}
         </p>
 
@@ -23,7 +23,7 @@ const Hero = () => {
 
         <div className="w-10 h-px bg-border mb-7" aria-hidden="true" />
 
-        <p className="text-[15px] leading-[1.85] text-text-secondary max-w-[400px] mb-10">
+        <p className="text-[15px] leading-[1.85] text-text-secondary max-w-[420px] mb-10">
           {t("description")}
         </p>
 
@@ -47,7 +47,7 @@ const Hero = () => {
       <div className="bg-navy flex flex-col justify-center px-5 sm:px-8 lg:px-14 py-12 lg:py-20 lg:pr-[max(40px,calc((100vw-1240px)/2+40px))]">
         {/* Exam Prep */}
         <div className="mb-10">
-          <p className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
+          <p className="text-[11px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
             {tData("details")}
           </p>
           <div className="space-y-1.5">
@@ -74,7 +74,7 @@ const Hero = () => {
 
         {/* Study Abroad */}
         <div>
-          <p className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
+          <p className="text-[11px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
             {tStudyAbroad("title")}
           </p>
           <div className="grid grid-cols-2 gap-x-6 gap-y-2">

@@ -59,7 +59,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Left column */}
             <div>
-              <span className="text-xs font-bold tracking-[0.25em] uppercase text-white/50 mb-4 block">
+              <span className="text-xs font-bold tracking-[0.25em] uppercase text-white/55 mb-4 block">
                 {t("programCount")}
               </span>
               <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white tracking-tight">
@@ -69,7 +69,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
 
             {/* Right column */}
             <div className="flex flex-col gap-6">
-              <p className="text-lg text-white/70 font-light leading-relaxed">
+              <p className="text-[15px] text-white/65 font-light leading-relaxed">
                 {t('heroDesc')}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -91,22 +91,32 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
       <ServicesGrid />
 
       {/* CTA Section */}
-      <section className="bg-navy">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section className="bg-navy relative overflow-hidden">
+        <svg
+          viewBox="0 0 400 400"
+          className="absolute left-[-60px] top-1/2 -translate-y-1/2 w-[280px] h-[280px] opacity-[0.04] pointer-events-none"
+          aria-hidden="true"
+        >
+          <circle cx="200" cy="200" r="160" stroke="white" strokeWidth="1" fill="none" />
+          <ellipse cx="200" cy="200" rx="160" ry="30" stroke="white" strokeWidth="0.6" fill="none" />
+          <ellipse cx="200" cy="200" rx="30" ry="160" stroke="white" strokeWidth="0.6" fill="none" />
+          <ellipse cx="200" cy="200" rx="80" ry="160" stroke="white" strokeWidth="0.6" fill="none" />
+        </svg>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-serif text-white mb-2">
+              <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-white tracking-tight mb-2">
                 {t('borderlessEducation')}
               </h2>
-              <p className="text-white/60 font-light">
+              <p className="text-white/60 text-[15px]">
                 {t('worldIsYourCampus')}
               </p>
             </div>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-white text-navy font-medium hover:bg-white/90 transition-colors whitespace-nowrap"
+              className="inline-flex items-center justify-center h-12 px-8 rounded-md bg-white text-navy font-semibold text-[13px] hover:bg-white/90 transition-colors whitespace-nowrap"
             >
-              {t('home') === 'Ana Səhifə' ? 'Əlaqə' : 'Contact Us'}
+              {t('services')}
             </Link>
           </div>
         </div>

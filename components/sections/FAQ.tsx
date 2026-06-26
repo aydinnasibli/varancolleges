@@ -17,13 +17,13 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
       <div className="container-main">
         <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-12 lg:gap-20 items-start">
           <div className="lg:sticky lg:top-24">
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
               {t("subtitle")}
             </p>
             <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05] mb-5">
               {t("title")}
             </h2>
-            <p className="text-[14px] leading-[1.75] text-text-secondary mb-8">
+            <p className="text-[15px] leading-[1.75] text-text-secondary mb-8">
               {t("description")}
             </p>
             <FAQContactWrapper label={t("contactUs")} />
@@ -36,7 +36,7 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
                 className="group border-b border-border last:border-b-0 [&_summary::-webkit-details-marker]:hidden"
               >
                 <summary className="px-6 py-5 flex justify-between items-start gap-4 hover:bg-surface/60 transition-colors select-none cursor-pointer">
-                  <span className="text-[14px] font-semibold text-navy leading-snug">
+                  <span className="text-[15px] font-semibold text-navy leading-snug">
                     {faq.question}
                   </span>
                   <svg
@@ -55,7 +55,7 @@ const FAQ = async ({ customFaqs }: FAQProps) => {
                   </svg>
                 </summary>
                 <div className="px-6 pb-5 border-t border-border/60">
-                  <p className="text-[13px] leading-[1.85] text-text-secondary pt-4">
+                  <p className="text-[15px] leading-[1.85] text-text-secondary pt-4">
                     {faq.answer}
                   </p>
                 </div>

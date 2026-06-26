@@ -37,7 +37,7 @@ const Footer = async () => {
 
           {/* Pages */}
           <nav aria-label="Footer navigation">
-            <h3 className="text-[10px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
+            <h3 className="text-[11px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
               {tNav("home")}
             </h3>
             <ul className="flex flex-col gap-2.5">
@@ -64,7 +64,7 @@ const Footer = async () => {
 
           {/* Services */}
           <nav aria-label="Services">
-            <h3 className="text-[10px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
+            <h3 className="text-[11px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
               {tNav("services")}
             </h3>
             <ul className="flex flex-col gap-2.5">
@@ -88,7 +88,7 @@ const Footer = async () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-[10px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
+            <h3 className="text-[11px] font-bold text-white/60 tracking-[0.16em] uppercase mb-4">
               {tNav("contact")}
             </h3>
             <div className="flex flex-col gap-2.5">

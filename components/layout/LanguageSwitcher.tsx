@@ -24,7 +24,7 @@ export default function LanguageSwitcher() {
         <button
           disabled={isPending}
           onClick={() => handleLanguageChange('az')}
-          className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 ${
+          className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
             locale === 'az'
               ? 'bg-navy text-white font-semibold shadow-sm'
               : 'text-text-muted hover:text-navy'
@@ -35,7 +35,7 @@ export default function LanguageSwitcher() {
         <button
           disabled={isPending}
           onClick={() => handleLanguageChange('en')}
-          className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 ${
+          className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 cursor-pointer ${
             locale === 'en'
               ? 'bg-navy text-white font-semibold shadow-sm'
               : 'text-text-muted hover:text-navy'

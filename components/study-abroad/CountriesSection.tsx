@@ -9,12 +9,22 @@ const CountriesSection = async ({ locale }: { locale: string }) => {
 
   return (
     <section className="py-16 relative overflow-hidden bg-surface">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <svg
+        viewBox="0 0 400 400"
+        className="absolute right-[-100px] top-[-50px] w-[300px] h-[300px] opacity-[0.03] pointer-events-none"
+        aria-hidden="true"
+      >
+        <circle cx="200" cy="200" r="160" stroke="currentColor" strokeWidth="1" fill="none" className="text-navy" />
+        <ellipse cx="200" cy="200" rx="160" ry="30" stroke="currentColor" strokeWidth="0.6" fill="none" className="text-navy" />
+        <ellipse cx="200" cy="200" rx="80" ry="160" stroke="currentColor" strokeWidth="0.6" fill="none" className="text-navy" />
+        <ellipse cx="200" cy="200" rx="130" ry="160" stroke="currentColor" strokeWidth="0.6" fill="none" className="text-navy" />
+      </svg>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-navy-light text-xs font-bold tracking-[0.25em] uppercase mb-3">
             {tServicesPage("destinations") || "Destinations"}
           </h2>
-          <h3 className="text-3xl md:text-4xl font-serif text-navy tracking-tight">
+          <h3 className="text-3xl md:text-4xl font-sans font-extrabold text-navy tracking-tight">
             {tServicesPage("worldIsYourCampus")}
           </h3>
           <div className="w-12 h-0.5 bg-navy mx-auto mt-6 opacity-30"></div>

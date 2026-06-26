@@ -33,8 +33,8 @@
     "paymentCtaDesc": "Secure payments — no need to visit the office"
   },
   "Hero": {
-    "title1": "Education",
-    "title2": "Without Borders",
+    "title1": "From Baku,",
+    "title2": "To the World",
     "description": "IELTS & SAT preparation, university admissions, and visa support — from Baku to campuses worldwide.",
     "button1": "Study Abroad",
     "button2": "Services",
@@ -69,7 +69,8 @@
     "phone": "Phone",
     "email": "Email",
     "workingHours": "Monday - Saturday, 09:00 - 22:00",
-    "noPosts": "There are no posts available at the moment."
+    "noPosts": "There are no posts available at the moment.",
+    "whatsappCta": "Chat on WhatsApp"
   },
   "About": {
     "title": "About Us",
@@ -86,6 +87,12 @@
     "feat4": "International Certificates",
     "feat5": "Global Partnerships",
     "feat6": "Career Support",
+    "feat1Desc": "IELTS, TOEFL, and Cambridge-certified instructors with years of exam preparation experience.",
+    "feat2Desc": "Blended learning with AI-powered diagnostics, adaptive practice, and one-on-one coaching.",
+    "feat3Desc": "Customized study plans built around your target score, timeline, and learning style.",
+    "feat4Desc": "Official IELTS, SAT, and AP preparation with globally recognized assessment standards.",
+    "feat5Desc": "Direct relationships with 50+ universities across 6 countries for streamlined admissions.",
+    "feat6Desc": "From application to arrival — visa guidance, accommodation, and ongoing academic support.",
     "visitUs": "Visit Us",
     "visitUsDesc": "Come to our office, let's talk about your future.",
     "statExperience": "Experience",
@@ -115,7 +122,10 @@
       "messageLabel": "Your Message",
       "messagePlaceholder": "Write your question or message here...",
       "submit": "Submit",
-      "submitting": "Submitting..."
+      "submitting": "Submitting...",
+      "successToast": "Your message has been received!",
+      "successMessage": "Your message has been received! We'll get back to you shortly.",
+      "errorMessage": "An error occurred. Please try again."
     }
   },
   "StudyAbroad": {
@@ -131,8 +141,8 @@
     "service2Feat1": "Filling out visa forms",
     "service2Feat2": "Interview simulation",
     "service2Feat3": "Insurance and flight planning",
-    "heroTitle": "Education Without",
-    "heroSubtitle": "Borders",
+    "heroTitle": "Your Path to",
+    "heroSubtitle": "Global Education",
     "heroDesc": "At Varan Colleges, we direct our students to universities and colleges in the USA, Canada, Australia, European countries, and Turkey. Our goal is not just admission, but to provide professional support in choosing the right country, the right major, and the right university.",
     "academicAdvice": {
       "title": "Academic Advice and Career Planning",
@@ -269,7 +279,17 @@
     "submitting": "Submitting...",
     "success": "Your application has been accepted!",
     "error": "An error occurred.",
-    "unexpectedError": "An unexpected error occurred."
+    "unexpectedError": "An unexpected error occurred.",
+    "programLabel": "Program of Interest",
+    "programPlaceholder": "Select a program",
+    "programs": {
+      "ielts": "IELTS Preparation",
+      "sat": "SAT Preparation",
+      "toefl": "TOEFL Preparation",
+      "studyAbroad": "Study Abroad",
+      "gmat": "GMAT / GRE Preparation",
+      "other": "Other"
+    }
   },
   "ServicePage": {
     "freeConsultation": "Free Consultation",
@@ -640,8 +660,8 @@
     "heroDesc": "Everything you need for quality education and a bright future in one place. As VaranColleges, we are by your side to help you reach your goals.",
     "home": "Home",
     "services": "Services",
-    "borderlessEducation": "Borderless Education",
-    "worldIsYourCampus": "The World Is Your Campus",
+    "borderlessEducation": "Start Your Journey",
+    "worldIsYourCampus": "Every great career starts with the right education",
     "academicDevelopment": "Academic Development",
     "languageCourses": "Language Courses & Exams",
     "coursesDesc": "Professional programs to improve your international certificates and foreign language skills.",

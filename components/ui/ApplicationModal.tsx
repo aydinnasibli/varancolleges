@@ -27,13 +27,14 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
     name: "",
     email: "",
     phone: "",
+    program: "",
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const t = useTranslations("ApplicationModal");
   const tGen = useTranslations("General");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -49,6 +50,7 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
     data.append("name", formData.name);
     data.append("email", formData.email);
     data.append("phone", formData.phone);
+    data.append("program", formData.program);
     data.append("message", formData.message);
 
     try {
@@ -56,7 +58,7 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
 
       if (response.success) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", program: "", message: "" });
         toast.success(t("success"));
 
         setTimeout(() => {
@@ -122,6 +124,23 @@ export function ApplicationModal({ children }: ApplicationModalProps) {
               required
               className="bg-surface border-border text-navy placeholder:text-text-faint focus-visible:ring-navy/20"
             />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="program" className="text-navy">{t("programLabel")}</Label>
+            <select
+              id="program"
+              value={formData.program}
+              onChange={handleChange}
+              className="flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy/20"
+            >
+              <option value="">{t("programPlaceholder")}</option>
+              <option value="ielts">{t("programs.ielts")}</option>
+              <option value="sat">{t("programs.sat")}</option>
+              <option value="toefl">{t("programs.toefl")}</option>
+              <option value="studyAbroad">{t("programs.studyAbroad")}</option>
+              <option value="gmat">{t("programs.gmat")}</option>
+              <option value="other">{t("programs.other")}</option>
+            </select>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="message" className="text-navy">{t("messageLabel")}</Label>

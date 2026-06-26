@@ -107,6 +107,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ensureUserInDb } from "@/lib/ensure-user";
+import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 
 export default async function RootLayout({
   children,
@@ -145,6 +146,7 @@ export default async function RootLayout({
               data-cf-beacon='{"token": "1d9b481741fb4b02ac93c816ca4a0371"}'
             />
             {children}
+            <WhatsAppFloat />
             <Toaster position="bottom-left" />
           </NextIntlClientProvider>
         </body>

@@ -33,8 +33,8 @@
     "paymentCtaDesc": "Ofisə gəlmədən təhlükəsiz ödəniş"
   },
   "Hero": {
-    "title1": "Sərhədsiz",
-    "title2": "Təhsil",
+    "title1": "Bakıdan,",
+    "title2": "Dünyaya",
     "description": "IELTS və SAT hazırlığı, universitetlərə qəbul və viza dəstəyi — Bakıdan dünyanın kampuslarına.",
     "button1": "Xaricdə Təhsil",
     "button2": "Xidmətlər",
@@ -69,7 +69,8 @@
     "phone": "Telefon",
     "email": "Email",
     "workingHours": "Bazar ertəsi - Şənbə, 09:00 - 22:00",
-    "noPosts": "Hazırda heç bir yazı yoxdur."
+    "noPosts": "Hazırda heç bir yazı yoxdur.",
+    "whatsappCta": "WhatsApp-da yazın"
   },
   "About": {
     "title": "Haqqımızda",
@@ -86,6 +87,12 @@
     "feat4": "Beynəlxalq Sertifikatlar",
     "feat5": "Qlobal Əməkdaşlıqlar",
     "feat6": "Karyera Dəstəyi",
+    "feat1Desc": "IELTS, TOEFL və Cambridge sertifikatlı müəllimlər, illərlə imtahan hazırlığı təcrübəsi.",
+    "feat2Desc": "Süni intellekt diaqnostikası, adaptiv təlim və fərdi koçinq sessiyaları ilə qarışıq öyrənmə.",
+    "feat3Desc": "Hədəf balınıza, vaxt qrafikinizə və öyrənmə üslubunuza uyğun fərdi tədris planları.",
+    "feat4Desc": "Qlobal standartlara uyğun rəsmi IELTS, SAT və AP hazırlıq proqramları.",
+    "feat5Desc": "6 ölkədə 50+ universitetlə birbaşa əlaqələr — sürətli qəbul prosesi.",
+    "feat6Desc": "Müraciətdən gəlişə qədər — viza dəstəyi, yaşayış seçimi və davamlı akademik yardım.",
     "visitUs": "Bizi Ziyarət Edin",
     "visitUsDesc": "Ofisimizə yaxınlaşın, gələcəyiniz haqqında danışaq.",
     "statExperience": "Təcrübə",
@@ -115,7 +122,10 @@
       "messageLabel": "Mesajınız",
       "messagePlaceholder": "Sualınızı və ya mesajınızı buraya yazın...",
       "submit": "Göndər",
-      "submitting": "Göndərilir..."
+      "submitting": "Göndərilir...",
+      "successToast": "Müraciətiniz qəbul edildi!",
+      "successMessage": "Müraciətiniz qəbul edildi! Tezliklə sizinlə əlaqə saxlayacağıq.",
+      "errorMessage": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
     }
   },
   "StudyAbroad": {
@@ -131,8 +141,8 @@
     "service2Feat1": "Viza anketinin doldurulması",
     "service2Feat2": "Müsahibə simulyasiyası",
     "service2Feat3": "Sığorta və uçuş planlaması",
-    "heroTitle": "Sərhədsiz",
-    "heroSubtitle": "Təhsil",
+    "heroTitle": "Qlobal Təhsilə",
+    "heroSubtitle": "Gedən Yolunuz",
     "heroDesc": "Varan Colleges olaraq tələbələrimizi ABŞ, Kanada, Avstraliya, Avropa ölkələri və Türkiyədə yerləşən universitet və kolleclərə yönləndiririk. Məqsədimiz yalnız qəbul almaq deyil, tələbənin düzgün ölkə, düzgün ixtisas və düzgün universitet seçməsinə peşəkar şəkildə dəstək olmaqdır.",
     "academicAdvice": {
       "title": "Akademik Məsləhət və Karyera Planlaması",
@@ -269,7 +279,17 @@
     "submitting": "Göndərilir...",
     "success": "Müraciətiniz qəbul edildi!",
     "error": "Xəta baş verdi.",
-    "unexpectedError": "Gözlənilməz xəta baş verdi."
+    "unexpectedError": "Gözlənilməz xəta baş verdi.",
+    "programLabel": "Maraqlandığınız Proqram",
+    "programPlaceholder": "Proqram seçin",
+    "programs": {
+      "ielts": "IELTS Hazırlığı",
+      "sat": "SAT Hazırlığı",
+      "toefl": "TOEFL Hazırlığı",
+      "studyAbroad": "Xaricdə Təhsil",
+      "gmat": "GMAT / GRE Hazırlığı",
+      "other": "Digər"
+    }
   },
   "ServicePage": {
     "freeConsultation": "Ödənişsiz Konsultasiya",
@@ -640,8 +660,8 @@
     "heroDesc": "Keyfiyyətli təhsil və parlaq gələcək üçün ehtiyacınız olan hər şey bir ünvanda. VaranColleges olaraq hədəflərinizə çatmağınız üçün yanınızdayıq.",
     "home": "Ana Səhifə",
     "services": "Xidmətlər",
-    "borderlessEducation": "Sərhədsiz Təhsil",
-    "worldIsYourCampus": "Dünya Sizin Kampusunuzdur",
+    "borderlessEducation": "Yolculuğunuza Başlayın",
+    "worldIsYourCampus": "Hər böyük karyera düzgün təhsillə başlayır",
     "academicDevelopment": "Akademik İnkişaf",
     "languageCourses": "Dil Kursları və İmtahanlar",
     "coursesDesc": "Beynəlxalq sertifikatlar və xarici dil biliklərinizi təkmilləşdirmək üçün peşəkar proqramlar.",

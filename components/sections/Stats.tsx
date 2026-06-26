@@ -22,7 +22,7 @@ const Stats = () => {
               <span className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-none">
                 {stat.value}
               </span>
-              <span className="block text-[10px] text-text-muted mt-2 tracking-[0.14em] uppercase">
+              <span className="block text-[11px] text-text-muted mt-2 tracking-[0.14em] uppercase">
                 {stat.label}
               </span>
             </div>

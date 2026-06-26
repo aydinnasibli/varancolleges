@@ -1,12 +1,13 @@
 import { Link } from "@/i18n/routing";
 import { ArrowRight } from "lucide-react";
 import { getPosts } from "@/lib/data";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 
 const BlogPreview = async () => {
   const posts = await getPosts();
   const recentPosts = posts.slice(0, 3);
   const t = await getTranslations("BlogPreview");
+  const locale = await getLocale();
 
   if (recentPosts.length === 0) {
     return null;
@@ -17,10 +18,10 @@ const BlogPreview = async () => {
       <div className="container-main">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
               {t("subtitle")}
             </p>
-            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05]">
+            <h2 className="font-sans text-3xl md:text-[38px] font-extrabold text-navy leading-[1.1] tracking-tight">
               {t("title")}
             </h2>
           </div>
@@ -51,7 +52,7 @@ const BlogPreview = async () => {
               </div>
               <div className="flex items-center gap-4 shrink-0">
                 <time className="text-xs text-text-muted" dateTime={post.publishedAt}>
-                  {new Date(post.publishedAt).toLocaleDateString('az-AZ', {
+                  {new Date(post.publishedAt).toLocaleDateString(locale === 'az' ? 'az-AZ' : 'en-US', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'

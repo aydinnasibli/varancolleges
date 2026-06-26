@@ -53,7 +53,7 @@ const ServicesGrid = () => {
               href={`/services/${service.slug}`}
               className="bg-white p-10 hover:bg-surface transition-colors cursor-pointer group block"
             >
-              <span className="text-xs font-medium tracking-[0.2em] uppercase text-text-faint block mb-3">
+              <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-text-muted block mb-3">
                 {getCategory(service.slug, tData)}
               </span>
               <h3 className="text-2xl font-serif text-navy mb-3">

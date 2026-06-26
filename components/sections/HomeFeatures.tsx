@@ -16,14 +16,14 @@ const HomeFeatures = () => {
     tData.has(`${service.slug}.category`) ? tData(`${service.slug}.category`) : "";
 
   return (
-    <section className="section-padding bg-white border-t border-border">
+    <section className="py-16 lg:py-24 bg-white border-t border-border">
       <div className="container-main">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-14 gap-4">
           <div>
-            <p className="text-[11px] font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
+            <p className="text-xs font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
               {tServices("academicDevelopment")}
             </p>
-            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05]">
+            <h2 className="font-sans text-3xl md:text-[40px] font-extrabold text-navy leading-[1.1] tracking-tight">
               {tServices("heroTitle")}
             </h2>
           </div>
@@ -42,7 +42,7 @@ const HomeFeatures = () => {
               href={`/services/${service.slug}`}
               className="bg-white px-7 py-8 flex flex-col min-h-[180px] hover:bg-surface transition-colors group"
             >
-              <p className="text-[10px] font-bold tracking-[0.14em] text-text-muted uppercase mb-4">
+              <p className="text-[11px] font-bold tracking-[0.14em] text-text-muted uppercase mb-4">
                 {getCategory(service)}
               </p>
               <h3 className="font-serif text-[24px] font-bold text-navy leading-[1.15] flex-1 group-hover:text-navy-light transition-colors">

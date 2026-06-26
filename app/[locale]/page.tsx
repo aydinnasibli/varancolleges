@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default function Home() {
   return (
     <>
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-100 focus:bg-navy focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold">
+      <a href="#main-content" className="fixed -top-full left-2 z-100 bg-navy text-white px-4 py-2 rounded-md text-sm font-semibold focus-visible:top-2">
         Skip to content
       </a>
       <Navbar />
