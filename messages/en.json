@@ -16,7 +16,7 @@
     "studyAbroad": "Study Abroad",
     "contact": "Contact",
     "blog": "Blog",
-    "mockExams": "Mock Exams"
+    "mockExams": "SAT Exam"
   },
   "Footer": {
     "language": "Language",
@@ -842,7 +842,7 @@
   },
   "Exam": {
     "nav": {
-      "mockExams": "Mock Exams",
+      "mockExams": "SAT Exam",
       "myExams": "My Exams",
       "signIn": "Sign In",
       "signUp": "Sign Up",
@@ -850,7 +850,7 @@
       "loading": "Loading..."
     },
     "listing": {
-      "label": "Mock Exams",
+      "label": "SAT Exam",
       "title": "Practice Like It's the Real Thing",
       "description": "Full-length digital SAT simulations with timed sections and detailed score reports — just like the real exam.",
       "noExams": "No exams available yet. Check back soon!",

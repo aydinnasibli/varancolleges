@@ -16,7 +16,7 @@
     "studyAbroad": "Xaricdə Təhsil",
     "contact": "Əlaqə",
     "blog": "Blog",
-    "mockExams": "Sınaq İmtahanları"
+    "mockExams": "SAT İmtahanı"
   },
   "Footer": {
     "language": "Dil",
@@ -842,7 +842,7 @@
   },
   "Exam": {
     "nav": {
-      "mockExams": "Sınaq İmtahanları",
+      "mockExams": "SAT İmtahanı",
       "myExams": "İmtahanlarım",
       "signIn": "Daxil ol",
       "signUp": "Qeydiyyat",
@@ -850,7 +850,7 @@
       "loading": "Yüklənir..."
     },
     "listing": {
-      "label": "Sınaq İmtahanları",
+      "label": "SAT İmtahanı",
       "title": "Real İmtahan kimi Hazırlaşın",
       "description": "Vaxtlı bölmələr və ətraflı bal hesabatları ilə tam uzunluqlu rəqəmsal SAT simulyasiyaları — real imtahan kimi.",
       "noExams": "Hələ imtahan mövcud deyil. Tezliklə yoxlayın!",
