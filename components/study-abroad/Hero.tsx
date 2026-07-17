@@ -27,7 +27,7 @@ const Hero = async () => {
             {tGen("applyNow")}
           </Link>
           <a href="#destinations" className="bg-transparent text-white/35 border-none cursor-pointer text-[13px] font-medium px-0 py-3.5 hover:text-white/75 transition-colors">
-            {t("countries") || "Destinations"} ↓
+            {t("destinations")} ↓
           </a>
         </div>
       </div>

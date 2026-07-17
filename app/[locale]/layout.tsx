@@ -125,7 +125,7 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang={locale} className="scroll-smooth">
+      <html lang={locale} className="scroll-smooth" data-scroll-behavior="smooth">
         <head>
           <link rel="icon" href="/images/logo-light.png" type="image/png" />
           <link rel="apple-touch-icon" href="/images/logo-light.png" />

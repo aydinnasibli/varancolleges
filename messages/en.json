@@ -35,14 +35,15 @@
   "Hero": {
     "title1": "From Baku,",
     "title2": "To the World",
-    "description": "IELTS & SAT preparation, university admissions, and visa support — from Baku to campuses worldwide.",
-    "button1": "Study Abroad",
-    "button2": "Services",
+    "description": "English courses, IELTS, TOEFL & SAT preparation, university admissions and visa support — all under one roof in Baku.",
+    "button1": "Free Consultation",
+    "button2": "Courses & Services",
+    "coursesLabel": "Language & Exam Courses",
     "card1Title": "Top Universities",
     "card1Desc": "Top 100 in World Rankings",
     "card2Title": "Success",
     "card2Desc": "Visa application approval rate",
-    "subtitle": "Education Consultancy · Baku"
+    "subtitle": "Language & Education Center · Baku"
   },
   "Stats": {
     "years": "Years Experience",
@@ -143,6 +144,7 @@
     "service2Feat3": "Insurance and flight planning",
     "heroTitle": "Your Path to",
     "heroSubtitle": "Global Education",
+    "destinations": "Destinations",
     "heroDesc": "At Varan Colleges, we direct our students to universities and colleges in the USA, Canada, Australia, European countries, and Turkey. Our goal is not just admission, but to provide professional support in choosing the right country, the right major, and the right university.",
     "academicAdvice": {
       "title": "Academic Advice and Career Planning",
@@ -262,7 +264,9 @@
   },
   "Blog": {
     "title": "Blog & News",
-    "desc": "Read the latest information about studying abroad, exam preparation, and scholarship programs here."
+    "desc": "Read the latest information about studying abroad, exam preparation, and scholarship programs here.",
+    "readMore": "Read more",
+    "noPosts": "No posts available yet."
   },
   "ApplicationModal": {
     "title": "Apply Now",

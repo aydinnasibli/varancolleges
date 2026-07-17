@@ -11,26 +11,24 @@ const StudyAbroadTeaser = async () => {
   return (
     <section className="py-20 lg:py-32 bg-surface border-t border-border">
       <div className="container-main">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
-          <div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
+          <div className="md:max-w-[620px]">
             <p className="text-xs font-semibold tracking-[0.18em] text-text-muted uppercase mb-3">
               {t("subtitle")}
             </p>
-            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05]">
+            <h2 className="font-serif text-3xl md:text-[44px] font-bold text-navy leading-[1.05] mb-5">
               {t("title")}
             </h2>
-          </div>
-          <div className="md:text-right">
-            <p className="text-[15px] text-text-secondary max-w-[340px] leading-[1.75] mb-4">
+            <p className="text-[15px] text-text-secondary leading-[1.75]">
               {t("heroDesc")}
             </p>
-            <Link
-              href="/study-abroad"
-              className="bg-navy text-white px-7 py-3 rounded-md text-[13px] font-semibold tracking-[0.02em] hover:bg-navy-mid transition-colors inline-block"
-            >
-              {t("title")} →
-            </Link>
           </div>
+          <Link
+            href="/study-abroad"
+            className="shrink-0 bg-navy text-white px-7 py-3 rounded-md text-[13px] font-semibold tracking-[0.02em] hover:bg-navy-mid transition-colors inline-block whitespace-nowrap"
+          >
+            {t("title")} →
+          </Link>
         </div>
 
         <div className="border border-border rounded-lg overflow-hidden bg-white">

@@ -40,8 +40,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function BlogPage() {
+export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const posts = await getPosts();
+  const t = await getTranslations({ locale, namespace: 'Blog' });
+  const tNav = await getTranslations({ locale, namespace: 'Navigation' });
+  const dateLocale = locale === 'az' ? 'az-AZ' : 'en-US';
 
   return (
     <main className="min-h-screen bg-white text-navy font-sans selection:bg-navy selection:text-white overflow-x-hidden">
@@ -51,15 +55,15 @@ export default async function BlogPage() {
       <section className="relative py-24 lg:py-32 bg-navy">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl lg:text-7xl font-serif font-bold text-white mb-6 tracking-tight">
-            Blog & Xəbərlər
+            {t("title")}
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-8"></div>
           <p className="text-lg text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
-            Xaricdə təhsil, imtahanlara hazırlıq və təqaüd proqramları haqqında ən son məlumatları buradan oxuyun.
+            {t("desc")}
           </p>
           <div className="mt-12 flex justify-center gap-2 text-sm text-white/50 uppercase tracking-widest font-medium">
             <Link href="/" className="hover:text-white transition-colors">
-              Ana Səhifə
+              {tNav("home")}
             </Link>
             <span className="text-white/40">•</span>
             <span className="text-white">Blog</span>
@@ -72,7 +76,7 @@ export default async function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {posts.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-xl text-text-muted font-light">Hazırda heç bir yazı yoxdur.</p>
+              <p className="text-xl text-text-muted font-light">{t("noPosts")}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -86,10 +90,11 @@ export default async function BlogPage() {
                         className="object-cover transform group-hover:scale-110 transition-transform duration-700"
                         src={post.mainImage}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     )}
                     <div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-md px-3 py-1 rounded text-xs text-navy border border-border">
-                      {new Date(post.publishedAt).toLocaleDateString('az-AZ', {
+                      {new Date(post.publishedAt).toLocaleDateString(dateLocale, {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric'
@@ -105,7 +110,7 @@ export default async function BlogPage() {
                     </p>
                   )}
                   <span className="inline-flex items-center text-navy-light text-sm font-medium opacity-0 transform -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all">
-                    Oxumağa davam et
+                    {t("readMore")}
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </span>
                 </Link>

@@ -45,20 +45,20 @@ const Hero = () => {
 
       {/* RIGHT — Dark navy services panel */}
       <div className="bg-navy flex flex-col justify-center px-5 sm:px-8 lg:px-14 py-12 lg:py-20 lg:pr-[max(40px,calc((100vw-1240px)/2+40px))]">
-        {/* Exam Prep */}
+        {/* Language & Exam Courses */}
         <div className="mb-10">
           <p className="text-[11px] font-bold tracking-[0.2em] text-white/50 uppercase mb-5">
-            {tData("details")}
+            {t("coursesLabel")}
           </p>
           <div className="space-y-1.5">
-            <Link href="/services/ielts" className="block hover:translate-x-1 transition-transform duration-200">
+            <Link href="/services/general-english" className="block hover:translate-x-1 transition-transform duration-200">
               <span className="font-serif text-[clamp(2rem,4vw,3.25rem)] font-semibold text-white leading-none tracking-tight">
-                IELTS
+                {tData("general-english.title")}
               </span>
             </Link>
-            <Link href="/services/toefl" className="block hover:translate-x-1 transition-transform duration-200">
+            <Link href="/services/ielts" className="block hover:translate-x-1 transition-transform duration-200">
               <span className="font-serif text-[clamp(1.5rem,3vw,2.5rem)] font-semibold text-white/70 leading-none">
-                TOEFL · SAT
+                IELTS · TOEFL · SAT
               </span>
             </Link>
             <Link href="/services" className="block hover:translate-x-1 transition-transform duration-200">

@@ -35,14 +35,15 @@
   "Hero": {
     "title1": "Bakıdan,",
     "title2": "Dünyaya",
-    "description": "IELTS və SAT hazırlığı, universitetlərə qəbul və viza dəstəyi — Bakıdan dünyanın kampuslarına.",
-    "button1": "Xaricdə Təhsil",
-    "button2": "Xidmətlər",
+    "description": "İngilis dili kursları, IELTS, TOEFL və SAT hazırlığı, universitet qəbulu və viza dəstəyi — hamısı bir ünvanda, Bakıda.",
+    "button1": "Ödənişsiz Konsultasiya",
+    "button2": "Kurslar və Xidmətlər",
+    "coursesLabel": "Dil və İmtahan Kursları",
     "card1Title": "Top Universitetlər",
     "card1Desc": "Dünya reytinqində ilk 100",
     "card2Title": "Uğur",
     "card2Desc": "Viza müraciətlərinin təsdiq faizi",
-    "subtitle": "Təhsil Konsaltinqi · Bakı"
+    "subtitle": "Dil və Təhsil Mərkəzi · Bakı"
   },
   "Stats": {
     "years": "İl Təcrübə",
@@ -143,6 +144,7 @@
     "service2Feat3": "Sığorta və uçuş planlaması",
     "heroTitle": "Qlobal Təhsilə",
     "heroSubtitle": "Gedən Yolunuz",
+    "destinations": "İstiqamətlər",
     "heroDesc": "Varan Colleges olaraq tələbələrimizi ABŞ, Kanada, Avstraliya, Avropa ölkələri və Türkiyədə yerləşən universitet və kolleclərə yönləndiririk. Məqsədimiz yalnız qəbul almaq deyil, tələbənin düzgün ölkə, düzgün ixtisas və düzgün universitet seçməsinə peşəkar şəkildə dəstək olmaqdır.",
     "academicAdvice": {
       "title": "Akademik Məsləhət və Karyera Planlaması",
@@ -262,7 +264,9 @@
   },
   "Blog": {
     "title": "Blog & Xəbərlər",
-    "desc": "Xaricdə təhsil, imtahanlara hazırlıq və təqaüd proqramları haqqında ən son məlumatları buradan oxuyun."
+    "desc": "Xaricdə təhsil, imtahanlara hazırlıq və təqaüd proqramları haqqında ən son məlumatları buradan oxuyun.",
+    "readMore": "Oxumağa davam et",
+    "noPosts": "Hazırda heç bir yazı yoxdur."
   },
   "ApplicationModal": {
     "title": "Müraciət et",
