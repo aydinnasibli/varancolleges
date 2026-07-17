@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const title = tData('title') || 'VaranColleges';
 
   const description = tData('description') || '';
-  const heroImage = servicesData.find(s => s.slug === slug)?.heroImage || '/images/varan-office.webp';
+  const heroImage = servicesData.find(s => s.slug === slug)?.heroImage || '/images/og-image.png';
 
   return {
     title,

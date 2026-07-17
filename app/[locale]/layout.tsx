@@ -47,10 +47,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: "website",
       images: [
         {
-          url: "/images/varan-office.webp",
+          url: "/images/og-image.png",
           width: 1200,
           height: 630,
-          alt: "VaranColleges Office",
+          alt: "VaranColleges — Language & Education Center, Baku",
         },
       ],
     },
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: t('twitterTitle'),
       description: t('twitterDescription'),
-      images: ["/images/varan-office.webp"],
+      images: ["/images/og-image.png"],
     },
     robots: {
       index: true,
@@ -80,7 +80,7 @@ const jsonLd = {
   name: "VaranColleges",
   url: "https://www.varancolleges.com",
   logo: "https://www.varancolleges.com/images/logo.png",
-  image: "https://www.varancolleges.com/images/varan-office.webp",
+  image: "https://www.varancolleges.com/images/og-image.png",
   description:
     "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
   address: {
@@ -127,7 +127,7 @@ export default async function RootLayout({
     <ClerkProvider>
       <html lang={locale} className="scroll-smooth" data-scroll-behavior="smooth">
         <head>
-          <link rel="icon" href="/images/logo-light.png" type="image/png" />
+          <link rel="icon" href="/images/logo-icon.png" type="image/png" />
           <link rel="apple-touch-icon" href="/images/logo-light.png" />
           <meta name="theme-color" content="#ffffff" />
         </head>

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const description = post.excerpt || post.title;
   const ogImage = post.mainImage
     ? [{ url: post.mainImage, width: 1200, height: 630, alt: post.title }]
-    : [{ url: '/images/varan-office.webp', width: 1200, height: 630, alt: post.title }];
+    : [{ url: '/images/og-image.png', width: 1200, height: 630, alt: post.title }];
 
   return {
     title: `${post.title} - Varan Colleges`,
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title: `${post.title} - Varan Colleges`,
       description,
-      images: post.mainImage ? [post.mainImage] : ['/images/varan-office.webp'],
+      images: post.mainImage ? [post.mainImage] : ['/images/og-image.png'],
     },
     alternates: {
       canonical,
