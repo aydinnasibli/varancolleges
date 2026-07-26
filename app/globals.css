@@ -78,6 +78,38 @@
   }
 }
 
+@layer components {
+  /* Question / passage HTML rendered by <MathRenderer>. Line breaks are stored
+     as newlines, and Preflight strips list markers, so both are restored here
+     for every place the content is shown (exam, results, admin preview). */
+  .math-content {
+    white-space: pre-wrap;
+  }
+
+  .math-content ul,
+  .math-content ol {
+    white-space: normal;
+    margin-block: 0.5em;
+    padding-inline-start: 1.5rem;
+  }
+
+  .math-content ul {
+    list-style: disc outside;
+  }
+
+  .math-content ol {
+    list-style: decimal outside;
+  }
+
+  .math-content li {
+    margin-block: 0.25em;
+  }
+
+  .math-content li::marker {
+    color: inherit;
+  }
+}
+
 @layer utilities {
   .section-padding {
     @apply py-20 lg:py-28;

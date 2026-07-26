@@ -61,6 +61,62 @@ function insertAtCursor(
   });
 }
 
+// A "fake" list line: Word/PDF bullets arrive as plain text, not as <li>
+const BULLET_LINE = /^[ \t\u00a0]*(?:[•·◦▪‣∙*-]|o(?=\t))[ \t\u00a0]+(.+)$/;
+const NUMBERED_LINE = /^[ \t\u00a0]*\d+[.)][ \t\u00a0]+(.+)$/;
+
+// Turn runs of "• item" / "1. item" lines into real <ul>/<ol> markup
+function groupBulletLines(text: string): string {
+  const out: string[] = [];
+  let open: "ul" | "ol" | null = null;
+
+  for (const line of text.split("\n")) {
+    const bullet = line.match(BULLET_LINE);
+    const numbered = bullet ? null : line.match(NUMBERED_LINE);
+    const wanted = bullet ? "ul" : numbered ? "ol" : null;
+
+    if (!wanted) {
+      if (open) out.push(`</${open}>`);
+      open = null;
+      out.push(line);
+      continue;
+    }
+    if (open !== wanted) {
+      if (open) out.push(`</${open}>`);
+      out.push(`<${wanted}>`);
+      open = wanted;
+    }
+    out.push(`<li>${(bullet ?? numbered)![1].trim()}</li>`);
+  }
+  if (open) out.push(`</${open}>`);
+
+  return out.join("\n");
+}
+
+// Shared Word HTML stripper — keeps <u>, <strong>, <em> and list structure,
+// and converts the remaining blocks to newlines
+function stripWordHtml(html: string): string {
+  function extractFormatted(node: Node): string {
+    if (node.nodeType === Node.TEXT_NODE) return node.textContent || "";
+    if (node.nodeType !== Node.ELEMENT_NODE) return "";
+    const el = node as HTMLElement;
+    const tag = el.tagName.toLowerCase();
+    const inner = Array.from(el.childNodes).map(extractFormatted).join("");
+    if (tag === "u") return `<u>${inner}</u>`;
+    if (tag === "strong" || tag === "b") return `<strong>${inner}</strong>`;
+    if (tag === "em" || tag === "i") return `<em>${inner}</em>`;
+    // Real lists keep their structure — MathRenderer knows <ul>/<ol>/<li>
+    if (tag === "li") return `\n<li>${inner.replace(/\s+/g, " ").trim()}</li>`;
+    if (tag === "ul" || tag === "ol") return `\n<${tag}>${inner}\n</${tag}>\n`;
+    const block = ["p", "div", "br", "tr", "h1", "h2", "h3", "h4", "h5", "h6"];
+    return block.includes(tag) ? `${inner}\n` : inner;
+  }
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  const text = extractFormatted(div).replace(/\n{3,}/g, "\n\n");
+  return groupBulletLines(text).trimEnd();
+}
+
 // Small preview toggle component
 function PreviewToggle({ content, label }: { content: string; label: string }) {
   const [show, setShow] = useState(false);
@@ -271,25 +327,6 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
 
   const close = () => setActiveEditor(null);
 
-  // Shared Word HTML stripper — keeps <u>, <strong>, <em> and converts blocks to newlines
-  function stripWordHtml(html: string): string {
-    function extractFormatted(node: Node): string {
-      if (node.nodeType === Node.TEXT_NODE) return node.textContent || "";
-      if (node.nodeType !== Node.ELEMENT_NODE) return "";
-      const el = node as HTMLElement;
-      const tag = el.tagName.toLowerCase();
-      const inner = Array.from(el.childNodes).map(extractFormatted).join("");
-      if (tag === "u") return `<u>${inner}</u>`;
-      if (tag === "strong" || tag === "b") return `<strong>${inner}</strong>`;
-      if (tag === "em" || tag === "i") return `<em>${inner}</em>`;
-      const block = ["p", "div", "br", "li", "tr", "h1", "h2", "h3", "h4", "h5", "h6"];
-      return block.includes(tag) ? `${inner}\n` : inner;
-    }
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    return extractFormatted(div).replace(/\n{3,}/g, "\n\n").trimEnd();
-  }
-
   function makePasteHandler(
     ref: React.RefObject<HTMLTextAreaElement | HTMLInputElement | null>,
     currentValue: string,
@@ -297,9 +334,12 @@ export default function QuestionForm({ examId, initialData, defaultSection, defa
   ) {
     return (e: React.ClipboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       const html = e.clipboardData.getData("text/html");
-      if (!html) return;
+      const text = e.clipboardData.getData("text/plain");
+      if (!html && !text) return;
       e.preventDefault();
-      const cleaned = stripWordHtml(html);
+      // Bullets come as <li> from Word/Docs but as plain "• item" lines from
+      // PDFs and plain-text sources — both become real list markup
+      const cleaned = html ? stripWordHtml(html) : groupBulletLines(text).trimEnd();
       const el = ref.current;
       if (el) {
         const start = (el as HTMLInputElement).selectionStart ?? currentValue.length;

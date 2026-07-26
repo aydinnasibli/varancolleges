@@ -3,17 +3,25 @@
 import katex from "katex";
 import "katex/dist/katex.min.css";
 
+// The only tags we intentionally store in question / passage content
+const ALLOWED_TAGS = /^(?:u|strong|b|em|i|sup|sub|span|br|ul|ol|li)$/i;
+
 /**
  * Remove MS Word HTML cruft:
  *   1. Strip HTML comment blocks (<!--...-->) which contain Word CSS
- *   2. Strip all HTML tags EXCEPT the safe inline set we intentionally store
+ *   2. Strip all HTML tags EXCEPT the safe set we intentionally store,
+ *      dropping the attributes (Word styles/classes, event handlers) of the
+ *      ones we keep
+ *   3. Squeeze the whitespace around list tags so `white-space: pre-wrap`
+ *      doesn't render it as blank lines between the items
  */
 function sanitizeContent(raw: string): string {
   // Remove HTML comment blocks (Word CSS lives here)
   let s = raw.replace(/<!--[\s\S]*?-->/g, "");
-  // Remove any tag that isn't one of our allowed inline tags or a KaTeX span
-  // We keep: <u>, <strong>, <b>, <em>, <i>, <span class="katex...">
-  s = s.replace(/<\/?(?!u|strong|b|em|i|span|br)([a-zA-Z][a-zA-Z0-9]*)(\s[^>]*)?\/?>/gi, "");
+  s = s.replace(/<(\/?)([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>/g, (_match, slash: string, tag: string) =>
+    ALLOWED_TAGS.test(tag) ? `<${slash}${tag.toLowerCase()}>` : ""
+  );
+  s = s.replace(/\s*(<\/?(?:ul|ol|li)>)\s*/g, "$1");
   return s.trim();
 }
 
@@ -49,7 +57,7 @@ export default function MathRenderer({ content, className }: MathRendererProps) 
   const html = renderMath(content);
   return (
     <div
-      className={className}
+      className={className ? `math-content ${className}` : "math-content"}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
