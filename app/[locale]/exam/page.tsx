@@ -2,14 +2,13 @@ import { getActiveExams } from "@/app/actions/exam-public";
 import {
   Timer,
   BarChart3,
-  ArrowRight,
   Clock,
 } from "lucide-react";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
 import ExamSections from "./ExamSections";
+import ExamHeroCta from "./ExamHeroCta";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/routing";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -68,13 +67,7 @@ export default async function ExamListingPage({
               <p className="text-base leading-[1.85] text-white/60 mt-6 max-w-md">
                 {t("description")}
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 bg-white hover:bg-white/90 text-navy font-semibold px-7 py-3 rounded mt-8 text-sm transition-colors"
-              >
-                {t("registerNow")}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <ExamHeroCta label={t("registerNow")} />
             </div>
           </div>
 
