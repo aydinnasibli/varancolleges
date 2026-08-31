@@ -324,7 +324,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     const breakMins = Math.floor(breakTimeLeft / 60);
     const breakSecs = breakTimeLeft % 60;
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-slate-900 font-sans">
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-slate-900 font-sans exam-screen-enter">
         <h1 className="text-3xl font-bold mb-6">{isMainBreak ? t("breakDetails") : t("moduleComplete")}</h1>
         {isMainBreak ? (
           <div className="bg-white border border-slate-300 p-10 rounded-xl shadow-sm text-center max-w-lg w-full">
@@ -336,7 +336,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
             <button
               onClick={() => { if (nextQuestionsReady) { setBreakTimeLeft(0); setPhase("exam"); } }}
               disabled={!nextQuestionsReady}
-              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm flex items-center gap-2 mx-auto"
+              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2 mx-auto"
             >
               {!nextQuestionsReady && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("resumeTesting")}
@@ -349,7 +349,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
             <button
               onClick={() => { if (nextQuestionsReady) setPhase("exam"); }}
               disabled={!nextQuestionsReady}
-              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm flex items-center gap-2 mx-auto"
+              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2 mx-auto"
             >
               {!nextQuestionsReady && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("nextModule")}
@@ -362,7 +362,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
   if (phase === "submitting") {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-900 font-sans">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-900 font-sans exam-screen-enter">
         <div className="text-center">
           <Loader2 className="h-10 w-10 text-[#0052a3] animate-spin mx-auto mb-4" />
           <p className="text-xl font-bold">{t("submittingScore")}</p>
@@ -383,7 +383,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
           <span className="font-mono text-base tracking-widest font-bold">
             {formatTime(timeLeft)}
           </span>
-          <button className="flex items-center justify-center border border-slate-400 p-1.5 rounded text-slate-600 hover:bg-slate-100">
+          <button className="flex items-center justify-center border border-slate-400 p-1.5 rounded text-slate-600 hover:bg-slate-100 transition-colors duration-150">
             <Clock className="w-4 h-4" />
           </button>
         </div>
@@ -394,7 +394,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
         {/* LEFT — question number + passage (if any) + question text */}
         <div className="md:w-1/2 h-full overflow-y-auto border-r border-dashed border-slate-300 bg-white p-8 md:p-12">
-          <div className="max-w-xl mx-auto">
+          <div key={currentQuestion?._id} className="max-w-xl mx-auto exam-question-enter">
             <div className="bg-slate-900 text-white w-7 h-7 flex items-center justify-center font-bold text-sm mb-6 rounded-sm">
               {currentIndex + 1}
             </div>
@@ -419,12 +419,12 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
         {/* RIGHT — answers only */}
         <div className="md:w-1/2 h-full overflow-y-auto bg-white p-8 md:p-12 relative">
-          <div className="max-w-xl mx-auto">
+          <div key={currentQuestion?._id} className="max-w-xl mx-auto exam-question-enter">
             {/* Flag button anchored to top-right of answer panel */}
             <div className="flex justify-end mb-6">
               <button
                 onClick={handleFlagToggle}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded border font-bold text-xs transition-colors ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded border font-bold text-xs transition-colors duration-150 ${
                   flagged.has(currentQuestion?._id || '')
                     ? "text-[#b20000] border-[#b20000]/30"
                     : "text-slate-600 border-transparent hover:text-black hover:border-slate-300"
@@ -449,13 +449,13 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                     <button
                       key={opt}
                       onClick={() => handleAnswerSelect(opt)}
-                      className={`w-full flex items-start gap-4 p-4 rounded-xl border-[2.5px] text-left transition-colors ${
+                      className={`w-full flex items-start gap-4 p-4 rounded-xl border-[2.5px] text-left transition-[background-color,border-color,box-shadow] duration-150 ease-out active:scale-[0.995] motion-reduce:active:scale-100 ${
                         isSelected
-                          ? "border-[#0052a3] bg-[#f0f6ff]"
-                          : "border-slate-300 hover:border-slate-400 bg-white"
+                          ? "border-[#0052a3] bg-[#f0f6ff] shadow-[0_0_0_3px_rgba(0,82,163,0.08)]"
+                          : "border-slate-300 hover:border-slate-400 hover:bg-slate-50/60 bg-white"
                       }`}
                     >
-                      <span className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold mt-0.5 ${
+                      <span className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold mt-0.5 transition-colors duration-150 ease-out ${
                         isSelected ? "border-[#0052a3] bg-[#0052a3] text-white" : "border-slate-400 text-slate-600"
                       }`}>
                         {opt}
@@ -480,7 +480,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
          <div className="flex-1 flex justify-center">
             <button
                onClick={() => setShowNav(true)}
-               className="font-bold text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 px-5 py-2 rounded-full transition-colors flex items-center gap-2"
+               className="font-bold text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 px-5 py-2 rounded-full transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 flex items-center gap-2"
             >
                {t("question")} {currentIndex + 1} {t("of")} {questions.length}
                <Grid className="w-4 h-4" />
@@ -490,7 +490,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
             <button
               onClick={() => goToQuestion(currentIndex - 1)}
               disabled={currentIndex === 0}
-              className="px-6 py-2 font-bold text-[#0052a3] disabled:text-slate-300 disabled:cursor-not-allowed hover:bg-slate-100 rounded-full transition-colors"
+              className="px-6 py-2 font-bold text-[#0052a3] disabled:text-slate-300 disabled:cursor-not-allowed hover:bg-slate-100 rounded-full transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100"
             >
               {t("back")}
             </button>
@@ -503,7 +503,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                 }
               }}
               disabled={submitting}
-              className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full transition-colors flex items-center gap-2"
+              className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2"
             >
               {submitting && currentIndex === questions.length - 1 && (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -515,9 +515,9 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
       {/* QUESTION NAV OVERLAY (Sterile Drawer) */}
       {showNav && (
-        <div className="absolute inset-0 bg-white z-50 flex flex-col">
+        <div className="absolute inset-0 bg-white z-50 flex flex-col exam-overlay-enter">
           <header className="h-[52px] border-b border-slate-300 flex items-center justify-center font-bold text-black shrink-0 relative">
-            <button onClick={() => setShowNav(false)} className="absolute right-6 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-100 rounded-full text-slate-600">
+            <button onClick={() => setShowNav(false)} className="absolute right-6 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-100 rounded-full text-slate-600 transition-colors duration-150">
                <X className="w-6 h-6" />
             </button>
             {t("reviewPage")}
@@ -543,7 +543,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
                            {isFlagged && <Bookmark className="w-3 h-3 text-[#b20000] fill-[#b20000] absolute -top-3" />}
                            <button
                              onClick={() => goToQuestion(i)}
-                             className={`w-8 h-8 flex items-center justify-center font-bold text-sm border-2 rounded-sm transition-colors ${
+                             className={`w-8 h-8 flex items-center justify-center font-bold text-sm border-2 rounded-sm transition-colors duration-150 hover:border-[#0052a3] active:scale-95 motion-reduce:active:scale-100 ${
                                isAns ? "bg-[#0052a3] border-[#0052a3] text-white" : "border-slate-300 bg-white text-slate-700"
                              }`}
                            >

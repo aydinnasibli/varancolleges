@@ -2,9 +2,19 @@
 
 import { WhatsAppIcon } from "@/components/ui/custom-icons";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
+
+// Matches /exam/<slug>/take with or without a locale prefix
+const TAKING_EXAM = /^(?:\/(?:en|az))?\/exam\/[^/]+\/take(?:\/|$)/;
 
 const WhatsAppFloat = () => {
   const t = useTranslations("General");
+  const pathname = usePathname();
+
+  // The exam interface is a full-screen timed workspace whose footer holds the
+  // Back/Next buttons at bottom-right — exactly where this floats. Nothing
+  // should sit on top of the Next button mid-exam.
+  if (TAKING_EXAM.test(pathname)) return null;
 
   return (
     <a
