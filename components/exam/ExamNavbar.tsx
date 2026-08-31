@@ -2,11 +2,15 @@
 
 import { Link } from "@/i18n/routing";
 import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 import { BookOpen, Phone, Mail, Clock, CreditCard, LayoutDashboard } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function ExamNavbar() {
   const { isSignedIn, isLoaded, user } = useUser();
+  // Real browser path (locale prefix included) so auth returns to the page the
+  // user started from — an exam detail page, not "/".
+  const pathname = usePathname();
   const t = useTranslations("Exam.nav");
   const tGen = useTranslations("General");
 
@@ -109,12 +113,20 @@ export default function ExamNavbar() {
                 </>
               ) : (
                 <>
-                  <SignInButton mode="modal">
+                  <SignInButton
+                    mode="modal"
+                    forceRedirectUrl={pathname}
+                    signUpForceRedirectUrl={pathname}
+                  >
                     <button className="text-sm text-text-secondary hover:text-navy transition-colors font-medium border border-border hover:border-navy/30 px-3.5 py-1.5 rounded-lg">
                       {t("signIn")}
                     </button>
                   </SignInButton>
-                  <SignUpButton mode="modal">
+                  <SignUpButton
+                    mode="modal"
+                    forceRedirectUrl={pathname}
+                    signInForceRedirectUrl={pathname}
+                  >
                     <button className="text-sm bg-navy hover:bg-navy-light text-white px-3.5 py-1.5 rounded-lg font-semibold transition-colors">
                       {t("signUp")}
                     </button>
