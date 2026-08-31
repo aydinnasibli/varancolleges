@@ -957,7 +957,9 @@
         "physicalAttendance": "Gələcək imtahanlar üçün mərkəzimizdə fiziki iştirak məcburidir. Giriş şifrəsi yalnız imtahan günü mərkəzdə veriləcəkdir — uzaqdan giriş qəbul edilmir.",
         "noRefund": "Ödəniş tamamlandıqdan sonra geri qaytarılma həyata keçirilmir. İstisna hallarda VaranColleges idarəçiliyi ilə əvvəlcədən razılaşma tələb olunur.",
         "dataConsent": "Satın alma prosesini tamamlayaraq bu şərtləri oxuduğunuzu və qəbul etdiyinizi təsdiq etmiş olursunuz. Şəxsi məlumatlarınız (ad, e-poçt) VaranColleges tərəfindən yalnız imtahanın idarə edilməsi və əlaqə məqsədləri üçün istifadə ediləcəkdir."
-      }
+      },
+      "minutesShort": "dəq",
+      "startFailed": "İmtahanı başlada bilmədik. Zəhmət olmasa yenidən cəhd edin, problem davam edərsə bizimlə əlaqə saxlayın."
     },
     "profile": {
       "myExams": "İmtahanlarım",
@@ -974,7 +976,11 @@
       "attemptHistory": "Cəhd Tarixi",
       "purchased": "Satın alınıb",
       "moreAttempts": "daha çox cəhd",
-      "paymentSuccess": "Ödəniş uğurla tamamlandı! İmtahanınız aşağıda mövcuddur."
+      "paymentSuccess": "Ödəniş uğurla tamamlandı! İmtahanınız aşağıda mövcuddur.",
+      "signOut": "Hesabdan çıx",
+      "memberSince": "Üzvlük tarixi",
+      "avgScore": "Orta Bal",
+      "minutesShort": "dəq"
     },
     "interface": {
       "section1": "Bölmə 1: Oxu və Yazı",

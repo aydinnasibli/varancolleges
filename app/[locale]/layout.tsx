@@ -124,7 +124,9 @@ export default async function RootLayout({
   await ensureUserInDb();
 
   return (
-    <ClerkProvider>
+    // afterSignOutUrl is required here: Clerk v7 (Core 3) removed the
+    // per-component sign-out redirect props from <UserButton>.
+    <ClerkProvider afterSignOutUrl="/">
       <html lang={locale} className="scroll-smooth" data-scroll-behavior="smooth">
         <head>
           <link rel="icon" href="/images/logo-icon.png" type="image/png" />

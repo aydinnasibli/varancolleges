@@ -2,6 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserPurchases, getUserAttempts } from "@/app/actions/exam-public";
 import ExamNavbar from "@/components/exam/ExamNavbar";
+import SignOutControl from "./SignOutControl";
 import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import ExamActionButton from "./ExamActionButton";
@@ -60,6 +61,8 @@ export default async function ProfilePage({
   const [{ locale }, sp] = await Promise.all([params, searchParams]);
   const paymentSuccess = sp.payment === "success";
 
+  const dateLocale = locale === "az" ? "az-AZ" : "en-US";
+
   const [user, t, purchasesResult, attemptsResult] = await Promise.all([
     currentUser(),
     getTranslations({ locale, namespace: "Exam.profile" }),
@@ -88,7 +91,7 @@ export default async function ProfilePage({
         <section className="border-b border-border bg-gradient-to-b from-surface via-surface to-white">
           <div className="max-w-4xl mx-auto px-6 pt-10 pb-8">
             {/* Avatar + name */}
-            <div className="flex items-center gap-5 mb-8">
+            <div className="flex flex-wrap items-center gap-5 mb-8">
               {user?.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -111,13 +114,17 @@ export default async function ProfilePage({
                 {user?.createdAt && (
                   <p className="flex items-center gap-1.5 text-xs text-text-muted mt-1.5">
                     <CalendarDays className="h-3.5 w-3.5" />
-                    Member since{" "}
-                    {new Date(user.createdAt).toLocaleDateString("en-US", {
+                    {t("memberSince")}{" "}
+                    {new Date(user.createdAt).toLocaleDateString(dateLocale, {
                       month: "long",
                       year: "numeric",
                     })}
                   </p>
                 )}
+              </div>
+
+              <div className="ml-auto">
+                <SignOutControl label={t("signOut")} />
               </div>
             </div>
 
@@ -144,7 +151,7 @@ export default async function ProfilePage({
                 },
                 {
                   icon: <TrendingUp className="h-4 w-4" />,
-                  label: "Avg Score",
+                  label: t("avgScore"),
                   value:
                     completedAttempts.length > 0
                       ? Math.round(
@@ -251,12 +258,12 @@ export default async function ProfilePage({
                       <div className="flex items-center gap-3 text-xs text-text-muted mt-1.5">
                         <span className="flex items-center gap-1">
                           <Clock className="h-3.5 w-3.5" />
-                          {exam.totalDuration} min
+                          {exam.totalDuration} {t("minutesShort")}
                         </span>
                         <span className="flex items-center gap-1">
                           <CalendarDays className="h-3.5 w-3.5" />
                           {t("purchased")}{" "}
-                          {new Date(purchase.purchasedAt).toLocaleDateString("en-US", {
+                          {new Date(purchase.purchasedAt).toLocaleDateString(dateLocale, {
                             month: "short",
                             day: "numeric",
                             year: "numeric",
@@ -354,7 +361,7 @@ export default async function ProfilePage({
                               {/* Date + badges */}
                               <div className="flex-1 flex items-center gap-2 min-w-0">
                                 <span className="text-xs text-text-secondary">
-                                  {new Date(attempt.startedAt).toLocaleDateString("en-US", {
+                                  {new Date(attempt.startedAt).toLocaleDateString(dateLocale, {
                                     month: "short",
                                     day: "numeric",
                                     year: "numeric",

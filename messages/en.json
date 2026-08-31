@@ -957,7 +957,9 @@
         "physicalAttendance": "Physical attendance at our education center is mandatory for upcoming exams. The access password is issued on-site on exam day only — remote access is not permitted.",
         "noRefund": "No refunds are issued after payment is completed. Exceptions require prior arrangement with VaranColleges management.",
         "dataConsent": "By completing a purchase you confirm that you have read and agreed to these terms. Your personal data (name, email) will be used by VaranColleges solely for exam administration and communication purposes."
-      }
+      },
+      "minutesShort": "min",
+      "startFailed": "We couldn't start your exam. Please try again, or contact us if the problem continues."
     },
     "profile": {
       "myExams": "My Exams",
@@ -974,7 +976,11 @@
       "attemptHistory": "Attempt History",
       "purchased": "Purchased",
       "moreAttempts": "more attempts",
-      "paymentSuccess": "Payment successful! Your exam is now available below."
+      "paymentSuccess": "Payment successful! Your exam is now available below.",
+      "signOut": "Sign Out",
+      "memberSince": "Member since",
+      "avgScore": "Avg Score",
+      "minutesShort": "min"
     },
     "interface": {
       "section1": "Section 1: Reading and Writing",

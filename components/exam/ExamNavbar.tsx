@@ -1,13 +1,13 @@
 "use client";
 
 import { Link } from "@/i18n/routing";
-import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { BookOpen, Phone, Mail, Clock, CreditCard, LayoutDashboard } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function ExamNavbar() {
-  const { isSignedIn, isLoaded, user } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
   // Real browser path (locale prefix included) so auth returns to the page the
   // user started from — an exam detail page, not "/".
   const pathname = usePathname();
@@ -95,21 +95,17 @@ export default function ExamNavbar() {
                     <LayoutDashboard className="h-4 w-4" />
                   </Link>
 
-                  {/* Static avatar — display only, no Clerk menu */}
-                  <div className="pointer-events-none select-none">
-                    {user?.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={user.imageUrl}
-                        alt={user.fullName ?? "User"}
-                        className="w-8 h-8 rounded-full border-2 border-navy/20 object-cover"
-                      />
-                    ) : (
-                      <div className="w-8 h-8 rounded-full bg-navy/10 border-2 border-navy/20 flex items-center justify-center text-sm font-bold text-navy-light">
-                        {user?.firstName?.[0] ?? "U"}
-                      </div>
-                    )}
-                  </div>
+                  {/* Account menu — the only sign-out affordance in the
+                      student-facing app. Sign-out target comes from
+                      <ClerkProvider afterSignOutUrl>; Clerk v7 dropped the
+                      per-component prop. */}
+                  <UserButton
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-8 h-8 border-2 border-navy/20",
+                      },
+                    }}
+                  />
                 </>
               ) : (
                 <>

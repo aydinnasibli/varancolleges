@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import Footer from "@/components/layout/Footer";
-import { Clock, BookOpen, CheckCircle, PenLine, Calculator, Calendar, Lock } from "lucide-react";
+import { Clock, BookOpen, CheckCircle, PenLine, Calculator, Calendar, Lock, AlertTriangle } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import TakeExamButton from "./TakeExamButton";
 import ExamAuthButtons from "./ExamAuthButtons";
@@ -46,14 +46,21 @@ const TOTAL_QUESTIONS = SAT_STRUCTURE.reduce(
 
 export default async function ExamDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string; locale: string }>;
+  searchParams: Promise<{ error?: string }>;
 }) {
   const { slug, locale } = await params;
-  const [{ userId }, t] = await Promise.all([
+  const [{ userId }, t, sp] = await Promise.all([
     auth(),
     getTranslations({ locale, namespace: "Exam.detail" }),
+    searchParams,
   ]);
+
+  // take/page.tsx bounces back here with ?error=start_failed when startAttempt()
+  // fails — surface it instead of silently dropping the user on the page.
+  const startFailed = sp.error === "start_failed";
 
   const examResult = await getExamBySlug(slug);
   if (!examResult.success || !examResult.exam) notFound();
@@ -111,10 +118,27 @@ export default async function ExamDetailPage({
 
   const hasPurchase = !!purchase;
 
+  // Mirrors the server-side rule in take/page.tsx: the exam date gates first-time
+  // takers only — anyone who already completed it can retake at any point.
+  const canTakeExam = isExamUnlocked || completedAttempts.length > 0;
+
   return (
     <>
       <ExamNavbar />
       <main className="min-h-screen bg-white">
+
+        {/* ── START-FAILURE NOTICE ─────────────────────────────────── */}
+        {startFailed && (
+          <div
+            role="alert"
+            className="bg-red-50 border-b border-red-200 px-4 sm:px-6 py-3"
+          >
+            <p className="max-w-6xl mx-auto flex items-start gap-2.5 text-sm text-red-800">
+              <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0 text-red-600" />
+              {t("startFailed")}
+            </p>
+          </div>
+        )}
 
         {/* ── HERO ─────────────────────────────────────────────────── */}
         <section className="relative py-14 sm:py-16 overflow-hidden bg-navy">
@@ -195,12 +219,14 @@ export default async function ExamDetailPage({
                             </div>
                             <div className="flex items-baseline justify-between gap-3 text-text-secondary">
                               <span>{t("timePerModule")}</span>
-                              <span className="text-navy font-medium tabular-nums whitespace-nowrap">{s.minutesPerModule} min</span>
+                              <span className="text-navy font-medium tabular-nums whitespace-nowrap">
+                                {s.minutesPerModule} {t("minutesShort")}
+                              </span>
                             </div>
                             <div className="flex items-baseline justify-between gap-3 pt-2.5 border-t border-border">
                               <span className="text-text-secondary">{t("totalTime")}</span>
                               <span className="text-navy-light font-bold text-base tabular-nums whitespace-nowrap">
-                                {s.modules * s.minutesPerModule} min
+                                {s.modules * s.minutesPerModule} {t("minutesShort")}
                               </span>
                             </div>
                           </div>
@@ -212,7 +238,7 @@ export default async function ExamDetailPage({
               </div>
 
               {/* Previous Attempts */}
-              {completedAttempts.length > 1 && (
+              {completedAttempts.length > 0 && (
                 <div>
                   <h2 className="text-xl font-serif font-bold text-navy mb-5 flex items-center gap-3">
                     <span className="w-6 h-px bg-navy shrink-0" />
@@ -295,7 +321,7 @@ export default async function ExamDetailPage({
                         <CheckCircle className="h-4 w-4 shrink-0" />
                         {t("purchased")}
                       </div>
-                      {!isExamUnlocked ? (
+                      {!canTakeExam ? (
                         <div className="w-full bg-surface border border-border rounded-xl py-4 px-4 text-center">
                           <Lock className="h-5 w-5 text-text-muted mx-auto mb-2" />
                           <p className="text-sm text-text-secondary font-medium">{t("unlocksOn")}</p>
