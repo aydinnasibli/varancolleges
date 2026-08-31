@@ -1008,7 +1008,9 @@
       "sectionOverview": "Section {number} Overview",
       "unanswered": "Unanswered",
       "answered": "Answered",
-      "forReview": "For Review"
+      "forReview": "For Review",
+      "hideTimer": "Hide",
+      "showTimer": "Show"
     },
     "results": {
       "resultsLabel": "Results",

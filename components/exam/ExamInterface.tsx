@@ -86,8 +86,8 @@ function FreeResponseInput({ questionId, value, onChange }: { questionId: string
   };
 
   return (
-    <div className="mt-8 border border-slate-300 rounded-lg p-6 bg-white shadow-sm">
-      <div className="font-bold text-slate-800 mb-4 text-sm">{t("spr")}</div>
+    <div className="mt-7 rounded-xl p-5" style={{ background: "var(--x-panel)", border: "1px solid var(--x-rule)" }}>
+      <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em]" style={{ color: "var(--x-ink-faint)" }}>{t("spr")}</div>
       <input
         key={questionId}
         type="text"
@@ -95,7 +95,7 @@ function FreeResponseInput({ questionId, value, onChange }: { questionId: string
         onChange={handleChange}
         placeholder={t("sprPlaceholder")}
         autoComplete="off"
-        className="w-full border-2 border-slate-300 hover:border-slate-400 focus:border-[#0052a3] focus:ring-1 focus:ring-[#0052a3] rounded-md px-4 py-3 text-slate-900 text-lg font-mono outline-none transition-all"
+        className="exam-field w-full rounded-lg px-4 py-3 text-[18px] font-mono outline-none transition-colors duration-150"
       />
     </div>
   );
@@ -127,6 +127,7 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
   const [timeLeft, setTimeLeft] = useState<number>(savedTime ?? defaultTime);
 
   const [showNav, setShowNav] = useState(false);
+  const [timerHidden, setTimerHidden] = useState(false);
   const [phase, setPhase] = useState<"exam" | "section_break" | "submitting">("exam");
   const [breakType, setBreakType] = useState<SectionBreakType>("module");
   const [breakTimeLeft, setBreakTimeLeft] = useState(0);
@@ -242,6 +243,42 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     }
   };
 
+  // Keyboard: A-D / 1-4 pick an answer, arrows move, F flags, Esc closes review.
+  // Suppressed while typing so the free-response field keeps its letters.
+  useEffect(() => {
+    if (phase !== "exam") return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null;
+      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      if (e.key === "Escape") { setShowNav(false); return; }
+      if (showNav) return;
+
+      const key = e.key.toUpperCase();
+
+      if (currentQuestion?.questionType !== "free_response") {
+        const byLetter = ["A", "B", "C", "D"].indexOf(key);
+        const byNumber = ["1", "2", "3", "4"].indexOf(e.key);
+        const choice = byLetter >= 0 ? byLetter : byNumber;
+        if (choice >= 0) {
+          e.preventDefault();
+          handleAnswerSelect(["A", "B", "C", "D"][choice]);
+          return;
+        }
+      }
+
+      if (e.key === "ArrowLeft") { e.preventDefault(); goToQuestion(currentIndex - 1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); goToQuestion(currentIndex + 1); }
+      else if (key === "F") { e.preventDefault(); handleFlagToggle(); }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, showNav, currentIndex, currentQuestion, handleAnswerSelect, handleFlagToggle, questions.length]);
+
   const handleSectionComplete = async () => {
     if (submittingRef.current) return;
     submittingRef.current = true;
@@ -324,32 +361,32 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
     const breakMins = Math.floor(breakTimeLeft / 60);
     const breakSecs = breakTimeLeft % 60;
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-slate-900 font-sans exam-screen-enter">
-        <h1 className="text-3xl font-bold mb-6">{isMainBreak ? t("breakDetails") : t("moduleComplete")}</h1>
+      <div className="exam-root min-h-screen flex flex-col items-center justify-center p-6 font-sans exam-screen-enter">
+        <h1 className="text-2xl font-semibold mb-6">{isMainBreak ? t("breakDetails") : t("moduleComplete")}</h1>
         {isMainBreak ? (
-          <div className="bg-white border border-slate-300 p-10 rounded-xl shadow-sm text-center max-w-lg w-full">
+          <div className="p-10 rounded-2xl text-center max-w-lg w-full" style={{ background: "var(--x-panel)", border: "1px solid var(--x-rule)" }}>
             <h2 className="text-xl font-bold mb-4">{t("mainBreakLength")}</h2>
             <div className="text-5xl font-mono font-bold mb-6">
               {String(breakMins).padStart(2, "0")}:{String(breakSecs).padStart(2, "0")}
             </div>
-            <p className="text-slate-600 mb-8">{t("mainBreakDesc")}</p>
+            <p className="mb-8" style={{ color: "var(--x-ink-soft)" }}>{t("mainBreakDesc")}</p>
             <button
               onClick={() => { if (nextQuestionsReady) { setBreakTimeLeft(0); setPhase("exam"); } }}
               disabled={!nextQuestionsReady}
-              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2 mx-auto"
+              className="px-7 py-3 rounded-xl text-[14px] font-semibold disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2 mx-auto" style={{ background: "var(--x-accent)", color: "var(--x-panel)" }}
             >
               {!nextQuestionsReady && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("resumeTesting")}
             </button>
           </div>
         ) : (
-          <div className="bg-white border border-slate-300 p-10 rounded-xl shadow-sm text-center max-w-lg w-full">
+          <div className="p-10 rounded-2xl text-center max-w-lg w-full" style={{ background: "var(--x-panel)", border: "1px solid var(--x-rule)" }}>
             <h2 className="text-xl font-bold mb-4">{t("readyToMoveOn")}</h2>
-            <p className="text-slate-600 mb-8">{t("moduleCompleteDesc")}</p>
+            <p className="mb-8" style={{ color: "var(--x-ink-soft)" }}>{t("moduleCompleteDesc")}</p>
             <button
               onClick={() => { if (nextQuestionsReady) setPhase("exam"); }}
               disabled={!nextQuestionsReady}
-              className="px-8 py-3 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full shadow-sm transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2 mx-auto"
+              className="px-7 py-3 rounded-xl text-[14px] font-semibold disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2 mx-auto" style={{ background: "var(--x-accent)", color: "var(--x-panel)" }}
             >
               {!nextQuestionsReady && <Loader2 className="w-4 h-4 animate-spin" />}
               {t("nextModule")}
@@ -362,198 +399,343 @@ export default function ExamInterface({ attempt, questions: initialQuestions, ex
 
   if (phase === "submitting") {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-900 font-sans exam-screen-enter">
+      <div className="exam-root min-h-screen flex items-center justify-center font-sans exam-screen-enter">
         <div className="text-center">
-          <Loader2 className="h-10 w-10 text-[#0052a3] animate-spin mx-auto mb-4" />
+          <Loader2 className="h-9 w-9 animate-spin mx-auto mb-4" style={{ color: "var(--x-accent)" }} />
           <p className="text-xl font-bold">{t("submittingScore")}</p>
         </div>
       </div>
     );
   }
 
+  const hasPassage = Boolean(currentQuestion?.passageText);
+  const isFlagged = flagged.has(currentQuestion?._id || "");
+  const selected = answers[currentQuestion?._id || ""];
+
+  // Built once and placed by whichever layout is active, so the split and
+  // single-column views can never drift apart.
+  const questionBlock = (
+    <>
+      <div className="flex items-start justify-between gap-4 mb-5">
+        <span
+          className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] pt-1"
+          style={{ color: "var(--x-ink-faint)" }}
+        >
+          {currentIndex + 1} / {questions.length}
+        </span>
+        <button
+          onClick={handleFlagToggle}
+          aria-pressed={isFlagged}
+          className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[12px] font-medium transition-colors duration-150"
+          style={{
+            color: isFlagged ? "var(--x-mark)" : "var(--x-ink-soft)",
+            background: isFlagged ? "var(--x-mark-wash)" : "transparent",
+            border: `1px solid ${isFlagged ? "var(--x-mark)" : "var(--x-rule)"}`,
+          }}
+        >
+          <Bookmark className="w-3.5 h-3.5" style={isFlagged ? { fill: "currentColor" } : undefined} />
+          {isFlagged ? t("clearMark") : t("markForReview")}
+        </button>
+      </div>
+
+      <MathRenderer
+        content={currentQuestion?.questionText || ""}
+        className="exam-read text-[19px] leading-[1.55] font-medium"
+      />
+    </>
+  );
+
+  const answerBlock =
+    currentQuestion?.questionType === "free_response" ? (
+      <FreeResponseInput
+        questionId={currentQuestion._id}
+        value={answers[currentQuestion._id] ?? ""}
+        onChange={handleAnswerSelect}
+      />
+    ) : (
+      <div className="mt-7 space-y-2.5">
+        {(["A", "B", "C", "D"] as const).map((opt) => {
+          const isSelected = selected === opt;
+          return (
+            <button
+              key={opt}
+              onClick={() => handleAnswerSelect(opt)}
+              data-selected={isSelected}
+              aria-pressed={isSelected}
+              className="exam-choice w-full flex items-start gap-3.5 rounded-xl px-4 py-3.5 text-left active:scale-[0.995] motion-reduce:active:scale-100"
+              style={{
+                background: isSelected ? undefined : "var(--x-panel)",
+                border: `1px solid ${isSelected ? "var(--x-accent)" : "var(--x-rule-strong)"}`,
+              }}
+            >
+              <span
+                className="shrink-0 w-7 h-7 rounded-lg grid place-items-center text-[13px] font-semibold mt-px transition-colors duration-150"
+                style={
+                  isSelected
+                    ? { background: "var(--x-accent)", color: "var(--x-panel)" }
+                    : { border: "1px solid var(--x-rule-strong)", color: "var(--x-ink-soft)" }
+                }
+              >
+                {opt}
+              </span>
+              <MathRenderer
+                content={currentQuestion?.options[opt] || ""}
+                className="exam-read text-[17px] leading-[1.5] self-center"
+              />
+            </button>
+          );
+        })}
+      </div>
+    );
+
   return (
-    <div className="h-screen w-screen bg-white flex flex-col text-slate-900 font-sans overflow-hidden">
-      {/* HEADER */}
-      <header className="h-[52px] bg-white border-b border-slate-300 flex items-center justify-between px-6 shrink-0 text-sm font-semibold text-slate-700">
-        <div className="flex-1"></div>
-        <div className="flex-1 flex justify-center text-black font-bold">
-          {getSectionLabel(currentSection, t)}
+    <div className="exam-root h-screen w-screen flex flex-col font-sans overflow-hidden">
+      {/* HEADER — module and position left, clock centred, controls right */}
+      <header
+        className="h-14 shrink-0 flex items-center gap-4 px-4 sm:px-6"
+        style={{ background: "var(--x-panel)", borderBottom: "1px solid var(--x-rule)" }}
+      >
+        <div className="flex-1 min-w-0">
+          <p
+            className="text-[11px] font-semibold uppercase tracking-[0.12em] truncate"
+            style={{ color: "var(--x-ink-faint)" }}
+          >
+            {getSectionLabel(currentSection, t)}
+          </p>
+          <p className="text-[13px] font-semibold tabular-nums" style={{ color: "var(--x-ink-soft)" }}>
+            {t("question")} {currentIndex + 1} {t("of")} {questions.length}
+          </p>
         </div>
-        <div className="flex-1 flex justify-end gap-6 items-center">
-          <span className="font-mono text-base tracking-widest font-bold">
-            {formatTime(timeLeft)}
-          </span>
-          <button className="flex items-center justify-center border border-slate-400 p-1.5 rounded text-slate-600 hover:bg-slate-100 transition-colors duration-150">
-            <Clock className="w-4 h-4" />
+
+        {/* Amber under 5 minutes, red under 1. The one place on this screen
+            where colour is allowed to raise the pulse. */}
+        <div className="shrink-0 text-center tabular-nums">
+          {timerHidden ? (
+            <span className="text-[13px] font-medium" style={{ color: "var(--x-ink-faint)" }}>
+              &middot;&middot;&middot;
+            </span>
+          ) : (
+            <span
+              className="font-mono text-[22px] leading-none font-semibold tracking-tight"
+              style={{
+                color:
+                  timeLeft <= 60
+                    ? "var(--x-crit)"
+                    : timeLeft <= 300
+                      ? "var(--x-warn)"
+                      : "var(--x-ink)",
+              }}
+            >
+              {formatTime(timeLeft)}
+            </span>
+          )}
+        </div>
+
+        <div className="flex-1 flex justify-end">
+          <button
+            onClick={() => setTimerHidden((v) => !v)}
+            aria-pressed={timerHidden}
+            className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[12px] font-medium transition-colors duration-150"
+            style={{ color: "var(--x-ink-soft)", border: "1px solid var(--x-rule)" }}
+          >
+            <Clock className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">
+              {timerHidden ? t("showTimer") : t("hideTimer")}
+            </span>
           </button>
         </div>
       </header>
 
-      {/* MAIN CONTENT ZONE — always book split */}
-      <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
+      {/* Progress — ambient, no numbers competing with the header */}
+      <div className="h-[3px] shrink-0" style={{ background: "var(--x-rule)" }}>
+        <div
+          className="exam-progress-fill h-full"
+          style={{
+            width: `${((currentIndex + 1) / Math.max(questions.length, 1)) * 100}%`,
+            background: "var(--x-accent)",
+          }}
+        />
+      </div>
 
-        {/* LEFT — question number + passage (if any) + question text */}
-        <div className="md:w-1/2 h-full overflow-y-auto border-r border-dashed border-slate-300 bg-white p-8 md:p-12">
-          <div key={currentQuestion?._id} className="max-w-xl mx-auto exam-question-enter">
-            <div className="bg-slate-900 text-white w-7 h-7 flex items-center justify-center font-bold text-sm mb-6 rounded-sm">
-              {currentIndex + 1}
-            </div>
-            {currentQuestion?.passageText && (
-              <div className="mb-8 prose prose-slate">
+      {/* MAIN — split only when there is a passage to split against.
+          Math questions have no passageText, so the old unconditional 50/50
+          left half the screen holding a single line. */}
+      <main className="flex-1 overflow-hidden">
+        {hasPassage ? (
+          <div className="h-full flex flex-col md:flex-row">
+            {/* Passage */}
+            <div
+              className="md:w-1/2 min-h-0 flex-1 md:flex-none md:h-full overflow-y-auto px-6 py-8 sm:px-10 md:px-12"
+              style={{ background: "var(--x-panel)", borderRight: "1px solid var(--x-rule)" }}
+            >
+              <div key={currentQuestion?._id} className="max-w-[62ch] mx-auto exam-question-enter">
                 <MathRenderer
-                  content={currentQuestion.passageText}
-                  className="text-base leading-loose text-slate-700 whitespace-pre-wrap font-serif"
+                  content={currentQuestion?.passageText || ""}
+                  className="exam-read text-[17px] leading-[1.7] whitespace-pre-wrap"
                 />
+                {currentQuestion?.image && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={currentQuestion.image}
+                    alt=""
+                    className="max-w-full my-7 rounded-lg"
+                    style={{ border: "1px solid var(--x-rule)" }}
+                  />
+                )}
               </div>
-            )}
-            <MathRenderer
-              content={currentQuestion?.questionText || ""}
-              className="text-lg leading-relaxed text-slate-900 font-serif"
-            />
-            {currentQuestion?.image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={currentQuestion.image} alt="Diagram" className="max-w-full my-6 border border-slate-200" />
-            )}
-          </div>
-        </div>
-
-        {/* RIGHT — answers only */}
-        <div className="md:w-1/2 h-full overflow-y-auto bg-white p-8 md:p-12 relative">
-          <div key={currentQuestion?._id} className="max-w-xl mx-auto exam-question-enter">
-            {/* Flag button anchored to top-right of answer panel */}
-            <div className="flex justify-end mb-6">
-              <button
-                onClick={handleFlagToggle}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded border font-bold text-xs transition-colors duration-150 ${
-                  flagged.has(currentQuestion?._id || '')
-                    ? "text-[#b20000] border-[#b20000]/30"
-                    : "text-slate-600 border-transparent hover:text-black hover:border-slate-300"
-                }`}
-              >
-                <Bookmark className={`w-4 h-4 ${flagged.has(currentQuestion?._id || '') ? "fill-[#b20000]" : ""}`} />
-                {flagged.has(currentQuestion?._id || '') ? t("clearMark") : t("markForReview")}
-              </button>
             </div>
 
-            {currentQuestion?.questionType === "free_response" ? (
-              <FreeResponseInput
-                questionId={currentQuestion._id}
-                value={answers[currentQuestion._id] ?? ""}
-                onChange={handleAnswerSelect}
-              />
-            ) : (
-              <div className="space-y-3">
-                {(["A", "B", "C", "D"] as const).map((opt) => {
-                  const isSelected = answers[currentQuestion?._id || ''] === opt;
+            {/* Question + answers */}
+            <div
+              className="md:w-1/2 min-h-0 flex-1 md:flex-none md:h-full overflow-y-auto px-6 py-8 sm:px-10 md:px-12"
+              style={{ background: "var(--x-bg)" }}
+            >
+              <div key={currentQuestion?._id} className="max-w-[58ch] mx-auto exam-question-enter">
+                {questionBlock}
+                {answerBlock}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* No passage: one centred column, the question given room to breathe */
+          <div className="h-full overflow-y-auto px-6 py-10 sm:px-10" style={{ background: "var(--x-bg)" }}>
+            <div key={currentQuestion?._id} className="max-w-[60ch] mx-auto exam-question-enter">
+              {currentQuestion?.image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={currentQuestion.image}
+                  alt=""
+                  className="max-w-full mb-8 rounded-lg"
+                  style={{ border: "1px solid var(--x-rule)" }}
+                />
+              )}
+              {questionBlock}
+              {answerBlock}
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* FOOTER */}
+      <footer
+        className="h-16 shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6"
+        style={{ background: "var(--x-panel)", borderTop: "1px solid var(--x-rule)" }}
+      >
+        <button
+          onClick={() => setShowNav(true)}
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-semibold transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100"
+          style={{ color: "var(--x-ink)", border: "1px solid var(--x-rule)" }}
+        >
+          <Grid className="w-4 h-4" style={{ color: "var(--x-ink-faint)" }} />
+          <span className="hidden sm:inline">{t("reviewPage")}</span>
+          <span className="sm:hidden tabular-nums">{currentIndex + 1}/{questions.length}</span>
+        </button>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => goToQuestion(currentIndex - 1)}
+            disabled={currentIndex === 0}
+            className="px-4 py-2 rounded-lg text-[13px] font-semibold transition-colors duration-150 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100"
+            style={{ color: "var(--x-ink)", border: "1px solid var(--x-rule)" }}
+          >
+            {t("back")}
+          </button>
+          <button
+            onClick={() => {
+              if (currentIndex < questions.length - 1) {
+                goToQuestion(currentIndex + 1);
+              } else {
+                handleSectionComplete();
+              }
+            }}
+            disabled={submitting}
+            className="flex items-center gap-2 px-6 py-2 rounded-lg text-[13px] font-semibold transition-colors duration-150 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100"
+            style={{ background: "var(--x-accent)", color: "var(--x-panel)" }}
+          >
+            {submitting && currentIndex === questions.length - 1 && (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            )}
+            {currentIndex < questions.length - 1 ? t("next") : t("finishSection")}
+          </button>
+        </div>
+      </footer>
+
+      {/* REVIEW OVERLAY */}
+      {showNav && (
+        <div
+          className="absolute inset-0 z-50 flex flex-col exam-overlay-enter"
+          style={{ background: "var(--x-bg)" }}
+        >
+          <header
+            className="h-14 shrink-0 flex items-center justify-between px-4 sm:px-6"
+            style={{ background: "var(--x-panel)", borderBottom: "1px solid var(--x-rule)" }}
+          >
+            <span className="text-[13px] font-semibold">
+              {t("sectionOverview", { number: SECTION_ORDER.indexOf(currentSection) + 1 })}
+            </span>
+            <button
+              onClick={() => setShowNav(false)}
+              aria-label={t("reviewPage")}
+              className="p-2 rounded-lg transition-colors duration-150"
+              style={{ color: "var(--x-ink-soft)", border: "1px solid var(--x-rule)" }}
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </header>
+
+          <div className="flex-1 overflow-y-auto px-6 py-8 sm:px-10">
+            <div className="max-w-3xl mx-auto">
+              <div
+                className="flex flex-wrap gap-x-6 gap-y-2 mb-8 text-[12px] font-medium"
+                style={{ color: "var(--x-ink-soft)" }}
+              >
+                <span className="flex items-center gap-2">
+                  <span
+                    className="w-3.5 h-3.5 rounded"
+                    style={{ background: "var(--x-panel)", border: "1px solid var(--x-rule-strong)" }}
+                  />
+                  {t("unanswered")}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="w-3.5 h-3.5 rounded" style={{ background: "var(--x-accent)" }} />
+                  {t("answered")}
+                </span>
+                <span className="flex items-center gap-2">
+                  <Bookmark className="w-3.5 h-3.5" style={{ color: "var(--x-mark)", fill: "currentColor" }} />
+                  {t("forReview")}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-2">
+                {questions.map((q, i) => {
+                  const ans = answers[q._id];
+                  const isAns = ans !== null && ans !== undefined;
+                  const isMarked = flagged.has(q._id);
+                  const isCurrent = i === currentIndex;
                   return (
                     <button
-                      key={opt}
-                      onClick={() => handleAnswerSelect(opt)}
-                      className={`w-full flex items-start gap-4 p-4 rounded-xl border-[2.5px] text-left transition-[background-color,border-color,box-shadow] duration-150 ease-out active:scale-[0.995] motion-reduce:active:scale-100 ${
-                        isSelected
-                          ? "border-[#0052a3] bg-[#f0f6ff] shadow-[0_0_0_3px_rgba(0,82,163,0.08)]"
-                          : "border-slate-300 hover:border-slate-400 hover:bg-slate-50/60 bg-white"
-                      }`}
+                      key={q._id}
+                      onClick={() => goToQuestion(i)}
+                      className="relative h-10 rounded-lg text-[13px] font-semibold tabular-nums transition-colors duration-150 active:scale-95 motion-reduce:active:scale-100"
+                      style={{
+                        background: isAns ? "var(--x-accent)" : "var(--x-panel)",
+                        color: isAns ? "var(--x-panel)" : "var(--x-ink-soft)",
+                        border: `1px solid ${isCurrent ? "var(--x-ink)" : isAns ? "var(--x-accent)" : "var(--x-rule-strong)"}`,
+                        boxShadow: isCurrent ? "0 0 0 2px var(--x-accent-edge)" : undefined,
+                      }}
                     >
-                      <span className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-bold mt-0.5 transition-colors duration-150 ease-out ${
-                        isSelected ? "border-[#0052a3] bg-[#0052a3] text-white" : "border-slate-400 text-slate-600"
-                      }`}>
-                        {opt}
-                      </span>
-                      <MathRenderer
-                        content={currentQuestion?.options[opt] || ""}
-                        className="text-base leading-relaxed text-slate-800 self-center"
-                      />
+                      {i + 1}
+                      {isMarked && (
+                        <Bookmark
+                          className="w-3 h-3 absolute -top-1 -right-1"
+                          style={{ color: "var(--x-mark)", fill: "currentColor" }}
+                        />
+                      )}
                     </button>
                   );
                 })}
               </div>
-            )}
-          </div>
-        </div>
-
-      </main>
-
-      {/* FOOTER */}
-      <footer className="h-[64px] bg-white border-t border-slate-300 flex items-center justify-between px-6 shrink-0 z-10 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
-         <div className="flex-1"></div>
-         <div className="flex-1 flex justify-center">
-            <button
-               onClick={() => setShowNav(true)}
-               className="font-bold text-sm text-slate-800 bg-slate-100 hover:bg-slate-200 px-5 py-2 rounded-full transition-colors duration-150 active:scale-[0.98] motion-reduce:active:scale-100 flex items-center gap-2"
-            >
-               {t("question")} {currentIndex + 1} {t("of")} {questions.length}
-               <Grid className="w-4 h-4" />
-            </button>
-         </div>
-         <div className="flex-1 flex justify-end gap-4">
-            <button
-              onClick={() => goToQuestion(currentIndex - 1)}
-              disabled={currentIndex === 0}
-              className="px-6 py-2 font-bold text-[#0052a3] disabled:text-slate-300 disabled:cursor-not-allowed hover:bg-slate-100 rounded-full transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100"
-            >
-              {t("back")}
-            </button>
-            <button
-              onClick={() => {
-                if (currentIndex < questions.length - 1) {
-                  goToQuestion(currentIndex + 1);
-                } else {
-                  handleSectionComplete();
-                }
-              }}
-              disabled={submitting}
-              className="px-8 py-2 bg-[#0052a3] hover:bg-[#004285] disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold rounded-full transition-colors duration-150 active:scale-[0.98] disabled:active:scale-100 motion-reduce:active:scale-100 flex items-center gap-2"
-            >
-              {submitting && currentIndex === questions.length - 1 && (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              )}
-              {currentIndex < questions.length - 1 ? t("next") : t("finishSection")}
-            </button>
-         </div>
-      </footer>
-
-      {/* QUESTION NAV OVERLAY (Sterile Drawer) */}
-      {showNav && (
-        <div className="absolute inset-0 bg-white z-50 flex flex-col exam-overlay-enter">
-          <header className="h-[52px] border-b border-slate-300 flex items-center justify-center font-bold text-black shrink-0 relative">
-            <button onClick={() => setShowNav(false)} className="absolute right-6 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-100 rounded-full text-slate-600 transition-colors duration-150">
-               <X className="w-6 h-6" />
-            </button>
-            {t("reviewPage")}
-          </header>
-          <div className="p-12 flex-1 overflow-y-auto">
-             <div className="max-w-4xl mx-auto">
-                <h3 className="text-xl font-bold mb-8">{t("sectionOverview", { number: SECTION_ORDER.indexOf(currentSection) + 1 })}</h3>
-                <div className="flex gap-8 mb-10 text-sm font-bold text-slate-700">
-                   <div className="flex items-center gap-2"><span className="block w-4 h-4 border border-slate-300 bg-white" /> {t("unanswered")}</div>
-                   <div className="flex items-center gap-2"><span className="block w-4 h-4 bg-[#0052a3]" /> {t("answered")}</div>
-                   <div className="flex items-center gap-2">
-                       <Bookmark className="w-4 h-4 text-[#b20000] fill-[#b20000]" /> {t("forReview")}
-                   </div>
-                </div>
-                
-                <div className="grid grid-cols-10 sm:grid-cols-12 md:grid-cols-20 gap-x-2 gap-y-4">
-                   {questions.map((q, i) => {
-                      const ans = answers[q._id];
-                      const isAns = ans !== null && ans !== undefined;
-                      const isFlagged = flagged.has(q._id);
-                      return (
-                         <div key={q._id} className="relative flex flex-col items-center gap-1 group">
-                           {isFlagged && <Bookmark className="w-3 h-3 text-[#b20000] fill-[#b20000] absolute -top-3" />}
-                           <button
-                             onClick={() => goToQuestion(i)}
-                             className={`w-8 h-8 flex items-center justify-center font-bold text-sm border-2 rounded-sm transition-colors duration-150 hover:border-[#0052a3] active:scale-95 motion-reduce:active:scale-100 ${
-                               isAns ? "bg-[#0052a3] border-[#0052a3] text-white" : "border-slate-300 bg-white text-slate-700"
-                             }`}
-                           >
-                             {i + 1}
-                           </button>
-                         </div>
-                      )
-                   })}
-                </div>
-             </div>
+            </div>
           </div>
         </div>
       )}

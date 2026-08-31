@@ -1008,7 +1008,9 @@
       "sectionOverview": "Bölmə {number} İcmalı",
       "unanswered": "Cavablandırılmayıb",
       "answered": "Cavablandırılıb",
-      "forReview": "Nəzərdən Keçiriləcək"
+      "forReview": "Nəzərdən Keçiriləcək",
+      "hideTimer": "Gizlət",
+      "showTimer": "Göstər"
     },
     "results": {
       "resultsLabel": "Nəticələr",
