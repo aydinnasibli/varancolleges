@@ -9,6 +9,7 @@ import Footer from "@/components/layout/Footer";
 import ExamSections from "./ExamSections";
 import ExamHeroCta from "./ExamHeroCta";
 import { getTranslations } from "next-intl/server";
+import { getExamPhase } from "@/lib/exam-schedule";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -43,9 +44,13 @@ export default async function ExamListingPage({
     getTranslations({ locale, namespace: "Exam" }),
   ]);
   const allExams = result.success ? result.exams : [];
-  const now = new Date();
-  const upcomingExams = allExams.filter((e) => new Date((e as { examDate: string }).examDate) > now);
-  const pastExams = allExams.filter((e) => new Date((e as { examDate: string }).examDate) <= now);
+  // An exam on its own exam day belongs with the current ones, not the archive
+  const pastExams = allExams.filter(
+    (e) => getExamPhase((e as { examDate: string }).examDate) === "past"
+  );
+  const upcomingExams = allExams.filter(
+    (e) => getExamPhase((e as { examDate: string }).examDate) !== "past"
+  );
 
   return (
     <>

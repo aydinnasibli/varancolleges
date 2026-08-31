@@ -2,6 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserPurchases, getUserAttempts } from "@/app/actions/exam-public";
 import { reconcilePendingExamPurchases } from "@/app/actions/stripe";
+import { isExamOpen } from "@/lib/exam-schedule";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import SignOutControl from "./SignOutControl";
 import Footer from "@/components/layout/Footer";
@@ -246,7 +247,7 @@ export default async function ProfilePage({
               // Without this the dashboard offered "Start Exam" for an exam that
               // has not opened, and take/page.tsx bounced the user straight back.
               const examDate = exam.examDate ? new Date(exam.examDate) : null;
-              const isExamUnlocked = examDate ? examDate <= new Date() : true;
+              const isExamUnlocked = isExamOpen(exam.examDate);
               const canTakeExam = isExamUnlocked || completed.length > 0;
 
               return (

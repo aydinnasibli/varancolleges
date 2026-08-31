@@ -6,6 +6,7 @@ import ExamPurchase from "@/models/ExamPurchase";
 import TuitionPayment from "@/models/TuitionPayment";
 import Exam from "@/models/Exam";
 import User from "@/models/User";
+import { getExamPhase } from "@/lib/exam-schedule";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest) {
               Exam.findById(examId).lean(),
               User.findOne({ clerkId: userId }).lean(),
             ]);
-            if (exam && user && exam.examDate > new Date()) {
+            if (exam && user && getExamPhase(exam.examDate) !== "past") {
               const esc = (s: string) =>
                 s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
               const transporter = nodemailer.createTransport({

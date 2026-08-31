@@ -4,6 +4,7 @@ import { getExamBySlug, getUserPurchaseForExam, getUserAttempts } from "@/app/ac
 import { startAttempt } from "@/app/actions/exam-attempt";
 import ExamInterface from "@/components/exam/ExamInterface";
 import ExamPasswordGate from "../ExamPasswordGate";
+import { getExamPhase } from "@/lib/exam-schedule";
 
 export const dynamic = "force-dynamic";
 export const metadata = { robots: { index: false, follow: false } };
@@ -35,7 +36,7 @@ export default async function TakeExamPage({
 
   // Block access if exam date hasn't arrived yet — but only for first-time takers.
   // Users who have already completed the exam can always retake.
-  if (exam.examDate && new Date(exam.examDate) > new Date()) {
+  if (getExamPhase(exam.examDate) === "upcoming") {
     const attemptsResult = await getUserAttempts(userId, exam._id);
     const hasCompleted = attemptsResult.success &&
       attemptsResult.attempts.some((a) => a.status === "completed");

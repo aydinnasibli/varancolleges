@@ -9,6 +9,7 @@ import TakeExamButton from "./TakeExamButton";
 import ExamAuthButtons from "./ExamAuthButtons";
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
+import { isExamOpen } from "@/lib/exam-schedule";
 
 export const dynamic = "force-dynamic";
 
@@ -78,7 +79,7 @@ export default async function ExamDetailPage({
   };
 
   const examDateObj = new Date(exam.examDate);
-  const isExamUnlocked = examDateObj <= new Date();
+  const isExamUnlocked = isExamOpen(exam.examDate);
   const isUpcoming = !isExamUnlocked;
   const examDateFormatted = examDateObj.toLocaleDateString(locale === "az" ? "az-AZ" : "en-US", {
     day: "numeric",

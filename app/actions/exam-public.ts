@@ -1,6 +1,7 @@
 "use server";
 
 import dbConnect from "@/lib/db";
+import { getExamPhase, requiresExamPassword } from "@/lib/exam-schedule";
 import Exam from "@/models/Exam";
 import ExamPurchase from "@/models/ExamPurchase";
 import ExamAttempt from "@/models/ExamAttempt";
@@ -33,7 +34,6 @@ export async function getExamBySlug(slug: string) {
     if (!exam) return { success: false, error: "Exam not found" };
     const { examPassword, ...rest } = exam;
     const examDate = rest.examDate ? (rest.examDate as Date) : null;
-    const isUnlocked = examDate ? examDate <= new Date() : false;
     return {
       success: true,
       exam: {
@@ -42,7 +42,8 @@ export async function getExamBySlug(slug: string) {
         examDate: examDate ? examDate.toISOString() : null,
         createdAt: rest.createdAt ? (rest.createdAt as Date).toISOString() : null,
         updatedAt: rest.updatedAt ? (rest.updatedAt as Date).toISOString() : null,
-        requiresPassword: isUnlocked && !!examPassword,
+        phase: getExamPhase(examDate),
+        requiresPassword: requiresExamPassword(examDate, examPassword),
       },
     };
   } catch (error) {
