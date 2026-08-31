@@ -57,7 +57,7 @@ export default function ExamPurchaseButton({
         disabled
         className="flex items-center justify-center gap-2 w-full bg-surface border border-border text-text-muted py-3 rounded-xl text-sm font-semibold cursor-not-allowed"
       >
-        <CheckCircle className="h-4 w-4 text-green-400" />
+        <CheckCircle className="h-4 w-4 text-green-600" />
         <span>{t("agreeButton")}</span>
       </button>
     );
@@ -100,13 +100,13 @@ export default function ExamPurchaseButton({
 
             {/* Physical attendance warning — only for upcoming exams */}
             {isUpcoming && (
-              <div className="flex gap-3 bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+              <div className="flex gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4">
+                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-sm font-semibold text-amber-300">
+                  <p className="text-sm font-semibold text-amber-900">
                     {t("physicalAttendanceWarning")}
                   </p>
-                  <p className="text-xs text-amber-200/70 mt-1 leading-relaxed">
+                  <p className="text-xs text-amber-800 mt-1 leading-relaxed">
                     {t("physicalAttendanceDetail")}
                   </p>
                 </div>
