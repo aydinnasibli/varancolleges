@@ -151,9 +151,12 @@ export async function getUserPurchases(userId: string) {
 
   try {
     await dbConnect();
+    // Completed only. A pending row means the user opened Stripe Checkout and
+    // has not paid — surfacing it let the dashboard offer "Start Exam" for an
+    // unpaid exam, which take/page.tsx then refused.
     const purchases = await ExamPurchase.find({
       userId,
-      status: { $in: ["completed", "pending"] },
+      status: "completed",
     })
       .sort({ purchasedAt: -1 })
       .lean();

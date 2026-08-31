@@ -1,6 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserPurchases, getUserAttempts } from "@/app/actions/exam-public";
+import { reconcilePendingExamPurchases } from "@/app/actions/stripe";
 import ExamNavbar from "@/components/exam/ExamNavbar";
 import SignOutControl from "./SignOutControl";
 import Footer from "@/components/layout/Footer";
@@ -14,7 +15,6 @@ import {
   RotateCcw,
   CheckCircle,
   PlayCircle,
-  Loader2,
   Target,
   TrendingUp,
   CalendarDays,
@@ -62,6 +62,11 @@ export default async function ProfilePage({
   const paymentSuccess = sp.payment === "success";
 
   const dateLocale = locale === "az" ? "az-AZ" : "en-US";
+
+  // Stripe returns the buyer here before the webhook necessarily lands, so
+  // settle any pending purchase against Stripe first — otherwise a just-paid
+  // exam would be missing from the list below.
+  await reconcilePendingExamPurchases();
 
   const [user, t, purchasesResult, attemptsResult] = await Promise.all([
     currentUser(),
@@ -212,7 +217,6 @@ export default async function ProfilePage({
                 answers: Array<{ selectedAnswer: string | null }>;
               }>;
 
-              const isPending = (purchase as { status: string }).status === "pending";
               const inProgressAttempt = examAttempts.find((a) => a.status === "in_progress");
               const inProgress = inProgressAttempt?.answers.some((a) => a.selectedAnswer !== null)
                 ? inProgressAttempt
@@ -247,12 +251,6 @@ export default async function ProfilePage({
                         <span className="text-xs font-semibold bg-navy/10 text-navy-light px-2.5 py-0.5 rounded-full border border-navy/20">
                           {exam.type}
                         </span>
-                        {isPending && (
-                          <span className="flex items-center gap-1 text-xs text-yellow-400 bg-yellow-400/10 border border-yellow-400/20 px-2 py-0.5 rounded-full">
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                            {t("paymentVerifying")}
-                          </span>
-                        )}
                       </div>
                       <h3 className="text-lg font-bold text-navy leading-tight">{exam.title}</h3>
                       <div className="flex items-center gap-3 text-xs text-text-muted mt-1.5">
