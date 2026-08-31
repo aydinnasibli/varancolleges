@@ -4,6 +4,9 @@ import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 
 const isAdminRoute = createRouteMatcher(['/admin(.*)'])
+// /payment is deliberately absent: the page renders for signed-out visitors and
+// offers the Clerk modal instead of bouncing them to the hosted Account Portal.
+// Auth is still enforced server-side in createTuitionPaymentSession().
 const isStudentRoute = createRouteMatcher([
   '/exam/:slug/take(.*)',
   '/en/exam/:slug/take(.*)',
@@ -11,9 +14,6 @@ const isStudentRoute = createRouteMatcher([
   '/profile(.*)',
   '/en/profile(.*)',
   '/az/profile(.*)',
-  '/payment(.*)',
-  '/en/payment(.*)',
-  '/az/payment(.*)',
 ])
 
 const intlMiddleware = createMiddleware(routing)

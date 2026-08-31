@@ -1043,7 +1043,11 @@
     "successBanner": "Ödəniş uğurla tamamlandı! Təşəkkür edirik.",
     "cancelledBanner": "Ödəniş ləğv edildi. Yenidən cəhd edə bilərsiniz.",
     "validationMin": "Minimum ödəniş ₼1-dir",
-    "validationMax": "Maksimum ödəniş ₼5.000-dir"
+    "validationMax": "Maksimum ödəniş ₼5.000-dir",
+    "signInTitle": "Davam etmək üçün daxil olun",
+    "signInSubtitle": "Ödəniş etmək üçün hesabınız olmalıdır — bu, ödənişi qeydinizə bağlamağa və sizə qəbz göndərməyə imkan verir.",
+    "signIn": "Daxil ol",
+    "signUp": "Qeydiyyat"
   },
   "CTA": {
     "title": "Məsləhətçi ilə Danışın",

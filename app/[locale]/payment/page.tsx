@@ -1,9 +1,9 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PaymentForm from "./PaymentForm";
+import PaymentSignInPrompt from "./PaymentSignInPrompt";
 import { CreditCard, CheckCircle, XCircle } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -15,10 +15,9 @@ export default async function PaymentPage({
   searchParams: Promise<{ payment?: string }>;
 }) {
   const { userId } = await auth();
-  if (!userId) redirect("/sign-in");
 
   const [user, t, sp] = await Promise.all([
-    currentUser(),
+    userId ? currentUser() : null,
     getTranslations("Payment"),
     searchParams,
   ]);
@@ -60,9 +59,18 @@ export default async function PaymentPage({
           </div>
         </section>
 
-        {/* Payment Form */}
+        {/* Payment Form — signed-out visitors get the Clerk modal instead */}
         <section className="max-w-2xl mx-auto px-6 py-12">
-          <PaymentForm />
+          {userId ? (
+            <PaymentForm />
+          ) : (
+            <PaymentSignInPrompt
+              title={t("signInTitle")}
+              subtitle={t("signInSubtitle")}
+              signInLabel={t("signIn")}
+              signUpLabel={t("signUp")}
+            />
+          )}
         </section>
       </main>
       <Footer />

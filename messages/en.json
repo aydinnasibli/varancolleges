@@ -1043,7 +1043,11 @@
     "successBanner": "Payment successful! Thank you.",
     "cancelledBanner": "Payment was cancelled. You can try again below.",
     "validationMin": "Minimum payment is ₼1",
-    "validationMax": "Maximum payment is ₼5,000"
+    "validationMax": "Maximum payment is ₼5,000",
+    "signInTitle": "Sign in to continue",
+    "signInSubtitle": "You need an account to make a payment, so we can link it to your record and send you a receipt.",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
   },
   "CTA": {
     "title": "Talk to an Advisor",

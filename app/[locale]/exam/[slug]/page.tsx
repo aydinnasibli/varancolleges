@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { Clock, BookOpen, CheckCircle, PenLine, Calculator, Calendar, Lock } from "lucide-react";
 import ExamPurchaseButton from "./ExamPurchaseButton";
 import TakeExamButton from "./TakeExamButton";
+import ExamAuthButtons from "./ExamAuthButtons";
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 
@@ -283,20 +284,10 @@ export default async function ExamDetailPage({
                       <p className="text-xs text-text-secondary text-center">
                         {t("signInToPurchase")}
                       </p>
-                      <div className="flex gap-2">
-                        <a
-                          href="/sign-in"
-                          className="flex-1 text-center bg-surface hover:bg-surface-hover text-navy py-2.5 rounded-xl text-sm font-medium transition-colors border border-border"
-                        >
-                          {t("signIn")}
-                        </a>
-                        <a
-                          href="/sign-up"
-                          className="flex-1 text-center bg-navy hover:bg-navy-light text-white py-2.5 rounded-xl text-sm font-semibold transition-colors"
-                        >
-                          {t("signUp")}
-                        </a>
-                      </div>
+                      <ExamAuthButtons
+                        signInLabel={t("signIn")}
+                        signUpLabel={t("signUp")}
+                      />
                     </div>
                   ) : hasPurchase ? (
                     <div className="space-y-3 mb-5">
