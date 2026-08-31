@@ -18,6 +18,7 @@ import {
   Target,
   TrendingUp,
   CalendarDays,
+  Lock,
   ArrowRight,
   ListChecks,
 } from "lucide-react";
@@ -237,7 +238,16 @@ export default async function ProfilePage({
                 slug: string;
                 type: string;
                 totalDuration: number;
+                examDate: string | Date | null;
               };
+
+              // Mirrors take/page.tsx: the exam date gates first-time takers
+              // only — anyone who already completed it can retake at any point.
+              // Without this the dashboard offered "Start Exam" for an exam that
+              // has not opened, and take/page.tsx bounced the user straight back.
+              const examDate = exam.examDate ? new Date(exam.examDate) : null;
+              const isExamUnlocked = examDate ? examDate <= new Date() : true;
+              const canTakeExam = isExamUnlocked || completed.length > 0;
 
               return (
                 <div
@@ -295,7 +305,19 @@ export default async function ProfilePage({
 
                   {/* ── Action buttons ── */}
                   <div className="flex flex-wrap items-center gap-3 px-6 pb-5">
-                    {inProgress ? (
+                    {!canTakeExam ? (
+                      <span className="inline-flex items-center gap-2 bg-surface border border-border text-text-secondary px-5 py-2.5 rounded-xl text-sm font-medium">
+                        <Lock className="h-4 w-4 text-text-muted" />
+                        {t("unlocksOn")}{" "}
+                        <span className="text-navy-light font-semibold">
+                          {examDate!.toLocaleDateString(dateLocale, {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </span>
+                      </span>
+                    ) : inProgress ? (
                       <ExamActionButton
                         href={`/exam/${exam.slug}/take`}
                         label={t("continueExam")}
@@ -317,7 +339,7 @@ export default async function ProfilePage({
                         {t("viewLatestResults")}
                       </Link>
                     )}
-                    {completed.length === 0 && !inProgress && (
+                    {canTakeExam && completed.length === 0 && !inProgress && (
                       <span className="text-xs text-text-muted italic">No attempts yet</span>
                     )}
                   </div>

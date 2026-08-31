@@ -979,7 +979,9 @@
       "signOut": "Sign Out",
       "memberSince": "Member since",
       "avgScore": "Avg Score",
-      "minutesShort": "min"
+      "minutesShort": "min",
+      "unlocksOn": "Unlocks on",
+      "lockedUntilExamDay": "Opens on exam day"
     },
     "interface": {
       "section1": "Section 1: Reading and Writing",

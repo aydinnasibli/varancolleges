@@ -979,7 +979,9 @@
       "signOut": "Hesabdan çıx",
       "memberSince": "Üzvlük tarixi",
       "avgScore": "Orta Bal",
-      "minutesShort": "dəq"
+      "minutesShort": "dəq",
+      "unlocksOn": "Açılır",
+      "lockedUntilExamDay": "İmtahan günü açılır"
     },
     "interface": {
       "section1": "Bölmə 1: Oxu və Yazı",
