@@ -129,8 +129,12 @@ export default async function RootLayout({
     <ClerkProvider afterSignOutUrl="/">
       <html lang={locale} className="scroll-smooth" data-scroll-behavior="smooth">
         <head>
-          <link rel="icon" href="/images/logo-icon.png" type="image/png" />
-          <link rel="apple-touch-icon" href="/images/logo-light.png" />
+          {/* Icons must be square (1:1) — Google Search skips non-square favicons
+              and falls back to the generic globe. Served from public/ so they
+              resolve before the [locale] dynamic segment can swallow them. */}
+          <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+          <link rel="icon" href="/icon.png" type="image/png" sizes="512x512" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
           <meta name="theme-color" content="#ffffff" />
         </head>
         <body

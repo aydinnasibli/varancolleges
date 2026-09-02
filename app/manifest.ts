@@ -9,13 +9,10 @@ export default function manifest(): MetadataRoute.Manifest {
     display: 'standalone',
     background_color: '#0B1120',
     theme_color: '#0B1120',
+    // Manifest icons must be square; the old 248x220 logo was not.
     icons: [
-      {
-        src: '/images/logo-light.png',
-        sizes: '248x220',
-        type: 'image/png',
-        purpose: 'any',
-      },
+      { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: '/icon.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
     ],
   };
 }
