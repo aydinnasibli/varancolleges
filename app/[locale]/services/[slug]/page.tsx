@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Link } from "@/i18n/routing";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { servicesData } from "@/lib/services-data";
@@ -7,44 +8,25 @@ import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { Clock, CalendarDays, Award, CheckCircle2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from 'next';
+import { pageMetadata, ogImageFromUnsplash, breadcrumbJsonLd, jsonLdGraph, localeUrl, ORGANIZATION_ID } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const t = await getTranslations({ locale, namespace: 'ServicesData' });
+  const service = servicesData.find(s => s.slug === slug);
+  if (!service) return {};
+
+  const tMeta = await getTranslations({ locale, namespace: 'Metadata' });
   const tData = await getTranslations({ locale, namespace: `ServicesData.${slug}` });
+  const name = tData('title');
 
-  const canonical = locale === 'az' ? `https://www.varancolleges.com/services/${slug}` : `https://www.varancolleges.com/${locale}/services/${slug}`;
-
-  // Use a fallback for the title since not all slugs might be in the translations yet (but we expect them to be)
-  const title = tData('title') || 'VaranColleges';
-
-  const description = tData('description') || '';
-  const heroImage = servicesData.find(s => s.slug === slug)?.heroImage || '/images/og-image.png';
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: heroImage, width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [heroImage],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': `https://www.varancolleges.com/services/${slug}`,
-        'az': `https://www.varancolleges.com/services/${slug}`,
-        'en': `https://www.varancolleges.com/en/services/${slug}`,
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: `services/${slug}`,
+    title: tMeta('serviceTitle', { service: name }),
+    description: `${tData('description')} ${tMeta('serviceDescSuffix')}`,
+    image: { url: ogImageFromUnsplash(service.heroImage), width: 1200, height: 630, alt: name },
+  });
 }
 
 export default async function ServiceDetailsPage({ params }: { params: Promise<{ locale: string, slug: string }> }) {
@@ -59,8 +41,26 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
   const t = await getTranslations({ locale, namespace: "ServicesData" });
   const tData = await getTranslations({ locale, namespace: `ServicesData.${slug}` });
 
+  const structuredData = jsonLdGraph(
+    {
+      "@type": "Service",
+      "@id": `${localeUrl(locale, `services/${slug}`)}#service`,
+      name: tData("title"),
+      description: tData("description"),
+      url: localeUrl(locale, `services/${slug}`),
+      serviceType: tData("title"),
+      provider: { "@id": ORGANIZATION_ID },
+      areaServed: { "@type": "City", name: "Baku" },
+    },
+    breadcrumbJsonLd(locale, tNav("home"), [
+      [tNav("services"), "services"],
+      [tData("title"), `services/${slug}`],
+    ])
+  );
+
   return (
     <main className="min-h-screen bg-white text-navy font-sans selection:bg-navy selection:text-white overflow-x-hidden">
+      <JsonLd data={structuredData} />
       <Navbar />
 
       {/* Hero Section — 58/42 split */}
@@ -70,13 +70,13 @@ export default async function ServiceDetailsPage({ params }: { params: Promise<{
             {/* Left side */}
             <div>
               {/* Breadcrumb */}
-              <div className="mb-10 flex items-center gap-2 text-sm text-white/50 tracking-wide">
-                <a href="/" className="hover:text-white transition-colors">{tNav("home")}</a>
-                <span>/</span>
-                <a href="/services" className="hover:text-white transition-colors">{tNav("services")}</a>
-                <span>/</span>
-                <span className="text-white">{tData("title")}</span>
-              </div>
+              <nav aria-label="Breadcrumb" className="mb-10 flex items-center gap-2 text-sm text-white/50 tracking-wide">
+                <Link href="/" className="hover:text-white transition-colors">{tNav("home")}</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/services" className="hover:text-white transition-colors">{tNav("services")}</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-white" aria-current="page">{tData("title")}</span>
+              </nav>
 
               <h1 className="text-5xl md:text-7xl font-serif text-white mb-8 leading-[1.1] tracking-tight">
                 {tData("title")}

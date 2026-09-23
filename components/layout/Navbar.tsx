@@ -7,6 +7,7 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import { cn } from "@/lib/utils";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 
 const Navbar = () => {
@@ -118,7 +119,15 @@ const Navbar = () => {
         <div className="container-main h-full">
           <div className="flex justify-between items-center h-full">
             {/* Logo */}
-            <Link href="/" className="shrink-0 flex items-center">
+            <Link href="/" className="shrink-0 flex items-center gap-2.5">
+              <Image
+                src="/images/logo-mark.png"
+                alt=""
+                width={43}
+                height={44}
+                loading="eager"
+                className="h-11 w-auto"
+              />
               <span className="font-serif text-[22px] font-bold text-navy tracking-tight">
                 Varan<span className="font-normal ml-0.5 text-navy/70">Colleges</span>
               </span>
@@ -188,8 +197,11 @@ const Navbar = () => {
         )}
       >
         <div className="flex items-center justify-between px-5 h-16 border-b border-border">
-          <span className="font-serif text-lg font-bold text-navy">
-            Varan<span className="font-normal ml-0.5 text-navy/70">Colleges</span>
+          <span className="flex items-center gap-2 font-serif text-lg font-bold text-navy">
+            <Image src="/images/logo-mark.png" alt="" width={35} height={36} className="h-9 w-auto" />
+            <span>
+              Varan<span className="font-normal ml-0.5 text-navy/70">Colleges</span>
+            </span>
           </span>
           <button
             onClick={closeMobileMenu}

@@ -6,47 +6,27 @@ import Footer from "@/components/layout/Footer";
 import ShareButtons from "@/components/ui/ShareButtons";
 import { getPostBySlug } from "@/lib/data";
 import { Metadata } from "next";
+import { pageMetadata, postDescription, localeUrl, breadcrumbJsonLd, jsonLdGraph, ORGANIZATION_ID, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
   const post = await getPostBySlug(slug);
-  const canonical = locale === 'az' ? `https://www.varancolleges.com/blog/${slug}` : `https://www.varancolleges.com/${locale}/blog/${slug}`;
+  if (!post) return {};
 
-  if (!post) {
-    return {
-      title: "Yazı tapılmadı - Varan Colleges",
-    };
-  }
-
-  const description = post.excerpt || post.title;
-  const ogImage = post.mainImage
-    ? [{ url: post.mainImage, width: 1200, height: 630, alt: post.title }]
-    : [{ url: '/images/og-image.png', width: 1200, height: 630, alt: post.title }];
-
-  return {
-    title: `${post.title} - Varan Colleges`,
-    description,
-    openGraph: {
-      title: `${post.title} - Varan Colleges`,
-      description,
-      url: canonical,
-      images: ogImage,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${post.title} - Varan Colleges`,
-      description,
-      images: post.mainImage ? [post.mainImage] : ['/images/og-image.png'],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': `https://www.varancolleges.com/blog/${slug}`,
-        'az': `https://www.varancolleges.com/blog/${slug}`,
-        'en': `https://www.varancolleges.com/en/blog/${slug}`,
-      }
-    }
-  };
+  // Posts are written in Azerbaijani only, so /en/blog/<slug> serves the same
+  // article — canonicalise both to the AZ URL instead of claiming an EN version.
+  return pageMetadata({
+    locale,
+    path: `blog/${slug}`,
+    title: post.title,
+    description: postDescription(post),
+    languages: 'az',
+    type: 'article',
+    publishedTime: post.publishedAt,
+    image: post.mainImage ? { url: post.mainImage, alt: post.title } : undefined,
+  });
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
@@ -57,8 +37,35 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
     notFound();
   }
 
+  // Posts canonicalise to the AZ URL, so the breadcrumb trail does too.
+  const tNav = await getTranslations({ locale: "az", namespace: "Navigation" });
+  const url = localeUrl("az", `blog/${slug}`);
+  const structuredData = jsonLdGraph(
+    {
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      mainEntityOfPage: url,
+      url,
+      headline: post.title,
+      description: postDescription(post),
+      image: post.mainImage || `${SITE_URL}${DEFAULT_OG_IMAGE}`,
+      datePublished: post.publishedAt,
+      dateModified: post.publishedAt,
+      inLanguage: "az",
+      author: post.author
+        ? { "@type": "Person", name: post.author }
+        : { "@id": ORGANIZATION_ID },
+      publisher: { "@id": ORGANIZATION_ID },
+    },
+    breadcrumbJsonLd("az", tNav("home"), [
+      [tNav("blog"), "blog"],
+      [post.title, `blog/${slug}`],
+    ])
+  );
+
   return (
     <main className="min-h-screen bg-white text-navy font-sans selection:bg-navy selection:text-white overflow-x-hidden">
+      <JsonLd data={structuredData} />
       <Navbar />
 
       {/* Hero Section */}
@@ -67,7 +74,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
           {post.mainImage && (
             <Image
               src={post.mainImage}
-              alt={post.title}
+              alt=""
               fill
               className="object-cover opacity-10"
               priority
@@ -75,15 +82,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
           )}
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-12">
-          <div className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-white text-sm font-medium mb-6">
+          <time dateTime={post.publishedAt} className="inline-block bg-white/10 px-4 py-1.5 rounded-full text-white text-sm font-medium mb-6">
             {new Date(post.publishedAt).toLocaleDateString('az-AZ', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </div>
+          </time>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 tracking-tight leading-tight">
             {post.title}
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent mx-auto mb-8"></div>
 
-          <div className="mt-8 flex justify-center gap-2 text-sm text-white/50 uppercase tracking-widest font-medium">
+          <nav aria-label="Breadcrumb" className="mt-8 flex justify-center gap-2 text-sm text-white/50 uppercase tracking-widest font-medium">
             <Link href="/" className="hover:text-white transition-colors">
               Ana Səhifə
             </Link>
@@ -92,8 +99,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ local
               Blog
             </Link>
             <span className="text-white/40">•</span>
-            <span className="text-white truncate max-w-[150px]">{post.title}</span>
-          </div>
+            <span className="text-white truncate max-w-[150px]" aria-current="page">{post.title}</span>
+          </nav>
         </div>
       </section>
 

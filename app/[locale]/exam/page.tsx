@@ -10,26 +10,19 @@ import ExamSections from "./ExamSections";
 import ExamHeroCta from "./ExamHeroCta";
 import { getTranslations } from "next-intl/server";
 import { getExamPhase } from "@/lib/exam-schedule";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Exam.listing" });
-  const canonical =
-    locale === "az"
-      ? "https://www.varancolleges.com/exam"
-      : `https://www.varancolleges.com/${locale}/exam`;
-  return {
-    title: t("title"),
-    description: t("description"),
-    alternates: {
-      canonical,
-      languages: {
-        "x-default": "https://www.varancolleges.com/exam",
-        az: "https://www.varancolleges.com/exam",
-        en: "https://www.varancolleges.com/en/exam",
-      },
-    },
-  };
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const tExam = await getTranslations({ locale, namespace: 'Exam.listing' });
+  return pageMetadata({
+    locale,
+    path: 'exam',
+    title: t('examTitle'),
+    description: tExam('description'),
+  });
 }
 
 export default async function ExamListingPage({

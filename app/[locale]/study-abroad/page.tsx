@@ -5,39 +5,19 @@ import JourneyTimeline from "@/components/study-abroad/JourneyTimeline";
 import CountriesSection from "@/components/study-abroad/CountriesSection";
 import CTASection from "@/components/study-abroad/CTASection";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tStudy = await getTranslations({ locale, namespace: 'StudyAbroadData' });
-  const canonical = locale === 'az' ? 'https://www.varancolleges.com/study-abroad' : `https://www.varancolleges.com/${locale}/study-abroad`;
-  const title = t('studyAbroad');
-  const description = tStudy('hero.description');
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/images/og-image.png'],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': 'https://www.varancolleges.com/study-abroad',
-        'az': 'https://www.varancolleges.com/study-abroad',
-        'en': 'https://www.varancolleges.com/en/study-abroad',
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: 'study-abroad',
+    title: t('studyAbroadTitle'),
+    description: tStudy('hero.description'),
+  });
 }
 
 export default async function StudyAbroadPage({ params }: { params: Promise<{ locale: string }> }) {

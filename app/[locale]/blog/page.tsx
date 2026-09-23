@@ -5,39 +5,19 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { getPosts } from "@/lib/data";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Navigation' });
-  const tMeta = await getTranslations({ locale, namespace: 'Metadata' });
-  const canonical = locale === 'az' ? 'https://www.varancolleges.com/blog' : `https://www.varancolleges.com/${locale}/blog`;
-  const title = t('blog');
-  const description = tMeta('blogDescription');
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/images/og-image.png'],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': 'https://www.varancolleges.com/blog',
-        'az': 'https://www.varancolleges.com/blog',
-        'en': 'https://www.varancolleges.com/en/blog',
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: 'blog',
+    title: t('blogTitle'),
+    description: t('blogDescription'),
+  });
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {

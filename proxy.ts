@@ -21,6 +21,11 @@ const intlMiddleware = createMiddleware(routing)
 // 1 year — user's locale preference persists across browser sessions
 const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
+// Search engines and link-preview bots must see every URL as-is. Googlebot
+// crawls mostly from US IPs, so geo-redirecting it would bounce every AZ page
+// to /en and the Azerbaijani site would never be indexed.
+const CRAWLER_UA = /bot|crawl|spider|slurp|facebookexternalhit|facebookcatalog|embedly|quora link preview|outbrain|pinterest|vkshare|w3c_validator|whatsapp|telegram|skypeuripreview|lighthouse|chrome-lighthouse|google-inspectiontool|googleother|yandex|baiduspider|duckduckgo|applebot|petalbot|semrush|ahrefs/i
+
 export default clerkMiddleware(async (auth, req) => {
   // API routes must pass through untouched — no locale redirect, no auth redirect
   // (Stripe webhooks and other API handlers handle their own auth)
@@ -59,7 +64,9 @@ export default clerkMiddleware(async (auth, req) => {
     // test the Azerbaijani version without being redirected.
     const country = req.headers.get('x-vercel-ip-country')
 
-    if (!hasLocaleCookie && country) {
+    const isCrawler = CRAWLER_UA.test(req.headers.get('user-agent') ?? '')
+
+    if (!hasLocaleCookie && country && !isCrawler) {
       const preferredLocale = country === 'AZ' ? 'az' : 'en'
       // EN locale lives at /en or /en/... — check precisely so a future
       // route like /enquiry or /enterprise doesn't get treated as EN locale

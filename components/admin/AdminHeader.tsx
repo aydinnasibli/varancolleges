@@ -1,15 +1,14 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
-import { Search, GraduationCap } from "lucide-react";
+import Image from "next/image";
+import { Search } from "lucide-react";
 
 export function AdminHeader() {
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 bg-white px-10 py-3 sticky top-0 z-10">
       <div className="flex items-center gap-8">
         <Link href="/admin" className="flex items-center gap-4 text-[#1152d4]">
-          <div className="size-6 flex items-center justify-center">
-            <GraduationCap className="h-6 w-6" />
-          </div>
+          <Image src="/images/logo-mark.png" alt="" width={35} height={36} className="h-9 w-auto" />
           <h2 className="text-slate-900 text-xl font-bold leading-tight tracking-[-0.015em]">
             VaranColleges Admin
           </h2>

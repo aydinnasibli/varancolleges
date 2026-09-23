@@ -5,6 +5,7 @@ import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { BookOpen, Phone, Mail, Clock, CreditCard, LayoutDashboard } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export default function ExamNavbar() {
   const { isSignedIn, isLoaded } = useUser();
@@ -57,7 +58,15 @@ export default function ExamNavbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
 
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0 flex items-center gap-2.5">
+            <Image
+              src="/images/logo-mark.png"
+              alt=""
+              width={39}
+              height={40}
+              loading="eager"
+              className="h-10 w-auto"
+            />
             <span className="font-serif text-xl font-bold text-navy tracking-tight">
               Varan<span className="font-normal ml-1">Colleges</span>
             </span>

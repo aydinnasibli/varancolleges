@@ -10,29 +10,23 @@ import ExamAuthButtons from "./ExamAuthButtons";
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 import { isExamOpen } from "@/lib/exam-schedule";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
   const result = await getExamBySlug(slug);
   if (!result.success || !result.exam) return {};
-  const exam = result.exam as { title: string; description: string };
-  const canonical = locale === 'az'
-    ? `https://www.varancolleges.com/exam/${slug}`
-    : `https://www.varancolleges.com/${locale}/exam/${slug}`;
-  return {
+  const exam = result.exam as { title: string; description?: string };
+  const tMeta = await getTranslations({ locale, namespace: 'Exam.listing' });
+  return pageMetadata({
+    locale,
+    path: `exam/${slug}`,
     title: exam.title,
-    description: exam.description,
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': `https://www.varancolleges.com/exam/${slug}`,
-        az: `https://www.varancolleges.com/exam/${slug}`,
-        en: `https://www.varancolleges.com/en/exam/${slug}`,
-      },
-    },
-  };
+    description: `${exam.description ?? ''} ${tMeta('description')}`,
+  });
 }
 
 const SAT_STRUCTURE = [

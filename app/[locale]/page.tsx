@@ -8,37 +8,20 @@ import CTABanner from "@/components/sections/CTABanner";
 import Footer from "@/components/layout/Footer";
 
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
-  const canonical = locale === 'az' ? 'https://www.varancolleges.com' : `https://www.varancolleges.com/${locale}`;
-  const description = t('description');
-  const title = t('title');
 
-  return {
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: 'VaranColleges' }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/images/og-image.png'],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': 'https://www.varancolleges.com',
-        'az': 'https://www.varancolleges.com',
-        'en': 'https://www.varancolleges.com/en',
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: '',
+    title: t('homeTitle'),
+    absoluteTitle: true,
+    description: t('description'),
+  });
 }
 
 export default function Home() {

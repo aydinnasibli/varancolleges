@@ -7,7 +7,18 @@
     "openGraphDescription": "Make your study abroad dreams come true with VaranColleges. IELTS, SAT preparation and guaranteed admission to prestigious universities worldwide.",
     "twitterTitle": "VaranColleges - Study Abroad",
     "twitterDescription": "Make your study abroad dreams come true with VaranColleges. Professional team and guaranteed results.",
-    "blogDescription": "VaranColleges Blog — expert articles and practical advice on studying abroad, IELTS, SAT, GRE and GMAT preparation."
+    "blogDescription": "VaranColleges Blog — expert articles and practical advice on studying abroad, IELTS, SAT, GRE and GMAT preparation.",
+    "homeTitle": "VaranColleges — Study Abroad, IELTS & SAT Prep in Baku",
+    "aboutTitle": "About Us — Study Abroad Center in Baku",
+    "servicesTitle": "Services — IELTS, SAT, TOEFL, GRE & GMAT Courses",
+    "studyAbroadTitle": "Study Abroad — University Admissions Support",
+    "countryTitle": "Study in {country} — Admissions & Visa Support",
+    "contactTitle": "Contact Us — 137A Samad Vurgun, Baku",
+    "blogTitle": "Blog — Study Abroad & Exam Prep Advice",
+    "examTitle": "Digital SAT Mock Exams Online",
+    "serviceTitle": "{service} in Baku",
+    "serviceDescSuffix": "Expert-led preparation at VaranColleges in Baku.",
+    "countryDescription": "{description} VaranColleges guides you through admissions, scholarships and student visas to study in {country}."
   },
   "Navigation": {
     "home": "Home",

@@ -2,17 +2,21 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'VaranColleges',
+    id: '/',
+    name: 'VaranColleges — Xaricdə Təhsil və İmtahan Hazırlığı',
     short_name: 'VaranColleges',
-    description: 'Xaricdə təhsil üzrə peşəkar məsləhət xidməti',
+    description: 'Bakıda xaricdə təhsil üzrə məsləhət və IELTS, SAT, TOEFL, GRE, GMAT hazırlığı.',
+    lang: 'az',
     start_url: '/',
+    scope: '/',
     display: 'standalone',
-    background_color: '#0B1120',
-    theme_color: '#0B1120',
-    // Manifest icons must be square; the old 248x220 logo was not.
+    // Matches the cream background baked into the icons so the splash screen is seamless.
+    background_color: '#F7F2ED',
+    theme_color: '#0C1F3F',
     icons: [
       { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
       { src: '/icon.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
   };
 }

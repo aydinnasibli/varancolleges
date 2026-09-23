@@ -16,14 +16,21 @@ const Footer = async () => {
           {/* Brand */}
           <div>
             <div className="mb-5">
-              <Link href="/">
-                <Image
-                  src="/images/logo-light.png"
-                  alt="Varan Colleges"
-                  width={800}
-                  height={450}
-                  className="h-8 w-auto object-contain opacity-90"
-                />
+              <Link href="/" className="inline-flex items-center gap-3">
+                {/* The navy mark disappears on the navy footer, so it sits on the
+                    same cream tile used for the app icon. */}
+                <span className="flex size-14 items-center justify-center rounded-xl bg-[#F7F2ED]">
+                  <Image
+                    src="/images/logo-mark.png"
+                    alt=""
+                    width={43}
+                    height={44}
+                    className="h-11 w-auto"
+                  />
+                </span>
+                <span className="font-serif text-[22px] font-bold text-white tracking-tight">
+                  Varan<span className="font-normal ml-0.5 text-white/70">Colleges</span>
+                </span>
               </Link>
             </div>
             <p className="text-[13px] leading-[1.8] text-white/55 max-w-[260px] mb-5">

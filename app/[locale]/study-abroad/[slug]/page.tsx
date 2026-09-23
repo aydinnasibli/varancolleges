@@ -10,46 +10,24 @@ import CTASection from "@/components/study-abroad/CTASection";
 import FAQ from "@/components/sections/FAQ";
 import { ApplicationModal } from "@/components/ui/ApplicationModal";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { pageMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string, slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
   const studyAbroadData = await getStudyAbroadData(locale);
   const country = studyAbroadData.countries.find((c) => c.slug === slug);
-  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  if (!country) return {};
 
-  if (!country) {
-    return { title: t('studyAbroad') };
-  }
+  const tMeta = await getTranslations({ locale, namespace: 'Metadata' });
 
-  const canonical = locale === 'az' ? `https://www.varancolleges.com/study-abroad/${slug}` : `https://www.varancolleges.com/${locale}/study-abroad/${slug}`;
-
-  const title = `${country.name} - ${t('studyAbroad')}`;
-  const description = country.description || '';
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: country.flagUrl, alt: country.name }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [country.flagUrl],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': `https://www.varancolleges.com/study-abroad/${slug}`,
-        'az': `https://www.varancolleges.com/study-abroad/${slug}`,
-        'en': `https://www.varancolleges.com/en/study-abroad/${slug}`,
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: `study-abroad/${slug}`,
+    title: tMeta('countryTitle', { country: country.name }),
+    description: tMeta('countryDescription', { description: country.description, country: country.name }),
+  });
 }
 
 export default async function CountryPage({ params }: { params: Promise<{ locale: string, slug: string }> }) {
@@ -65,16 +43,22 @@ export default async function CountryPage({ params }: { params: Promise<{ locale
   }
 
   const countryFaqs = getCountryFaqs(slug, tFaqData);
+  const tNav = await getTranslations({ locale, namespace: 'Navigation' });
+  const breadcrumbs = breadcrumbJsonLd(locale, tNav('home'), [
+    [tNav('studyAbroad'), 'study-abroad'],
+    [country.name, `study-abroad/${slug}`],
+  ]);
 
   return (
     <main className="min-h-screen bg-white text-text-secondary font-sans selection:bg-navy selection:text-white overflow-x-hidden">
+      <JsonLd data={{ "@context": "https://schema.org", ...breadcrumbs }} />
       <Navbar />
 
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden border-b border-border bg-navy">
         <div className="absolute inset-0 z-0">
           <Image
             src={country.flagUrl}
-            alt={`${country.name} background`}
+            alt=""
             fill
             className="object-cover opacity-[0.06] grayscale"
             priority

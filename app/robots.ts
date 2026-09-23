@@ -1,12 +1,15 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin/',
+      // Private/auth-only areas. Profile, payment and exam-taking pages are
+      // left crawlable on purpose so bots can read their noindex tag.
+      disallow: ['/admin', '/api/'],
     },
-    sitemap: 'https://www.varancolleges.com/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

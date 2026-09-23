@@ -5,12 +5,26 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
+    // Service pages used to live at /services/<exam>-hazirligi; those URLs are
+    // still indexed and linked, so send them (and their link equity) to the
+    // current slugs instead of a 404.
+    const legacyServiceSlugs = ['sat', 'ielts', 'gmat', 'toefl', 'yos', 'gre', 'ab', 'ib'];
+    const legacyServiceRedirects = legacyServiceSlugs.flatMap((slug) => [
+      { source: `/services/${slug}-hazirligi`, destination: `/services/${slug}`, permanent: true },
+      { source: `/en/services/${slug}-hazirligi`, destination: `/en/services/${slug}`, permanent: true },
+    ]);
+
     return [
       {
         source: '/index.html',
         destination: '/',
         permanent: true,
       },
+      // AZ is the default locale and is served without a prefix; /az/... would
+      // otherwise be a duplicate of every page.
+      { source: '/az', destination: '/', permanent: true },
+      { source: '/az/:path*', destination: '/:path*', permanent: true },
+      ...legacyServiceRedirects,
     ];
   },
   async headers() {

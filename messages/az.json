@@ -7,7 +7,18 @@
     "openGraphDescription": "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
     "twitterTitle": "VaranColleges - Xaricdə Təhsil",
     "twitterDescription": "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. Peşəkar komanda və zəmanətli nəticələr.",
-    "blogDescription": "VaranColleges Blog — xaricdə təhsil, IELTS, SAT, GRE və GMAT hazırlığı haqqında ekspert məqalələri və faydalı tövsiyələr."
+    "blogDescription": "VaranColleges Blog — xaricdə təhsil, IELTS, SAT, GRE və GMAT hazırlığı haqqında ekspert məqalələri və faydalı tövsiyələr.",
+    "homeTitle": "VaranColleges — Bakıda Xaricdə Təhsil, IELTS və SAT Hazırlığı",
+    "aboutTitle": "Haqqımızda — Bakıda Xaricdə Təhsil Mərkəzi",
+    "servicesTitle": "Xidmətlər — IELTS, SAT, TOEFL, GRE, GMAT Kursları",
+    "studyAbroadTitle": "Xaricdə Təhsil — Universitetlərə Qəbul Dəstəyi",
+    "countryTitle": "{country} — Xaricdə Təhsil və Qəbul",
+    "contactTitle": "Əlaqə — Bakı, Səməd Vurğun 137A",
+    "blogTitle": "Blog — Xaricdə Təhsil və İmtahan Məsləhətləri",
+    "examTitle": "Onlayn Rəqəmsal SAT Sınaq İmtahanları",
+    "serviceTitle": "{service} Bakıda",
+    "serviceDescSuffix": "Bakıda VaranColleges-də təcrübəli müəllimlərlə hazırlıq.",
+    "countryDescription": "{description} VaranColleges ilə {country} universitetlərinə qəbul, təqaüd və tələbə vizası üzrə peşəkar dəstək."
   },
   "Navigation": {
     "home": "Ana Səhifə",

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
@@ -19,46 +19,56 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 import { getTranslations } from "next-intl/server";
 
+import { SITE_URL, SITE_NAME, jsonLdGraph, organizationJsonLd, websiteJsonLd, pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
+
+export const viewport: Viewport = {
+  themeColor: "#0C1F3F",
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
-  return {
-    metadataBase: new URL("https://www.varancolleges.com"),
-    title: {
-      default: t('title'),
-      template: "%s | VaranColleges",
-    },
+  // Defaults for any route that doesn't define its own metadata. Pages
+  // override title/description/canonical/openGraph via pageMetadata().
+  const defaults = pageMetadata({
+    locale,
+    path: "",
+    title: t('homeTitle'),
+    absoluteTitle: true,
     description: t('description'),
-    keywords: t('keywords').split(', '),
-    authors: [{ name: "VaranColleges" }],
-    creator: "VaranColleges",
-    publisher: "VaranColleges",
+  });
+
+  return {
+    ...defaults,
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: t('homeTitle'),
+      template: `%s | ${SITE_NAME}`,
+    },
+    applicationName: SITE_NAME,
+    authors: [{ name: SITE_NAME, url: SITE_URL }],
+    creator: SITE_NAME,
+    publisher: SITE_NAME,
     formatDetection: {
       email: false,
       address: false,
       telephone: false,
     },
-    openGraph: {
-      title: t('openGraphTitle'),
-      description: t('openGraphDescription'),
-      siteName: "VaranColleges",
-      locale: locale === 'az' ? 'az_AZ' : 'en_US',
-      type: "website",
-      images: [
-        {
-          url: "/images/og-image.png",
-          width: 1200,
-          height: 630,
-          alt: "VaranColleges — Language & Education Center, Baku",
-        },
+    // Canonical/hreflang are page-specific; never inherit the homepage's.
+    alternates: undefined,
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "48x48" },
+        { url: "/icon-32.png", type: "image/png", sizes: "32x32" },
+        { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+        { url: "/icon.png", type: "image/png", sizes: "512x512" },
       ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
     },
-    twitter: {
-      card: "summary_large_image",
-      title: t('twitterTitle'),
-      description: t('twitterDescription'),
-      images: ["/images/og-image.png"],
+    appleWebApp: {
+      title: SITE_NAME,
     },
     robots: {
       index: true,
@@ -73,35 +83,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
   };
 }
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  name: "VaranColleges",
-  url: "https://www.varancolleges.com",
-  logo: "https://www.varancolleges.com/images/logo.png",
-  image: "https://www.varancolleges.com/images/og-image.png",
-  description:
-    "VaranColleges ilə xaricdə təhsil xəyallarınızı gerçəkləşdirin. IELTS, SAT hazırlığı və dünyanın nüfuzlu universitetlərinə qəbul zəmanəti.",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "137A Samad Vurgun",
-    addressLocality: "Baku",
-    postalCode: "1022",
-    addressCountry: "AZ",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+994-77-188-50-50",
-    email: "info@varancolleges.com",
-    contactType: "customer service",
-    areaServed: "AZ",
-    availableLanguage: ["Azerbaijani", "English", "Russian"],
-  },
-  sameAs: [
-    "https://www.instagram.com/varancollegesltd/",
-  ],
-};
 
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -128,24 +109,11 @@ export default async function RootLayout({
     // per-component sign-out redirect props from <UserButton>.
     <ClerkProvider afterSignOutUrl="/">
       <html lang={locale} className="scroll-smooth" data-scroll-behavior="smooth">
-        <head>
-          {/* Icons must be square (1:1) — Google Search skips non-square favicons
-              and falls back to the generic globe. Served from public/ so they
-              resolve before the [locale] dynamic segment can swallow them. */}
-          <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
-          <link rel="icon" href="/icon.png" type="image/png" sizes="512x512" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-          <meta name="theme-color" content="#ffffff" />
-        </head>
         <body
           className={`${cormorant.variable} ${plusJakarta.variable} font-sans antialiased bg-white text-navy selection:bg-accent/20 selection:text-navy`}
         >
           <NextIntlClientProvider messages={messages}>
-            <Script
-              id="json-ld"
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
+            <JsonLd data={jsonLdGraph(organizationJsonLd(locale), websiteJsonLd(locale))} />
             <Script
               strategy="afterInteractive"
               src="https://static.cloudflareinsights.com/beacon.min.js"

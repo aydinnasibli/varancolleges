@@ -5,39 +5,19 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/ui/custom-icons";
 import ContactForm from "@/components/sections/ContactForm";
 import Map from "@/components/ui/Map";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tContact = await getTranslations({ locale, namespace: 'Contact' });
-  const canonical = locale === 'az' ? 'https://www.varancolleges.com/contact' : `https://www.varancolleges.com/${locale}/contact`;
-  const title = t('contact');
-  const description = tContact('heroDesc');
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/images/og-image.png'],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': 'https://www.varancolleges.com/contact',
-        'az': 'https://www.varancolleges.com/contact',
-        'en': 'https://www.varancolleges.com/en/contact',
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: 'contact',
+    title: t('contactTitle'),
+    description: tContact('heroDesc'),
+  });
 }
 
 export default async function ContactPage() {

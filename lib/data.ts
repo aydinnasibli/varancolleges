@@ -15,6 +15,7 @@ export interface Post {
   mainImage?: string; // Simplied image URL string
   publishedAt: string;
   excerpt?: string;
+  author?: string;
   body: string; // Simplified HTML or markdown string
 }
 
@@ -57,6 +58,7 @@ export async function getPosts(): Promise<Post[]> {
       mainImage: post.image,
       publishedAt: post.date.toISOString(),
       excerpt: post.excerpt,
+      author: post.author,
       body: post.content,
     }));
   } catch (error) {
@@ -81,6 +83,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       mainImage: post.image,
       publishedAt: post.date.toISOString(),
       excerpt: post.excerpt,
+      author: post.author,
       body: post.content,
     };
   } catch (error) {

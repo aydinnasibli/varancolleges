@@ -4,39 +4,19 @@ import Map from "@/components/ui/Map";
 import { Link } from "@/i18n/routing";
 import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'Navigation' });
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
   const tAbout = await getTranslations({ locale, namespace: 'About' });
-  const canonical = locale === 'az' ? 'https://www.varancolleges.com/about' : `https://www.varancolleges.com/${locale}/about`;
-  const title = t('about');
-  const description = tAbout('heroDesc');
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: title }],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: ['/images/og-image.png'],
-    },
-    alternates: {
-      canonical,
-      languages: {
-        'x-default': 'https://www.varancolleges.com/about',
-        'az': 'https://www.varancolleges.com/about',
-        'en': 'https://www.varancolleges.com/en/about',
-      }
-    }
-  };
+  return pageMetadata({
+    locale,
+    path: 'about',
+    title: t('aboutTitle'),
+    description: tAbout('heroDesc'),
+  });
 }
 
 export default async function AboutPage() {
