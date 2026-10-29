@@ -107,6 +107,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ik.imagekit.io',
       },
+      // Cover photos for blog posts based on media interviews (seed-blog-posts.js)
+      { protocol: 'https', hostname: 'plat.az', pathname: '/storage/uploads/**' },
+      { protocol: 'https', hostname: 'sonxeber.az', pathname: '/uploads/**' },
+      { protocol: 'https', hostname: 'eramedia.az', pathname: '/app/storage/**' },
     ],
   },
 };
